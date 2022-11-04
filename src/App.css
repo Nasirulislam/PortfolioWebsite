@@ -1,0 +1,22 @@
+.main-button{
+  margin: 30px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  z-index: 100;
+  cursor: pointer;
+  right: 0;
+  position: fixed  ;
+}
+
+.card1{
+  width: 100px;
+  height: 100px;
+  background-color: rgb(36, 124, 73);
+ position: absolute;
+}
+.card2{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-color: rgb(43, 194, 164);
+}
