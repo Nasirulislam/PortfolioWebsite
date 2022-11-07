@@ -1,0 +1,28 @@
+.Auston-image1, .Auston-image2, .Auston-image3{
+    width: 400px;
+    height: 400px;
+    
+}
+.auston-section{
+    position: relative;
+    /* top: 900px ; */
+}
+.Auston-image1>img{
+    right: 70px !important;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+}
+.Auston-image2{
+    position: absolute;
+    top:80px;
+    left: 150px;
+    width: 500px;
+    height: 500px;
+}
+.Auston-image3{
+    position: absolute;
+    left: 550px;
+    width: 500px;
+    height: 500px;
+}

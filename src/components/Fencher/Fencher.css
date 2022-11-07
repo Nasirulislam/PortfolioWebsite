@@ -1,0 +1,22 @@
+.fencher-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image1 {
+  /* margin: 0px 150px; */
+  max-width: 550px;
+  right: 25%;
+  position: absolute;
+  z-index: 0;
+}
+
+.image2 {
+  position: absolute !important;
+  left: 60%;
+  top:80px;
+  max-width: 400px;
+  z-index: 0;
+}

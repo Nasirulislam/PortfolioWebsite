@@ -3,8 +3,9 @@ import Home from "./Home";
 import BottomSlider from "./BottomSlider";
 import "./Home.css";
 import { motion } from "framer-motion";
+import Fencher from "../Fencher/Fencher";
+import HomeMain from "./HomeMain";
 function HomeIndex() {
-  const [homeState, setHomeState] = useState(false);
   let hasMouse = false;
   const [direction, setdirection] = useState("left");
 
@@ -14,13 +15,13 @@ function HomeIndex() {
     return new Promise((res) => setTimeout(res, delay));
   }
 
+  const mousemove = (e) => {
+    setLargeCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
+    // setHomeState(true);
+    // await timeout(5000);
+    // setHomeState(false);
+  };
   useEffect(() => {
-    const mousemove = async (e) => {
-      setLargeCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
-      setHomeState(true);
-      await timeout(5000);
-      setHomeState(false);
-    };
     window.addEventListener("mousemove", mousemove);
     return () => {
       window.removeEventListener("mousemove", mousemove);
@@ -45,19 +46,14 @@ function HomeIndex() {
 
   return (
     <div id="home-page" className="home-page">
-      <div className={homeState ? "home-title" : "home-title-hide"}>
-        <h1>MARCUS</h1>
-        <h1 className="px-4">ERIKSSON</h1>
-      </div>
+      {/* <HomeMain /> */}
       <motion.div
         className="home-slide-section"
         animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
         initial={{
           opacity: 0.1,
-          
         }}
         transition={{
-
           type: "spring",
           stiffness: 50,
         }}
@@ -65,6 +61,7 @@ function HomeIndex() {
         <Home />
         <BottomSlider />
       </motion.div>
+     
     </div>
   );
 }

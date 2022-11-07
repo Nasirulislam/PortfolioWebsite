@@ -1,10 +1,39 @@
-.main-button{
+.index-button{
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
   z-index: 100;
   cursor: pointer;
   right: 0;
+  position: fixed  ;
+}
+.about-button{
+  margin: 30px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  z-index: 100;
+  cursor: pointer;
+  right: 0;
+  bottom: 0;
+  position: fixed  ;
+}
+.ME-button{
+  margin: 30px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  z-index: 100;
+  cursor: pointer;
+  left: 0;
+  position: fixed  ;
+}
+.null-button{
+  margin: 30px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  z-index: 100;
+  cursor: pointer;
+  left: 0;
+  bottom: 0;
   position: fixed  ;
 }
 

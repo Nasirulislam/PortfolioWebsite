@@ -25,6 +25,7 @@ function IndexItem(props) {
           initial={{
             opacity: 0.1,
             position: "relative",
+            rotate:0,
           }}
           transition={{
             type: "spring",
