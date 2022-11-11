@@ -8,6 +8,10 @@ import { useState } from "react";
 import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import FencerMain from "./components/Fencher/FencerMain";
+import Fencher from "./components/Fencher/Fencher";
+import BufferData from "./components/Buffer";
 
 function App() {
   const [IndexText, setIndexText] = useState("INDEX");
@@ -15,13 +19,13 @@ function App() {
   const [METext, setMEText] = useState("M-E");
   const [Text00, set00Text] = useState("00");
   const [clicked, setClicked] = useState(true);
-  
-  const setValues = ()=>{
+
+  const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
     setMEText("M-E");
     set00Text("00");
-  }
+  };
   const buttonToogle = () => {
     if (clicked) {
       setIndexText("CLOSE");
@@ -51,7 +55,7 @@ function App() {
       setAboutText("");
       set00Text("");
     } else {
-      setValues()
+      setValues();
     }
     setClicked(!clicked);
   };
@@ -62,55 +66,72 @@ function App() {
       setAboutText("");
       setMEText("");
     } else {
-      setValues()
+      setValues();
     }
     setClicked(!clicked);
   };
- 
-  return (
-    <div className="App">
-      <div className="main-button">
-        <h3
-          onClick={() => {
-            buttonToogle();
-          }}
-          className="index-button"
-        >
-          {IndexText}
-        </h3>
-      </div>
 
-      <div className="main-button">
-        <h3
-          onClick={() => {
-            AboutToogle();
-          }}
-          className="about-button"
-        >
-          {aboutText}
-        </h3>
-      </div>
-      <div className="main-button">
-        <h3
-          onClick={() => {
-            METoogle();
-          }}
-          className="ME-button"
-        >
-          {METext}
-        </h3>
-      </div>
-      <div className="main-button">
-        <h3
-          onClick={() => {
-            NullToogle();
-          }}
-          className="null-button"
-        >
-          {Text00}
-        </h3>
-      </div>
-      {clicked ? <div><HomeMain /> </div>: <Index />}
+  return (
+    <div>
+      <Router>
+        <div className="App">
+          <div className="main-button">
+            <h3
+              onClick={() => {
+                buttonToogle();
+              }}
+              className="index-button"
+            >
+              {IndexText}
+            </h3>
+          </div>
+
+          <div className="main-button">
+            <h3
+              onClick={() => {
+                AboutToogle();
+              }}
+              className="about-button"
+            >
+              {aboutText}
+            </h3>
+          </div>
+          <div className="main-button">
+            <h3
+              onClick={() => {
+                METoogle();
+              }}
+              className="ME-button"
+            >
+              {METext}
+            </h3>
+          </div>
+          <div className="main-button">
+            <h3
+              onClick={() => {
+                NullToogle();
+              }}
+              className="null-button"
+            >
+              {Text00}
+            </h3>
+          </div>
+          {clicked ? (
+            <div>
+              <Routes>
+                <Route exact path="/" element={<HomeMain />} />
+                {BufferData.map((item, index) => {
+                  return item.projects.map((project, pindex) => {
+                    return <Route exact path={"/".concat(project.slug)} element={<FencerMain />} />;
+                  });
+                })}
+              </Routes>
+            </div>
+          ) : (
+            <Index />
+          )}
+        </div>
+      </Router>
     </div>
   );
 }

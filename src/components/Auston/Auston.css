@@ -6,23 +6,26 @@
 .auston-section{
     position: relative;
     /* top: 900px ; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .Auston-image1>img{
     right: 70px !important;
-    position: absolute;
+    /* position: absolute; */
     width: 400px;
     height: 400px;
 }
 .Auston-image2{
-    position: absolute;
-    top:80px;
-    left: 150px;
+    /* position: absolute; */
+    margin-top: -10%;
     width: 500px;
     height: 500px;
 }
 .Auston-image3{
-    position: absolute;
-    left: 550px;
+    /* position: absolute; */
+    margin-top: -10%;
     width: 500px;
     height: 500px;
 }

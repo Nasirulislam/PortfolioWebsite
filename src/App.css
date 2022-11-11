@@ -1,13 +1,13 @@
-.index-button{
+.index-button {
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
   z-index: 100;
   cursor: pointer;
   right: 0;
-  position: fixed  ;
+  position: fixed;
 }
-.about-button{
+.about-button {
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
@@ -15,18 +15,18 @@
   cursor: pointer;
   right: 0;
   bottom: 0;
-  position: fixed  ;
+  position: fixed;
 }
-.ME-button{
+.ME-button {
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
   z-index: 100;
   cursor: pointer;
   left: 0;
-  position: fixed  ;
+  position: fixed;
 }
-.null-button{
+.null-button {
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
@@ -34,18 +34,32 @@
   cursor: pointer;
   left: 0;
   bottom: 0;
-  position: fixed  ;
+  position: fixed;
 }
 
-.card1{
+.card1 {
   width: 100px;
   height: 100px;
   background-color: rgb(36, 124, 73);
- position: absolute;
+  position: absolute;
 }
-.card2{
+.card2 {
   width: 100px;
   height: 100px;
   position: absolute;
   background-color: rgb(43, 194, 164);
+}
+
+img.hoverImages {
+  margin: 40px;
+  padding: 3px;
+
+  -webkit-transition: margin 0.5s ease-out;
+  -moz-transition: margin 0.5s ease-out;
+  -o-transition: margin 0.5s ease-out;
+}
+
+img.hoverImages:hover {
+  cursor: pointer;
+  margin-top: 20px;
 }

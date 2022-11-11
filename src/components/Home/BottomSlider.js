@@ -49,7 +49,7 @@ function BottomSlider(props) {
     }
   }, []);
   return (
-    <div id="bottom-slider">
+    <div id="bottom-slider" className="bottom-slider">
       <Marquee
         speed={0}
         gradient={false}

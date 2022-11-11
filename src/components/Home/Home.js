@@ -52,7 +52,7 @@ function Home(props) {
       oldX = e.pageX;
       oldY = e.pageY;
 
-      console.log(xDirection + " " + yDirection);
+      // console.log(xDirection + " " + yDirection);
     }
   }, []);
 

@@ -1,25 +1,22 @@
 .ballet-section{
     /* top:5500px; */
     position: relative;
+    margin-top: 10%;
 }
 .ballet-img1{
-    left: 150px;
-    position: absolute;
-    top:250px;
+  
     max-width: 400px;
     max-height: 400px;
 }
 .ballet-img2{
-    position: absolute;
-    top:100px;
-    right: 70px;
+    /* position: absolute; */
+    margin-top: 10%;;
     max-width: 500px;
     max-height: 500px;
 }
 .ballet-img3{
-    position: absolute;
-    left: 100px;
-    top:600px;
+    /* position: absolute; */
+
     max-width: 500px;
     max-height: 500px;
 }

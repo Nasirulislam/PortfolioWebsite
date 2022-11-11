@@ -3,8 +3,10 @@ import "./Fencher.css";
 import image1 from "../../Assets/images/1.jpg";
 import image2 from "../../Assets/images/4.jpg";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 function Fencher(props) {
+  const navigate = useNavigate();
   const [imageDirec, setImageDirec] = useState({ x: 0, y: 0 });
   const moveImage = (e) => {
     console.log("Mouse");
@@ -19,21 +21,29 @@ function Fencher(props) {
     };
   }, []);
   return (
-    <div className="fencher-section" style={{marginTop: props.MarginTop}}>
-      {/* <motion.div
-        animate={{ x: imageDirec.x, y: imageDirec.y }}
-      
-        transition={{
-          type: "spring",
-          stiffness: 0,
+    <div>
+      <div
+        className="fencher-section"
+        onClick={() => {
+          navigate(props.slug, {
+            state: {
+              title: props.title,
+              detail: props.title,
+              images: [...props.images],
+            },
+          });
         }}
-      > */}
-      <div className="image1">
-        <img className="image1" src={props.image1} />
-      </div>
-      {/* </motion.div> */}
-      <div className="image2">
-        <img className="image2" src={props.image2} />
+      >
+        <div className="fencher-title">
+          {/* <h1>{props.title}</h1> */}
+          {/* <h1 className="mx-5">{titleVal[1]}</h1> */}
+        </div>
+        <div className="image1">
+          <img className="image1" src={props.image1} />
+        </div>
+        <div className="image2">
+          <img className="image2" src={props.image2} />
+        </div>
       </div>
     </div>
   );

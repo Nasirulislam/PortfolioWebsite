@@ -5,10 +5,10 @@ import "./Home.css";
 import { motion } from "framer-motion";
 import Fencher from "../Fencher/Fencher";
 import HomeMain from "./HomeMain";
-function HomeIndex() {
+function HomeIndex(props) {
   let hasMouse = false;
   const [direction, setdirection] = useState("left");
-
+  const titleVal = props.title.split(" ");
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
 
   async function timeout(delay) {
@@ -46,7 +46,11 @@ function HomeIndex() {
 
   return (
     <div id="home-page" className="home-page">
-      {/* <HomeMain /> */}
+      {/* <div className="home-title">
+        <h1>{titleVal[0]}</h1>
+        <h1 className="mx-5">{titleVal[1]}</h1>
+      </div> */}
+
       <motion.div
         className="home-slide-section"
         animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
