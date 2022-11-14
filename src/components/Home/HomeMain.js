@@ -13,15 +13,29 @@ import Brenna from "../Brenna/Brenna";
 import BabyYorus from "../BabyYorus/BabyYorus";
 import BufferData from "../Buffer";
 import "./Home.css";
+import base_url from "../../constants/url"
+import axios from "axios";
+
 function HomeMain() {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [homeState, setHomeState] = useState(true);
   const [projects, setProjects] = useState([]);
   const heroTitle = document.querySelector(".hero-title");
+  const [projectsData, setProjectsData] = useState([]);
   // const heroTitleOverlay = document.querySelector("span");
 
   // heroTitleOverlay.innerText = heroTitle.textContent
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await axios.get(`${base_url}/project/`).then((response) => {
+        // console.log(response.data.data.sortedProjects);
+        setProjectsData(response.data.data.sortedProjects);
+      });
+    };
+    fetchProducts();
+  }, []);
   const setNames = (nameArr) => {
     if (nameArr.length == 1) {
       setFirstName(nameArr[0]);
@@ -97,73 +111,78 @@ function HomeMain() {
               <h1>{firstName}</h1>
               {/* <h1 className="mx-5">{titleVal[1]}</h1> */}
             </div>
-            
+
             <HomeIndex title={item.title} />
-            {item.projects.map((project, index1) => {
+            {projectsData.map((project, index1) => {
               if (project.template == 1) {
                 return (
                   <Fencher
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
                     title={project.title}
-                    images = {[...project.images]}
-                    slug = {"/".concat(project.slug)}
+                    images={[...project.images]}
+                    slug={"/".concat(project.slug)}
                   />
                 );
               } else if (project.template == 2) {
                 return (
                   <Auston
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
-                    image3={project.images[2].url}
-                    slug = {"/".concat(project.slug)}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
+                    image3={project.images[2]}
+                    slug={"/".concat(project.slug)}
                     title={project.title}
-                    images = {[...project.images]}
+                    images={[...project.images]}
                   />
                 );
               } else if (project.template == 3) {
                 return (
                   <Amoeba
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
-                    image3={project.images[2].url}
-                    slug = {"/".concat(project.slug)}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
+                    image3={project.images[2]}
+                    slug={"/".concat(project.slug)}
                     title={project.title}
-                    images = {[...project.images]}
+                    images={[...project.images]}
                   />
                 );
               } else if (project.template == 4) {
                 return (
                   <BeatsBy
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
-                    slug = {"/".concat(project.slug)}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
+                    slug={"/".concat(project.slug)}
                     title={project.title}
-                    images ={[...project.images]}
+                    images={[...project.images]}
                   />
                 );
               } else if (project.template == 5) {
                 return (
-                  <Brenna image1={project.images[0].url} title={project.title}  slug = {"/".concat(project.slug)} images = {[...project.images]} />
+                  <Brenna
+                    image1={project.images[0]}
+                    title={project.title}
+                    slug={"/".concat(project.slug)}
+                    images={[...project.images]}
+                  />
                 );
               } else if (project.template == 6) {
                 return (
                   <BabyYorus
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
                     title={project.title}
-                    slug = {"/".concat(project.slug)}
-                    images = {[...project.images]}
+                    slug={"/".concat(project.slug)}
+                    images={[...project.images]}
                   />
                 );
               } else if (project.template == 7) {
                 return (
                   <Ballet
-                    image1={project.images[0].url}
-                    image2={project.images[1].url}
-                    image3={project.images[2].url}
-                    slug = {"/".concat(project.slug)}
-                    images ={[...project.images]}
+                    image1={project.images[0]}
+                    image2={project.images[1]}
+                    image3={project.images[2]}
+                    slug={"/".concat(project.slug)}
+                    images={[...project.images]}
                     title={project.title}
                   />
                 );
@@ -175,7 +194,7 @@ function HomeMain() {
       <div className="view-all-projects" style={{ top: 12500 }}></div>
     </div>
   );
-  
+
   {
     /*         
         // return (

@@ -7,7 +7,7 @@
 
 .home-slider1 {
   margin: 10px 100px;
-  opacity: 0.8;
+  opacity: 1;
   color: blue;
 }
 .home-slider1-wrapper {
@@ -58,7 +58,7 @@
   margin: 0px 150px;
   margin-top: -10px;
   max-width: 350px;
-  opacity: 0.8;
+  opacity: 1;
   /* padding: 3px; */
   transition: margin 0.5 ease-ou;
   -webkit-transition: margin 0.5s ease-out;

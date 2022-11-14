@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import image1 from "./../../Assets/images/2.jpg";
+import url from "../../constants/url"
 import "./Fencher.css";
 function FencerMain() {
   const location = useLocation();
@@ -22,7 +23,7 @@ function FencerMain() {
               className="d-flex justify-content-center align-items-center"
             >
               <img
-                className="img-fluid"
+                className="img-fluid hoverImages"
                 src={images[0].url}
                 alt="Image not Found"
               />
@@ -47,7 +48,7 @@ function FencerMain() {
 
           return (
             <div style={{ alignSelf:FloatP, zIndex:1 }}>
-              <img className="img-fluid m-1 main-page-images" src={image.url} />
+              <img className="img-fluid m-1 main-page-images hoverImages" src={url.url + "/img/projects/" + image.url} />
             </div>
           );
         })}

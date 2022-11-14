@@ -1,31 +1,51 @@
-.Auston-image1, .Auston-image2, .Auston-image3{
-    width: 400px;
-    height: 400px;
-    
+.Auston-image1,
+.Auston-image2,
+.Auston-image3 {
+  width: 400px;
+  height: 400px;
 }
-.auston-section{
-    position: relative;
-    /* top: 900px ; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.auston-section {
+  position: relative;
+  /* top: 900px ; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.Auston-image1>img{
-    right: 70px !important;
-    /* position: absolute; */
-    width: 400px;
-    height: 400px;
+.Auston-image1 > img {
+  right: 70px ;
+  width: 400px;
+  height: 400px;
 }
-.Auston-image2{
-    /* position: absolute; */
-    margin-top: -10%;
-    width: 500px;
-    height: 500px;
+.hoverImages {
+  padding: 3px;
+  -webkit-transition: margin 1s ease-out;
+  -moz-transition: margin 1s ease-out;
+  -moz-transition: scale 1s ease-out;
+  -o-transition: margin 1s ease-out;
 }
-.Auston-image3{
-    /* position: absolute; */
-    margin-top: -10%;
-    width: 500px;
-    height: 500px;
+.Auston-image2 {
+  /* position: absolute; */
+  margin-top: -10%;
+  width: 500px;
+  height: 500px;
+}
+.Auston-image3 {
+  /* position: absolute; */
+  margin-top: -10%;
+  width: 500px;
+  height: 500px;
+}
+.Auston-image1:hover {
+  cursor: pointer;
+  margin-top: 5px;
+  margin-right: 5px;
+  right: 65px;
+}
+
+.hoverImages:hover {
+  cursor: pointer;
+  margin-top: 5px;
+  /* margin-right: 5px; */
+  right: 60px;
 }

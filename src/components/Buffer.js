@@ -23,7 +23,7 @@ const BufferData = [
             {
                 id:2,
                 title:"FENCER",
-                slug:"fencer-portfolio/",
+                slug:"auston-portfolio/",
                 images:[
                     {
                         type:1,

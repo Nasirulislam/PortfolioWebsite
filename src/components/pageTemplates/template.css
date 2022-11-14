@@ -1,0 +1,40 @@
+.temp1_img1 {
+  max-width: 700px;
+  float: right;
+  position: relative;
+}
+.temp1_img2 {
+  max-width: 500px;
+  z-index: 1;
+  margin-left: 90px;
+  margin-top: -50px;
+  position: relative;
+}
+.temp1_sec1 {
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+.temp1_sec2 {
+  margin-top: 15vh;
+  float: right;
+  width: 100%;
+}
+.temp1_sec3 {
+  margin-top: 15vh;
+  float: right;
+  width: 100%;
+}
+.temp1_img3 {
+  max-width: 400px;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+.temp1_img4 {
+  max-width: 700px;
+  margin-left: 10vw;
+}
+.temp1_img5 {
+  max-width: 800px;
+}
+
