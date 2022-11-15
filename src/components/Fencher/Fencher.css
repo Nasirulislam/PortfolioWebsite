@@ -52,13 +52,13 @@
   max-width: 450px;
   margin-left: -50px;
 }
-.images{
+.images {
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
   flex-direction: column;
 }
-.main-page-images{
+.main-page-images {
   max-width: 800px;
   max-height: 800px;
 }
@@ -72,7 +72,7 @@
 .fencer-title > p {
   color: brown;
   font-weight: 700;
-  top:42%;
+  top: 42%;
   position: absolute;
 }
 .fencer-title {
@@ -95,7 +95,6 @@
   cursor: pointer;
   margin-top: 5px;
   margin-right: 5px;
-  
 }
 .image2 {
   margin: 30px;
@@ -111,3 +110,4 @@
   margin-top: 15px;
   margin-left: 5px;
 }
+

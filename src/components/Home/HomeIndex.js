@@ -8,7 +8,7 @@ import HomeMain from "./HomeMain";
 function HomeIndex(props) {
   let hasMouse = false;
   const [direction, setdirection] = useState("left");
-  const titleVal = props.title.split(" ");
+  const titleVal = props.name;
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
 
   async function timeout(delay) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom/dist";
-
+import base_url from "../../constants/url";
 function Brenna(props) {
   const navigate = useNavigate();
   return (
@@ -13,14 +13,14 @@ function Brenna(props) {
         onClick={() => {
           navigate(props.slug, {
             state: {
-              title: props.title,
-              detail: props.title,
+              name: props.name,
+              detail: props.name,
               images: props.images,
             },
           });
         }}
       >
-        <img className="img-fluid hoverImages" src={props.image1} />
+        <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />
       </div>
     </div>
   );

@@ -5,10 +5,10 @@ import CSSRulePlugin from "gsap/CSSRulePlugin";
 import { motion } from "framer-motion";
 
 import IndexItem from "./indeItem";
-function Index() {
+function Index(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [id, setId] = useState(-1);
-
+  console.log(props);
   const handleClick = (itemId) => {
     setIsAnitmating(!isAnimating);
     setId(id);
@@ -16,8 +16,8 @@ function Index() {
   return (
     <div className="index-section">
       <div className="index-innersection">
-        {IndexData.map((item, index) => {
-          return <IndexItem id={item.id} text={item.text} image={item.image}/>;
+        {props.projectData.map((item, index) => {
+          return <IndexItem  text={item.name} image={item.images[0]}/>;
         })}
       </div>
     </div>

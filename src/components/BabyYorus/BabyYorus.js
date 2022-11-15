@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom/dist";
-
+import base_url from "../../constants/url";
 function BabyYorus(props) {
   const navigate = useNavigate();
   return (
@@ -10,8 +10,8 @@ function BabyYorus(props) {
       onClick={() => {
         navigate(props.slug, {
           state: {
-            title: props.title,
-            detail: props.title,
+            name: props.name,
+            detail: props.name,
             images: props.images,
           },
         });
@@ -21,13 +21,13 @@ function BabyYorus(props) {
         className="baby-yorus-image1"
         style={{ maxWidth: 550, maxHeight: 550, margin: 20 }}
       >
-        <img className="img-fluid hoverImages" src={props.image1} />
+        <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />
       </div>
       <div
         className="baby-yorus-image1"
         style={{ maxWidth: 450, maxHeight: 450, margin: 20 }}
       >
-        <img className="img-fluid hoverImages" src={props.image2} />
+        <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />
       </div>
     </div>
   );

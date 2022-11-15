@@ -76,6 +76,7 @@ a::after {
   position: absolute;
   width: 100%;
   left: 0;
+  color: black !important;
 }
 a::before {
   background-color: black;
@@ -92,7 +93,7 @@ a::after {
   transform-origin: 100% 50%;
   transform: translate3d(200%, 0, 0);
   transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-  color: #36abd6;
+  color: black;
 }
 
 a:hover::before {
@@ -105,6 +106,7 @@ a:hover::after {
 
 a span {
   display: inline-block;
+  color: black;
   transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
 }
 

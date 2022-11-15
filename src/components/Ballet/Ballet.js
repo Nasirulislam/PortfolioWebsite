@@ -5,7 +5,7 @@ import image2 from "./../../Assets/images/1.jpg";
 import image3 from "./../../Assets/images/3.jpg";
 import { Container, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom/dist";
-
+import base_url from "../../constants/url";
 function Ballet(props) {
   const navigate = useNavigate();
   return (
@@ -14,8 +14,8 @@ function Ballet(props) {
       onClick={() => {
         navigate(props.slug, {
           state: {
-            title: props.title,
-            detail: props.title,
+            name: props.name,
+            detail: props.name,
             images: props.images,
           },
         });
@@ -25,16 +25,25 @@ function Ballet(props) {
         <Row>
           <Col lg={6}>
             <div className="ballet-img1">
-              <img className="img-fluid hoverImages" src={props.image1} />
+              <img
+                className="img-fluid hoverImages"
+                src={`${base_url}` + "/img/projects/" + props.image1}
+              />
             </div>
 
             <div className="ballet-img2">
-              <img className="img-fluid hoverImages" src={props.image2} />
+              <img
+                className="img-fluid hoverImages"
+                src={`${base_url}` + "/img/projects/" + props.image2}
+              />
             </div>
           </Col>
           <Col lg={6}>
             <div className="ballet-img3">
-              <img className="img-fluid hoverImages" src={props.image3} />
+              <img
+                className="img-fluid hoverImages"
+                src={`${base_url}` + "/img/projects/" + props.image3}
+              />
             </div>
           </Col>
         </Row>

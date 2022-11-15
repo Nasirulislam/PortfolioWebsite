@@ -85,6 +85,7 @@
 .home-title > h1 {
   font-size: 150px;
   z-index: 100;
+  text-transform: uppercase;
   /* -webkit-background-clip: text; */
   /* -webkit-text-fill-color: transparent; */
   /* background: rgba(255, 255, 255, 0.2); */

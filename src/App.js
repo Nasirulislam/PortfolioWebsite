@@ -3,7 +3,7 @@ import "./App.css";
 import HomeIndex from "./components/Home/HomeIndex";
 import BottomSlider from "./components/Home/BottomSlider";
 import Index from "./components/Index/Index";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,28 +13,29 @@ import FencerMain from "./components/Fencher/FencerMain";
 import Fencher from "./components/Fencher/Fencher";
 import BufferData from "./components/Buffer";
 import { useEffect } from "react";
-import axios from "axios"
+import axios from "axios";
 import template1 from "./components/pageTemplates/Template1";
-import base_url from "./constants/url"
+import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
+import Template2 from "./components/pageTemplates/Template2";
+import Admin from "./components/admin/Admin";
 function App() {
-
   const [projectsData, setProjectsData] = useState([]);
   const [IndexText, setIndexText] = useState("INDEX");
   const [aboutText, setAboutText] = useState("ABOUT");
   const [METext, setMEText] = useState("M-E");
-  const [Text00, set00Text] = useState("00");
+  const [Text00, set00Text] = useState(0);
   const [clicked, setClicked] = useState(true);
 
-  useEffect(()=>{
-    const fetchProducts = async ()=>{
-      await axios.get(`${base_url}/project/`).then((response)=>{
-        // console.log(response.data.data.sortedProjects);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await axios.get(`${base_url}/project/`).then((response) => {
+        console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
-      })
-    }
+      });
+    };
     fetchProducts();
-  },[])
+  }, []);
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
@@ -135,36 +136,38 @@ function App() {
           </div>
           {clicked ? (
             <div>
-              <Template1/>
-              {/* <Routes>
-                <Route exact path="/" element={<HomeMain />} />
-                {
-                  projectsData.map((project, pindex) => {
-                    // console.log(project.slug);
-                    if (project.slug === "marcus") {
-                      return (
-                        <Route
-                          exact
-                          path={"/".concat(project.slug)}
-                          element={<Template1 />}
-                        />
-                      );
-                    }
-                    else if (project.slug === "fencer/") {
-                      return (
-                        <Route
-                          exact
-                          path={"/".concat(project.slug)}
-                          element={<template1 />}
-                        />
-                      );
-                    }
-                  })
-                }
-              </Routes> */}
+              {/* <Template1/> */}
+              <Routes>
+                <Route exact path="/" element={<HomeMain setCount = {Text00}/>} />
+                {projectsData.map((project, pindex) => {
+                  // console.log(project.slug);
+                  return(
+                    <Route key={pindex} exact path={"/".concat(project.slug)} element={<Template1/>}/>
+                  )
+
+                  // if (project.slug === "marcus") {
+                  //   return (
+                  //     <Route
+                  //       exact
+                  //       path={"/".concat(project.slug)}
+                  //       element={<Template1 />}
+                  //     />
+                  //   );
+                  // } else if (project.slug === "fencer/") {
+                  //   return (
+                  //     <Route
+                  //       exact
+                  //       path={"/".concat(project.slug)}
+                  //       element={<Template1 />}
+                  //     />
+                  //   );
+                  // }
+                })}
+                <Route exact path="/admin"  element={<Admin />} />
+              </Routes>
             </div>
           ) : (
-            <Index />
+            <Index projectData = {projectsData} />
           )}
         </div>
       </Router>

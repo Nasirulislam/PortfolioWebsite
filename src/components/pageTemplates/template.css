@@ -1,3 +1,21 @@
+.title {
+  position: fixed;
+  margin-top: 30vh;
+  color: transparent;
+}
+.title > h1 {
+  font-size: 80px;
+  margin-left: 10vw;
+  -webkit-text-stroke: 2px brown;
+  background:transparent;
+}
+.title > p {
+  font-size: 20px;
+  margin-left: 10vw;
+  color:brown;
+  background:transparent;
+}
+
 .temp1_img1 {
   max-width: 700px;
   float: right;
@@ -8,6 +26,7 @@
   z-index: 1;
   margin-left: 90px;
   margin-top: -50px;
+  /* margin-bottom: 10vh; */
   position: relative;
 }
 .temp1_sec1 {
@@ -17,6 +36,7 @@
 }
 .temp1_sec2 {
   margin-top: 15vh;
+  /* margin-bottom: 10vh; */
   float: right;
   width: 100%;
 }
@@ -24,17 +44,83 @@
   margin-top: 15vh;
   float: right;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .temp1_img3 {
   max-width: 400px;
   margin-left: 50px;
   margin-top: 50px;
+  /* margin-bottom: 10vh */;
 }
 .temp1_img4 {
   max-width: 700px;
   margin-left: 10vw;
 }
-.temp1_img5 {
-  max-width: 800px;
+
+.temp_img1,
+.temp_img2 {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  /* margin-bottom: 10vh */;
+}
+.temp_img1 > img {
+  max-width: 700px;
+  margin-top: 15vh;
+  /* margin-bottom: 10vh */;
+}
+.temp_img1{
+  justify-content: flex-end;
+}
+.temp_img2{
+  justify-content: flex-start ;
+}
+.temp_img2 > img {
+  max-width: 700px;
+  margin-top: 15vh;
+  /* margin-bottom: 10vh */;
 }
 
+.temp_img3 {
+  width: 100%;
+  margin-top: 20px;
+  /* margin-bottom: 10vh */;
+}
+.temp_img3 > img {
+  float: unset;
+}
+.temp_img4 {
+  margin-top: -10vh;
+  /* margin-bottom: 10vh */;
+ display: flex;
+ justify-content: flex-end;
+}
+.temp_img4 > img {
+  max-width: 500px;
+  margin-right: 10vw;
+  /* margin-bottom: 10vh */;
+}
+.temp_img5 {
+  margin-top: -10vh;
+  /* margin-bottom: 10vh */;
+  float: left;
+}
+.temp_img5 > img {
+  max-width: 500px;
+  display: flex;
+  margin-left: 10vw;
+  /* margin-bottom: 10vh */;
+}
+
+.movingImg {
+  -webkit-transition: margin 1s ease-out;
+  -moz-transition: margin 1s ease-out;
+  -o-transition: margin 1s ease-out;
+}
+.movingImg:hover{
+  cursor: pointer;
+  margin-top: -5px;
+  margin-left: 5px;
+}
