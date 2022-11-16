@@ -6,8 +6,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import base_url from "../../constants/url";
 function Fencher(props) {
-  console.log("this is tjhje Count:")
-  console.log(props.setCount)
+  
 
   const navigate = useNavigate();
   const [imageDirec, setImageDirec] = useState({ x: 0, y: 0 });

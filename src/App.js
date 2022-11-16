@@ -86,64 +86,79 @@ function App() {
     }
     setClicked(!clicked);
   };
-
+  const path = window.location.pathname;
+  console.log(path)
   return (
     <div>
       <Router>
         <div className="App">
-          <div className="main-button">
-            <h3
-              onClick={() => {
-                buttonToogle();
-              }}
-              className="index-button"
-            >
-              <a href="#" id="style-2" data-replace={IndexText}>
-                <span>{IndexText}</span>
-              </a>
-            </h3>
-          </div>
+          {path !== "/admin" ? (
+            <>
+              <div className="main-button">
+                <h3
+                  onClick={() => {
+                    buttonToogle();
+                  }}
+                  className="index-button"
+                >
+                  <a href="#" id="style-2" data-replace={IndexText}>
+                    <span>{IndexText}</span>
+                  </a>
+                </h3>
+              </div>
 
-          <div className="main-button">
-            <h3
-              onClick={() => {
-                AboutToogle();
-              }}
-              className="about-button"
-            >
-              {aboutText}
-            </h3>
-          </div>
-          <div className="main-button">
-            <h3
-              onClick={() => {
-                METoogle();
-              }}
-              className="ME-button"
-            >
-              {METext}
-            </h3>
-          </div>
-          <div className="main-button">
-            <h3
-              onClick={() => {
-                NullToogle();
-              }}
-              className="null-button"
-            >
-              {Text00}
-            </h3>
-          </div>
+              <div className="main-button">
+                <h3
+                  onClick={() => {
+                    AboutToogle();
+                  }}
+                  className="about-button"
+                >
+                  {aboutText}
+                </h3>
+              </div>
+              <div className="main-button">
+                <h3
+                  onClick={() => {
+                    METoogle();
+                  }}
+                  className="ME-button"
+                >
+                  {METext}
+                </h3>
+              </div>
+              <div className="main-button">
+                <h3
+                  onClick={() => {
+                    NullToogle();
+                  }}
+                  className="null-button"
+                >
+                  {Text00}
+                </h3>
+              </div>
+            </>
+          ) : null}
+
           {clicked ? (
             <div>
               {/* <Template1/> */}
               <Routes>
-                <Route exact path="/" element={<HomeMain setCount = {Text00}/>} />
+                <Route
+                  exact
+                  path="/"
+                  element={<HomeMain setCount={Text00} />}
+                />
                 {projectsData.map((project, pindex) => {
                   // console.log(project.slug);
-                  return(
-                    <Route key={pindex} exact path={"/".concat(project.slug)} element={<Template1/>}/>
-                  )
+                  return (
+                    <Route
+                      key={pindex}
+                      exact
+                      path={"/".concat(project.slug)}
+                      element={<Template1 />}
+                    />
+                  );
 
                   // if (project.slug === "marcus") {
                   //   return (
@@ -163,11 +178,11 @@ function App() {
                   //   );
                   // }
                 })}
-                <Route exact path="/admin"  element={<Admin />} />
+                <Route exact path="/admin" element={<Admin />} />
               </Routes>
             </div>
           ) : (
-            <Index projectData = {projectsData} />
+            <Index projectData={projectsData} />
           )}
         </div>
       </Router>
