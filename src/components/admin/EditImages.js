@@ -22,25 +22,47 @@ function EditImages(props) {
   const [imgId, setImgId] = useState([]);
   const [projectId, setProjectId] = useState("");
   const [setting, setSetting] = useState(false);
-  //   const []
-  //   const [selectedProject]
+ 
+
   const moveForward = () => {
-    console.log(selectedImages);
-    selectedImages.map((item, index) => {
-      if (index < selectedImages.length - 1 && item === imgId) {
-        temp.push(selectedImages[index + 1]);
-        selectedImages[index + 1] = selectedImages[index];
-        selectedImages[index] = temp[0];
+    // console.log(selectedImages);
+    for (var i=0;i<selectedImages.length; i++){
+      if (selectedImages[i] === imgId) {
+        console.log("Index 1 ");
+        console.log(selectedImages[i]);
+        console.log(selectedImages[i + 1]);
+        console.log("Index 3 ");
+        console.log("Ending");
+        temp.push(selectedImages[i + 1]);
+        selectedImages[i + 1] = selectedImages[i];
+        selectedImages[i] = temp[0];
         temp.pop();
-        // window.location.reload();
+        break;
       }
-    });
-    setting == true?setSetting(false):setSetting(true);
+    }
+    window.location.reload();
+
+    setting == true ? setSetting(false) : setSetting(true);
+  };
+  const moveBackward  = () => {
+    // console.log(selectedImages);
+    for (var i=1;i<selectedImages.length; i++){
+      if (selectedImages[i] === imgId) {
+        temp.push(selectedImages[i -1]);
+        selectedImages[i - 1] = selectedImages[i];
+        selectedImages[i] = temp[0];
+        temp.pop();
+        break;
+      }
+    }
+    window.location.reload();
+
+    setting == true ? setSetting(false) : setSetting(true);
   };
   const handleSelectedProject = (name) => {
     projectsData.map((project, index) => {
       if (project.name === name) {
-        setProjectId(project._id)
+        setProjectId(project._id);
         setTitle(project.name);
         setIndex(project.index);
         setTemplate(project.template);
@@ -64,15 +86,16 @@ function EditImages(props) {
   const patchReq = async () => {
     console.log("Inside Patch");
     const body = {
-      name: "Damian",
       images: selectedImages,
     };
     console.log(selectedImages);
     console.log(body);
 
-    await axios.patch(`${base_url}/project/${projectId}`, body).then((response) => {
-      console.log(response);
-    });
+    await axios
+      .patch(`${base_url}/project/${projectId}`, body)
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   const onSelectFile = (event) => {
@@ -124,7 +147,7 @@ function EditImages(props) {
           </Form.Select>
 
           <section className="edit-section">
-            <Button className="edit-image-btn">Prev</Button>
+            <Button className="edit-image-btn" onClick={()=>moveBackward()}>Prev</Button>
             <div className="edit-image-section">
               {selectedImages &&
                 selectedImages.map((image, index) => {
@@ -134,6 +157,7 @@ function EditImages(props) {
                       className="edit-image"
                       onClick={() => {
                         setImgId(image);
+
                       }}
                       style={{
                         border: selectImg
@@ -143,12 +167,13 @@ function EditImages(props) {
                     >
                       <img
                         src={`${base_url}` + "/img/projects/" + image}
+                        width="150"
                         height="150"
                         alt="upload"
                       />
-                      <button onClick={() => deleteHandler(image)}>
+                      {/* <button onClick={() => deleteHandler(image)}>
                         delete image
-                      </button>
+                      </button> */}
                       <p>{index + 1}</p>
                     </div>
                   );
@@ -167,6 +192,7 @@ function EditImages(props) {
           <Button
             variant="primary"
             // type="submit"
+            className="button"
             onClick={() => {
               patchReq();
             }}

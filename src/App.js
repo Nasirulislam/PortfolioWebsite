@@ -19,18 +19,27 @@ import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
 import Template2 from "./components/pageTemplates/Template2";
 import Admin from "./components/admin/Admin";
+import Login from "./components/admin/Login";
 function App() {
   const [projectsData, setProjectsData] = useState([]);
   const [IndexText, setIndexText] = useState("INDEX");
   const [aboutText, setAboutText] = useState("ABOUT");
   const [METext, setMEText] = useState("M-E");
-  const [Text00, set00Text] = useState(0);
+  const [Text00, set00Text] = useState("00");
   const [clicked, setClicked] = useState(true);
 
+  function changeIndex(index) {
+    if(index < 0) {
+      index = "00";
+    }
+    if(parseInt(index) < 10 && index !== "00" ) {
+      index = `0${index}`;
+    }
+    set00Text(index);
+  }
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
       });
     };
@@ -87,7 +96,6 @@ function App() {
     setClicked(!clicked);
   };
   const path = window.location.pathname;
-  console.log(path)
   return (
     <div>
       <Router>
@@ -96,9 +104,7 @@ function App() {
             <>
               <div className="main-button">
                 <h3
-                  onClick={() => {
-                    buttonToogle();
-                  }}
+                  onClick={buttonToogle}
                   className="index-button"
                 >
                   <a href="#" id="style-2" data-replace={IndexText}>
@@ -109,9 +115,7 @@ function App() {
 
               <div className="main-button">
                 <h3
-                  onClick={() => {
-                    AboutToogle();
-                  }}
+                  onClick={AboutToogle}
                   className="about-button"
                 >
                   {aboutText}
@@ -119,9 +123,7 @@ function App() {
               </div>
               <div className="main-button">
                 <h3
-                  onClick={() => {
-                    METoogle();
-                  }}
+                  onClick={METoogle}
                   className="ME-button"
                 >
                   {METext}
@@ -129,9 +131,7 @@ function App() {
               </div>
               <div className="main-button">
                 <h3
-                  onClick={() => {
-                    NullToogle();
-                  }}
+                  onClick={NullToogle}
                   className="null-button"
                 >
                   {Text00}
@@ -147,7 +147,7 @@ function App() {
                 <Route
                   exact
                   path="/"
-                  element={<HomeMain setCount={Text00} />}
+                  element={<HomeMain projectsData={projectsData} onChange={changeIndex} />}
                 />
                 {projectsData.map((project, pindex) => {
                   // console.log(project.slug);
@@ -178,7 +178,8 @@ function App() {
                   //   );
                   // }
                 })}
-                <Route exact path="/admin" element={<Admin />} />
+                <Route exact path="/admin" element={<Login />} />
+                <Route exact path="/admin-login" element={<Admin />} />
               </Routes>
             </div>
           ) : (

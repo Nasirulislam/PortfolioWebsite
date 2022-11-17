@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,30 +7,37 @@ import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
 import FileUploader from "../admin/FileUploder";
+import { BsFillTrashFill } from "react-icons/bs";
 
 function EditProject(props) {
   const [title, setTitle] = useState("");
-  const [detail, setDetail] = useState("");
+  const [P_id, setPId] = useState("");
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
   const [Slug, setSlug] = useState("");
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [projectsData, setProjectsData] = useState([]);
-//   const [selectedProject]
-  
-const handleSelectedProject = (name)=>{
-    projectsData.map((project, index)=>{
-        if(project.name === name){
-            setTitle(project.name);
-            setIndex(project.index);
-            setTemplate(project.template);
-            setSlug(project.slug);
-            setSelectedImages(project.images);
-            console.log("Value Updated");
-        }
-    })
-}
+  const [uploadImg, setUploadImg] = useState(false);
+  const [displayImage, setdisplayImage] = useState([]);
+  const [imageToSend, setimageToSend] = useState([]);
+  const [delteIcon, setDeleteIcon] = useState(false);
+
+  const handleSelectedProject = (name) => {
+    projectsData.map((project, index) => {
+      if (project.name === name) {
+        setTitle(project.name);
+        setIndex(project.index);
+        setTemplate(project.template);
+        setSlug(project.slug);
+        setPId(project._id);
+        setSelectedImages(project.images);
+        // console.log("Value Updated");
+        setDeleteIcon(true);
+      }
+    });
+    setUploadImg(true);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,10 +57,23 @@ const handleSelectedProject = (name)=>{
       return URL.createObjectURL(file);
     });
 
-    setSelectedImages((previousImages) => previousImages.concat(imagesArray));
+    setdisplayImage((previousImages) => previousImages.concat(imagesArray));
 
-    // FOR BUG IN CHROME
-    event.target.value = "";
+    const files = event.target.files;
+    let imagesFile = []
+    Array.from(files).forEach(file=>imagesFile.push(file));
+    setimageToSend(imagesFile);
+    console.log("Display Images")
+    console.log(imagesFile    )
+    console.log("SImageto send Images")
+    console.log(imageToSend)
+
+  };
+
+  const deleteProduct = async () => {
+    await axios.delete(`${base_url}/project/${P_id}`).then((response) => {
+      window.location.reload();
+    });
   };
 
   function deleteHandler(image) {
@@ -67,31 +87,48 @@ const handleSelectedProject = (name)=>{
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
-    
-    await axios.post(`${base_url}/project/new`, formData,{'Content-Type': 'multipart/form-data' }).then((response) => {
-      console.log(response);
-      setDetail('');
-      setTitle('');
-    //   window.location.reload();
-      
+   let imagesTo = []
 
-    });
+    console.log(imageToSend);
+
+    Array.from(imageToSend).forEach((file)=>{imagesTo.push(file)});
+    Array.from(selectedImages).forEach((file)=>{imagesTo.push(file)});
+    console.log("Updated")
+    setSelectedImages(imageToSend)
+    console.log(selectedImages)
+    Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
+
+    await axios
+      .post(`${base_url}/project/new`, formData, {
+        "Content-Type": "multipart/form-data",
+      })
+      .then((response) => {
+        console.log(response);
+        setPId("");
+        setTitle("");
+        //   window.location.reload();
+      });
   };
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
       <Card className="p-3 my-5 form-card">
         <Form>
-        <Form.Select aria-label="Default select example" className="my-4" onChange={(e)=>handleSelectedProject(e.target.value)}>
-            <option>Projects</option>
-            {
-                projectsData.map((project,index)=>{
-                    return(
-                        <option>{project.name}</option>
-                    )
-                })
-            }
-          </Form.Select>
+          <div className="d-flex justify-content-center align-items-center">
+            <Form.Select
+              aria-label="Default select example"
+              className="my-4"
+              onChange={(e) => handleSelectedProject(e.target.value)}
+            >
+              <option>Projects</option>
+              {projectsData.map((project, index) => {
+                return <option key={index}>{project.name}</option>;
+              })}
+            </Form.Select>
+            <Button className={delteIcon ? "delete-icon m-2" : "d-none"} onClick={()=>deleteProduct()}>
+              <BsFillTrashFill />
+            </Button>
+          </div>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -138,7 +175,12 @@ const handleSelectedProject = (name)=>{
             />
           </Form.Group>
           <section>
-            <label className="img-label">
+            {/* <label
+              className="img-label"
+              onClick={() => {
+                setUploadImg(false);
+              }}
+            >
               + Add Images
               <br />
               <span>up to 10 images</span>
@@ -152,14 +194,32 @@ const handleSelectedProject = (name)=>{
             </label>
             <br />
 
-            <input type="file" multiple />
+            <input type="file" multiple /> */}
 
             <div className="images">
               {selectedImages &&
                 selectedImages.map((image, index) => {
                   return (
                     <div key={image} className="image">
-                      <img src={ `${base_url}`+'/img/projects/' +image } height="200" alt="upload" />
+                      <img
+                        src={`${base_url}` + "/img/projects/" + image}
+                        width="150"
+                        alt="upload"
+                      />
+                      <button onClick={() => deleteHandler(image)}>
+                        delete image
+                      </button>
+                      <p>{index + 1}</p>
+                    </div>
+                  );
+                })}
+            </div>
+            <div className="images">
+              {displayImage &&
+                displayImage.map((image, index) => {
+                  return (
+                    <div key={image} className="image">
+                      <img src={image} width="150" alt="upload" />
                       <button onClick={() => deleteHandler(image)}>
                         delete image
                       </button>

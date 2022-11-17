@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Home from "./Home";
 import BottomSlider from "./BottomSlider";
 import "./Home.css";
@@ -16,7 +16,7 @@ function HomeIndex(props) {
   }
 
   const mousemove = (e) => {
-    setLargeCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
+    setLargeCircle({ x: (e.clientX / 3) * -1, y: (e.clientY / 3) * -1 });
   };
   useEffect(() => {
     window.addEventListener("mousemove", mousemove);
@@ -24,6 +24,41 @@ function HomeIndex(props) {
       window.removeEventListener("mousemove", mousemove);
     };
   }, []);
+
+  const ref1 = useRef(null);
+  // const ref2 = useRef(null);
+  const isInViewport = useIsInViewport(ref1);
+  if (isInViewport) {
+    handleChange({name: "marcus", slug: "marcus"});
+  }
+
+  function handleChange(name) {
+    // Here, we invoke the callback with the new value
+    props.onChange(name);
+  }
+
+  function useIsInViewport(ref) {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+
+    const observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) =>
+          setIsIntersecting(entry.isIntersecting)
+        ),
+      []
+    );
+
+    useEffect(() => {
+      observer.observe(ref.current);
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [ref, observer]);
+
+    return isIntersecting;
+  }
+
   // useEffect(() => {
   //   var bodyElement = document.getElementById("home-page");
   //   bodyElement.addEventListener("mousemove", getMouseDirection, false);
@@ -42,7 +77,8 @@ function HomeIndex(props) {
   // }, []);
 
   return (
-    <div id="home-page" className="home-page">
+    <div id="home-page" className="home-page"
+    ref={ref1}>
       {/* <div className="home-title">
         <h1>{titleVal[0]}</h1>
         <h1 className="mx-5">{titleVal[1]}</h1>
@@ -51,18 +87,19 @@ function HomeIndex(props) {
       <motion.div
         className="home-slide-section"
         animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-        initial={{
-          // opacity: 0.1,
-        }}
+        initial={
+          {
+            // opacity: 0.1,
+          }
+        }
         transition={{
           type: "spring",
           stiffness: 10,
         }}
       >
-        <Home />
-        <BottomSlider />
+        <Home projectsData={props.projectsData} />
+        <BottomSlider projectsData={props.projectsData} />
       </motion.div>
-     
     </div>
   );
 }

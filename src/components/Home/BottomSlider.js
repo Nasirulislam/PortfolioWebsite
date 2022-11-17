@@ -11,6 +11,7 @@ import image9 from "./../../Assets/images/9.jpg";
 import ReactFloaterJs from "react-floaterjs";
 import { useRef, useState } from "react";
 import { Card } from "react-bootstrap";
+import base_url from "../../constants/url";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -24,30 +25,34 @@ import { Autoplay, EffectFade } from "swiper";
 
 function BottomSlider(props) {
   const images = [];
-  const [direction, setdirection] = useState("left")
+  const [projectsData, setProjectData] = useState([]);
+  // const [direction, setdirection] = useState("left");
 
-  useEffect(() => {
-    var bodyElement = document.getElementById("bottom-slider");
-    bodyElement.addEventListener("mousemove", getMouseDirection, false);
+  const getRandom = (limit)=>{
+    return Math.floor(Math.random() * limit);
+  }
+  // useEffect(() => {
+  //   var bodyElement = document.getElementById("bottom-slider");
+  //   bodyElement.addEventListener("mousemove", getMouseDirection, false);
 
-    var xDirection = "";
+  //   var xDirection = "";
 
-    var oldX = 0;
+  //   var oldX = 0;
 
-    function getMouseDirection(e) {
-      //deal with the horizontal case
-      if (oldX < e.pageX) {
-        xDirection = "right";
-        setdirection("right");
-      } else {
-        xDirection = "left";
-        setdirection("left");
-      }
+  //   function getMouseDirection(e) {
+  //     //deal with the horizontal case
+  //     if (oldX < e.pageX) {
+  //       xDirection = "right";
+  //       setdirection("right");
+  //     } else {
+  //       xDirection = "left";
+  //       setdirection("left");
+  //     }
 
-      oldX = e.pageX;
+  //     oldX = e.pageX;
+  //   }
+  // }, []);
 
-    }
-  }, []);
   return (
     <div id="bottom-slider" className="bottom-slider">
       <Marquee
@@ -56,36 +61,15 @@ function BottomSlider(props) {
         // direction={direction}
         className="bottom-slider1-wrapper"
       >
-        <ReactFloaterJs className="slider-image">
-          <Card className="bottom-slider1" onMouseMove={(event) => {}}>
-            <img src={image7} />
-          </Card>
-        </ReactFloaterJs>
-        <ReactFloaterJs className="slider-image">
-          <Card className="bottom-slider1">
-            <img src={image8} />
-          </Card>
-        </ReactFloaterJs>
-        <ReactFloaterJs className="slider-image">
-          <Card className="bottom-slider1">
-            <img src={image9} />
-          </Card>
-        </ReactFloaterJs>
-        <ReactFloaterJs className="slider-image">
-          <Card className="bottom-slider1">
-            <img src={image1} />
-          </Card>
-        </ReactFloaterJs>
-        <ReactFloaterJs>
-          <Card className="bottom-slider1">
-            <img src={image2} />
-          </Card>
-        </ReactFloaterJs>
-        <ReactFloaterJs className="slider-image">
-          <Card className="bottom-slider1">
-            <img src={image3} />
-          </Card>
-        </ReactFloaterJs>
+        {props.projectsData.map((item) => {
+          return (
+            <ReactFloaterJs className="slider-image">
+              <Card className="bottom-slider1" onMouseMove={(event) => {}}>
+                <img  src={ `${base_url}`+'/img/projects/' + item.images[1]} />
+              </Card>
+            </ReactFloaterJs>
+          );
+        })}
       </Marquee>
     </div>
   );

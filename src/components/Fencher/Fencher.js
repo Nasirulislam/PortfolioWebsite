@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Fencher.css";
 import image1 from "../../Assets/images/1.jpg";
 import image2 from "../../Assets/images/4.jpg";
@@ -11,11 +11,48 @@ function Fencher(props) {
   const navigate = useNavigate();
   const [imageDirec, setImageDirec] = useState({ x: 0, y: 0 });
   const moveImage = (e) => {
-    // console.log("Mouse");
     if (e.clientX < 356 && e.clientY < 356) {
       setImageDirec({ x: e.clientX + 5, y: e.clientY + 5 });
     }
   };
+
+
+  const ref1 = useRef(null);
+  // const ref2 = useRef(null);
+  const isInViewport = useIsInViewport(ref1);
+  if(isInViewport){
+    handleChange({name: props.name, slug: props.slug});
+  }
+
+  function handleChange(name) {
+    // Here, we invoke the callback with the new value
+    props.onChange(name);
+  }
+
+  function useIsInViewport(ref) {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+  
+    const observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) =>
+          setIsIntersecting(entry.isIntersecting)
+        ),
+      []
+    );
+  
+    useEffect(() => {
+      observer.observe(ref.current);
+  
+      return () => {
+        observer.disconnect();
+      };
+    }, [ref, observer]);
+  
+    return isIntersecting;
+  }
+
+
+
   useEffect(() => {
     window.addEventListener("mousemove", moveImage);
     return () => {
@@ -25,7 +62,9 @@ function Fencher(props) {
   return (
     <div>
       <div
-        className="fencher-section"
+        className="fencher-section mt-0"
+        style={{backgroundColor: "#acdde9"}}
+        ref={ref1}
         onClick={() => {
           console.log(props.name)
           navigate(props.slug, {

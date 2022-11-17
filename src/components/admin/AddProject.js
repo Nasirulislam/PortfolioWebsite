@@ -22,9 +22,6 @@ function AddProject(props) {
   let selectedFilesArray = [];
 
   const onSelectFile = (event) => {
-    // setSelectedImages(event.target.files)
-    // setSelectedImages(selectedFiles)
-
     const selectedFiles = event.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
     const imagesArray = selectedFilesArray.map((file) => {
@@ -34,9 +31,6 @@ function AddProject(props) {
     setdisplayImage((previousImages) => previousImages.concat(imagesArray));
 
 
-    console.log(event.target.files[0]);
-    setSelectedImages(selectedFiles)
-    console.log(event.target.files)
     const files = event.target.files;
     let imagesFile = []
     Array.from(files).forEach(file=>imagesFile.push(file));
@@ -50,7 +44,7 @@ function AddProject(props) {
     // setSelectedImages(selectedFilesArray);
 
     console.log("Selected Files");
-    console.log(selectedImages);
+    console.log(displayImage);
 
     // FOR BUG IN CHROME
     // event.target.value = "";
@@ -68,8 +62,8 @@ function AddProject(props) {
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
- 
     Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
+    console.log(selectedImages)
 
 
     await axios.post(`${base_url}/project/new`, formData,{'Content-Type': 'multipart/form-data' }).then((response) => {
@@ -77,8 +71,6 @@ function AddProject(props) {
       setDetail('');
       setTitle('');
       window.location.reload();
-      
-
     });
     // setSelectedImages([]);
   };
@@ -165,7 +157,7 @@ function AddProject(props) {
                 displayImage.map((image, index) => {
                   return (
                     <div key={image} className="image">
-                      <img src={image} height="200" alt="upload" />
+                      <img src={image} width="150" alt="upload" />
                       <button onClick={() => deleteHandler(image)}>
                         delete image
                       </button>
