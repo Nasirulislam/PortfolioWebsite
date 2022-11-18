@@ -20,51 +20,15 @@ import "swiper/css/pagination";
 
 import "./Home.css";
 import Marquee from "react-fast-marquee";
-// import required modules
-import { Autoplay, EffectFade } from "swiper";
-import BottomSlider from "./BottomSlider";
 
 function Home(props) {
   const images = [];
-  const [projectsData, setProjectData] = useState([]);
-  // const [maindirection, setMaindirection] = useState("left");
-  // let Maindirection = "left";
-
   const getRandom = (limit) => {
     return Math.floor(Math.random() * limit);
   };
 
-  // useEffect(() => {
-  //   var bodyElement = document.getElementById("home-main-slider");
-  //   bodyElement.addEventListener("mousemove", getMouseDirection, false);
-
-  //   var xDirection = "";
-  //   var yDirection = "";
-
-  //   var oldX = 0;
-  //   var oldY = 0;
-
-  //   function getMouseDirection(e) {
-  //     //deal with the horizontal case
-  //     if (oldX < e.pageX) {
-  //       xDirection = "right";
-  //       setMaindirection("right");
-  //       Maindirection = "right";
-  //     } else {
-  //       xDirection = "left";
-  //       setMaindirection("left");
-  //       Maindirection = "left";
-  //     }
-
-  //     oldX = e.pageX;
-  //     oldY = e.pageY;
-
-  //     // console.log(xDirection + " " + yDirection);
-  //   }
-  // }, []);
-
   return (
-    <div id="home-main-slider">
+    <div id="home-main-slider"  >
       <Marquee speed={1} gradient={false} className="home-slider1-wrapper">
         {props.projectsData.map((item, index) => {
           // const index = getRandom(item.images.length);

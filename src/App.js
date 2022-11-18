@@ -8,7 +8,14 @@ import { useState } from "react";
 import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import FencerMain from "./components/Fencher/FencerMain";
 import Fencher from "./components/Fencher/Fencher";
 import BufferData from "./components/Buffer";
@@ -29,10 +36,10 @@ function App() {
   const [clicked, setClicked] = useState(true);
 
   function changeIndex(index) {
-    if(index < 0) {
+    if (index < 0) {
       index = "00";
     }
-    if(parseInt(index) < 10 && index !== "00" ) {
+    if (parseInt(index) < 10 && index !== "00") {
       index = `0${index}`;
     }
     set00Text(index);
@@ -96,17 +103,21 @@ function App() {
     setClicked(!clicked);
   };
   const path = window.location.pathname;
+  const returnIndex = (index) => {
+    if (index > projectsData.length - 1) {
+      return index + 1;
+    }
+    return index;
+  };
+
   return (
     <div>
       <Router>
         <div className="App">
-          {path !== "/admin" ? (
+          {path !== "/admin" && path !== "/admin-login" ? (
             <>
               <div className="main-button">
-                <h3
-                  onClick={buttonToogle}
-                  className="index-button"
-                >
+                <h3 onClick={buttonToogle} className="index-button">
                   <a href="#" id="style-2" data-replace={IndexText}>
                     <span>{IndexText}</span>
                   </a>
@@ -114,26 +125,17 @@ function App() {
               </div>
 
               <div className="main-button">
-                <h3
-                  onClick={AboutToogle}
-                  className="about-button"
-                >
+                <h3 onClick={AboutToogle} className="about-button">
                   {aboutText}
                 </h3>
               </div>
               <div className="main-button">
-                <h3
-                  onClick={METoogle}
-                  className="ME-button"
-                >
+                <h3 onClick={METoogle} className="ME-button">
                   {METext}
                 </h3>
               </div>
               <div className="main-button">
-                <h3
-                  onClick={NullToogle}
-                  className="null-button"
-                >
+                <h3 onClick={NullToogle} className="null-button">
                   {Text00}
                 </h3>
               </div>
@@ -147,7 +149,12 @@ function App() {
                 <Route
                   exact
                   path="/"
-                  element={<HomeMain projectsData={projectsData} onChange={changeIndex} />}
+                  element={
+                    <HomeMain
+                      projectsData={projectsData}
+                      onChange={changeIndex}
+                    />
+                  }
                 />
                 {projectsData.map((project, pindex) => {
                   // console.log(project.slug);
@@ -156,7 +163,15 @@ function App() {
                       key={pindex}
                       exact
                       path={"/".concat(project.slug)}
-                      element={<Template1 />}
+                      element={
+                        <Template1
+                          nextProject={
+                            pindex < projectsData.length - 1
+                              ? projectsData[pindex + 1]
+                              : projectsData[pindex]
+                          }
+                        />
+                      }
                     />
                   );
 
@@ -179,7 +194,17 @@ function App() {
                   // }
                 })}
                 <Route exact path="/admin" element={<Login />} />
-                <Route exact path="/admin-login" element={<Admin />} />
+                <Route
+                  exact
+                  path="/admin-login"
+                  element={
+                    JSON.parse(localStorage.getItem("Status")) === "ok" ? (
+                      <Admin />
+                    ) : (
+                      <Login />
+                    )
+                  }
+                />
               </Routes>
             </div>
           ) : (

@@ -24,6 +24,16 @@ function EditProject(props) {
   const [delteIcon, setDeleteIcon] = useState(false);
 
   const handleSelectedProject = (name) => {
+    if(name === "Projects"){
+      setTitle("");
+      setIndex("");
+      setTemplate("");
+      setSlug("");
+      setPId("");
+      setSelectedImages([]);
+      setDeleteIcon(false);
+      return;
+    }
     projectsData.map((project, index) => {
       if (project.name === name) {
         setTitle(project.name);
@@ -60,14 +70,9 @@ function EditProject(props) {
     setdisplayImage((previousImages) => previousImages.concat(imagesArray));
 
     const files = event.target.files;
-    let imagesFile = []
-    Array.from(files).forEach(file=>imagesFile.push(file));
+    let imagesFile = [];
+    Array.from(files).forEach((file) => imagesFile.push(file));
     setimageToSend(imagesFile);
-    console.log("Display Images")
-    console.log(imagesFile    )
-    console.log("SImageto send Images")
-    console.log(imageToSend)
-
   };
 
   const deleteProduct = async () => {
@@ -87,16 +92,21 @@ function EditProject(props) {
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
-   let imagesTo = []
+    let imagesTo = [];
 
     console.log(imageToSend);
 
-    Array.from(imageToSend).forEach((file)=>{imagesTo.push(file)});
-    Array.from(selectedImages).forEach((file)=>{imagesTo.push(file)});
-    console.log("Updated")
-    setSelectedImages(imageToSend)
-    console.log(selectedImages)
-    Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
+    Array.from(imageToSend).forEach((file) => {
+      imagesTo.push(file);
+    });
+    Array.from(selectedImages).forEach((file) => {
+      imagesTo.push(file);
+    });
+    setSelectedImages(imageToSend);
+
+    Array.from(selectedImages).forEach((file) => {
+      formData.append("images", file);
+    });
 
     await axios
       .post(`${base_url}/project/new`, formData, {
@@ -114,10 +124,10 @@ function EditProject(props) {
     <div className="d-flex align-items-center justify-content-center h-100">
       <Card className="p-3 my-5 form-card">
         <Form>
-          <div className="d-flex justify-content-center align-items-center">
+          <Form.Label className="mb-0">Select any Project</Form.Label>
+          <div className="d-flex justify-content-center align-items-center mb-3">
             <Form.Select
               aria-label="Default select example"
-              className="my-4"
               onChange={(e) => handleSelectedProject(e.target.value)}
             >
               <option>Projects</option>
@@ -125,7 +135,10 @@ function EditProject(props) {
                 return <option key={index}>{project.name}</option>;
               })}
             </Form.Select>
-            <Button className={delteIcon ? "delete-icon m-2" : "d-none"} onClick={()=>deleteProduct()}>
+            <Button
+              className={delteIcon ? "delete-icon m-2" : "d-none"}
+              onClick={() => deleteProduct()}
+            >
               <BsFillTrashFill />
             </Button>
           </div>
@@ -234,7 +247,7 @@ function EditProject(props) {
             type="submit"
             onClick={(e) => submitData(e)}
           >
-            Submit
+            Update
           </Button>
         </Form>
       </Card>

@@ -1,7 +1,12 @@
 .title {
-  position: fixed;
-  margin-top: 30vh;
-  color: transparent;
+  background-color:#ddd;
+    position: fixed;
+    padding: 2em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: transparent;
 }
 .title > h1 {
   font-size: 80px;
@@ -16,6 +21,21 @@
   background:transparent;
 }
 
+.next-project-section>.next-title{
+  position: absolute;
+  z-index: 10;
+  margin-top: 80px;
+  margin-left: 5vw;
+}
+.next-project-section{
+  position: relative;
+}
+.next-project-section>.next-title>h1{
+  font-size: 100px;
+}
+.next-proj-img{
+  max-width: 900px;
+}
 .temp1_img1 {
   max-width: 700px;
   float: right;
@@ -123,4 +143,9 @@
   cursor: pointer;
   margin-top: -5px;
   margin-left: 5px;
+}
+
+.main-proj-section{
+  position: relative;
+  display: flex;
 }

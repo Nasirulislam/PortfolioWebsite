@@ -40,18 +40,30 @@
 }
 
 .fencher-section {
+  position: relative;
   display: flex;
   margin-top: 300px;
   height: 100vh;
   justify-content: center;
   align-items: center;
 }
+.fencher-index-title{
+  position: absolute;
+}
+.fencher-index-title>h1{
+  font-weight: 700;
+  font-size: 100px;
+  float: left !important;
+  margin-left: -38vw;
+}
 .image1 {
   max-width: 550px;
+  height: 100vh;
 }
 .image2 {
   max-width: 450px;
   margin-left: -50px;
+  max-height: 60vh;
 }
 .images {
   display: flex;
@@ -112,3 +124,7 @@
   margin-left: 5px;
 }
 
+.next-project-section{
+  /* height: 100vh; */
+  position: relative;
+}

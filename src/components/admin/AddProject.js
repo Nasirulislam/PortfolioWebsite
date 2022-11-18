@@ -6,9 +6,6 @@ import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
-import FileUploader from "../admin/FileUploder";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 
 function AddProject(props) {
   const [title, setTitle] = useState("");
@@ -43,8 +40,8 @@ function AddProject(props) {
 
     // setSelectedImages(selectedFilesArray);
 
-    console.log("Selected Files");
-    console.log(displayImage);
+    // console.log("Selected Files");
+    // console.log(displayImage);
 
     // FOR BUG IN CHROME
     // event.target.value = "";
@@ -91,22 +88,12 @@ function AddProject(props) {
             />
           </Form.Group>
 
-          {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Detail</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Detail"
-              value={detail}
-              onChange={(e) => {
-                setDetail(e.target.value);
-              }}
-            />
-          </Form.Group> */}
+         
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Index</Form.Label>
+            <Form.Label>Index/Possition</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Detail"
+              placeholder="Enter project possition"
               value={index}
               onChange={(e) => {
                 setIndex(e.target.value);
@@ -117,7 +104,7 @@ function AddProject(props) {
             <Form.Label>Templates</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Detail"
+              placeholder="Enter between 1-7"
               value={template}
               onChange={(e) => {
                 setTemplate(e.target.value);
@@ -128,7 +115,7 @@ function AddProject(props) {
             <Form.Label>Slug</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Detail"
+              placeholder="Enter project Slug"
               value={Slug}
               onChange={(e) => {
                 setSlug(e.target.value);

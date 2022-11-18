@@ -33,17 +33,20 @@ section {
   background-image: url("./../../Assets/images/Background.jpg");
   margin: 0px 5px;
   margin-bottom: 5px;
+  border-radius: 10px;
 }
 .admin-brand {
-  background-color: rgba(0, 0, 0, 0.829);
   padding: 12px 47px;
   height: 80px;
-  padding-top: 20px;
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
   color: white;
+  font-weight:700 ;
+  font-size: 35px;
   margin-left: -107px;
 }
+.admin-brand:hover{
+  color: white !important;
+}
+
 .img-label {
   margin: 0 auto;
   display: flex;
@@ -146,4 +149,10 @@ label:hover,
 }
 .login-card{
  width: 30% ;
+}
+.edit-images-section{
+  height: 100vh;
+}
+.ChPass-section{
+  height: 100vh;
 }

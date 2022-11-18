@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import image1 from "./../../Assets/images/2.jpg";
-import url from "../../constants/url"
+import url from "../../constants/url";
 import "./Fencher.css";
+import NextProject from "../pageTemplates/NextProject";
+
 function FencerMain() {
   const location = useLocation();
   const { title, detail, images } = location.state;
+  const [titleValue, setTitleValue] = useState("");
+
+  function handleChange(newValue) {
+    setTitleValue(newValue.name);
+  }
+
+
   return (
     <div>
       <div className="images">
@@ -14,8 +23,7 @@ function FencerMain() {
           <Row>
             <Col lg={6}>
               <div className="fencer-title">
-                <h1>{title}</h1>
-                <p>{detail}</p>
+                <h1>{titleValue === "" ? title : titleValue}</h1>
               </div>
             </Col>
             <Col
@@ -45,14 +53,18 @@ function FencerMain() {
           } else if (image.type == 3) {
             zIndex = -1;
           }
-
           return (
-            <div style={{ alignSelf:FloatP, zIndex:1 }}>
-              <img className="img-fluid m-1 main-page-images hoverImages" src={url.url + "/img/projects/" + image.url} />
+            <div style={{ alignSelf: FloatP, zIndex: 1 }}>
+              <img
+                className="img-fluid m-1 main-page-images hoverImages"
+                src={url.url + "/img/projects/" + image.url}
+              />
             </div>
           );
         })}
       </div>
+
+      {/* <NextProject nextProject={nextProject} onChange={handleChange} /> */}
     </div>
   );
 }

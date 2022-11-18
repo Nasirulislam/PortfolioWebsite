@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 
 import AddProject from "./AddProject";
+import ChPass from "./ChPass";
 import EditImages from "./EditImages";
 import EditProject from "./EditProject";
 
@@ -17,15 +18,30 @@ function Admin() {
         <Row>
           <Col sm={2} className="admin-side-bar">
             <div>
-              <Nav variant="pills" className="flex-column  mx-4 my-5" style={{color:"white"}}>
+              <Nav
+                variant="pills"
+                className="flex-column  mx-4 my-5"
+                style={{ color: "white" }}
+              >
                 <Nav.Item>
-                  <Nav.Link eventKey="first" style={{color:"white"}}>Add Project</Nav.Link>
+                  <Nav.Link eventKey="first" style={{ color: "white" }}>
+                    Add Project
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="second" style={{color:"white"}} >Edit Project</Nav.Link>
+                  <Nav.Link eventKey="second" style={{ color: "white" }}>
+                    Edit Project
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="third" style={{color:"white"}}>Edit Images Index</Nav.Link>
+                  <Nav.Link eventKey="third" style={{ color: "white" }}>
+                    Edit Images Index
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="fourth" style={{ color: "white" }}>
+                    Change Password
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
             </div>
@@ -40,6 +56,9 @@ function Admin() {
               </Tab.Pane>
               <Tab.Pane eventKey="third">
                 <EditImages />
+              </Tab.Pane>
+              <Tab.Pane eventKey="fourth">
+                <ChPass />
               </Tab.Pane>
             </Tab.Content>
           </Col>

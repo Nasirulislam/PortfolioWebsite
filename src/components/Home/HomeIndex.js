@@ -16,7 +16,7 @@ function HomeIndex(props) {
   }
 
   const mousemove = (e) => {
-    setLargeCircle({ x: (e.clientX / 3) * -1, y: (e.clientY / 3) * -1 });
+    setLargeCircle({ x: (e.clientX / 4) * -1, y: (e.clientY / 4) * -1 });
   };
   useEffect(() => {
     window.addEventListener("mousemove", mousemove);
@@ -29,7 +29,7 @@ function HomeIndex(props) {
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
   if (isInViewport) {
-    handleChange({name: "marcus", slug: "marcus"});
+    handleChange({ name: "marcus", slug: "marcus" });
   }
 
   function handleChange(name) {
@@ -77,12 +77,8 @@ function HomeIndex(props) {
   // }, []);
 
   return (
-    <div id="home-page" className="home-page"
-    ref={ref1}>
-      {/* <div className="home-title">
-        <h1>{titleVal[0]}</h1>
-        <h1 className="mx-5">{titleVal[1]}</h1>
-      </div> */}
+    <div id="home-page" className="home-page" ref={ref1}>
+    
 
       <motion.div
         className="home-slide-section"

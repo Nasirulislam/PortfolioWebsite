@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import "./Home.css"
+import "./Home.css";
 function ViewAll(props) {
   const ref1 = useRef(null);
-  // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
+
   if (isInViewport) {
     handleChange({ name: "View All Projects", slug: "viewall" });
   }

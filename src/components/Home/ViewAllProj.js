@@ -6,13 +6,9 @@ function ViewAllProj() {
     const ref2 = useRef(null);
   
     const isInViewport1 = useIsInViewport(ref1);
-    // console.clear();
-    console.log("isInViewport1: ", isInViewport1);
   
     const isInViewport2 = useIsInViewport(ref2);
-    // console.clear();
-    console.log("isInViewport2: ", isInViewport2);
-
+  
     function useIsInViewport(ref) {
       const [isIntersecting, setIsIntersecting] = useState(false);
     

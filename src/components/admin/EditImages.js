@@ -22,17 +22,11 @@ function EditImages(props) {
   const [imgId, setImgId] = useState([]);
   const [projectId, setProjectId] = useState("");
   const [setting, setSetting] = useState(false);
- 
-
+  const [btnshow, setBtnShow] = useState(false);
   const moveForward = () => {
     // console.log(selectedImages);
-    for (var i=0;i<selectedImages.length; i++){
+    for (var i = 0; i < selectedImages.length; i++) {
       if (selectedImages[i] === imgId) {
-        console.log("Index 1 ");
-        console.log(selectedImages[i]);
-        console.log(selectedImages[i + 1]);
-        console.log("Index 3 ");
-        console.log("Ending");
         temp.push(selectedImages[i + 1]);
         selectedImages[i + 1] = selectedImages[i];
         selectedImages[i] = temp[0];
@@ -40,26 +34,31 @@ function EditImages(props) {
         break;
       }
     }
-    window.location.reload();
-
     setting == true ? setSetting(false) : setSetting(true);
   };
-  const moveBackward  = () => {
+  const moveBackward = () => {
     // console.log(selectedImages);
-    for (var i=1;i<selectedImages.length; i++){
+    for (var i = 1; i < selectedImages.length; i++) {
       if (selectedImages[i] === imgId) {
-        temp.push(selectedImages[i -1]);
+        temp.push(selectedImages[i - 1]);
         selectedImages[i - 1] = selectedImages[i];
         selectedImages[i] = temp[0];
         temp.pop();
         break;
       }
     }
-    window.location.reload();
 
     setting == true ? setSetting(false) : setSetting(true);
   };
   const handleSelectedProject = (name) => {
+    if (name === "Projects") {
+      setTitle("");
+      setIndex("");
+      setTemplate("");
+      setSelectedImages([]);
+      setBtnShow(false);
+      return;
+    }
     projectsData.map((project, index) => {
       if (project.name === name) {
         setProjectId(project._id);
@@ -68,7 +67,7 @@ function EditImages(props) {
         setTemplate(project.template);
         setSlug(project.slug);
         setSelectedImages(project.images);
-        console.log("Value Updated");
+        setBtnShow(true);
       }
     });
   };
@@ -84,7 +83,7 @@ function EditImages(props) {
   }, []);
 
   const patchReq = async () => {
-    console.log("Inside Patch");
+
     const body = {
       images: selectedImages,
     };
@@ -94,7 +93,7 @@ function EditImages(props) {
     await axios
       .patch(`${base_url}/project/${projectId}`, body)
       .then((response) => {
-        console.log(response);
+        window.location.reload();
       });
   };
 
@@ -132,12 +131,13 @@ function EditImages(props) {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center h-100">
+    <div className="d-flex align-items-center justify-content-center edit-images-section">
       <Card className="p-3 my-5 edit-form-card">
         <Form>
+          <Form.Label className="mb-0">Select any Project</Form.Label>
           <Form.Select
             aria-label="Default select example"
-            className="my-4"
+            className="mb-4 mt-2"
             onChange={(e) => handleSelectedProject(e.target.value)}
           >
             <option>Projects</option>
@@ -147,7 +147,9 @@ function EditImages(props) {
           </Form.Select>
 
           <section className="edit-section">
-            <Button className="edit-image-btn" onClick={()=>moveBackward()}>Prev</Button>
+            <Button className= {btnshow?"edit-image-btn":"invisible"} onClick={() => moveBackward()}>
+              Prev
+            </Button>
             <div className="edit-image-section">
               {selectedImages &&
                 selectedImages.map((image, index) => {
@@ -157,7 +159,6 @@ function EditImages(props) {
                       className="edit-image"
                       onClick={() => {
                         setImgId(image);
-
                       }}
                       style={{
                         border: selectImg
@@ -180,7 +181,7 @@ function EditImages(props) {
                 })}
             </div>
             <Button
-              className="edit-image-btn"
+              className={btnshow?"edit-image-btn":"invisible"}
               onClick={() => {
                 moveForward();
               }}
@@ -197,7 +198,7 @@ function EditImages(props) {
               patchReq();
             }}
           >
-            Submit
+            Update index
           </Button>
         </Form>
       </Card>

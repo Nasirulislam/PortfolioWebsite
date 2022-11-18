@@ -2,6 +2,36 @@
   margin: 0px;
 }
 
+.index-item-section{
+  border: 2px solid transparent;
+  text-transform: uppercase;
+}
+.index-item-anch::before {
+  background-color: transparent;
+  height: 2px;
+  bottom: 0;
+  transform-origin: 100% 50%;
+  transform: scaleX(0);
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.index-item-anch::after {
+  content: attr(data-replace);
+  height: 100%;
+  top: 0;
+  transform-origin: 100% 50%;
+  transform: translate3d(0, 200%, 0);
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  color: black;
+}
+.index-item-anch{
+  font-weight: 600 !important;
+}
+.index-item-section:hover{
+  border-color: black;
+  border-left: transparent;
+  border-right: transparent;
+}
+
 .index-innersection {
   margin: 30px;
   height: 100vh;
