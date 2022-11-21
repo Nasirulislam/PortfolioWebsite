@@ -42,7 +42,8 @@ function EditProject(props) {
         setSlug(project.slug);
         setPId(project._id);
         setSelectedImages(project.images);
-        // console.log("Value Updated");
+        console.log("Value Updated");
+        console.log(project);
         setDeleteIcon(true);
       }
     });

@@ -118,7 +118,7 @@ function App() {
             <>
               <div className="main-button">
                 <h3 onClick={buttonToogle} className="index-button">
-                  <a href="#" id="style-2" data-replace={IndexText}>
+                  <a  id="style-2" data-replace={IndexText}>
                     <span>{IndexText}</span>
                   </a>
                 </h3>

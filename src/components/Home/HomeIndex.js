@@ -29,7 +29,7 @@ function HomeIndex(props) {
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
   if (isInViewport) {
-    handleChange({ name: "marcus", slug: "marcus" });
+    handleChange({ name: "david Ellis", slug: "david Ellis" });
   }
 
   function handleChange(name) {

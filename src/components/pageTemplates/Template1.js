@@ -56,11 +56,10 @@ function Template1(props) {
             if (index < 1) {
               return (
                 <div style={{ alignSelf: FloatP, zIndex: 1 }}>
-                  {/* <img
+                  <img
                     className="img-fluid m-1 next-proj-img hoverImages"
                     src={`${base_url}` + "/img/projects/" + image}
-                  /> */}
-                  <h1>hello</h1>
+                  />
                 </div>
               );
             }
