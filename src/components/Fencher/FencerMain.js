@@ -15,7 +15,6 @@ function FencerMain() {
     setTitleValue(newValue.name);
   }
 
-
   return (
     <div>
       <div className="images">
@@ -54,7 +53,7 @@ function FencerMain() {
             zIndex = -1;
           }
           return (
-            <div style={{ alignSelf: FloatP, zIndex: 1 }}>
+            <div style={{ alignSelf: FloatP, zIndex: zIndex }}>
               <img
                 className="img-fluid m-1 main-page-images hoverImages"
                 src={url.url + "/img/projects/" + image.url}

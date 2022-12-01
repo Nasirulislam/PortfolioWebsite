@@ -1,40 +1,58 @@
-.index-section {
-  margin: 0px;
+@font-face {
+  font-family: "Vogue";
+  src: url("../../Assets/font/Vogue.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-.index-item-section{
+.index-section {
+  margin: 0 !important;
+  padding: 0;
+}
+
+.index-section-main-wrap {
+  background: url("./../../Assets/images/Index-Background1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-y: hidden;
+}
+.index-item-button {
+  font-weight: 600 !important;
+  font-size: 50px;
+  text-decoration: none;
+  margin: 0;
+  color: white;
+  padding: 0;
+  transition: 0.2s all ease-in-out;
+}
+
+.index-item-section {
   border: 2px solid transparent;
   text-transform: uppercase;
+  font-family: sans-serif;
 }
-.index-item-anch::before {
-  background-color: transparent;
-  height: 2px;
-  bottom: 0;
-  transform-origin: 100% 50%;
-  transform: scaleX(0);
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-.index-item-anch::after {
-  content: attr(data-replace);
-  height: 100%;
-  top: 0;
-  transform-origin: 100% 50%;
-  transform: translate3d(0, 200%, 0);
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-  color: black;
-}
-.index-item-anch{
-  font-weight: 600 !important;
-}
-.index-item-section:hover{
-  border-color: black;
+
+.index-item-section:hover {
+  border-color: white;
   border-left: transparent;
   border-right: transparent;
 }
+.index-item-section:hover .index-list-props>.index-atend{
+  display: flex;
+  color: white;
+  font-size: 20px;
+}
+.index-item-section:hover .index-item-button {
+  font-family: "Vogue";
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+}
 
+.index-item-button{}
 .index-innersection {
   margin: 30px;
-  height: 100vh;
+  height: 90vh;
   overflow: scroll;
 }
 .index-list-item > h3 {
@@ -47,37 +65,30 @@
 
 .index-list-item {
   width: 200px;
-  
+
   transition: all 1.3 ease-in-out;
   cursor: pointer;
 }
 .index-image {
+  top: 20vh;
   width: 30%;
   height: 30%;
   /* visibility: hidden; */
   /* transition: all 1.3 ease-in-out; */
 }
-
-/* .index-list-item:hover > .index-image {
-  width: 30%;
-  height: 30%;
-  visibility: visible;
-} */
-
-
-.link{
+.link {
   display: flex;
   padding: 4rem 0 2rem 0;
   z-index: 10;
   justify-content: space-between;
 }
-.indexImage{
+.indexImage {
   mix-blend-mode: difference;
   z-index: 10;
 }
-.hover-reveal{
+.hover-reveal {
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -87,12 +98,81 @@
   transition: all 0.5s ease-out;
 }
 
-.hover-reveal>img{
+.hover-reveal > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: relative;
   transition: text-transform 0.5s ease-out;
-  
-
 }
+
+
+.index-item-button {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  transition:  0.5s ease-in-out;
+}
+
+.index-item-button::before,
+.index-item-button::after {
+  
+ content: attr(data-replace);
+  position: absolute;
+  width: 100%;
+  left: 0;
+  color: white ;
+}
+
+.index-item-button::after {
+  content: attr(data-replace);
+  height: 100%;
+  top: 0;
+  transform-origin: 100% 50%;
+  transform: translateY(250px);
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  color: white;
+}
+.index-atend{
+margin-left: 30%;
+justify-content: center;
+align-items: center;
+display: none;
+}
+.index-list-props::before {
+  content: "";
+  height: 100%;
+  top: -100;
+  transform-origin: 100% 50%;
+  transform: translateY(250px);
+  transition: transform .1s cubic-bezier(0.76, 0, 0.24, 1);
+  color: white;
+}
+.index-item-button::before {
+  content: "";
+  height: 100%;
+  top: -100;
+  transform-origin: 100% 50%;
+  transform: translateY(250px);
+  transition: transform .1s cubic-bezier(0.76, 0, 0.24, 1);
+  color: white;
+}
+
+.index-list-props:hover .index-item-button::before {
+  transform: translateY(-250px);
+  /* transform-origin: 0% 50%; */
+  /* transform: translateY(-250px); */
+}
+.index-list-props:hover .index-item-button::after {
+  transform: translate3d(0, 0, 0);
+  /* transform-origin: 0% 50%; */
+  /* transform: translateY(-250px); */
+}
+
+
+
+/* .index-item-button span {
+  display: inline-block;
+  color: white;
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+} */

@@ -62,7 +62,7 @@
 }
 .image2 {
   max-width: 450px;
-  margin-left: -50px;
+  margin-left: -100px;
   max-height: 60vh;
 }
 .images {
@@ -111,7 +111,7 @@
 }
 .image2 {
   margin: 30px;
-  margin-left: 0;
+  margin-left: -35px;
   padding: 3px;
   -webkit-transition: margin 1s ease-out;
   -moz-transition: margin 1s ease-out;

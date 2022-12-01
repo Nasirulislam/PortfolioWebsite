@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import "./Index.css";
 import { motion } from "framer-motion";
 import base_url from "../../constants/url";
+import { useNavigate } from "react-router-dom";
 
 function IndexItem(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [display, setDisplay] = useState(true);
+  console.log("Index Page Items");
+  console.log(props);
 
   const onMouseOver = (itemId) => {
     setIsAnitmating(true);
+
     setDisplay(true);
     setTimeout(() => {
       setDisplay(false);
@@ -19,37 +23,49 @@ function IndexItem(props) {
     setIsAnitmating(false);
     setDisplay(false);
   };
-
+  const navigate = useNavigate();
   return (
     <div className="index-item-section">
-      <div className="d-flex index-list-props">
-        <h3
-          className="index-item-button"
-          onMouseEnter={() => onMouseOver(props.name)}
-          onMouseLeave={() => onMouseLeave(props.name)}
-        >
-          <a
-            className="index-item-anch"
-            href="#"
-            id="style-2"
+      <div>
+        <div className="d-flex index-list-props">
+          <h3
+            className="index-item-button"
             data-replace={props.text}
+            onMouseEnter={() => onMouseOver(props.name)}
+            onMouseLeave={() => onMouseLeave(props.name)}
+            onClick={() => {
+              props.setRedHome();
+              props.closeIndex();
+              navigate(props.currentProject.slug, {
+                state: {
+                  name: props.currentProject.name,
+                  detail: props.currentProject.name,
+                  images: [...props.currentProject.images],
+                  projects: props.projects,
+                  nextProject: props.nextProject,
+                },
+              });
+            }}
           >
-            <span>{props.text}</span>
-          </a>
-        </h3>
-
+            {props.text}
+          </h3>
+          <div className="index-atend">
+            <p>{props.currentProject.slug}</p>
+          </div>
+        </div>
         <motion.div
           className="index-image"
           id="in-image"
           style={{ display: display ? "inline" : "none" }}
           animate={{
-            x: isAnimating ? 500 : "-200vh",
+            x: isAnimating ? 500 : "200vh",
             opacity: isAnimating ? 1 : 0,
             position: "absolute",
           }}
           initial={{
             opacity: 0,
             position: "relative",
+            x: "200vh",
             rotate: 0,
           }}
           transition={{

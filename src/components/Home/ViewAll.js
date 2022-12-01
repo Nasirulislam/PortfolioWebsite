@@ -34,8 +34,10 @@ function ViewAll(props) {
     return isIntersecting;
   }
   return (
-    <div ref={ref1} className="view-all-project">
-      <div className="home-title"></div>
+    <div ref={ref1} className="view-all-projects">
+      <div className="home-title-view">
+      
+      </div>
     </div>
   );
 }

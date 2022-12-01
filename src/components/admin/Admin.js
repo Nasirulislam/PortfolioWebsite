@@ -21,25 +21,37 @@ function Admin() {
               <Nav
                 variant="pills"
                 className="flex-column  mx-4 my-5"
-                style={{ color: "white" }}
+                style={{ color: "white", width: "160px" }}
               >
                 <Nav.Item>
-                  <Nav.Link eventKey="first" style={{ color: "white" }}>
+                  <Nav.Link
+                    eventKey="first"
+                    style={{ color: "white", width: "160px" }}
+                  >
                     Add Project
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="second" style={{ color: "white" }}>
+                  <Nav.Link
+                    eventKey="second"
+                    style={{ color: "white", width: "160px" }}
+                  >
                     Edit Project
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="third" style={{ color: "white" }}>
+                  <Nav.Link
+                    eventKey="third"
+                    style={{ color: "white", width: "160px" }}
+                  >
                     Edit Images Index
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="fourth" style={{ color: "white" }}>
+                  <Nav.Link
+                    eventKey="fourth"
+                    style={{ color: "white", width: "160px" }}
+                  >
                     Change Password
                   </Nav.Link>
                 </Nav.Item>

@@ -8,6 +8,8 @@ import base_url from "../../constants/url";
 function Auston(props) {
   const [homeState, setHomeState] = useState(true);
   const navigate = useNavigate();
+  console.log("This is Aauston")
+  console.log(props);
 
   const ref1 = useRef(null);
   // const ref2 = useRef(null);

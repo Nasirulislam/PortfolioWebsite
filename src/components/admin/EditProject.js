@@ -110,7 +110,7 @@ function EditProject(props) {
     });
 
     await axios
-      .post(`${base_url}/project/new`, formData, {
+      .put(`${base_url}/project/${P_id}`, formData, {
         "Content-Type": "multipart/form-data",
       })
       .then((response) => {

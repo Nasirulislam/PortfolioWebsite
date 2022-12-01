@@ -28,9 +28,9 @@ function BottomSlider(props) {
   const [projectsData, setProjectData] = useState([]);
   // const [direction, setdirection] = useState("left");
 
-  const getRandom = (limit)=>{
+  const getRandom = (limit) => {
     return Math.floor(Math.random() * limit);
-  }
+  };
   // useEffect(() => {
   //   var bodyElement = document.getElementById("bottom-slider");
   //   bodyElement.addEventListener("mousemove", getMouseDirection, false);
@@ -61,14 +61,16 @@ function BottomSlider(props) {
         // direction={direction}
         className="bottom-slider1-wrapper"
       >
-        {props.projectsData.map((item) => {
-          return (
-            <ReactFloaterJs className="slider-image">
+        {props.projectsData.map((item, index) => {
+          if (index > 3 && index < 7) {
+            return (
+              // <ReactFloaterJs className="slider-image">
               <Card className="bottom-slider1" onMouseMove={(event) => {}}>
-                <img  src={ `${base_url}`+'/img/projects/' + item.images[1]} />
+                <img src={`${base_url}` + "/img/projects/" + item.images[1]} />
               </Card>
-            </ReactFloaterJs>
-          );
+              // </ReactFloaterJs>
+            );
+          }
         })}
       </Marquee>
     </div>

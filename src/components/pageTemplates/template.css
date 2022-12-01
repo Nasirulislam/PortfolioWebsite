@@ -10,7 +10,7 @@
 .title > h1 {
   font-size: 110px;
   margin-left: 10vw;
-  -webkit-text-stroke: 2px brown;
+  -webkit-text-stroke: 5px black;
   background: transparent;
 }
 .title > p {
@@ -24,20 +24,66 @@
   position: absolute;
   z-index: 10;
   margin-top: 80px;
+
   margin-left: 12vw;
-  color: transparent;
+  color: white;
+  /* background: rgba(0, 0, 0, 0.209); */
 }
 .next-project-section {
   position: relative;
 }
+.next-title{
+  position: fixed;
+}
 .next-project-section > .next-title > h1 {
   font-size: 110px;
   margin-left: 10vw;
-  -webkit-text-stroke: 4px black;
+  -webkit-text-stroke: 4px white;
+
   background: transparent;
 }
-.next-proj-img {
-  max-width: 900px;
+.next-project-section > .next-title > h2 {
+  font-size: 40px;
+  margin-left: 10vw;
+  color: black;
+  -webkit-text-stroke: 4px white;
+}
+.next-title > h4 {
+  -webkit-text-stroke: 1px white;
+  font-weight: 700;
+  font-size: 42px;
+  /* margin-top:50%;
+  z-index: 100; */
+  margin-top: 50px;
+  margin-left: 20vw;
+}
+.title>h1{
+  background: transparent;
+  overflow: hidden;
+}
+.title>span{
+  display: inline-block;
+  transform: translateY(100%);
+}
+.next-title > h1 {
+  color: black;
+  font-weight: 700;
+  font-size: 42px;
+  /* margin-top:50%;
+  z-index: 100; */
+  margin-top: 100px;
+  margin-left: 20vw;
+}
+.next-proj-img1 {
+  max-width: 60vw;
+  max-height: 100vh;
+  margin: 10px;
+}
+.next-proj-img2 {
+  max-width: 40vw;
+  max-height: 100vh;
+  margin: 10px;
+  margin-left: -50px;
 }
 .temp1_img1 {
   max-width: 700px;
@@ -81,7 +127,9 @@
   max-width: 700px;
   margin-left: 10vw;
 }
-
+.next-section {
+  z-index: 5;
+}
 .temp_img1,
 .temp_img2 {
   display: flex;
@@ -92,10 +140,11 @@
 .temp_img1 > img {
   max-width: 700px;
   margin-top: 15vh;
-  /* margin-bottom: 10vh */
+  margin-bottom: 10vh;
 }
 .temp_img1 {
   justify-content: flex-end;
+  margin-bottom: 10vh;
 }
 .temp_img2 {
   justify-content: flex-start;
@@ -103,7 +152,7 @@
 .temp_img2 > img {
   max-width: 700px;
   margin-top: 15vh;
-  /* margin-bottom: 10vh */
+  margin-bottom: 10vh;
 }
 
 .temp_img3 {
@@ -123,7 +172,7 @@
 .temp_img4 > img {
   max-width: 500px;
   margin-right: 10vw;
-  /* margin-bottom: 10vh */
+  margin-bottom: 10vh;
 }
 .temp_img5 {
   margin-top: -10vh;

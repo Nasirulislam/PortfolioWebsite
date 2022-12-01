@@ -5,6 +5,8 @@ import "./Home.css";
 import { motion } from "framer-motion";
 import Fencher from "../Fencher/Fencher";
 import HomeMain from "./HomeMain";
+import base_url from "../../constants/url";
+import { Card } from "react-bootstrap";
 function HomeIndex(props) {
   let hasMouse = false;
   const [direction, setdirection] = useState("left");
@@ -78,8 +80,6 @@ function HomeIndex(props) {
 
   return (
     <div id="home-page" className="home-page" ref={ref1}>
-    
-
       <motion.div
         className="home-slide-section"
         animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
@@ -93,8 +93,74 @@ function HomeIndex(props) {
           stiffness: 10,
         }}
       >
-        <Home projectsData={props.projectsData} />
-        <BottomSlider projectsData={props.projectsData} />
+        <Card
+          className="image1"
+          style={{ float: "left", top: "1vh", width: "25vw" }}
+        >
+          <img
+            className="img-fluid"
+            src={
+              `${base_url}` +
+              "/img/projects/" +
+              props.projectsData[0]?.images[1]
+            }
+          />
+        </Card>
+        <Card
+          className="image2"
+          style={{ float: "right", top: "-8vh", width: "30vw" }}
+        >
+          <img
+            className="img-fluid"
+            src={
+              `${base_url}` +
+              "/img/projects/" +
+              props.projectsData[1]?.images[0]
+            }
+          />
+        </Card>
+        <Card
+          className="image3"
+          style={{ left: "-200px", top: "76vh", width: "25vw" }}
+        >
+          <img
+            className="img-fluid"
+            src={
+              `${base_url}` +
+              "/img/projects/" +
+              props.projectsData[2]?.images[0]
+            }
+          />
+        </Card>
+        <Card
+          className="image4"
+          style={{ right: "-26vw", top: "15vh", width: "27vw" }}
+        >
+          <img
+            className="img-fluid"
+            src={
+              `${base_url}` +
+              "/img/projects/" +
+              props.projectsData[3]?.images[0]
+            }
+          />
+        </Card>
+        <Card
+          className="image5"
+          style={{ right: "-70vw", top: "15vh", width: "27vw" }}
+        >
+          <img
+            className="img-fluid"
+            src={
+              `${base_url}` +
+              "/img/projects/" +
+              props.projectsData[3]?.images[1]
+            }
+          />
+        </Card>
+
+        {/* <Home randomIndex = {props.randomIndex} projectsData={props.projectsData} />
+        <BottomSlider projectsData={props.projectsData} /> */}
       </motion.div>
     </div>
   );

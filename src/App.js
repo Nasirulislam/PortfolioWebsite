@@ -8,6 +8,7 @@ import { useState } from "react";
 import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
+import Scroller from "./components/Home/Scroller";
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,6 +35,8 @@ function App() {
   const [METext, setMEText] = useState("M-E");
   const [Text00, set00Text] = useState("00");
   const [clicked, setClicked] = useState(true);
+  const [Redhome, setHome] = useState(false);
+
 
   function changeIndex(index) {
     if (index < 0) {
@@ -44,6 +47,9 @@ function App() {
     }
     set00Text(index);
   }
+  const setRedHome= ()=>{
+    setHome(true);
+  }
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
@@ -52,6 +58,12 @@ function App() {
     };
     fetchProducts();
   }, []);
+  const makeNull = ()=>{
+    setIndexText("");
+    setAboutText("");
+    setMEText("");
+    set00Text("");
+  }
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
@@ -59,6 +71,7 @@ function App() {
     set00Text("00");
   };
   const buttonToogle = () => {
+  
     if (clicked) {
       setIndexText("CLOSE");
       setAboutText("");
@@ -68,6 +81,9 @@ function App() {
       setValues();
     }
     setClicked(!clicked);
+    if(Redhome){
+      window.location.href = "/"
+    }
   };
   const AboutToogle = () => {
     if (clicked) {
@@ -82,14 +98,10 @@ function App() {
   };
   const METoogle = () => {
     if (clicked) {
-      setMEText("CLOSE");
-      setIndexText("");
-      setAboutText("");
-      set00Text("");
+      // navigate("/");
     } else {
       setValues();
     }
-    setClicked(!clicked);
   };
   const NullToogle = () => {
     if (clicked) {
@@ -118,7 +130,7 @@ function App() {
             <>
               <div className="main-button">
                 <h3 onClick={buttonToogle} className="index-button">
-                  <a  id="style-2" data-replace={IndexText}>
+                  <a id="style-2" data-replace={IndexText}>
                     <span>{IndexText}</span>
                   </a>
                 </h3>
@@ -126,17 +138,23 @@ function App() {
 
               <div className="main-button">
                 <h3 onClick={AboutToogle} className="about-button">
-                  {aboutText}
+                  <a id="style-2" data-replace={aboutText}>
+                    <span>{aboutText}</span>
+                  </a>
                 </h3>
               </div>
               <div className="main-button">
                 <h3 onClick={METoogle} className="ME-button">
-                  {METext}
+                  <a href="/" id="style-2" data-replace={METext}>
+                    <span>{METext}</span>
+                  </a>
                 </h3>
               </div>
               <div className="main-button">
                 <h3 onClick={NullToogle} className="null-button">
-                  {Text00}
+                  <a id="style-2" data-replace={Text00}>
+                    <span>{Text00}</span>
+                  </a>
                 </h3>
               </div>
             </>
@@ -153,11 +171,12 @@ function App() {
                     <HomeMain
                       projectsData={projectsData}
                       onChange={changeIndex}
+                      indexBtn = {buttonToogle}
                     />
                   }
                 />
                 {projectsData.map((project, pindex) => {
-                  // console.log(project.slug);
+             
                   return (
                     <Route
                       key={pindex}
@@ -165,35 +184,15 @@ function App() {
                       path={"/".concat(project.slug)}
                       element={
                         <Template1
-                          nextProject={
-                            pindex < projectsData.length - 1
-                              ? projectsData[pindex + 1]
-                              : projectsData[pindex]
-                          }
+                          projectData={projectsData}
+                          index={pindex}
                         />
                       }
                     />
                   );
-
-                  // if (project.slug === "marcus") {
-                  //   return (
-                  //     <Route
-                  //       exact
-                  //       path={"/".concat(project.slug)}
-                  //       element={<Template1 />}
-                  //     />
-                  //   );
-                  // } else if (project.slug === "fencer/") {
-                  //   return (
-                  //     <Route
-                  //       exact
-                  //       path={"/".concat(project.slug)}
-                  //       element={<Template1 />}
-                  //     />
-                  //   );
-                  // }
                 })}
                 <Route exact path="/admin" element={<Login />} />
+                <Route exact path="/testing" element={<Scroller />} />
                 <Route
                   exact
                   path="/admin-login"
@@ -208,7 +207,7 @@ function App() {
               </Routes>
             </div>
           ) : (
-            <Index projectData={projectsData} />
+            <Index projectData={projectsData}  closeIndex={buttonToogle} RedHome = {setRedHome}/>
           )}
         </div>
       </Router>

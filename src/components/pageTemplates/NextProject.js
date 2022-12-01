@@ -1,42 +1,82 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useRef } from "react";
+
 import { Container, Row, Col } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
-import image1 from "./../../Assets/images/2.jpg";
-import url from "../../constants/url";
+import base_url from "../../constants/url";
+import "./template.css";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { useEffect } from "react";
+import { useState } from "react";
 
 function NextProject(props) {
+  const projectData = props.projectData;
+  const index = props.index;
+  const navigate = useNavigate();
+  const [bottom, setBottom] = useState(false);
+
+  const handleNextProject = (event) => {
+    console.log("scroliing");
+    const element = document.getElementsByClassName("next-project-section")[0];
+    var offset =
+      element.getBoundingClientRect().top -
+      element.offsetParent.getBoundingClientRect().top;
+    console.log(element.scrollHeight);
+    const top = window.pageYOffset + window.innerHeight - offset;
+
+    if (top >= element.scrollHeight) {
+      setBottom(true);
+    } else if (top < element.scrollHeight - 300) {
+      setBottom(false);
+    }
+  };
+  const setScroll = () => {
+    console.log("hello");
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleNextProject);
+    return () => {
+      window.removeEventListener("scroll", handleNextProject);
+    };
+  }, []);
+  
   return (
-    <div className="next-project-section d-flex">
-      <div className="next-proj-title">
-        <h1>{props.nextProject.name}</h1>
+    <div
+      className="next-project-section py-4"
+      style={{
+        width: "100%",
+        // maxHeight: "100vh",
+        height: "700px",
+        background:projectData[index+1].color,
+      }}
+      onClick={() => {
+        navigate(
+          index + 1 < projectData.length - 1
+            ? `/${projectData[index + 1].slug}`
+            : "/"
+        );
+      }}
+    >
+      <div className="next-title">
+        {index <= projectData.length - 1 ? (
+          <h1 style={{ color:projectData[index+1].color}}>{projectData[index + 1].name}</h1>
+        ) : (
+          ""
+        )}
+        <h4 style={{ color:projectData[index+1].color}}>Next project</h4>
       </div>
-      <div className="images">
-        {props.nextProject.images?.map((image, index) => {
-          var FloatP = "";
-          var float = false;
-          var zIndex = 0;
-          if (image.type == 0) {
-            FloatP = "flex-start";
-            float = true;
-          } else if (image.type == 1) {
-            FloatP = "flex-end";
-            float = false;
-          } else if (image.type == 2) {
-            zIndex = 1;
-          } else if (image.type == 3) {
-            zIndex = -1;
+      <div className="d-flex justify-content-center align-items-center">
+        <img
+          className="next-proj-img1"
+          src={
+            `${base_url}` + "/img/projects/" + projectData[index + 1].images[0]
           }
-          if (index < 2) {
-            return (
-              <div style={{ alignSelf: FloatP, zIndex: 1 }}>
-                <img
-                  className="img-fluid m-1 main-page-images hoverImages"
-                  src={url.url + "/img/projects/" + image.url}
-                />
-              </div>
-            );
+        />
+        <img
+          className="next-proj-img2"
+          src={
+            `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
           }
-        })}
+        />
       </div>
     </div>
   );

@@ -4,7 +4,20 @@
 .home-image {
   max-height: 400px;
 }
-
+.first1{
+  width: 100vw;
+  background: red;
+  height: 100vh;
+}
+.second1{
+  width: 100vw;
+  background:blue;
+  height: 100vh;
+}
+.testing{
+  width:100vw;
+  height:100vh;
+}
 .home-slider1 {
   margin: 10px 100px;
   opacity: 1;
@@ -13,9 +26,10 @@
 .home-slider1-wrapper {
   /* overflow-x: hidden; */
   /* overflow-y: hidden; */
+  display: flex;
   z-index: none;
   background: transparent;
-  width: 110% !important;
+  width: 100% !important;
   margin-top: 100px ;
 
 }
@@ -35,6 +49,7 @@
 }
 #home-main-slider{
   height: 50vh;
+  margin-left: 18%;
 }
 .home-main-slider {
   background: transparent !important;
@@ -52,8 +67,8 @@
   background: transparent;
 }
 .home-slider1 {
-  margin: 0px 100px;
-  max-width: 250px;
+  margin: 20px 100px;
+  
   margin-top: 20px;
   /* max-height:400px; */
   /* padding: 3px; */
@@ -63,12 +78,18 @@
   -o-transition: margin 0.5s ease-out;
 }
 .bottom-slider1-wrapper {
-  width: 150% !important;
+  /* width: 150% !important; */
   background: transparent;
+}
+.home-slider1{
+  width: 30vw;
+  margin: 50px;
 }
 .bottom-slider {
   position: relative;
   height: 50vh;
+  margin-left: 18%;
+  /* margin-left: ; */
 }
 .bottom-slider1 {
   margin: 0px 100px;
@@ -89,14 +110,15 @@
   cursor: pointer;
   margin-top: -63px;
 } */
-.view-all-project{
-  height: 100vh;
-}
+
 .home-title {
+
   top: 20vh;
   position: fixed;
   z-index: 100;
-  margin-left: 100px;
+  margin-left: 20vw;
+  top:30vh;
+  
   -webkit-text-stroke: 1px black;
   background: transparent;
   mix-blend-mode: exclusion;
@@ -113,6 +135,7 @@
 .home-title > h1 {
   font-size: 150px;
   z-index: 100;
+  font-weight: 700;
   text-transform: uppercase;
   /* -webkit-background-clip: text; */
   /* -webkit-text-fill-color: transparent; */
@@ -127,11 +150,53 @@
 
 .view-all-projects {
   position: relative;
-  height: 100vh;
+  height: 300vh;
   width: 100vh;
   background-color: white;
 }
 
 .hero-title-container {
   position: relative;
+}
+
+.viewall{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-align: center;
+  margin-top: 50vh;
+  
+}
+.viewall>h1{
+  font-size: 15px;
+  position: fixed;
+  color: black;
+  text-align: center;
+  font-size: 14vw;
+  z-index:10;
+}
+.viewall>h1{
+  /* position: /; */
+  padding: 0;
+  -webkit-text-stroke: 1px black;
+  background: transparent;
+  color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.viewall>h1:before{
+  content: attr(data-text);
+  position: absolute;
+  margin-top: 0vh;
+  left:0;
+  width: 100%;
+  height: 0;
+  color: black;
+  overflow: hidden;
+  transition: 1s ;
+}
+.viewall>h1:hover:before{
+  height: 100%;
 }

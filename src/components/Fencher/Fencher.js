@@ -60,14 +60,17 @@ function Fencher(props) {
         ref={ref1}
         onClick={() => {
           console.log(props.name);
-          navigate(props.slug, {
-            state: {
-              name: props.name,
-              detail: props.name,
-              images: [...props.images],
-              nextProject: props.nextProject,
-            },
-          });
+          navigate(
+            props.slug
+            //   {
+            //   state: {
+            //     name: props.name,
+            //     detail: props.name,
+            //     images: [...props.images],
+            //     nextProject: props.nextProject,
+            //   },
+            // }
+          );
         }}
       >
         <div className="image1">

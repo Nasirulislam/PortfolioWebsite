@@ -26,22 +26,28 @@ function Home(props) {
   const getRandom = (limit) => {
     return Math.floor(Math.random() * limit);
   };
+  const count = useRef(0);
+  const ChipStyles = useRef({
+    position: "absolute",
+    top: Math.floor(Math.random() * 50),
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  });
+  useEffect(() => {
+    count.current = count.current + 1;
+  });
 
   return (
-    <div id="home-main-slider"  >
-      <Marquee speed={1} gradient={false} className="home-slider1-wrapper">
-        {props.projectsData.map((item, index) => {
-          // const index = getRandom(item.images.length);
-
+    <div id="home-main-slider" class="d-flex">
+      {props.projectsData.map((item, index) => {
+        if (index < 3) {
           return (
-            <ReactFloaterJs className="w-20" key={item._id}>
-              <Card className="home-slider1">
-                <img src={`${base_url}` + "/img/projects/" + item.images[0]} />
-              </Card>
-            </ReactFloaterJs>
+            <Card style={ChipStyles.current}>
+              <img src={`${base_url}` + "/img/projects/" + item.images[0]} />
+            </Card>
           );
-        })}
-      </Marquee>
+        }
+      })}
     </div>
   );
 }
