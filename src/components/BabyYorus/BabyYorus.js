@@ -54,6 +54,7 @@ function BabyYorus(props) {
             images: props.images,
           },
         });
+        window.scrollTo(0,0);
       }}
     >
       <div

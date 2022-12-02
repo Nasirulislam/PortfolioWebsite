@@ -9,6 +9,8 @@ import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
 import Scroller from "./components/Home/Scroller";
+import Spinner from "react-bootstrap/Spinner";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,6 +30,7 @@ import Template1 from "./components/pageTemplates/Template1";
 import Template2 from "./components/pageTemplates/Template2";
 import Admin from "./components/admin/Admin";
 import Login from "./components/admin/Login";
+import Testing from "./components/Home/Testing";
 function App() {
   const [projectsData, setProjectsData] = useState([]);
   const [IndexText, setIndexText] = useState("INDEX");
@@ -36,7 +39,7 @@ function App() {
   const [Text00, set00Text] = useState("00");
   const [clicked, setClicked] = useState(true);
   const [Redhome, setHome] = useState(false);
-
+  const [dataFetc, setDataFetch] = useState(false);
 
   function changeIndex(index) {
     if (index < 0) {
@@ -47,23 +50,24 @@ function App() {
     }
     set00Text(index);
   }
-  const setRedHome= ()=>{
+  const setRedHome = () => {
     setHome(true);
-  }
+  };
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
         setProjectsData(response.data.data.sortedProjects);
+        setDataFetch(true);
       });
     };
     fetchProducts();
   }, []);
-  const makeNull = ()=>{
+  const makeNull = () => {
     setIndexText("");
     setAboutText("");
     setMEText("");
     set00Text("");
-  }
+  };
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
@@ -71,7 +75,6 @@ function App() {
     set00Text("00");
   };
   const buttonToogle = () => {
-  
     if (clicked) {
       setIndexText("CLOSE");
       setAboutText("");
@@ -81,8 +84,8 @@ function App() {
       setValues();
     }
     setClicked(!clicked);
-    if(Redhome){
-      window.location.href = "/"
+    if (Redhome) {
+      window.location.href = "/";
     }
   };
   const AboutToogle = () => {
@@ -168,31 +171,41 @@ function App() {
                   exact
                   path="/"
                   element={
-                    <HomeMain
-                      projectsData={projectsData}
-                      onChange={changeIndex}
-                      indexBtn = {buttonToogle}
-                    />
+                    dataFetc ? (
+                      <HomeMain
+                        projectsData={projectsData}
+                        onChange={changeIndex}
+                        indexBtn={buttonToogle}
+                      />
+                    ) : (
+                      <div style={{ marginLeft: "50vw", marginTop: "20vh" }}>
+                        <Spinner
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                          }}
+                          animation="border"
+                        />
+                        <h1>Loading</h1>
+                      </div>
+                    )
                   }
                 />
                 {projectsData.map((project, pindex) => {
-             
                   return (
                     <Route
                       key={pindex}
                       exact
                       path={"/".concat(project.slug)}
                       element={
-                        <Template1
-                          projectData={projectsData}
-                          index={pindex}
-                        />
+                        <Template1 projectData={projectsData} index={pindex} />
                       }
                     />
                   );
                 })}
                 <Route exact path="/admin" element={<Login />} />
-                <Route exact path="/testing" element={<Scroller />} />
+                {/* <Route exact path="/testing" element={<Testing />} /> */}
+                <Route exact path="/new_test" element={<Testing />} />
                 <Route
                   exact
                   path="/admin-login"
@@ -207,7 +220,11 @@ function App() {
               </Routes>
             </div>
           ) : (
-            <Index projectData={projectsData}  closeIndex={buttonToogle} RedHome = {setRedHome}/>
+            <Index
+              projectData={projectsData}
+              closeIndex={buttonToogle}
+              RedHome={setRedHome}
+            />
           )}
         </div>
       </Router>

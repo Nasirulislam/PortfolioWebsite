@@ -54,6 +54,7 @@ function BeatsBy(props) {
             images: props.images,
           },
         });
+        window.scrollTo(0,0);
       }}
     >
       <div className="beats-image1">

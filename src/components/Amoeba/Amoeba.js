@@ -55,8 +55,12 @@ function Amoeba(props) {
             images: props.images,
           },
         });
+        window.scrollTo(0,0);
       }}
     >
+        <div className="home-title">
+        <h1>{props.name}</h1>
+      </div>
       <div className="d-flex justify-content-center">
         <div className="amoeba-imge1">
           <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />

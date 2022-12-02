@@ -9,12 +9,11 @@ import base_url from "../../constants/url";
 function Ballet(props) {
   const navigate = useNavigate();
 
-  
   const ref1 = useRef(null);
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
-  if(isInViewport){
-    handleChange({name: props.name, slug: props.slug});
+  if (isInViewport) {
+    handleChange({ name: props.name, slug: props.slug });
   }
 
   function handleChange(name) {
@@ -24,7 +23,7 @@ function Ballet(props) {
 
   function useIsInViewport(ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
-  
+
     const observer = useMemo(
       () =>
         new IntersectionObserver(([entry]) =>
@@ -32,23 +31,21 @@ function Ballet(props) {
         ),
       []
     );
-  
+
     useEffect(() => {
       observer.observe(ref.current);
-  
+
       return () => {
         observer.disconnect();
       };
     }, [ref, observer]);
-  
+
     return isIntersecting;
   }
-
 
   return (
     <div
       className="ballet-section"
-      style={{backgroundColor: "#95aba7"}}
       ref={ref1}
       onClick={() => {
         navigate(props.slug, {
@@ -58,8 +55,12 @@ function Ballet(props) {
             images: props.images,
           },
         });
+        window.scrollTo(0,0);
       }}
     >
+      <div className="home-title">
+        <h1>{props.name}</h1>
+      </div>
       <Container>
         <Row>
           <Col lg={6}>

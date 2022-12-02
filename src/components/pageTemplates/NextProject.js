@@ -44,9 +44,9 @@ function NextProject(props) {
       className="next-project-section py-4"
       style={{
         width: "100%",
-        // maxHeight: "100vh",
+        zindex:"10",
         height: "700px",
-        background:projectData[index+1].color,
+        
       }}
       onClick={() => {
         navigate(
@@ -54,6 +54,7 @@ function NextProject(props) {
             ? `/${projectData[index + 1].slug}`
             : "/"
         );
+        window.scrollTo(0,0);
       }}
     >
       <div className="next-title">

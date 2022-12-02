@@ -17,23 +17,25 @@ function Template1(props) {
   const [bottom, setBottom] = useState(false);
 
   const handleNextProject = (event) => {
-    console.log("scroliing");
+    // console.log("scroliing");
     const element = document.getElementsByClassName("next-project-section")[0];
     var offset =
       element.getBoundingClientRect().top -
       element.offsetParent.getBoundingClientRect().top;
-    console.log(element.scrollHeight);
+    // console.log(element.scrollHeight);
     const top = window.pageYOffset + window.innerHeight - offset;
 
+    // console.log("Top: " + top);
+    // console.log("Element height: " + element.scrollHeight);
     if (top >= element.scrollHeight) {
       setBottom(true);
+      // console.log("hello");
     } else if (top < element.scrollHeight - 300) {
       setBottom(false);
+      // console.log("Hey");
     }
   };
-  const setScroll = () => {
-    console.log("hello");
-  };
+  const setScroll = () => {};
   useEffect(() => {
     window.addEventListener("scroll", handleNextProject);
     return () => {
@@ -41,15 +43,33 @@ function Template1(props) {
     };
   }, []);
 
-  // let t1 = gsap.timeline({defaults:{ease:"SlowMo.easeOut"}});
-  // t1.to("#create")
+  const GroupRef = useRef([]);
+  const onScroll = (el) => {
+    const styles = GroupRef.current
+      .map((group, i) => {
+        const rect = group.getBoundingClientRect();
+        return { group, rect };
+      })
+      .find((group) => group.rect.bottom >= window.innerHeight * 0.5);
+
+    document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
+  });
+
   return (
     <div>
-      <div className="main-proj-section">
+      <div
+        className="main-proj-section"
+        ref={(el) => (GroupRef.current[0] = el)}
+        data-bgcolor={projectData[index].color}
+      >
         {projectData.map((item, itemIndex) => {
           if (index === itemIndex) {
             return (
-              <div style={{ width: "100vw", background: item.color }}>
+              <div style={{ width: "100vw" }}>
                 <div className="title">
                   <h1> {bottom ? "" : item.name}</h1>
                   {/* <h1><span id="create">{bottom ? "" : item.name}</span></h1> */}
@@ -75,7 +95,11 @@ function Template1(props) {
         })}
       </div>
       {index <= projectData.length - 1 ? (
-        <NextProject projectData={projectData} index={index} />
+        <div
+        ref={(el) => (GroupRef.current[1] = el)} data-bgcolor={projectData[index+1].color}
+        >
+          <NextProject projectData={projectData} index={index} />
+        </div>
       ) : (
         ""
       )}

@@ -33,10 +33,15 @@ function ViewAll(props) {
 
     return isIntersecting;
   }
+  const ViewAllClick = () => {
+      props.indexBtn();
+    
+  };
   return (
-    <div ref={ref1} className="view-all-projects">
-      <div className="home-title-view">
-      
+    <div ref={ref1} className="viewAll-projects" >
+      <div className="viewall" onClick={() =>  props.indexBtn()}>
+        <h1 data-text={"view All Projects"}>View All Projects</h1>
+        {/* <h1>Projects</h1> */}
       </div>
     </div>
   );

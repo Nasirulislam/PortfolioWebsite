@@ -15,12 +15,11 @@ import ViewAll from "./ViewAll";
 import {
   Animator,
   batch,
-  FadeIn,
+  Fade,
   MoveOut,
   ScrollContainer,
   ScrollPage,
   Sticky,
-  Fade,
   ZoomIn,
 } from "react-scroll-motion";
 
@@ -83,29 +82,42 @@ function HomeMain(props) {
   };
   return (
     <ScrollContainer>
-      <div
+      {/* <div
         className={changeClass ? "viewall" : "home-title"}
         onClick={() => ViewAllClick()}
       >
         <h1 data-text={value}>
           {projectsData.length > 0 && value === "" ? "David Ellis" : value}
         </h1>
-      </div>
-      <div ref={(el) => (GrouRef.current[0] = el)} style={{ height: "100vh", width: "100vw", background:"white" }} data-bgcolor={"white"}>
-        <HomeIndex
-          randomIndex={randomIndex}
-          projectsData={projectsData}
-          onChange={handleChange}
-        />
-      </div>
-
+      </div> */}
+      <ScrollPage>
+        <Animator
+           animation={batch(
+            Sticky(),
+            MoveOut(0, -200),
+            ZoomIn(),
+            Fade()
+          )}
+        >
+          <div
+            ref={(el) => (GrouRef.current[0] = el)}
+            style={{ height: "100vh", width: "100vw", background: "white" }}
+            data-bgcolor={"white"}
+          >
+            <HomeIndex
+              randomIndex={randomIndex}
+              projectsData={projectsData}
+              onChange={handleChange}
+            />
+          </div>
+        </Animator>
+      </ScrollPage>
       <ScrollPage>
         <Animator
           animation={batch(
             Sticky(),
-            FadeIn(),
-            ZoomIn(),
             MoveOut(0, -200),
+            ZoomIn(),
             Fade()
           )}
         >
@@ -115,8 +127,8 @@ function HomeMain(props) {
             data-bgcolor={projectsData[0]?.color}
           >
             <Fencher
-              image1={projectsData[0]?.images[2]}
-              image2={projectsData[0]?.images[2]}
+              image1={projectsData[0]?.images[0]}
+              image2={projectsData[0]?.images[1]}
               name={projectsData[0]?.name}
               images={projectsData[0]?.images}
               slug={"/".concat(projectsData[0]?.slug)}
@@ -131,9 +143,8 @@ function HomeMain(props) {
         <Animator
           animation={batch(
             Sticky(),
-            FadeIn(),
-            ZoomIn(),
             MoveOut(0, -200),
+            ZoomIn(),
             Fade()
           )}
         >
@@ -160,9 +171,8 @@ function HomeMain(props) {
         <Animator
           animation={batch(
             Sticky(),
-            FadeIn(),
-            ZoomIn(),
             MoveOut(0, -200),
+            ZoomIn(),
             Fade()
           )}
         >
@@ -188,9 +198,9 @@ function HomeMain(props) {
         <Animator
           animation={batch(
             Sticky(),
-            FadeIn(),
-            ZoomIn(),
+
             MoveOut(0, -200),
+            ZoomIn(),
             Fade()
           )}
         >
@@ -216,9 +226,9 @@ function HomeMain(props) {
         <Animator
           animation={batch(
             Sticky(),
-            FadeIn(),
-            ZoomIn(),
+
             MoveOut(0, -200),
+            ZoomIn(),
             Fade()
           )}
         >
@@ -242,148 +252,27 @@ function HomeMain(props) {
       </ScrollPage>
       <ScrollPage>
         <Animator
-          animation={batch(
-            Sticky(),
-            FadeIn(),
-            ZoomIn(),
-            MoveOut(0, -200),
-            Fade()
-          )}
+          animation={batch(Sticky(), MoveOut(0, -200), ZoomIn(), Fade())}
         >
           <div
-            ref={(el) => (GrouRef.current[5] = el)}
-            style={{ height: "100vh", width: "100vw" }}
+            // ref={(el) => (GrouRef.current[5] = el)}
+            style={{
+              paddingTop: "1px",
+              height: "100vh",
+              width: "100vw",
+              background: "white",
+            }}
             data-bgcolor={"white"}
           >
             <ViewAll
               name="View All Projects"
               slug="viewAll"
               onChange={handleChange}
+              indexBtn={props.indexBtn}
             />
           </div>
         </Animator>
       </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
-            FadeIn(),
-            ZoomIn(),
-            MoveOut(0, -200),
-            Fade()
-          )}
-        >
-          <ViewAll
-            name="View All Projects"
-            slug="viewAll"
-            // viewAllTrans = {viewAllTrans}
-            onChange={handleChange}
-          />
-        </Animator>
-      </ScrollPage>
-      {/* {projectsData.map((project, index1) => {
-        let nextIndex = 0;
-        if (index1 < projectsData.length - 2) {
-          nextIndex = index1 + 1;
-        }
-        if (index1 < 14) {
-          if (project.template == 1) {
-            return (
-              <Fencher
-                key={index1}
-                image1={project.images[2]}
-                image2={project.images[2]}
-                name={project.name}
-                images={[...project.images]}
-                slug={"/".concat(project.slug)}
-                setCount={props.setCount}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 2) {
-            return (
-              <Auston
-                key={index1}
-                image1={project.images[0]}
-                image2={project.images[1]}
-                image3={project.images[2]}
-                slug={"/".concat(project.slug)}
-                name={project.name}
-                images={[...project.images]}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 3) {
-            return (
-              <Amoeba
-                key={index1}
-                image1={project.images[0]}
-                image2={project.images[1]}
-                image3={project.images[2]}
-                slug={"/".concat(project.slug)}
-                name={project.name}
-                images={[...project.images]}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 4) {
-            return (
-              <BeatsBy
-                key={index1}
-                image1={project.images[0]}
-                image2={project.images[1]}
-                slug={"/".concat(project.slug)}
-                name={project.name}
-                images={[...project.images]}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 5) {
-            return (
-              <Brenna
-                key={index1}
-                image1={project.images[0]}
-                name={project.name}
-                slug={"/".concat(project.slug)}
-                images={[...project.images]}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 6) {
-            return (
-              <BabyYorus
-                key={index1}
-                image1={project.images[0]}
-                image2={project.images[1]}
-                name={project.name}
-                slug={"/".concat(project.slug)}
-                images={[...project.images]}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          } else if (project.template == 7) {
-            return (
-              <Ballet
-                key={index1}
-                image1={project.images[0]}
-                image2={project.images[1]}
-                image3={project.images[2]}
-                slug={"/".concat(project.slug)}
-                images={[...project.images]}
-                name={project.name}
-                nextProject={projectsData[nextIndex]}
-                onChange={handleChange}
-              />
-            );
-          }
-        }
-      })} */}
     </ScrollContainer>
   );
 }

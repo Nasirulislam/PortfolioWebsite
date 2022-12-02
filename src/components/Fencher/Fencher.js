@@ -53,38 +53,32 @@ function Fencher(props) {
     };
   }, []);
   return (
-    <div>
-      <div
-        className="fencher-section mt-0"
-        style={{ backgroundColor: "#acdde9" }}
-        ref={ref1}
-        onClick={() => {
-          console.log(props.name);
-          navigate(
-            props.slug
-            //   {
-            //   state: {
-            //     name: props.name,
-            //     detail: props.name,
-            //     images: [...props.images],
-            //     nextProject: props.nextProject,
-            //   },
-            // }
-          );
-        }}
-      >
-        <div className="image1">
-          <img
-            className="image1"
-            src={`${base_url}` + "/img/projects/" + props.image1}
-          />
-        </div>
-        <div className="image2">
-          <img
-            className="image2"
-            src={`${base_url}` + "/img/projects/" + props.image2}
-          />
-        </div>
+    <div
+      className="fencher-section mt-0"
+      style={{ cursor:"pointer" }}
+      ref={ref1}
+      onClick={() => {
+        navigate(
+          props.slug
+        );
+        window.scrollTo(0,0);
+      }}
+    >
+      <div className="home-title">
+        <h1>{props.name}</h1>
+       
+      </div>
+      <div className="image1">
+        <img
+          className="image1"
+          src={`${base_url}` + "/img/projects/" + props.image1}
+        />
+      </div>
+      <div className="image2">
+        <img
+          className="image2"
+          src={`${base_url}` + "/img/projects/" + props.image2}
+        />
       </div>
     </div>
   );

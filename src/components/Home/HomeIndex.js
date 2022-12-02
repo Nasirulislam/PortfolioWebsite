@@ -80,6 +80,9 @@ function HomeIndex(props) {
 
   return (
     <div id="home-page" className="home-page" ref={ref1}>
+      <div className="home-title">
+        <h1>David Ellis</h1>
+      </div>
       <motion.div
         className="home-slide-section"
         animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}

@@ -1,15 +1,31 @@
 .title {
-  position: fixed;
+  /* position: fixed;
   padding: 2em;
   left: 25%;
   top: 40%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  color: transparent;
+  color: transparent; */
+  padding: 2em;
+  top: 10%;
+  position: fixed;
+  z-index: 1;
+
+  -webkit-text-stroke: 1px black;
+  background: transparent;
+  mix-blend-mode: exclusion;
+  color: white;
+  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 110px;
 }
 .title > h1 {
   font-size: 110px;
-  margin-left: 10vw;
+  font-weight: 700;
   -webkit-text-stroke: 5px black;
   background: transparent;
 }
@@ -24,13 +40,13 @@
   position: absolute;
   z-index: 10;
   margin-top: 80px;
-
   margin-left: 12vw;
   color: white;
   /* background: rgba(0, 0, 0, 0.209); */
 }
 .next-project-section {
   position: relative;
+  z-index: 10;
 }
 .next-title{
   position: fixed;

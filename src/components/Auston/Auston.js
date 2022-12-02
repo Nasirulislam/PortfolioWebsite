@@ -8,14 +8,14 @@ import base_url from "../../constants/url";
 function Auston(props) {
   const [homeState, setHomeState] = useState(true);
   const navigate = useNavigate();
-  console.log("This is Aauston")
+  console.log("This is Aauston");
   console.log(props);
 
   const ref1 = useRef(null);
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
-  if(isInViewport){
-    handleChange({name: props.name, slug: props.slug});
+  if (isInViewport) {
+    handleChange({ name: props.name, slug: props.slug });
   }
 
   function handleChange(name) {
@@ -25,7 +25,7 @@ function Auston(props) {
 
   function useIsInViewport(ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
-  
+
     const observer = useMemo(
       () =>
         new IntersectionObserver(([entry]) =>
@@ -33,24 +33,23 @@ function Auston(props) {
         ),
       []
     );
-  
+
     useEffect(() => {
       observer.observe(ref.current);
-  
+
       return () => {
         observer.disconnect();
       };
     }, [ref, observer]);
-  
+
     return isIntersecting;
   }
 
   return (
     <div
-    ref={ref1}
-    id="index_01"
+      ref={ref1}
+      id="index_01"
       className="auston-section"
-      style={{ backgroundColor: "#ebc12a" }}
       onClick={() => {
         navigate(props.slug, {
           state: {
@@ -59,18 +58,31 @@ function Auston(props) {
             images: props.images,
           },
         });
+        window.scrollTo(0,0);
       }}
     >
+      <div className="home-title">
+        <h1>{props.name}</h1>
+      </div>
       <div className="d-flex justify-content-center">
         <div className="Auston-image1 mx-3">
-          <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />
+          <img
+            className="img-fluid hoverImages"
+            src={`${base_url}` + "/img/projects/" + props.image1}
+          />
         </div>
         <div className="Auston-image2 mx-3">
-          <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image2 } />
+          <img
+            className="img-fluid hoverImages"
+            src={`${base_url}` + "/img/projects/" + props.image2}
+          />
         </div>
       </div>
       <div className="Auston-image3">
-        <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image3 } />
+        <img
+          className="img-fluid hoverImages"
+          src={`${base_url}` + "/img/projects/" + props.image3}
+        />
       </div>
     </div>
   );

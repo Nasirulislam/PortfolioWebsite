@@ -18,17 +18,15 @@ function Index(props) {
     setId(id);
   };
 
-  const SendHome =()=>{
-    if(redHome){
-     
-      navigate("/")
+  const SendHome = () => {
+    if (redHome) {
+      navigate("/");
     }
-  }
+  };
   return (
     <div className="index-section-main-wrap">
       <div className="index-section">
         <div className="index-innersection">
-       
           {props.projectData.map((item, index) => {
             return (
               <IndexItem
@@ -38,7 +36,7 @@ function Index(props) {
                 text={item.name}
                 image={item.images[0]}
                 closeIndex={props.closeIndex}
-                setRedHome = {setRedHome}
+                setRedHome={setRedHome}
               />
             );
           })}

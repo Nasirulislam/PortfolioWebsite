@@ -114,7 +114,7 @@
 .home-title {
 
   top: 20vh;
-  position: fixed;
+  position: absolute;
   z-index: 100;
   margin-left: 20vw;
   top:30vh;
@@ -165,8 +165,11 @@
   align-items: center;
   color: black;
   text-align: center;
-  margin-top: 50vh;
+  margin-top: 47vh;
   
+}
+.viewAll-projects{
+  background: white;
 }
 .viewall>h1{
   font-size: 15px;
