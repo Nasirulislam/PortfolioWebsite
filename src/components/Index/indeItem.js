@@ -26,59 +26,58 @@ function IndexItem(props) {
   const navigate = useNavigate();
   return (
     <div className="index-item-section">
-      <div>
-        <div className="d-flex index-list-props">
-          <h3
-            className="index-item-button"
-            data-replace={props.text}
-            onMouseEnter={() => onMouseOver(props.name)}
-            onMouseLeave={() => onMouseLeave(props.name)}
-            onClick={() => {
-              props.setRedHome();
-              props.closeIndex();
-              navigate(props.currentProject.slug, {
-                state: {
-                  name: props.currentProject.name,
-                  detail: props.currentProject.name,
-                  images: [...props.currentProject.images],
-                  projects: props.projects,
-                  nextProject: props.nextProject,
-                },
-              });
-            }}
-          >
-            {props.text}
-          </h3>
-          <div className="index-atend">
-            <p>{props.currentProject.slug}</p>
-          </div>
-        </div>
-        <motion.div
-          className="index-image"
-          id="in-image"
-          style={{ display: display ? "inline" : "none" }}
-          animate={{
-            x: isAnimating ? 500 : "200vh",
-            opacity: isAnimating ? 1 : 0,
-            position: "absolute",
-          }}
-          initial={{
-            opacity: 0,
-            position: "relative",
-            x: "200vh",
-            rotate: 0,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 60,
+      <div className="d-flex indexlist-props">
+        <h3
+          className="indexitem-button"
+          title={props.text}
+          // data-replace={props.text}
+          onMouseEnter={() => onMouseOver(props.name)}
+          onMouseLeave={() => onMouseLeave(props.name)}
+          onClick={() => {
+            props.setRedHome();
+            props.closeIndex();
+            navigate(props.currentProject.slug, {
+              state: {
+                name: props.currentProject.name,
+                detail: props.currentProject.name,
+                images: [...props.currentProject.images],
+                projects: props.projects,
+                nextProject: props.nextProject,
+              },
+            });
           }}
         >
-          <img
-            className="img-fluid animated fadeOut"
-            src={`${base_url}` + "/img/projects/" + props.image}
-          />
-        </motion.div>
+          {props.text}
+        </h3>
+        <div className="index-atend">
+          <p>{props.currentProject.slug}</p>
+        </div>
       </div>
+      <motion.div
+        className="index-image"
+        id="in-image"
+        style={{ display: display ? "inline" : "none" }}
+        animate={{
+          x: isAnimating ? 500 : "200vh",
+          opacity: isAnimating ? 1 : 0,
+          position: "absolute",
+        }}
+        initial={{
+          opacity: 0,
+          position: "relative",
+          x: "200vh",
+          rotate: 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 60,
+        }}
+      >
+        <img
+          className="img-fluid animated fadeOut"
+          src={`${base_url}` + "/img/projects/" + props.image}
+        />
+      </motion.div>
     </div>
   );
 }

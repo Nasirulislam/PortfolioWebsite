@@ -10,6 +10,46 @@
   margin: 0 !important;
   padding: 0;
 }
+.index-item-section {
+  list-style: none;
+  display: block;
+}
+.index-item-section .indexlist-props {
+  display: block;
+  background: transparent;
+  margin: 5px 0;
+  overflow: hidden;
+  height: 2.5em;
+  padding: 0;
+  color: white;
+}
+.index-item-section .indexlist-props .indexitem-button {
+  display: inline-block;
+  padding: 0;
+  font-weight: 600 !important;
+  font-size: 35px;
+  font-family: "Arial";
+  transition-property: margin-top;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+  margin-top: 0;
+  line-height: 1.5em;
+  color: inherit;
+  text-decoration: none;
+}
+.indexitem-button{
+  width: 100%;
+}
+.index-item-section .indexlist-props .indexitem-button:hover {
+  margin-top: -1.5em;
+}
+
+.index-item-section .indexlist-props .indexitem-button:after {
+  content: attr(title);
+  display: block;
+  font-family: "Vogue";
+  transition-property: margin-top;
+}
 
 .index-section-main-wrap {
   background: url("./../../Assets/images/Index-Background1.jpg");
@@ -17,15 +57,7 @@
   background-size: cover;
   overflow-y: hidden;
 }
-.index-item-button {
-  font-weight: 600 !important;
-  font-size: 50px;
-  text-decoration: none;
-  margin: 0;
-  color: white;
-  padding: 0;
-  transition: 0.2s all ease-in-out;
-}
+
 
 .index-item-section {
   border: 2px solid transparent;
@@ -38,7 +70,7 @@
   border-left: transparent;
   border-right: transparent;
 }
-.index-item-section:hover .index-list-props>.index-atend{
+.index-item-section:hover .indexlist-props > .index-atend {
   display: flex;
   color: white;
   font-size: 20px;
@@ -49,7 +81,6 @@
   font-weight: 600;
 }
 
-.index-item-button{}
 .index-innersection {
   margin: 30px;
   height: 90vh;
@@ -106,22 +137,20 @@
   transition: text-transform 0.5s ease-out;
 }
 
-
 .index-item-button {
   overflow: hidden;
   position: relative;
   display: inline-block;
-  transition:  0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .index-item-button::before,
 .index-item-button::after {
-  
- content: attr(data-replace);
+  content: attr(data-replace);
   position: absolute;
   width: 100%;
   left: 0;
-  color: white ;
+  color: white;
 }
 
 .index-item-button::after {
@@ -130,22 +159,22 @@
   top: 0;
   transform-origin: 100% 50%;
   transform: translateY(250px);
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
   color: white;
 }
-.index-atend{
-margin-left: 30%;
-justify-content: center;
-align-items: center;
-display: none;
+.index-atend {
+  margin-left: -20%;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }
-.index-list-props::before {
+/* .index-list-props::before {
   content: "";
   height: 100%;
   top: -100;
   transform-origin: 100% 50%;
   transform: translateY(250px);
-  transition: transform .1s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.1s cubic-bezier(0.76, 0, 0.24, 1);
   color: white;
 }
 .index-item-button::before {
@@ -154,22 +183,18 @@ display: none;
   top: -100;
   transform-origin: 100% 50%;
   transform: translateY(250px);
-  transition: transform .1s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.1s cubic-bezier(0.76, 0, 0.24, 1);
   color: white;
-}
+} */
 
-.index-list-props:hover .index-item-button::before {
+/* .index-list-props:hover .index-item-button::before {
   transform: translateY(-250px);
-  /* transform-origin: 0% 50%; */
-  /* transform: translateY(-250px); */
+
 }
 .index-list-props:hover .index-item-button::after {
   transform: translate3d(0, 0, 0);
-  /* transform-origin: 0% 50%; */
-  /* transform: translateY(-250px); */
-}
 
-
+} */
 
 /* .index-item-button span {
   display: inline-block;
