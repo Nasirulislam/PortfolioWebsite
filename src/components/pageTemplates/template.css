@@ -42,11 +42,11 @@
   margin-top: 80px;
   margin-left: 12vw;
   color: white;
-  /* background: rgba(0, 0, 0, 0.209); */
 }
 .next-project-section {
   position: relative;
   z-index: 10;
+  padding-top: 160px !important;
 }
 .next-title{
   position: fixed;
@@ -55,7 +55,6 @@
   font-size: 110px;
   margin-left: 10vw;
   -webkit-text-stroke: 4px white;
-
   background: transparent;
 }
 .next-project-section > .next-title > h2 {

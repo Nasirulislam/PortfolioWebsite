@@ -41,12 +41,12 @@ function NextProject(props) {
   
   return (
     <div
-      className="next-project-section py-4"
+      className="next-project-section pt-4"
       style={{
         width: "100%",
         zindex:"10",
         height: "700px",
-        
+        background:"transparent",        
       }}
       onClick={() => {
         navigate(
