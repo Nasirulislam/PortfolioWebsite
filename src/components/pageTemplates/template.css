@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   z-index: 1;
   color: transparent; */
-  padding: 2em;
+  margin: 2em;
   top: 10%;
   position: fixed;
   z-index: 1;
@@ -47,8 +47,9 @@
   position: relative;
   z-index: 10;
   padding-top: 160px !important;
+  transition: all 0.5s ease-in-out ;
 }
-.next-title{
+.next-title {
   position: fixed;
 }
 .next-project-section > .next-title > h1 {
@@ -72,11 +73,11 @@
   margin-top: 50px;
   margin-left: 20vw;
 }
-.title>h1{
+.title > h1 {
   background: transparent;
   overflow: hidden;
 }
-.title>span{
+.title > span {
   display: inline-block;
   transform: translateY(100%);
 }
@@ -89,11 +90,17 @@
   margin-top: 100px;
   margin-left: 20vw;
 }
+
 .next-proj-img1 {
   max-width: 70vw;
   max-height: 100vh;
-  
   margin: 10px;
+  transition: all 0.5s ease-in-out;
+}
+.next-proj-img1:hover {
+  margin-left: 10px;
+  margin-top: -30px;
+  cursor: pointer;
 }
 .next-proj-img2 {
   max-width: 50vw;
@@ -101,6 +108,12 @@
   margin: 10px;
   margin-top: 133px;
   margin-left: -50px;
+  transition: all 0.5s ease-in-out ;
+}
+.next-proj-img2:hover{
+  margin-left: 10px;
+  margin-bottom: -30px;
+  cursor: pointer;
 }
 .temp1_img1 {
   max-width: 700px;
@@ -157,7 +170,14 @@
 .temp_img1 > img {
   max-width: 700px;
   margin-top: 15vh;
+  margin-right: 5vw;
   margin-bottom: 10vh;
+  transition: all 0.5 ease-in-out;
+}
+.temp_img1 > img:hover {
+  cursor: pointer;
+  margin-top: 5vh;
+  margin-right: 2vw;
 }
 .temp_img1 {
   justify-content: flex-end;
@@ -170,6 +190,11 @@
   max-width: 700px;
   margin-top: 15vh;
   margin-bottom: 10vh;
+  transition: all 0.5 ease-in-out;
+}
+.temp_img2 > img:hover {
+  margin-bottom: 6vh;
+  margin-left: -1vw;
 }
 
 .temp_img3 {
@@ -179,10 +204,15 @@
 }
 .temp_img3 > img {
   float: unset;
+  transition: all 0.5 ease-in-out;
 }
+.temp_img3 > img :hover {
+  margin-top: 0px;
+  margin-right: -10px;
+}
+
 .temp_img4 {
   margin-top: -10vh;
-  /* margin-bottom: 10vh */
   display: flex;
   justify-content: flex-end;
 }
@@ -190,6 +220,10 @@
   max-width: 500px;
   margin-right: 10vw;
   margin-bottom: 10vh;
+}
+.temp_img4 > img:hover {
+  margin-right: 3vw;
+  margin-bottom: 2vh;
 }
 .temp_img5 {
   margin-top: -10vh;
@@ -202,7 +236,9 @@
   margin-left: 10vw;
   /* margin-bottom: 10vh */
 }
-
+.temp_img5 > img:hover {
+  margin-left: 0vw;
+}
 .movingImg {
   -webkit-transition: margin 1s ease-out;
   -moz-transition: margin 1s ease-out;

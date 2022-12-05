@@ -21,7 +21,7 @@ function Template1(props) {
     const element = document.getElementsByClassName("next-project-section")[0];
     var offset =
       element.getBoundingClientRect().top -
-      element.offsetParent.getBoundingClientRect().top;
+      element.offsetParent.getBoundingClientRecst().top;
     // console.log(element.scrollHeight);
     const top = window.pageYOffset + window.innerHeight - offset;
 
@@ -96,7 +96,8 @@ function Template1(props) {
       </div>
       {index <= projectData.length - 1 ? (
         <div
-        ref={(el) => (GroupRef.current[1] = el)} data-bgcolor={projectData[index+1].color}
+          ref={(el) => (GroupRef.current[1] = el)}
+          data-bgcolor={projectData[index + 1].color}
         >
           <NextProject projectData={projectData} index={index} />
         </div>
