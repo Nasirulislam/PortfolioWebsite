@@ -9,6 +9,7 @@ import { useState } from "react";
 
 function AddProject(props) {
   const [title, setTitle] = useState("");
+  const [color, setColor] = useState("");
   const [detail, setDetail] = useState("");
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
@@ -59,6 +60,7 @@ function AddProject(props) {
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
+    formData.append("color", color);
     Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
     console.log(selectedImages)
 
@@ -119,6 +121,17 @@ function AddProject(props) {
               value={Slug}
               onChange={(e) => {
                 setSlug(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Color</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Template Color"
+              value={color}
+              onChange={(e) => {
+                setColor(e.target.value);
               }}
             />
           </Form.Group>

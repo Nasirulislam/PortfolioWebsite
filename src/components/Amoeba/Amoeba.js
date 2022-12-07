@@ -6,13 +6,13 @@ import "./Amoeba.css";
 import base_url from "../../constants/url";
 import { useNavigate } from "react-router-dom/dist";
 function Amoeba(props) {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
   const ref1 = useRef(null);
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
-  if(isInViewport){
-    handleChange({name: props.name, slug: props.slug});
+  if (isInViewport) {
+    handleChange({ name: props.name, slug: props.slug });
   }
 
   function handleChange(name) {
@@ -22,7 +22,7 @@ function Amoeba(props) {
 
   function useIsInViewport(ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
-  
+
     const observer = useMemo(
       () =>
         new IntersectionObserver(([entry]) =>
@@ -30,22 +30,22 @@ function Amoeba(props) {
         ),
       []
     );
-  
+
     useEffect(() => {
       observer.observe(ref.current);
-  
+
       return () => {
         observer.disconnect();
       };
     }, [ref, observer]);
-  
+
     return isIntersecting;
   }
 
 
   return (
     <div
-      className="amoeba-section"
+      className="amoeba-section card-wrapper"
       ref={ref1}
       onClick={() => {
         navigate(props.slug, {
@@ -55,23 +55,25 @@ function Amoeba(props) {
             images: props.images,
           },
         });
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       }}
     >
-        <div className="home-title">
+      <div className="home-title">
         <h1>{props.name}</h1>
       </div>
       <div className="d-flex justify-content-center">
-        <div className="amoeba-imge1">
-          <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image1 } />
-        </div>
-        <div className="amoeba-imge2">
+        {props.images.map((banner, index) => {
+          return <div className="amoeba-imge1">
+            <img className="img-fluid hoverImages" src={`${base_url}` + '/img/projects/' + banner} />
+          </div>
+        })}
+        {/* <div className="amoeba-imge2">
           <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image3 } />
-        </div>
+        </div> */}
       </div>
-      <div className="amoeba-imge3">
+      {/* <div className="amoeba-imge3">
         <img className="img-fluid hoverImages" src={ `${base_url}`+'/img/projects/' + props.image2 } />
-      </div>
+      </div> */}
     </div>
   );
 }

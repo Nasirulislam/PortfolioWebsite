@@ -9,8 +9,10 @@ import Brenna from "../Brenna/Brenna";
 import BabyYorus from "../BabyYorus/BabyYorus";
 import BufferData from "../Buffer";
 import "./Home.css";
+import "./index.css";
 import base_url from "../../constants/url";
 import axios from "axios";
+import { motion } from "framer-motion";
 import ViewAll from "./ViewAll";
 import {
   Animator,
@@ -30,6 +32,7 @@ function HomeMain(props) {
 
   const GrouRef = useRef([]);
   const onScroll = (el) => {
+
     const styles = GrouRef.current
       .map((group, i) => {
         const rect = group.getBoundingClientRect();
@@ -80,200 +83,106 @@ function HomeMain(props) {
       props.indexBtn();
     }
   };
+
+  const portfolioAnimation = {
+    hidden: {
+      opacity: 0,
+      y: 100
+    },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
+
+
   return (
-    <ScrollContainer>
-      {/* <div
-        className={changeClass ? "viewall" : "home-title"}
-        onClick={() => ViewAllClick()}
+    <>
+      <motion.div
+        className="card-wrapper mb-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        ref={(el) => (GrouRef.current[0] = el)}
+        data-bgcolor="white"
       >
-        <h1 data-text={value}>
-          {projectsData.length > 0 && value === "" ? "David Ellis" : value}
-        </h1>
-      </div> */}
-      <ScrollPage>
-        <Animator
-           animation={batch(
-            Sticky(),
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
+        <HomeIndex
+          randomIndex={randomIndex}
+          projectsData={projectsData}
+          onChange={handleChange}
+        />
+      </motion.div>
+      {/* <ScrollContainer> */}
+      {projectsData.map((project, index) => {
+
+        return (<motion.div
+          className="card-wrapper my-4"
+          variants={portfolioAnimation}
+          initial={"hidden"}
+          whileInView={"visible"}
+          viewport={{ once: false, amount: 0.7 }}
+          transition={{ type: "spring", duration: 2 }}
+          ref={(el) => (GrouRef.current[1] = el)}
+          data-bgcolor={project.color}
         >
-          <div
-            ref={(el) => (GrouRef.current[0] = el)}
-            style={{ height: "100vh", width: "100vw", background: "white" }}
-            data-bgcolor={"white"}
-          >
-            <HomeIndex
-              randomIndex={randomIndex}
-              projectsData={projectsData}
-              onChange={handleChange}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
-        >
-          <div
-            ref={(el) => (GrouRef.current[0] = el)}
-            style={{ height: "100vh", width: "100vw" }}
-            data-bgcolor={projectsData[0]?.color}
-          >
+          {/* <ScrollPage> */}
+          {parseInt(project.template) === 1 ? (
             <Fencher
-              image1={projectsData[0]?.images[0]}
-              image2={projectsData[0]?.images[1]}
-              name={projectsData[0]?.name}
-              images={projectsData[0]?.images}
-              slug={"/".concat(projectsData[0]?.slug)}
+              name={project.name}
+              images={project.images}
+              slug={"/".concat(project.slug)}
               setCount={props.setCount}
-              nextProject={projectsData[1]}
+              nextProject={project[index + 1]}
               onChange={handleChange}
             />
-          </div>
-        </Animator>
-      </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
-        >
-          <div
-            ref={(el) => (GrouRef.current[1] = el)}
-            style={{ height: "100vh", width: "100vw" }}
-            data-bgcolor={projectsData[1]?.color}
-          >
-            <Auston
-              image1={projectsData[1]?.images[0]}
-              image2={projectsData[1]?.images[1]}
-              image3={projectsData[1]?.images[2]}
-              slug={"/".concat(projectsData[1]?.slug)}
-              name={projectsData[1]?.name}
-              images={projectsData[1]?.images}
-              nextProject={projectsData[2]}
-              onChange={handleChange}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
+          ) :
+            parseInt(project.template) === 2 ? (
+              <Auston
+                slug={"/".concat(project.slug)}
+                name={project.name}
+                images={project.images}
+                nextProject={project[index + 1]}
+                onChange={handleChange}
+              />
+            ) :
+              parseInt(project.template) === 3 ? (
+                <Amoeba
+                  slug={"/".concat(project.slug)}
+                  name={project.name}
+                  images={project.images}
+                  nextProject={project[index + 1]}
+                  onChange={handleChange}
+                />
+              ) :
+                <Ballet
+                  slug={"/".concat(project.slug)}
+                  name={project.name}
+                  images={project.images}
+                  nextProject={project[index + 1]}
+                  onChange={handleChange}
+                />
+          }
+          {/* </ScrollPage> */}
+        </motion.div>)
+      })}
 
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
-        >
-          <div
-            ref={(el) => (GrouRef.current[2] = el)}
-            style={{ height: "100vh", width: "100vw" }}
-            data-bgcolor={projectsData[2]?.color}
-          >
-            <Amoeba
-              image1={projectsData[2]?.images[0]}
-              image2={projectsData[2]?.images[1]}
-              image3={projectsData[2]?.images[2]}
-              slug={"/".concat(projectsData[2]?.slug)}
-              name={projectsData[2]?.name}
-              images={projectsData[2]?.images}
-              nextProject={projectsData[3]}
-              onChange={handleChange}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
 
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
-        >
-          <div
-            ref={(el) => (GrouRef.current[3] = el)}
-            style={{ height: "100vh", width: "100vw" }}
-            data-bgcolor={projectsData[3]?.color}
-          >
-            <Fencher
-              image1={projectsData[3]?.images[2]}
-              image2={projectsData[3]?.images[2]}
-              name={projectsData[3]?.name}
-              images={projectsData[3]?.images}
-              slug={"/".concat(projectsData[3]?.slug)}
-              setCount={props.setCount}
-              nextProject={projectsData[4]}
-              onChange={handleChange}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(
-            Sticky(),
-
-            MoveOut(0, -200),
-            ZoomIn(),
-            Fade()
-          )}
-        >
-          <div
-            ref={(el) => (GrouRef.current[4] = el)}
-            style={{ height: "100vh", width: "100vw" }}
-            data-bgcolor={projectsData[4]?.color}
-          >
-            <Ballet
-              image1={projectsData[2]?.images[0]}
-              image2={projectsData[2]?.images[1]}
-              image3={projectsData[2]?.images[2]}
-              slug={"/".concat(projectsData[2]?.slug)}
-              name={projectsData[2]?.name}
-              images={projectsData[2]?.images}
-              nextProject={projectsData[3]}
-              onChange={handleChange}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
-      <ScrollPage>
-        <Animator
-          animation={batch(Sticky(), MoveOut(0, -200), ZoomIn(), Fade())}
-        >
-          <div
-            // ref={(el) => (GrouRef.current[5] = el)}
-            style={{
-              paddingTop: "1px",
-              height: "100vh",
-              width: "100vw",
-              background: "white",
-            }}
-            data-bgcolor={"white"}
-          >
-            <ViewAll
-              name="View All Projects"
-              slug="viewAll"
-              onChange={handleChange}
-              indexBtn={props.indexBtn}
-            />
-          </div>
-        </Animator>
-      </ScrollPage>
-    </ScrollContainer>
+      <div
+        style={{
+          paddingTop: "1px",
+          height: "100vh",
+          width: "100vw",
+          background: "white",
+        }}
+        data-bgcolor={"white"}
+      >
+        <ViewAll
+          name="View All Projects"
+          slug="viewAll"
+          onChange={handleChange}
+          indexBtn={props.indexBtn}
+        />
+      </div>
+    </>
   );
 }
 

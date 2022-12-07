@@ -5,85 +5,67 @@ import image3 from "./../../Assets/images/4.jpg";
 import "./Auston.css";
 import { useNavigate } from "react-router-dom/dist";
 import base_url from "../../constants/url";
+import AnimatedText from "../AnimatedText";
+import {
+  motion
+} from "framer-motion";
+
+
 function Auston(props) {
   const [homeState, setHomeState] = useState(true);
   const navigate = useNavigate();
-  console.log("This is Aauston");
-  console.log(props);
 
   const ref1 = useRef(null);
-  // const ref2 = useRef(null);
-  const isInViewport = useIsInViewport(ref1);
-  if (isInViewport) {
-    handleChange({ name: props.name, slug: props.slug });
-  }
 
   function handleChange(name) {
     // Here, we invoke the callback with the new value
     props.onChange(name);
   }
 
-  function useIsInViewport(ref) {
-    const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
 
-    const observer = useMemo(
-      () =>
-        new IntersectionObserver(([entry]) =>
-          setIsIntersecting(entry.isIntersecting)
-        ),
-      []
-    );
-
-    useEffect(() => {
-      observer.observe(ref.current);
-
-      return () => {
-        observer.disconnect();
-      };
-    }, [ref, observer]);
-
-    return isIntersecting;
-  }
+  const portfolioAnimation = {
+    hidden: {
+      y: 100
+    },
+    visible: {
+      y: 0
+    }
+  };
 
   return (
     <div
-      ref={ref1}
-      id="index_01"
-      className="auston-section"
+      className="fencher-section card-wrapper mt-0"
+      style={{ cursor: "pointer", position: 'relative' }}
+      ref={ref}
       onClick={() => {
-        navigate(props.slug, {
-          state: {
-            name: props.name,
-            detail: props.name,
-            images: props.images,
-          },
-        });
-        window.scrollTo(0,0);
+        navigate(
+          props.slug
+        );
+        window.scrollTo(0, 0);
       }}
     >
-      <div className="home-title">
-        <h1>{props.name}</h1>
-      </div>
-      <div className="d-flex justify-content-center">
-        <div className="Auston-image1 mx-3">
-          <img
-            className="img-fluid hoverImages"
-            src={`${base_url}` + "/img/projects/" + props.image1}
-          />
-        </div>
-        <div className="Auston-image2 mx-3">
-          <img
-            className="img-fluid hoverImages"
-            src={`${base_url}` + "/img/projects/" + props.image2}
-          />
-        </div>
-      </div>
-      <div className="Auston-image3">
-        <img
-          className="img-fluid hoverImages"
-          src={`${base_url}` + "/img/projects/" + props.image3}
-        />
-      </div>
+
+      <motion.div className="home-title">
+        <motion.h1 ><AnimatedText {...{ type: "heading", text: props.name || "waheed" }} /></motion.h1>
+      </motion.div>
+
+      <motion.div className="image2 d-flex justify-content-around align-items-center" variants={portfolioAnimation}
+        initial={"hidden"}
+        whileInView={"visible"}
+        viewport={{ once: false, amount: 0.7 }}
+        transition={{ type: "spring", duration: 2 }}>
+        {props.images.map((banner, key) => {
+          return (
+            <img
+              className={key == 0 ? "hoverImages" : ""}
+              // style={{ y }}
+              src={`${base_url}` + "/img/projects/" + banner}
+              key={key}
+            />
+          )
+        })}
+      </motion.div>
     </div>
   );
 }

@@ -16,7 +16,7 @@
 .Auston-image1 > img {
   right: 70px ;
   width: 400px;
-  height: 400px;
+  /* height: 400px; */
 }
 .hoverImages {
   padding: 3px;
