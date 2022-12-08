@@ -1,14 +1,14 @@
 *{
   font-family:sans-serif;
-  
-}
-html{
-  scroll-snap-type: proximity;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 body{
   /* overflow-y: scroll !important; */
-  transition: 1s all ease-in;
+  transition: 1s all ease-in-out;
   background: white;
+  /* scroll-snap-type: smooth; */
 }
 .index-button {
   margin: 30px;

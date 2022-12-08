@@ -37,8 +37,7 @@
   height: 100vh;
 }
 .image2 {
-  max-width: 450px;
-  margin-left: -100px;
+  /* max-width: 450px; */
   max-height: 60vh;
 }
 .images {

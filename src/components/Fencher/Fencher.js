@@ -45,7 +45,7 @@ function Fencher(props) {
   // const y = useParallax(scrollYProgress, 200);
 
   const txtRef = useRef(null)
-  const isInView = useInView({ root: txtRef, once: true });
+  const isInView = useInView({ root: txtRef, once: false });
 
   const { scrollYProgress } = useScroll({
     target: txtRef,
@@ -72,22 +72,8 @@ function Fencher(props) {
     }
   };
 
-  const titleAnimation = {
-    hidden: {
-      y: "200%",
-      // color: "#0055FF",
-      transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.85 }
-    },
-    visible: {
-      y: 0,
-      // color: "#FF0088",
-      transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.75 }
-    }
-  };
-
   return (
     <div
-      className="fencher-section card-wrapper mt-0"
       style={{ cursor: "pointer", position: 'relative' }}
       ref={ref}
       onClick={() => {
@@ -98,33 +84,20 @@ function Fencher(props) {
       }}
     >
 
-      <motion.div className="home-title">
-        <motion.h1 ><AnimatedText {...{ type: "heading", text: props.name || "waheed" }} /></motion.h1>
-      </motion.div>
-
-      <motion.div className="image2 d-flex justify-content-around align-items-center" variants={portfolioAnimation}
-        initial={"hidden"}
-        whileInView={"visible"}
-        viewport={{ once: false, amount: 0.7 }}
-        transition={{ type: "spring", duration: 2 }}>
-        {props.images.map((banner, key) => {
-          return (
-            <img
-              className={key == 0 ? "hoverImages" : ""}
-              // style={{ y }}
-              src={`${base_url}` + "/img/projects/" + banner}
-              key={key}
-            />
-          )
-        })}
-      </motion.div>
-      {/* <motion.div className="image1" >
-        <img
-          className="image1"
-          src={`${base_url}` + "/img/projects/" + props.image1}
-        />
-      </motion.div> */}
-
+      <div className="image2">
+        <div className={"row align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{height: '100vh'}}>
+            {props.images.map((banner, key) => {
+              return (
+                <img
+                  className={key == 0 ? "hoverImages" : (props.images.length - 1) === key && props.images.length > 2  ? "last-image" : ""}
+                  style={{marginLeft: props.images.length == 2 && (props.images.length-1) == key ? '-100px' : '' }}
+                  src={`${base_url}` + "/img/projects/" + banner}
+                  key={key}
+                />
+              )
+            })}
+        </div>
+      </div>
     </div>
   );
 }

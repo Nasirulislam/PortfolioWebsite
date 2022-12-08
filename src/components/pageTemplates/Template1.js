@@ -70,15 +70,15 @@ function Template1(props) {
           if (index === itemIndex) {
             return (
               <div style={{ width: "100vw" }}>
-                <div className="title">
-                  <h1> {bottom ? "" : item.name}</h1>
+                <div className="home-title">
+                  <h1 style={{display: bottom == true ? "none" : "block"}}> {bottom ? "" : item.name}</h1>
                   {/* <h1><span id="create">{bottom ? "" : item.name}</span></h1> */}
                 </div>
                 <div className="d-flelx flex-co">
                   {item.images.map((temp, index) => {
                     if (index === 0) {
                       return (
-                        <div className="temp_img1" key={index}>
+                        <div className="temp_img1" key={index} style={{cursor: 'pointer'}}>
                           <img
                             className="movingImg img-fluid"
                             src={`${base_url}` + "/img/projects/" + temp}
@@ -98,6 +98,7 @@ function Template1(props) {
         <div
           ref={(el) => (GroupRef.current[1] = el)}
           data-bgcolor={projectData[index + 1].color}
+          style={{height: '100vh'}}
         >
           <NextProject projectData={projectData} index={index} />
         </div>

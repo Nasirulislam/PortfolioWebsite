@@ -68,9 +68,8 @@
 
 .home-page {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   background-color: transparent;
-
   position: relative;
 }
 
@@ -139,6 +138,7 @@
   background: transparent;
   mix-blend-mode: exclusion;
   color: white;
+  text-align: center;
 }
 
 .home-title>h1 {
@@ -170,6 +170,7 @@
 }
 
 .viewall {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,7 +182,6 @@
 
 .viewAll-projects {
   height:100%;
-  background: white;
 }
 
 .viewall>h1 {

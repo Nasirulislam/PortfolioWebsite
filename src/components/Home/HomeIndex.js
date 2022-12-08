@@ -8,6 +8,20 @@ import HomeMain from "./HomeMain";
 import base_url from "../../constants/url";
 import { Card } from "react-bootstrap";
 import AnimatedText from "../AnimatedText";
+import {
+  Animator,
+  batch,
+  Fade,
+  MoveOut,
+  ScrollContainer,
+  ScrollPage,
+  Sticky,
+  ZoomIn,
+} from "react-scroll-motion";
+
+
+
+
 function HomeIndex(props) {
   let hasMouse = false;
   const [direction, setdirection] = useState("left");
@@ -71,97 +85,101 @@ function HomeIndex(props) {
   };
 
   return (
-    <div id="home-page" className="home-page" ref={ref1}>
-      <motion.div className="home-title">
-        {/* <motion.h1 variants={container}><AnimatedText {...{ type: "heading", text: "David Ellis" }} /></motion.h1> */}
-      </motion.div>
-      <motion.div
-        className="home-slide-section"
-        initial={
-          {
-            opacity: 0,
-          }
+    // <ScrollContainer >
+    //   <ScrollPage >
+    //     <Animator
+    //       animation={batch(
+    //         Sticky(),
+    //         MoveOut(0, -200),
+    //         ZoomIn(),
+    //         Fade()
+    //       )}
+
+    //     >
+    <motion.div
+      className="home-slide-section"
+      animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+      initial={
+        {
+          // opacity: 0.1,
         }
-        animate={{ x: 0, y: 0, opacity: 1 }}
-        transition={{
-          delay: 0.5,
-          x: { duration: 1 },
-          default: { ease: "linear" }
-        }}
+      }
+      transition={{
+        type: "spring",
+        stiffness: 10,
+      }}
+    >
+      <div id="home-page" className="home-page" ref={ref1}>
+        <div className="home-slide-section">
+          <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow" style={{ height: '50vh' }}>
+            <Card className="">
+              <img
+                className="img-fluid mover-1"
+                src={
+                  `${base_url}` +
+                  "/img/projects/" +
+                  props.projectsData[0]?.images[1]
+                }
+              />
+            </Card>
+            <Card>
+              <img
+                className="img-fluid"
+                src={
+                  `${base_url}` +
+                  "/img/projects/" +
+                  props.projectsData[1]?.images[0]
+                }
+              />
+            </Card>
+          </div>
+          {/* <marquee> */}
+          <div className="col-md-12 d-flex justify-content-around align-items-center p-3 tech-slideshow" style={{ height: '50vh' }}>
+            <Card
+            >
+              <img
+                className="img-fluid"
+                src={
+                  `${base_url}` +
+                  "/img/projects/" +
+                  props.projectsData[0]?.images[1]
+                }
+              />
+            </Card>
+            <Card
+            >
+              <img
+                className="img-fluid"
+                src={
+                  `${base_url}` +
+                  "/img/projects/" +
+                  props.projectsData[1]?.images[0]
+                }
+              />
+            </Card>
+            <Card
+            >
+              <img
+                className="img-fluid"
+                src={
+                  `${base_url}` +
+                  "/img/projects/" +
+                  props.projectsData[1]?.images[0]
+                }
+              />
+            </Card>
+          </div>
 
-      >
-        <div className="col-md-12 d-flex justify-content-around align-items-center" style={{ height: '50vh' }}>
-          <Card
-            className="image1"
-          >
-            <img
-              className="img-fluid"
-              src={
-                `${base_url}` +
-                "/img/projects/" +
-                props.projectsData[0]?.images[1]
-              }
-            />
-          </Card>
-          <Card
-            className="image2"
-          >
-            <img
-              className="img-fluid"
-              src={
-                `${base_url}` +
-                "/img/projects/" +
-                props.projectsData[1]?.images[0]
-              }
-            />
-          </Card>
-        </div>
-        {/* <marquee> */}
-        <div className="col-md-12 d-flex justify-content-around align-items-center p-3" style={{ height: '50vh' }}>
-          <Card
-            className="image1"
-          >
-            <img
-              className="img-fluid"
-              src={
-                `${base_url}` +
-                "/img/projects/" +
-                props.projectsData[0]?.images[1]
-              }
-            />
-          </Card>
-          <Card
-            className="image2"
-          >
-            <img
-              className="img-fluid"
-              src={
-                `${base_url}` +
-                "/img/projects/" +
-                props.projectsData[1]?.images[0]
-              }
-            />
-          </Card>
-          <Card
-            className="image2"
-          >
-            <img
-              className="img-fluid"
-              src={
-                `${base_url}` +
-                "/img/projects/" +
-                props.projectsData[1]?.images[0]
-              }
-            />
-          </Card>
-        </div>
+          {/* </marquee> */}
 
-        {/* </marquee> */}
-
-        {/* <Home randomIndex = {props.randomIndex} projectsData={props.projectsData} />
+          {/* <Home randomIndex = {props.randomIndex} projectsData={props.projectsData} />
         <BottomSlider projectsData={props.projectsData} /> */}
-      </motion.div>
-    </div>
+        </div>
+      </div>
+    </motion.div>
+    //     </Animator>
+    //   </ScrollPage>
+    // </ScrollContainer>
   );
 }
 

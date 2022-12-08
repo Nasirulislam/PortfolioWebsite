@@ -40,7 +40,7 @@ function ViewAll(props) {
   return (
     <div ref={ref1} className="viewAll-projects" >
       <div className="viewall" onClick={() =>  props.indexBtn()}>
-        <h1 data-text={"view All Projects"}>View All Projects</h1>
+        {/* <h1 data-text={"view All Projects"}>View All Projects</h1> */}
         {/* <h1>Projects</h1> */}
       </div>
     </div>

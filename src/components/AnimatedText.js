@@ -19,7 +19,6 @@ const tagMap = {
 // individual character animations
 const AnimatedText = (props) => {
   // Framer Motion variant object, for controlling animation
-  console.log(props)
   const item = {
     hidden: {
       y: "200%",

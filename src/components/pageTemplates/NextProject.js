@@ -41,11 +41,11 @@ function NextProject(props) {
   
   return (
     <div
-      className="next-project-section pt-4"
+      className="next-project-section"
       style={{
         width: "100%",
         zindex:"10",
-        height: "700px",
+        height: "100vh",
         background:"transparent",        
       }}
       onClick={() => {
@@ -59,13 +59,13 @@ function NextProject(props) {
     >
       <div className="next-title">
         {index <= projectData.length - 1 ? (
-          <h1 style={{ color:projectData[index+1].color}}>{projectData[index + 1].name}</h1>
+          <h1 >{projectData[index + 1].name}</h1>
         ) : (
           ""
         )}
         <h4 style={{ color:projectData[index+1].color}}>Next project</h4>
       </div>
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center h-100">
         <img
           className="next-proj-img1"
           src={

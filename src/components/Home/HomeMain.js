@@ -1,29 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Amoeba from "../Amoeba/Amoeba";
-import Auston from "../Auston/Auston";
 import Fencher from "../Fencher/Fencher";
 import HomeIndex from "./HomeIndex";
-import Ballet from "../Ballet/Ballet";
-import BeatsBy from "../BeatsBy/Beatsby";
-import Brenna from "../Brenna/Brenna";
-import BabyYorus from "../BabyYorus/BabyYorus";
-import BufferData from "../Buffer";
 import "./Home.css";
 import "./index.css";
 import base_url from "../../constants/url";
 import axios from "axios";
 import { motion } from "framer-motion";
 import ViewAll from "./ViewAll";
-import {
-  Animator,
-  batch,
-  Fade,
-  MoveOut,
-  ScrollContainer,
-  ScrollPage,
-  Sticky,
-  ZoomIn,
-} from "react-scroll-motion";
+import AnimatedText from "../AnimatedText";
+
 
 function HomeMain(props) {
   const [projectsData, setProjectsData] = useState([]);
@@ -41,11 +26,14 @@ function HomeMain(props) {
       .find((group) => group.rect.bottom >= window.innerHeight * 0.5);
 
     document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
+    document.getElementById("portfolio-title").innerText = `${styles.group.dataset.title}`;
+    // setValue(`${styles.group.dataset.title}`);
   };
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
   });
+
   function randomNumberInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -53,6 +41,7 @@ function HomeMain(props) {
   for (let x = 0; x < 4; x++) {
     randomIndex.push(randomNumberInRange(0, projectsData.length - 1));
   }
+
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
@@ -84,48 +73,45 @@ function HomeMain(props) {
     }
   };
 
-  const portfolioAnimation = {
-    hidden: {
-      opacity: 0,
-      y: 100
-    },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
-  };
-
-
   return (
     <>
-      <motion.div
+
+      <motion.div className="home-title">
+        <motion.h1 className="indexitem-button" id="portfolio-title"><AnimatedText {...{ type: "heading", text: value }} /></motion.h1>
+      </motion.div>
+      <div
         className="card-wrapper mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
         ref={(el) => (GrouRef.current[0] = el)}
         data-bgcolor="white"
+        data-title="David Ellis"
       >
         <HomeIndex
           randomIndex={randomIndex}
           projectsData={projectsData}
           onChange={handleChange}
         />
-      </motion.div>
+      </div>
+
       {/* <ScrollContainer> */}
       {projectsData.map((project, index) => {
 
-        return (<motion.div
-          className="card-wrapper my-4"
-          variants={portfolioAnimation}
-          initial={"hidden"}
-          whileInView={"visible"}
-          viewport={{ once: false, amount: 0.7 }}
-          transition={{ type: "spring", duration: 2 }}
-          ref={(el) => (GrouRef.current[1] = el)}
+        return (<div
+          className="card-wrapper my-4 py-4"
+          ref={(el) => (GrouRef.current[index + 1] = el)}
           data-bgcolor={project.color}
+          data-title={project.name}
+          key={index}
         >
+          <Fencher
+            name={project.name}
+            images={(index%2==0) ? project.images.slice(0,2) : project.images.slice(0,3)}
+            slug={"/".concat(project.slug)}
+            setCount={props.setCount}
+            nextProject={project[index + 1]}
+            onChange={handleChange}
+          />
           {/* <ScrollPage> */}
-          {parseInt(project.template) === 1 ? (
+          {/* {parseInt(project.template) === 1 ? (
             <Fencher
               name={project.name}
               images={project.images}
@@ -160,9 +146,9 @@ function HomeMain(props) {
                   nextProject={project[index + 1]}
                   onChange={handleChange}
                 />
-          }
+          } */}
           {/* </ScrollPage> */}
-        </motion.div>)
+        </div>)
       })}
 
 
@@ -171,9 +157,11 @@ function HomeMain(props) {
           paddingTop: "1px",
           height: "100vh",
           width: "100vw",
-          background: "white",
+          overflowY: "hidden"
         }}
-        data-bgcolor={"white"}
+        ref={(el) => (GrouRef.current[projectsData.length + 1] = el)}
+        data-bgcolor="white"
+        data-title="View All Projects"
       >
         <ViewAll
           name="View All Projects"

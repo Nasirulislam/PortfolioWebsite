@@ -1,36 +1,23 @@
 import logo from "./logo.svg";
 import "./App.css";
-import HomeIndex from "./components/Home/HomeIndex";
-import BottomSlider from "./components/Home/BottomSlider";
 import Index from "./components/Index/Index";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import Home from "./components/Home/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
-import Scroller from "./components/Home/Scroller";
 import Spinner from "react-bootstrap/Spinner";
-
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
-import FencerMain from "./components/Fencher/FencerMain";
-import Fencher from "./components/Fencher/Fencher";
-import BufferData from "./components/Buffer";
 import { useEffect } from "react";
 import axios from "axios";
-import template1 from "./components/pageTemplates/Template1";
 import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
-import Template2 from "./components/pageTemplates/Template2";
 import Admin from "./components/admin/Admin";
 import Login from "./components/admin/Login";
 import Testing from "./components/Home/Testing";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+
 function App() {
   const [projectsData, setProjectsData] = useState([]);
   const [IndexText, setIndexText] = useState("INDEX");
