@@ -1,14 +1,11 @@
 import React, { useRef } from "react";
-
-import { Container, Row, Col } from "react-bootstrap";
 import base_url from "../../constants/url";
-import "./template.css";
 import getRandomTemp from "./Radome";
-import tempImg from "./tempImg";
 import { useLocation, useNavigate } from "react-router-dom";
 import NextProject from "./NextProject";
 import { useEffect } from "react";
 import { useState } from "react";
+import ReactTextTransition, { presets } from "react-text-transition";
 
 function Template1(props) {
   const projectData = props.projectData;
@@ -16,92 +13,85 @@ function Template1(props) {
   const navigate = useNavigate();
   const [bottom, setBottom] = useState(false);
 
-  const handleNextProject = (event) => {
-    // console.log("scroliing");
-    const element = document.getElementsByClassName("next-project-section")[0];
-    var offset =
-      element.getBoundingClientRect().top -
-      element.offsetParent.getBoundingClientRecst().top;
-    // console.log(element.scrollHeight);
-    const top = window.pageYOffset + window.innerHeight - offset;
+  const nextRef = useRef(null);
+  const [value, setValue] = useState(projectData[index].name);
 
-    // console.log("Top: " + top);
-    // console.log("Element height: " + element.scrollHeight);
-    if (top >= element.scrollHeight) {
-      setBottom(true);
-      // console.log("hello");
-    } else if (top < element.scrollHeight - 300) {
-      setBottom(false);
-      // console.log("Hey");
+  // const onScroll = (el) => {
+  // const { scrollTop, scrollHeight, clientHeight } = nextRef.current;
+  // if (scrollTop + clientHeight === scrollHeight) {
+  //   setValue(projectData[index+1].name);
+  // } else {
+  //   setValue(projectData[index].name);
+  // }
+  // const bottom = el.target.scrollHeight - el.target.scrollTop === el.target.clientHeight;
+
+  // if (styles.bottom > window.innerHeight * 0.5) {
+  //   document.body.style.backgroundColor = `${styles.dataset.bgcolor}`;
+  // }
+
+
+  // };
+
+  useEffect(() => {
+    const onScroll = function () {
+      console.log(document.body.offsetHeight);
+      console.log(window.innerHeight + window.scrollY)
+      if (window.innerHeight + window.scrollY > document.body.offsetHeight - 500) {
+        console.log("you're at the bottom of the page")
+        setValue(projectData[index + 1].name);
+        document.body.style.backgroundColor = projectData[index + 1].color;
+      } else {
+        setValue(projectData[index].name);
+        document.body.style.backgroundColor = projectData[index].color;
+      }
     }
-  };
-  const setScroll = () => {};
-  useEffect(() => {
-    window.addEventListener("scroll", handleNextProject);
-    return () => {
-      window.removeEventListener("scroll", handleNextProject);
-    };
-  }, []);
-
-  const GroupRef = useRef([]);
-  const onScroll = (el) => {
-    const styles = GroupRef.current
-      .map((group, i) => {
-        const rect = group.getBoundingClientRect();
-        return { group, rect };
-      })
-      .find((group) => group.rect.bottom >= window.innerHeight * 0.5);
-
-    document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
-  };
-
-  useEffect(() => {
     window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const nextProjectAnimate = {
+    hidden: {
+      y: 100
+    },
+    visible: {
+      y: 0
+    }
+  }
+
   return (
-    <div>
+    <div style={{ height: '100%' }} >
+      <div className="home-title">
+        <h1><ReactTextTransition springConfig={presets.default} className="indexitem-button"
+        >
+          {value || "David Ellis"}
+        </ReactTextTransition></h1>
+      </div>
       <div
         className="main-proj-section"
-        ref={(el) => (GroupRef.current[0] = el)}
-        data-bgcolor={projectData[index].color}
+        style={{ backgroundColor: projectData[index].color }}
       >
         {projectData.map((item, itemIndex) => {
           if (index === itemIndex) {
             return (
               <div style={{ width: "100vw" }}>
-                <div className="home-title">
-                  <h1 style={{display: bottom == true ? "none" : "block"}}> {bottom ? "" : item.name}</h1>
-                  {/* <h1><span id="create">{bottom ? "" : item.name}</span></h1> */}
-                </div>
-                <div className="d-flelx flex-co">
-                  {item.images.map((temp, index) => {
-                    if (index === 0) {
-                      return (
-                        <div className="temp_img1" key={index} style={{cursor: 'pointer'}}>
-                          <img
-                            className="movingImg img-fluid"
-                            src={`${base_url}` + "/img/projects/" + temp}
-                          />
-                        </div>
-                      );
-                    }
-                    return <div key={index}>{getRandomTemp(temp)}</div>;
-                  })}
-                </div>
+                {item.images.map((temp, index) => {
+                  if (index === 0) {
+                    return (
+                      <img
+                        className={"img-fluid"}
+                        src={`${base_url}` + "/img/projects/" + temp}
+                      />
+                    );
+                  }
+                  return <div key={index} style={{ height: '100vh', width: '100vw' }} className={"" + ((index % 2 == 1) && index !== 0 ? " imgOver" : "")}>{getRandomTemp(temp, index)}</div>;
+                })}
               </div>
             );
           }
         })}
       </div>
       {index <= projectData.length - 1 ? (
-        <div
-          ref={(el) => (GroupRef.current[1] = el)}
-          data-bgcolor={projectData[index + 1].color}
-          style={{height: '100vh'}}
-        >
-          <NextProject projectData={projectData} index={index} />
-        </div>
+        <NextProject projectData={projectData} index={index} />
       ) : (
         ""
       )}

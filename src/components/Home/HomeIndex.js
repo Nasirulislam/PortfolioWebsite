@@ -42,94 +42,39 @@ function HomeIndex(props) {
     };
   }, []);
 
-  const ref1 = useRef(null);
-  // const ref2 = useRef(null);
-  const isInViewport = useIsInViewport(ref1);
-  if (isInViewport) {
-    handleChange({ name: "david Ellis", slug: "david Ellis" });
-  }
+  const images = [
+    "pexels-ashish-sharma-917597.jpg", "pexels-motional-studio-1081685.jpg", "surreal-photography-platon-yurich-17.jpg", "mask-shape-element-kelly-brown-768x933.jpg", "surreal-photography-platon-yurich-30.jpg"
+  ];
 
-  function handleChange(name) {
-    // Here, we invoke the callback with the new value
-    props.onChange(name);
-  }
-
-  function useIsInViewport(ref) {
-    const [isIntersecting, setIsIntersecting] = useState(false);
-
-    const observer = useMemo(
-      () =>
-        new IntersectionObserver(([entry]) =>
-          setIsIntersecting(entry.isIntersecting)
-        ),
-      []
-    );
-
-    useEffect(() => {
-      observer.observe(ref.current);
-
-      return () => {
-        observer.disconnect();
-      };
-    }, [ref, observer]);
-
-    return isIntersecting;
-  }
-
-  const container = {
-    visible: {
-      transition: {
-        staggerChildren: 0.025
-      }
-    }
-  };
+  const firstIndex = images.slice(0, 2);
+  const secondIndex = images.slice(2, 5);
+  console.log(firstIndex)
 
   return (
-    // <ScrollContainer >
-    //   <ScrollPage >
-    //     <Animator
-    //       animation={batch(
-    //         Sticky(),
-    //         MoveOut(0, -200),
-    //         ZoomIn(),
-    //         Fade()
-    //       )}
 
-    //     >
     <motion.div
       className="home-slide-section"
       animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-      initial={
-        {
-          // opacity: 0.1,
-        }
-      }
       transition={{
         type: "spring",
         stiffness: 10,
       }}
     >
-      <div id="home-page" className="home-page" ref={ref1}>
+      <div id="home-page" className="home-page">
         <div className="home-slide-section">
           <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow" style={{ height: '50vh' }}>
             <Card className="">
               <img
+                style={{ height: '100vh' }}
                 className="img-fluid mover-1"
-                src={
-                  `${base_url}` +
-                  "/img/projects/" +
-                  props.projectsData[0]?.images[1]
-                }
+                src={`/images/index/${firstIndex[0]}`}
               />
             </Card>
             <Card>
               <img
+                style={{ height: '100vh' }}
                 className="img-fluid"
-                src={
-                  `${base_url}` +
-                  "/img/projects/" +
-                  props.projectsData[1]?.images[0]
-                }
+                src={`/images/index/${firstIndex[1]}`}
               />
             </Card>
           </div>
@@ -139,47 +84,28 @@ function HomeIndex(props) {
             >
               <img
                 className="img-fluid"
-                src={
-                  `${base_url}` +
-                  "/img/projects/" +
-                  props.projectsData[0]?.images[1]
-                }
+                src={`/images/index/${secondIndex[0]}`}
+              />
+            </Card>
+            <Card
+            >
+              <img
+                style={{ height: '100vh', width: '100vh' }}
+                className="img-fluid"
+                src={`/images/index/${secondIndex[1]}`}
               />
             </Card>
             <Card
             >
               <img
                 className="img-fluid"
-                src={
-                  `${base_url}` +
-                  "/img/projects/" +
-                  props.projectsData[1]?.images[0]
-                }
-              />
-            </Card>
-            <Card
-            >
-              <img
-                className="img-fluid"
-                src={
-                  `${base_url}` +
-                  "/img/projects/" +
-                  props.projectsData[1]?.images[0]
-                }
+                src={`/images/index/${secondIndex[2]}`}
               />
             </Card>
           </div>
-
-          {/* </marquee> */}
-
-          {/* <Home randomIndex = {props.randomIndex} projectsData={props.projectsData} />
-        <BottomSlider projectsData={props.projectsData} /> */}
         </div>
       </div>
     </motion.div>
-    //     </Animator>
-    //   </ScrollPage>
-    // </ScrollContainer>
   );
 }
 

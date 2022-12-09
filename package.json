@@ -27,6 +27,7 @@
     "react-scroll-motion": "^0.3.0",
     "react-scroll-trigger": "^0.6.14",
     "react-spring": "^9.5.5",
+    "react-text-transition": "^3.0.2",
     "react-use-gesture": "^9.1.3",
     "reactstrap": "^9.1.5",
     "sass": "^1.56.1",

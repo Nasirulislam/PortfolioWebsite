@@ -7,15 +7,19 @@ import base_url from "../../constants/url";
 import axios from "axios";
 import { motion } from "framer-motion";
 import ViewAll from "./ViewAll";
-import AnimatedText from "../AnimatedText";
+import ReactTextTransition, { presets } from "react-text-transition";
+import { useNavigate } from "react-router-dom";
 
 
 function HomeMain(props) {
   const [projectsData, setProjectsData] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
   const [changeClass, setChangeClass] = useState(false);
+  const [slug, setSlug] = useState();
+
 
   const GrouRef = useRef([]);
+  const navigate = useNavigate();
   const onScroll = (el) => {
 
     const styles = GrouRef.current
@@ -26,8 +30,9 @@ function HomeMain(props) {
       .find((group) => group.rect.bottom >= window.innerHeight * 0.5);
 
     document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
-    document.getElementById("portfolio-title").innerText = `${styles.group.dataset.title}`;
-    // setValue(`${styles.group.dataset.title}`);
+    // document.getElementById("portfolio-title").classList.add("change-title");
+    setValue(`${styles.group.dataset.title}`);
+    setSlug(`${styles.group.dataset.slug}`);
   };
 
   useEffect(() => {
@@ -52,20 +57,7 @@ function HomeMain(props) {
     fetchProducts();
   }, []);
 
-  const [value, setValue] = useState("");
-
-  function handleChange(newValue) {
-    setValue(newValue.name);
-    if (newValue.name === "View All Projects") {
-      setChangeClass(true);
-    } else {
-      setChangeClass(false);
-    }
-    let index = projectsData.findIndex(
-      (item) => `/${item.slug}` == newValue.slug
-    );
-    props.onChange(index);
-  }
+  const [value, setValue] = useState("");  
 
   const ViewAllClick = () => {
     if (changeClass) {
@@ -73,42 +65,62 @@ function HomeMain(props) {
     }
   };
 
+  const txtAnimation = {
+    hidden: {
+      y: 100
+    },
+    visible: {
+      y: 0
+    }
+  }
+
+  const handleSlug = () => {
+    if(value === "View All Projects") {
+      props.indexBtn();
+    } else {
+      navigate(slug);
+    }
+  }
+
   return (
     <>
 
-      <motion.div className="home-title">
-        <motion.h1 className="indexitem-button" id="portfolio-title"><AnimatedText {...{ type: "heading", text: value }} /></motion.h1>
-      </motion.div>
+      <div className="home-title change-title viewAll-projects">
+        <h1 style={{cursor: 'pointer'}} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
+        >
+          {value || "David Ellis"}
+        </ReactTextTransition></h1>
+      </div>
       <div
         className="card-wrapper mb-4"
         ref={(el) => (GrouRef.current[0] = el)}
         data-bgcolor="white"
         data-title="David Ellis"
+        data-slug="/"
       >
         <HomeIndex
           randomIndex={randomIndex}
           projectsData={projectsData}
-          onChange={handleChange}
         />
       </div>
 
       {/* <ScrollContainer> */}
       {projectsData.map((project, index) => {
 
-        return (<div
+        return (<motion.div
           className="card-wrapper my-4 py-4"
           ref={(el) => (GrouRef.current[index + 1] = el)}
           data-bgcolor={project.color}
           data-title={project.name}
+          data-slug={project.slug}
           key={index}
         >
           <Fencher
             name={project.name}
-            images={(index%2==0) ? project.images.slice(0,2) : project.images.slice(0,3)}
+            images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
             slug={"/".concat(project.slug)}
             setCount={props.setCount}
             nextProject={project[index + 1]}
-            onChange={handleChange}
           />
           {/* <ScrollPage> */}
           {/* {parseInt(project.template) === 1 ? (
@@ -148,7 +160,7 @@ function HomeMain(props) {
                 />
           } */}
           {/* </ScrollPage> */}
-        </div>)
+        </motion.div>)
       })}
 
 
@@ -157,16 +169,18 @@ function HomeMain(props) {
           paddingTop: "1px",
           height: "100vh",
           width: "100vw",
-          overflowY: "hidden"
+          overflowY: "hidden",
+          cursor: 'pointer'
         }}
         ref={(el) => (GrouRef.current[projectsData.length + 1] = el)}
         data-bgcolor="white"
         data-title="View All Projects"
+        onClick={props.indexBtn}
       >
+        
         <ViewAll
           name="View All Projects"
           slug="viewAll"
-          onChange={handleChange}
           indexBtn={props.indexBtn}
         />
       </div>

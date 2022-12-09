@@ -1,18 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Fencher.css";
-import image1 from "../../Assets/images/1.jpg";
-import image2 from "../../Assets/images/4.jpg";
 import { useNavigate } from "react-router-dom";
 import base_url from "../../constants/url";
 import {
-  motion,
   useScroll,
-  useSpring,
   useTransform,
-  MotionValue,
   useInView
 } from "framer-motion";
-import AnimatedText from "../AnimatedText";
 
 function Fencher(props) {
   const navigate = useNavigate();
@@ -41,17 +35,11 @@ function Fencher(props) {
   }
 
   const ref = useRef(null);
-  // const { scrollYProgress } = useScroll({ target: ref });
-  // const y = useParallax(scrollYProgress, 200);
+  const { scrollYProgress } = useScroll({ target: ref });
+  const y = useParallax(scrollYProgress, 200);
 
   const txtRef = useRef(null)
   const isInView = useInView({ root: txtRef, once: false });
-
-  const { scrollYProgress } = useScroll({
-    target: txtRef,
-    offset: ["start end", "end end"]
-  })
-
 
   const portfolioAnimation = {
     hidden: {
@@ -90,7 +78,7 @@ function Fencher(props) {
               return (
                 <img
                   className={key == 0 ? "hoverImages" : (props.images.length - 1) === key && props.images.length > 2  ? "last-image" : ""}
-                  style={{marginLeft: props.images.length == 2 && (props.images.length-1) == key ? '-100px' : '' }}
+                  style={{y, marginLeft: props.images.length == 2 && (props.images.length-1) == key ? '-100px' : '' }}
                   src={`${base_url}` + "/img/projects/" + banner}
                   key={key}
                 />

@@ -218,3 +218,10 @@
 .viewall>h1:hover:before {
   height: 100%;
 }
+
+.imgOver{
+  z-index: 200;
+}
+.img-fluid {
+  max-height: 100vh;
+}

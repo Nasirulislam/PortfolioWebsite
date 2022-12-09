@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 import { Container, Row, Col } from "react-bootstrap";
 import base_url from "../../constants/url";
-import "./template.css";
+// import "./template.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
@@ -33,9 +33,9 @@ function NextProject(props) {
     console.log("hello");
   };
   useEffect(() => {
-    window.addEventListener("scroll", handleNextProject);
+    // window.addEventListener("scroll", handleNextProject);
     return () => {
-      window.removeEventListener("scroll", handleNextProject);
+      // window.removeEventListener("scroll", handleNextProject);
     };
   }, []);
   
@@ -57,15 +57,15 @@ function NextProject(props) {
         window.scrollTo(0,0);
       }}
     >
-      <div className="next-title">
-        {index <= projectData.length - 1 ? (
+      <div className="">
+        {/* {index <= projectData.length - 1 ? (
           <h1 >{projectData[index + 1].name}</h1>
         ) : (
           ""
-        )}
-        <h4 style={{ color:projectData[index+1].color}}>Next project</h4>
+        )} */}
+        {/* <h4 style={{ color:projectData[index+1].color}}>Next project</h4> */}
       </div>
-      <div className="d-flex justify-content-center align-items-center h-100">
+      <div className="d-flex justify-content-center align-items-center">
         <img
           className="next-proj-img1"
           src={
