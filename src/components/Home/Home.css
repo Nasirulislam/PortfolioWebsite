@@ -203,7 +203,7 @@
   text-transform: uppercase;
 }
 
-.viewall>h1:before {
+.viewall>h1::before {
   content: attr(data-text);
   position: absolute;
   margin-top: 0vh;
@@ -215,7 +215,7 @@
   transition: 1s;
 }
 
-.viewall>h1:hover:before {
+.viewall>h1:hover::before {
   height: 100%;
 }
 

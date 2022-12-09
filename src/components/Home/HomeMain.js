@@ -31,8 +31,14 @@ function HomeMain(props) {
 
     document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
     // document.getElementById("portfolio-title").classList.add("change-title");
-    setValue(`${styles.group.dataset.title}`);
-    setSlug(`${styles.group.dataset.slug}`);
+    if (`${styles.group.dataset.title}` !== "View All Projects") {
+      setValue(`${styles.group.dataset.title}`);
+      setSlug(`${styles.group.dataset.slug}`);
+    } else {
+      setValue("");
+      setSlug("");
+    }
+
   };
 
   useEffect(() => {
@@ -57,7 +63,7 @@ function HomeMain(props) {
     fetchProducts();
   }, []);
 
-  const [value, setValue] = useState("");  
+  const [value, setValue] = useState("David Ellis");
 
   const ViewAllClick = () => {
     if (changeClass) {
@@ -75,7 +81,7 @@ function HomeMain(props) {
   }
 
   const handleSlug = () => {
-    if(value === "View All Projects") {
+    if (value === "View All Projects") {
       props.indexBtn();
     } else {
       navigate(slug);
@@ -85,10 +91,10 @@ function HomeMain(props) {
   return (
     <>
 
-      <div className="home-title change-title viewAll-projects">
-        <h1 style={{cursor: 'pointer'}} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
+      <div className="home-title change-title">
+        <h1 style={{ cursor: 'pointer' }} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
         >
-          {value || "David Ellis"}
+          {value}
         </ReactTextTransition></h1>
       </div>
       <div
@@ -177,11 +183,11 @@ function HomeMain(props) {
         data-title="View All Projects"
         onClick={props.indexBtn}
       >
-        
+
         <ViewAll
           name="View All Projects"
           slug="viewAll"
-          indexBtn={props.indexBtn}
+          indexBtn={ViewAllClick}
         />
       </div>
     </>
