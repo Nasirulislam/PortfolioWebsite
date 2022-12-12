@@ -9,6 +9,9 @@ import { motion } from "framer-motion";
 import ViewAll from "./ViewAll";
 import ReactTextTransition, { presets } from "react-text-transition";
 import { useNavigate } from "react-router-dom";
+import Auston from "../Auston/Auston";
+import Amoeba from "../Amoeba/Amoeba";
+import Brenna from "../Brenna/Brenna";
 
 
 function HomeMain(props) {
@@ -88,87 +91,171 @@ function HomeMain(props) {
     }
   }
 
+  const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
+  const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
+
+  const mousemove = (e) => {
+    setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
+    setMediumCircle({ x: (e.clientX / 80) * -1, y: (e.clientY / 80) * -1 });
+  };
+  useEffect(() => {
+    window.addEventListener("mousemove", mousemove);
+    return () => {
+      window.removeEventListener("mousemove", mousemove);
+    };
+  }, []);
+
   return (
     <>
-
-      <div className="home-title change-title">
-        <h1 style={{ cursor: 'pointer' }} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
-        >
-          {value}
-        </ReactTextTransition></h1>
-      </div>
-      <div
-        className="card-wrapper mb-4"
-        ref={(el) => (GrouRef.current[0] = el)}
-        data-bgcolor="white"
-        data-title="David Ellis"
-        data-slug="/"
-      >
-        <HomeIndex
-          randomIndex={randomIndex}
-          projectsData={projectsData}
-        />
-      </div>
-
-      {/* <ScrollContainer> */}
-      {projectsData.map((project, index) => {
-
-        return (<motion.div
-          className="card-wrapper my-4 py-4"
+      <div className="container" style={{height: '100%'}}>
+        <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+          <div className="home-title change-title">
+            <h1 style={{ cursor: 'pointer' }} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
+            >
+              {value}
+            </ReactTextTransition></h1>
+          </div>
+          <div
+            className="card-wrapper my-4"
+            ref={(el) => (GrouRef.current[0] = el)}
+            data-bgcolor="white"
+            data-title="David Ellis"
+            data-slug="/"
+          >
+            <HomeIndex
+              randomIndex={randomIndex}
+              projectsData={projectsData}
+            />
+          </div>
+        </div>
+        {projectsData.map((project, index) => {
+          
+         var e=parseInt(project.template);
+          return(
+            <>
+            {e==1?
+            <div
+            className="" style={{ width: '100%', height: '100vh', position: 'relative' }}
+            ref={(el) => (GrouRef.current[index + 1] = el)}
+            data-bgcolor={project.color}
+            data-title={project.name}
+            data-slug={project.slug}
+            key={index}
+          >
+            <Auston
+              name={project.name}
+              images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+              slug={"/".concat(project.slug)}
+              setCount={props.setCount}
+              nextProject={project[index + 1]}
+              coords={largeCircle}
+              slowCoords={mediumCircle}
+            />
+          </div>:e==2?
+          <div
+          className="col-md-12" style={{ width: '100%', height: '130vh', position: 'relative' }}
           ref={(el) => (GrouRef.current[index + 1] = el)}
           data-bgcolor={project.color}
           data-title={project.name}
           data-slug={project.slug}
           key={index}
         >
-          <Fencher
+          <Amoeba
             name={project.name}
             images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
             slug={"/".concat(project.slug)}
             setCount={props.setCount}
             nextProject={project[index + 1]}
+            coords={largeCircle}
+            slowCoords={mediumCircle}
           />
-          {/* <ScrollPage> */}
-          {/* {parseInt(project.template) === 1 ? (
-            <Fencher
-              name={project.name}
-              images={project.images}
-              slug={"/".concat(project.slug)}
-              setCount={props.setCount}
-              nextProject={project[index + 1]}
-              onChange={handleChange}
-            />
-          ) :
-            parseInt(project.template) === 2 ? (
-              <Auston
-                slug={"/".concat(project.slug)}
-                name={project.name}
-                images={project.images}
-                nextProject={project[index + 1]}
-                onChange={handleChange}
-              />
-            ) :
-              parseInt(project.template) === 3 ? (
-                <Amoeba
-                  slug={"/".concat(project.slug)}
-                  name={project.name}
-                  images={project.images}
-                  nextProject={project[index + 1]}
-                  onChange={handleChange}
-                />
-              ) :
-                <Ballet
-                  slug={"/".concat(project.slug)}
-                  name={project.name}
-                  images={project.images}
-                  nextProject={project[index + 1]}
-                  onChange={handleChange}
-                />
-          } */}
-          {/* </ScrollPage> */}
-        </motion.div>)
-      })}
+        </div>:
+       <div
+       className="col-md-8" style={{ width: '100%', height: '180vh', position: 'relative' }}
+       ref={(el) => (GrouRef.current[index + 1] = el)}
+       data-bgcolor={project.color}
+       data-title={project.name}
+       data-slug={project.slug}
+       key={index}
+     >
+       {<Brenna
+         name={project.name}
+         images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+         slug={"/".concat(project.slug)}
+         setCount={props.setCount}
+         nextProject={project[index + 1]}
+         coords={largeCircle}
+         slowCoords={mediumCircle}
+       />}
+     </div>
+          }
+            </>
+          )
 
+          // if (parseInt(project.template) == 1) {
+            // return (
+            // <div
+            //   className="" style={{ width: '100%', height: '100vh', position: 'relative' }}
+            //   ref={(el) => (GrouRef.current[index + 1] = el)}
+            //   data-bgcolor={project.color}
+            //   data-title={project.name}
+            //   data-slug={project.slug}
+            //   key={index}
+            // >
+            //   <Auston
+            //     name={project.name}
+            //     images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+            //     slug={"/".concat(project.slug)}
+            //     setCount={props.setCount}
+            //     nextProject={project[index + 1]}
+            //     coords={largeCircle}
+            //     slowCoords={mediumCircle}
+            //   />
+            // </div>
+            // )
+          // }
+          // else if (parseInt(project.template) == 2) {
+          //   return (
+            // <div
+            //   className="col-md-12" style={{ width: '100%', height: '100vh', position: 'relative' }}
+            //   ref={(el) => (GrouRef.current[index + 1] = el)}
+            //   data-bgcolor={project.color}
+            //   data-title={project.name}
+            //   data-slug={project.slug}
+            //   key={index}
+            // >
+            //   <Amoeba
+            //     name={project.name}
+            //     images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+            //     slug={"/".concat(project.slug)}
+            //     setCount={props.setCount}
+            //     nextProject={project[index + 1]}
+            //     coords={largeCircle}
+            //     slowCoords={mediumCircle}
+            //   />
+            // </div>)
+          // } else if (parseInt(project.template) == 3) {
+            // return (<div
+            //   className="col-md-8" style={{ width: '100%', height: '100vh', position: 'relative' }}
+            //   ref={(el) => (GrouRef.current[index + 1] = el)}
+            //   data-bgcolor={project.color}
+            //   data-title={project.name}
+            //   data-slug={project.slug}
+            //   key={index}
+            // >
+            //   {<Brenna
+            //     name={project.name}
+            //     images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+            //     slug={"/".concat(project.slug)}
+            //     setCount={props.setCount}
+            //     nextProject={project[index + 1]}
+            //     coords={largeCircle}
+            //     slowCoords={mediumCircle}
+            //   />}
+            // </div>)
+          // }
+        })}
+      </div>
 
       <div
         style={{

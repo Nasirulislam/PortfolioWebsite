@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import image1 from "./../../Assets/images/6.jpg";
-import image2 from "./../../Assets/images/5.jpg";
-import image3 from "./../../Assets/images/4.jpg";
 import "./Auston.css";
 import { useNavigate } from "react-router-dom/dist";
 import base_url from "../../constants/url";
-import AnimatedText from "../AnimatedText";
 import {
+  useScroll,
   motion
 } from "framer-motion";
 
@@ -16,6 +13,9 @@ function Auston(props) {
   const navigate = useNavigate();
 
   const ref1 = useRef(null);
+
+  const { scrollYProgress } = useScroll();
+  const fencerImages = ["/images/fencer (1).jpg", "/images/fencer (2).jpg"];
 
   function handleChange(name) {
     // Here, we invoke the callback with the new value
@@ -34,38 +34,38 @@ function Auston(props) {
   };
 
   return (
-    <div
-      className="fencher-section card-wrapper mt-0"
-      style={{ cursor: "pointer", position: 'relative' }}
-      ref={ref}
-      onClick={() => {
-        navigate(
-          props.slug
-        );
-        window.scrollTo(0, 0);
-      }}
-    >
-
-      <motion.div className="home-title">
-        <motion.h1 ><AnimatedText {...{ type: "heading", text: props.name || "waheed" }} /></motion.h1>
-      </motion.div>
-
-      <motion.div className="image2 d-flex justify-content-around align-items-center" variants={portfolioAnimation}
-        initial={"hidden"}
-        whileInView={"visible"}
-        viewport={{ once: false, amount: 0.7 }}
-        transition={{ type: "spring", duration: 2 }}>
-        {props.images.map((banner, key) => {
-          return (
-            <img
-              className={key == 0 ? "hoverImages" : ""}
-              // style={{ y }}
-              src={`${base_url}` + "/img/projects/" + banner}
-              key={key}
-            />
-          )
-        })}
-      </motion.div>
+    <div className={"col-md-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100vh' }}>
+      {fencerImages.map((banner, key) => {
+        {
+          if (key === 0) {
+            return (
+              <motion.div className={"col-md-6 d-flex align-items-center justify-content-end"}
+                animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
+                <img
+                  className="image-container"
+                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto' }}
+                  // src={`${base_url}` + "/img/projects/" + banner}
+                  src={banner}
+                  key={key}
+                />
+              </motion.div>
+            )
+          } else {
+            return (
+              <motion.div className={"col-md-6 d-flex align-items-center"} style={{ height: '100vh' }}
+                animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
+                <img
+                  className={"col-md-6 " + ((props.images.length - 1) === key && props.images.length > 2) ? " last-image" : " image-container "}
+                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '' }}
+                  // src={`${base_url}` + "/img/projects/" + banner}
+                  src={banner}
+                  key={key}
+                />
+              </motion.div>
+            )
+          }
+        }
+      })}
     </div>
   );
 }

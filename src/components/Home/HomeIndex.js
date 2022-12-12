@@ -1,23 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import Home from "./Home";
-import BottomSlider from "./BottomSlider";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { motion } from "framer-motion";
-import Fencher from "../Fencher/Fencher";
-import HomeMain from "./HomeMain";
-import base_url from "../../constants/url";
 import { Card } from "react-bootstrap";
-import AnimatedText from "../AnimatedText";
-import {
-  Animator,
-  batch,
-  Fade,
-  MoveOut,
-  ScrollContainer,
-  ScrollPage,
-  Sticky,
-  ZoomIn,
-} from "react-scroll-motion";
+
 
 
 
@@ -48,21 +33,19 @@ function HomeIndex(props) {
 
   const firstIndex = images.slice(0, 2);
   const secondIndex = images.slice(2, 5);
-  console.log(firstIndex)
 
   return (
-
-    <motion.div
-      className="home-slide-section"
-      animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 10,
-      }}
-    >
-      <div id="home-page" className="home-page">
-        <div className="home-slide-section">
-          <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow" style={{ height: '50vh' }}>
+    <div id="home-page" className="home-page">
+      <div className="home-slide-section">
+        <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow" style={{ height: '50vh' }}>
+          <motion.div
+            className="home-slide-section"
+            animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 10,
+            }}
+          >
             <Card className="">
               <img
                 style={{ height: '100vh' }}
@@ -70,6 +53,15 @@ function HomeIndex(props) {
                 src={`/images/index/${firstIndex[0]}`}
               />
             </Card>
+          </motion.div>
+          <motion.div
+            className="home-slide-section"
+            animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 10,
+            }}
+          >
             <Card>
               <img
                 style={{ height: '100vh' }}
@@ -77,9 +69,15 @@ function HomeIndex(props) {
                 src={`/images/index/${firstIndex[1]}`}
               />
             </Card>
-          </div>
-          {/* <marquee> */}
-          <div className="col-md-12 d-flex justify-content-around align-items-center p-3 tech-slideshow" style={{ height: '50vh' }}>
+          </motion.div>
+          <motion.div
+            className="home-slide-section"
+            animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 10,
+            }}
+          >
             <Card
             >
               <img
@@ -87,6 +85,15 @@ function HomeIndex(props) {
                 src={`/images/index/${secondIndex[0]}`}
               />
             </Card>
+          </motion.div>
+          <motion.div
+            className="home-slide-section"
+            animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 10,
+            }}
+          >
             <Card
             >
               <img
@@ -95,6 +102,15 @@ function HomeIndex(props) {
                 src={`/images/index/${secondIndex[1]}`}
               />
             </Card>
+          </motion.div>
+          <motion.div
+            className="home-slide-section"
+            animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 10,
+            }}
+          >
             <Card
             >
               <img
@@ -102,10 +118,36 @@ function HomeIndex(props) {
                 src={`/images/index/${secondIndex[2]}`}
               />
             </Card>
-          </div>
+          </motion.div>
         </div>
+        {/* <marquee> */}
+        {/* <div className="col-md-12 d-flex justify-content-around align-items-center p-3 tech-slideshow" style={{ height: '50vh' }}>
+          <Card
+          >
+            <img
+              className="img-fluid"
+              src={`/images/index/${secondIndex[0]}`}
+            />
+          </Card>
+          <Card
+          >
+            <img
+              style={{ height: '100vh', width: '100vh' }}
+              className="img-fluid"
+              src={`/images/index/${secondIndex[1]}`}
+            />
+          </Card>
+          <Card
+          >
+            <img
+              className="img-fluid"
+              src={`/images/index/${secondIndex[2]}`}
+            />
+          </Card>
+        </div> */}
       </div>
-    </motion.div>
+    </div>
+    // </motion.div >
   );
 }
 

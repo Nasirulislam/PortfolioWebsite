@@ -50,3 +50,8 @@
   /* margin-right: 5px; */
   right: 60px;
 }
+
+.image-container{
+  max-width: 75vh;
+  min-height: 100vh;
+}
