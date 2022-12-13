@@ -74,7 +74,8 @@
 }
 
 .home-slide-section {
-  width: 100%;
+  width: 30%;
+  height:70%;
   background: transparent;
 }
 
@@ -224,4 +225,8 @@
 }
 .img-fluid {
   max-height: 100vh;
+}
+
+.card {
+  border: none;
 }

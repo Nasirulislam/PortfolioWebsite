@@ -108,7 +108,7 @@ function HomeMain(props) {
   return (
     <>
       <div className="container" style={{height: '100%'}}>
-        <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+        <div style={{ position: 'relative', width: '100%', height: '130vh' }}>
           <div className="home-title change-title">
             <h1 style={{ cursor: 'pointer' }} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
             >
@@ -135,7 +135,7 @@ function HomeMain(props) {
             <>
             {e==1?
             <div
-            className="" style={{ width: '100%', height: '100vh', position: 'relative' }}
+            className="" style={{ width: '100%', height: '130vh', position: 'relative' }}
             ref={(el) => (GrouRef.current[index + 1] = el)}
             data-bgcolor={project.color}
             data-title={project.name}
@@ -153,7 +153,7 @@ function HomeMain(props) {
             />
           </div>:e==2?
           <div
-          className="col-md-12" style={{ width: '100%', height: '130vh', position: 'relative' }}
+          className="col-md-12" style={{ width: '100%', height: '160vh', position: 'relative' }}
           ref={(el) => (GrouRef.current[index + 1] = el)}
           data-bgcolor={project.color}
           data-title={project.name}
@@ -171,7 +171,7 @@ function HomeMain(props) {
           />
         </div>:
        <div
-       className="col-md-8" style={{ width: '100%', height: '180vh', position: 'relative' }}
+       className="col-md-8" style={{ width: '100%', height: '210vh', position: 'relative' }}
        ref={(el) => (GrouRef.current[index + 1] = el)}
        data-bgcolor={project.color}
        data-title={project.name}
