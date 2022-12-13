@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { motion } from "framer-motion";
-import { Card } from "react-bootstrap";
 
 
 function HomeIndex(props) {
@@ -58,8 +57,7 @@ function HomeIndex(props) {
                     src={`/images/index/${banner}`}
                   />
                 </motion.Card>
-                : <motion.Card className=""
-                  // animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                : <motion.Card className=""                  
                   key={index}>
                   <img
                     className="img-fluid mover-1"

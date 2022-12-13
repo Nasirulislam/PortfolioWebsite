@@ -15,7 +15,8 @@ import Testing from "./components/Home/Testing";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 
 function App() {
@@ -135,9 +136,9 @@ function App() {
               </div>
               <div className="main-button">
                 <h3 onClick={METoogle} className="ME-button">
-                  <a href="/" id="style-2" data-replace={METext}>
+                  <Link to="/" id="style-2" data-replace={METext}>
                     <span>{METext}</span>
-                  </a>
+                  </Link>
                 </h3>
               </div>
               <div className="main-button">

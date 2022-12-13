@@ -15,7 +15,7 @@ function Auston(props) {
   const ref1 = useRef(null);
 
   const { scrollYProgress } = useScroll();
-  const fencerImages = props.images.slice(0,2);
+  const fencerImages = props.images.slice(0,2).reverse();
 
 
   const ref = useRef(null);

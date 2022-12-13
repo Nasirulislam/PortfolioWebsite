@@ -1,12 +1,10 @@
-import React, { useRef } from "react";
-
-import { Container, Row, Col } from "react-bootstrap";
+import React from "react";
 import base_url from "../../constants/url";
-// import "./template.css";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import { useEffect } from "react";
+// import { motion } from "framer-motion";
 
 function NextProject(props) {
   const projectData = props.projectData;
@@ -14,72 +12,77 @@ function NextProject(props) {
   const navigate = useNavigate();
   const [bottom, setBottom] = useState(false);
 
-  const handleNextProject = (event) => {
-    console.log("scroliing");
-    const element = document.getElementsByClassName("next-project-section")[0];
-    var offset =
-      element.getBoundingClientRect().top -
-      element.offsetParent.getBoundingClientRect().top;
-    console.log(element.scrollHeight);
-    const top = window.pageYOffset + window.innerHeight - offset;
-
-    if (top >= element.scrollHeight) {
-      setBottom(true);
-    } else if (top < element.scrollHeight - 300) {
-      setBottom(false);
+  const nextProject = {
+    hidden: {
+      y: 150
+    },
+    visibility: {
+      y: 0
     }
-  };
-  const setScroll = () => {
-    console.log("hello");
+  }
+
+  const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
+  const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
+
+  const mousemove = (e) => {
+    setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
+    setMediumCircle({ x: (e.clientX / 80) * -1, y: (e.clientY / 80) * -1 });
   };
   useEffect(() => {
-    // window.addEventListener("scroll", handleNextProject);
+    window.addEventListener("mousemove", mousemove);
     return () => {
-      // window.removeEventListener("scroll", handleNextProject);
+      window.removeEventListener("mousemove", mousemove);
     };
   }, []);
-  
+
   return (
-    <div
+    <motion.div
       className="next-project-section"
       style={{
         width: "100%",
-        zindex:"10",
+        zindex: "10",
         height: "100vh",
-        background:"transparent",        
-      }}
+        background: "transparent",
+        position: 'relative'
+      }}      
       onClick={() => {
         navigate(
           index + 1 < projectData.length - 1
             ? `/${projectData[index + 1].slug}`
             : "/"
         );
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       }}
     >
-      <div className="">
-        {/* {index <= projectData.length - 1 ? (
-          <h1 >{projectData[index + 1].name}</h1>
-        ) : (
-          ""
-        )} */}
-        {/* <h4 style={{ color:projectData[index+1].color}}>Next project</h4> */}
-      </div>
-      <div className="d-flex justify-content-center align-items-center">
-        <img
+      <div className="d-flex justify-content-center align-items-center" style={{ position: 'relative' }}>
+        <motion.img
           className="next-proj-img1"
           src={
             `${base_url}` + "/img/projects/" + projectData[index + 1].images[0]
           }
+          animate={{ x: largeCircle.x, y: largeCircle.y }}
         />
-        <img
+        <motion.img
           className="next-proj-img2"
           src={
             `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
           }
+          animate={{ x: mediumCircle.x, y: mediumCircle.y }}
         />
+        {props.showDescription && (
+          <motion.h2
+            className="next-project"
+            variants={nextProject}
+            initial={"hidden"}
+            animate={"visibility"}
+            transition={{ type: "spring", duration: 2 }}
+            style={{ position: "absolute", bottom: "9%", left: "20%" }}
+          >Next project</motion.h2>
+        )}
+
       </div>
-    </div>
+
+    </motion.div>
   );
 }
 
