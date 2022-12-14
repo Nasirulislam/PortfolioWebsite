@@ -165,6 +165,7 @@ function HomeMain(props) {
                     nextProject={project[index + 1]}
                     coords={largeCircle}
                     slowCoords={mediumCircle}
+                    handleSlug={handleSlug}
                   />
                 </div> : e == 2 ?
                   <div
@@ -184,6 +185,7 @@ function HomeMain(props) {
                       nextProject={project[index + 1]}
                       coords={largeCircle}
                       slowCoords={mediumCircle}
+                      handleSlug={handleSlug}
                     />
                   </div> :
                   <div
@@ -203,6 +205,7 @@ function HomeMain(props) {
                       nextProject={project[index + 1]}
                       coords={largeCircle}
                       slowCoords={mediumCircle}
+                      handleSlug={handleSlug}
                     />}
                   </div>
               }

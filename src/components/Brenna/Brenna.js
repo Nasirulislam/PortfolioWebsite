@@ -17,6 +17,8 @@ function Brenna(props) {
             className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
             src={`${base_url}` + "/img/projects/" + banner}
             key={key}
+            style={{ cursor: 'pointer' }}
+            onClick={() => props.handleSlug()}
           />
         </motion.div>
           : key == 1 ?
@@ -27,6 +29,8 @@ function Brenna(props) {
                 className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
                 src={`${base_url}` + "/img/projects/" + banner}
                 key={key}
+                style={{ cursor: 'pointer' }}
+                onClick={() => props.handleSlug()}
               />
             </motion.div>
             : key == 2 ? <motion.div className={"col-md-12 d-flex align-items-center justify-content-center"}
@@ -36,6 +40,8 @@ function Brenna(props) {
                 className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
                 src={`${base_url}` + "/img/projects/" + banner}
                 key={key}
+                style={{ cursor: 'pointer' }}
+                onClick={() => props.handleSlug()}
               />
             </motion.div> : <></>
       })}

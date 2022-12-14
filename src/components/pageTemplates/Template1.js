@@ -1,6 +1,6 @@
 import React from "react";
 import base_url from "../../constants/url";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NextProject from "./NextProject";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,10 +10,11 @@ import { motion } from "framer-motion";
 function Template1(props) {
   const { slug } = useParams();
   const projectData = props.projectData;
-  const index = props.projectData.findIndex(item => item.slug == slug);
+  const index = props.index;
   const [bottom, setBottom] = useState(false);
   const [banners, setBanners] = useState([]);
   const [value, setValue] = useState(projectData[index].name);
+  const [nextPortfolioSlug, setSlug] = useState(projectData[index].slug);
 
   const makeTemplateBannerChunks = (arr, chunkSize) => {
     let array = [];
@@ -34,6 +35,7 @@ function Template1(props) {
         setValue(projectData[index + 1].name);
         document.body.style.backgroundColor = projectData[index + 1].color;
         setBottom(true);
+        setSlug(projectData[index + 1]?.slug)
       } else {
         setValue(projectData[index].name);
         document.body.style.backgroundColor = projectData[index].color;
@@ -56,6 +58,11 @@ function Template1(props) {
       window.removeEventListener("mousemove", mousemove);
     };
   }, []);
+
+  // const navigate = useNavigate();
+  // const handleSlug = () => {
+  //   navigate("/" + nextPortfolioSlug);
+  // }
 
   return (
     <motion.div style={{ height: '100%', position: 'relative' }}

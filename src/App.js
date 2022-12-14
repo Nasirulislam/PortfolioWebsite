@@ -11,6 +11,8 @@ import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
 import Admin from "./components/admin/Admin";
 import Login from "./components/admin/Login";
+import ScrollToTop from "./components/ScrollToTop";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -42,7 +44,6 @@ function App() {
   };
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("fetching records")
       await axios.get(`${base_url}/project/`).then((response) => {
         setProjectsData(response.data.data.sortedProjects);
         setDataFetch(true);
@@ -116,6 +117,7 @@ function App() {
   return (
     <div>
       <Router>
+        <ScrollToTop />
         <div className="App">
           {path !== "/admin" && path !== "/admin-login" ? (
             <>
@@ -179,7 +181,18 @@ function App() {
                     )
                   }
                 />
-                <Route path="/:slug" element={<Template1 projectData={projectsData} />} />
+                {projectsData.map((project, pindex) => {
+                  return (
+                    <Route
+                      key={pindex}
+                      exact
+                      path={"/".concat(project.slug)}
+                      element={
+                        <Template1 projectData={projectsData} index={pindex} />
+                      }
+                    />
+                  );
+                })}
                 <Route exact path="/admin" element={<Login />} />
                 <Route
                   exact

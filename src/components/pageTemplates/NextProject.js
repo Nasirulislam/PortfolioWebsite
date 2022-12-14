@@ -44,7 +44,7 @@ function NextProject(props) {
         height: "100vh",
         background: "transparent",
         position: 'relative'
-      }}      
+      }}
       onClick={() => {
         navigate(
           index + 1 < projectData.length - 1
@@ -62,13 +62,15 @@ function NextProject(props) {
           }
           animate={{ x: largeCircle.x, y: largeCircle.y }}
         />
-        <motion.img
-          className="next-proj-img2"
-          src={
-            `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
-          }
-          animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-        />
+        {projectData[index + 1].images.length > 1 && (
+          <motion.img
+            className="next-proj-img2"
+            src={
+              `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
+            }
+            animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+          />
+        )}
         {props.showDescription && (
           <motion.h2
             className="next-project"

@@ -9,25 +9,9 @@ import {
 
 
 function Auston(props) {
-  const [homeState, setHomeState] = useState(true);
+
   const navigate = useNavigate();
-
-  const ref1 = useRef(null);
-
-  const { scrollYProgress } = useScroll();
-  const fencerImages = props.images.slice(0,2).reverse();
-
-
-  const ref = useRef(null);
-
-  const portfolioAnimation = {
-    hidden: {
-      y: 100
-    },
-    visible: {
-      y: 0
-    }
-  };
+  const fencerImages = props.images.slice(0,2);
 
   return (
     <div className={"col-md-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100vh' }}>
@@ -39,9 +23,10 @@ function Auston(props) {
                 animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
                 <img
                   className="image-container"
-                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto' }}
+                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer' }}
                   src={`${base_url}` + "/img/projects/" + banner}
                   key={key}
+                  onClick={() => props.handleSlug()}
                 />
               </motion.div>
             )
@@ -51,9 +36,10 @@ function Auston(props) {
                 animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
                 <img
                   className={"col-md-6 " + ((props.images.length - 1) === key && props.images.length > 2) ? " last-image" : " image-container "}
-                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '' }}
+                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', cursor: 'pointer' }}
                   src={`${base_url}` + "/img/projects/" + banner}
                   key={key}
+                  onClick={() => props.handleSlug()}
                 />
               </motion.div>
             )
