@@ -253,3 +253,7 @@
   left: 0;
   background: transparent;
 }
+
+.col-md-6 img {
+  max-width: 100% !important;
+}
