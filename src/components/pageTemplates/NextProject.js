@@ -48,7 +48,7 @@ function NextProject(props) {
       onClick={() => {
         navigate(
           index + 1 < projectData.length - 1
-            ? `/${projectData[index + 1].slug}`
+            ? `${projectData[index + 1].slug}`
             : "/"
         );
         window.scrollTo(0, 0);

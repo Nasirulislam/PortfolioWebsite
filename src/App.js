@@ -11,7 +11,6 @@ import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
 import Admin from "./components/admin/Admin";
 import Login from "./components/admin/Login";
-import Testing from "./components/Home/Testing";
 import {
   BrowserRouter as Router,
   Routes,
@@ -43,6 +42,7 @@ function App() {
   };
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log("fetching records")
       await axios.get(`${base_url}/project/`).then((response) => {
         setProjectsData(response.data.data.sortedProjects);
         setDataFetch(true);
@@ -166,7 +166,7 @@ function App() {
                         indexBtn={buttonToogle}
                       />
                     ) : (
-                      <div style={{ marginLeft: "50vw", marginTop: "20vh" }}>
+                      <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>
                         <Spinner
                           style={{
                             width: "100px",
@@ -179,21 +179,8 @@ function App() {
                     )
                   }
                 />
-                {projectsData.map((project, pindex) => {
-                  return (
-                    <Route
-                      key={pindex}
-                      exact
-                      path={"/".concat(project.slug)}
-                      element={
-                        <Template1 projectData={projectsData} index={pindex} />
-                      }
-                    />
-                  );
-                })}
+                <Route path="/:slug" element={<Template1 projectData={projectsData} />} />
                 <Route exact path="/admin" element={<Login />} />
-                {/* <Route exact path="/testing" element={<Testing />} /> */}
-                <Route exact path="/new_test" element={<Testing />} />
                 <Route
                   exact
                   path="/admin-login"

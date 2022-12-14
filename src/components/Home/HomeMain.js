@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Auston from "../Auston/Auston";
 import Amoeba from "../Amoeba/Amoeba";
 import Brenna from "../Brenna/Brenna";
+import { motion } from "framer-motion";
 
 
 function HomeMain(props) {
@@ -45,6 +46,10 @@ function HomeMain(props) {
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    }
   });
 
   function randomNumberInRange(min, max) {
@@ -73,20 +78,11 @@ function HomeMain(props) {
     }
   };
 
-  const txtAnimation = {
-    hidden: {
-      y: 100
-    },
-    visible: {
-      y: 0
-    }
-  }
-
   const handleSlug = () => {
     if (value === "View All Projects") {
       props.indexBtn();
     } else {
-      navigate(slug);
+      navigate("/" + slug);
     }
   }
 
@@ -97,6 +93,7 @@ function HomeMain(props) {
     setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
     setMediumCircle({ x: (e.clientX / 80) * -1, y: (e.clientY / 80) * -1 });
   };
+
   useEffect(() => {
     window.addEventListener("mousemove", mousemove);
     return () => {
@@ -104,16 +101,31 @@ function HomeMain(props) {
     };
   }, []);
 
+  const animateTxt = {
+    hidden: {
+      y: 200
+    },
+    visible: {
+      y: 0
+    }
+  }
+
   return (
     <>
       <div className="container-fluid" style={{ height: '100%' }}>
-        <div style={{ position: 'relative', width: '100%', height: '130vh' }}>
-          <div className="home-title change-title">
-            <h1 style={{ cursor: 'pointer' }} onClick={handleSlug} data-text="View All Projects" id="homeTitle"><ReactTextTransition springConfig={presets.gentle} className="indexitem-button"
+        <div style={{ position: 'relative', width: '100%', height: '200vh' }}>          
+          {value.toLowerCase() !== "david ellis" && (
+            <motion.div className="home-title change-title"
+            initial={"hidden"}            
+            animate={"visible"}
+            variants={animateTxt}
+            transition={{y:200, duration: 5}}
             >
-              {value}
-            </ReactTextTransition></h1>
-          </div>
+              <h1 style={{ cursor: 'pointer' }} onClick={handleSlug}>
+                <ReactTextTransition springConfig={presets.gentle} className="indexitem-button">
+                  {value}
+                </ReactTextTransition></h1>
+            </motion.div>)}
           <div
             className="card-wrapper my-4"
             ref={(el) => (GrouRef.current[0] = el)}
@@ -121,10 +133,12 @@ function HomeMain(props) {
             data-title="David Ellis"
             data-slug="/"
             data-index="00"
+            style={{ height: "100%" }}
           >
             <HomeIndex
               randomIndex={randomIndex}
               projectsData={projectsData}
+              value={value}
             />
           </div>
         </div>

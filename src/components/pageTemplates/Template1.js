@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import base_url from "../../constants/url";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NextProject from "./NextProject";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -8,13 +8,11 @@ import ReactTextTransition, { presets } from "react-text-transition";
 import { motion } from "framer-motion";
 
 function Template1(props) {
+  const { slug } = useParams();
   const projectData = props.projectData;
-  const index = props.index;
-  const navigate = useNavigate();
+  const index = props.projectData.findIndex(item => item.slug == slug);
   const [bottom, setBottom] = useState(false);
   const [banners, setBanners] = useState([]);
-
-  const nextRef = useRef(null);
   const [value, setValue] = useState(projectData[index].name);
 
   const makeTemplateBannerChunks = (arr, chunkSize) => {
@@ -29,8 +27,7 @@ function Template1(props) {
   useEffect(() => {
 
     // split images array into 2 chunks
-    setBanners(makeTemplateBannerChunks(props.projectData[index]?.images, 2));
-    console.log(banners)
+    setBanners(makeTemplateBannerChunks(projectData[index]?.images, 2));
 
     const onScroll = function () {
       if (window.innerHeight + window.scrollY > document.body.offsetHeight - 500) {
@@ -45,13 +42,14 @@ function Template1(props) {
     }
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  });
+  }, [index]);
 
 
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
   };
+
   useEffect(() => {
     window.addEventListener("mousemove", mousemove);
     return () => {
@@ -59,21 +57,17 @@ function Template1(props) {
     };
   }, []);
 
-  const nextProjectAnimate = {
-    hidden: {
-      y: 100
-    },
-    visible: {
-      y: 0
-    }
-  }
-
   return (
-    <div style={{ height: '100%', position: 'relative' }} >
+    <motion.div style={{ height: '100%', position: 'relative' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 2 }}
+    >
       <div className="home-title" style={{ cursor: 'pointer' }}>
         <h1><ReactTextTransition springConfig={presets.default} className="indexitem-button"
         >
-          {value || "David Ellis"}
+          {value || projectData[index].name}
         </ReactTextTransition></h1>
       </div>
       <div
@@ -84,7 +78,7 @@ function Template1(props) {
           return (
             itemIndex === 0 ?
               <div className="row justify-content-end" style={{ height: '170vh', position: 'relative' }}>
-                <motion.div className="col-md-6 d-flex justify-content-end">
+                <motion.div className="col-md-6 d-flex justify-content-end" key={itemIndex}>
                   {item.map((banner, index) => {
                     return index == 0 ?
                       <motion.img
@@ -92,26 +86,31 @@ function Template1(props) {
                         src={`${base_url}` + "/img/projects/" + banner}
                         style={{ position: 'absolute', top: '30%', right: '22%' }}
                         animate={{ x: largeCircle.x, y: largeCircle.y }}
+                        key={index}
                       /> :
                       <img
                         className={"img-fluid"}
                         src={`${base_url}` + "/img/projects/" + banner}
+                        key={index}
                       />
                   })}
                 </motion.div>
               </div>
               : <div className="row my-5 py-5" style={{ height: '100%' }}>
                 <motion.div className={"col-md-12 d-flex " + (item.length > 1 ? "justify-content-between" : "justify-content-center")}
-                  style={{ zIndex: (banners.length - 1) === itemIndex || itemIndex%2==1 ? "1000" : "0" }}>
+                  style={{ zIndex: (banners.length - 1) === itemIndex || itemIndex % 2 == 1 ? "1000" : "0" }}
+                  key={itemIndex}>
                   {item.map((banner, index) => {
                     return index == 0 ?
                       <motion.img
                         className={"img-fluid"}
                         src={`${base_url}` + "/img/projects/" + banner}
+                        key={index}
                       /> :
                       <img
                         className={"img-fluid"}
                         src={`${base_url}` + "/img/projects/" + banner}
+                        key={index}
                       />
                   })}
                 </motion.div>
@@ -128,7 +127,7 @@ function Template1(props) {
           ""
         )
       }
-    </div >
+    </motion.div >
   );
 }
 
