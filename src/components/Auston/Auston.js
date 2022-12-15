@@ -22,7 +22,7 @@ function Auston(props) {
                 animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
                 <img
                   className="image-container"
-                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer' }}
+                  style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100vh' }}
                   src={`${base_url}` + "/img/projects/" + banner}
                   key={key}
                   onClick={() => props.handleSlug()}
