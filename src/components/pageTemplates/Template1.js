@@ -16,6 +16,7 @@ function Template1(props) {
   const [banners, setBanners] = useState([]);
   const [value, setValue] = useState(projectData[index].name);
   const [nextPortfolioSlug, setSlug] = useState(projectData[index].slug);
+  const currentPortfolioName = projectData[index].name;
 
   const makeTemplateBannerChunks = (arr) => {
 
@@ -55,8 +56,10 @@ function Template1(props) {
 
 
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
+  const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
+    setMediumCircle({ x: (e.clientX / 80) * -1, y: (e.clientY / 80) * -1 });
   };
 
   useEffect(() => {
@@ -78,7 +81,7 @@ function Template1(props) {
       exit={{ opacity: 0 }}
       transition={{ duration: 2 }}
     >
-      <div className="home-title" style={{ cursor: 'pointer' }}>
+      <div className={"home-title " + (currentPortfolioName === value ? "text-fill" : "")} style={{ cursor: 'pointer' }}>
         <h1><ReactTextTransition springConfig={presets.default} className="indexitem-button"
         >
           {value || projectData[index].name}
@@ -124,10 +127,11 @@ function Template1(props) {
                     key={index}
                   />
                   :
-                  <img
+                  <motion.img
                     className={"img-fluid"}
                     src={`${base_url}` + "/img/projects/" + banner}
                     key={index}
+                    animate={{ x: mediumCircle.x, y: mediumCircle.y }}
                   />
                 }
 
