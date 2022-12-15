@@ -3,7 +3,6 @@ import "./Auston.css";
 import { useNavigate } from "react-router-dom/dist";
 import base_url from "../../constants/url";
 import {
-  useScroll,
   motion
 } from "framer-motion";
 
@@ -19,7 +18,7 @@ function Auston(props) {
         {
           if (key === 0) {
             return (
-              <motion.div className={"col-md-6 d-flex align-items-center justify-content-end"}
+              <motion.div className={"col-md-7 d-flex align-items-center justify-content-end"}
                 animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
                 <img
                   className="image-container"
@@ -32,7 +31,7 @@ function Auston(props) {
             )
           } else {
             return (
-              <motion.div className={"col-md-6 d-flex align-items-center"} style={{ height: '100vh' }}
+              <motion.div className={"col-md-5 d-flex align-items-center"} style={{ height: '100vh' }}
                 animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
                 <img
                   className={"col-md-6 " + ((props.images.length - 1) === key && props.images.length > 2) ? " last-image" : " image-container "}

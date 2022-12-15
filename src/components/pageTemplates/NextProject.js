@@ -54,22 +54,26 @@ function NextProject(props) {
         window.scrollTo(0, 0);
       }}
     >
-      <div className="d-flex justify-content-center align-items-center" style={{ position: 'relative' }}>
-        <motion.img
-          className="next-proj-img1"
-          src={
-            `${base_url}` + "/img/projects/" + projectData[index + 1].images[0]
-          }
-          animate={{ x: largeCircle.x, y: largeCircle.y }}
-        />
-        {projectData[index + 1].images.length > 1 && (
+      <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>
+        <div className="col-md-4 d-flex justify-content-end">
           <motion.img
-            className="next-proj-img2"
+            className="next-proj-img1"
             src={
-              `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
+              `${base_url}` + "/img/projects/" + projectData[index + 1].images[0]
             }
             animate={{ x: mediumCircle.x, y: mediumCircle.y }}
           />
+        </div>
+        {projectData[index + 1].images.length > 1 && (
+          <div className="col-md-4">
+            <motion.img
+              className="next-proj-img2"
+              src={
+                `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
+              }
+              animate={{ x: largeCircle.x, y: largeCircle.y }}
+            />
+          </div>
         )}
         {props.showDescription && (
           <motion.h2
@@ -78,7 +82,7 @@ function NextProject(props) {
             initial={"hidden"}
             animate={"visibility"}
             transition={{ type: "spring", duration: 2 }}
-            style={{ position: "absolute", bottom: "9%", left: "20%" }}
+            style={{ position: "absolute", bottom: "12%", left: "20%" }}
           >Next project</motion.h2>
         )}
 

@@ -12,23 +12,30 @@ function Template1(props) {
   const projectData = props.projectData;
   const index = props.index;
   const [bottom, setBottom] = useState(false);
+  const [initialBanners, setInitialBanners] = useState([]);
   const [banners, setBanners] = useState([]);
   const [value, setValue] = useState(projectData[index].name);
   const [nextPortfolioSlug, setSlug] = useState(projectData[index].slug);
 
-  const makeTemplateBannerChunks = (arr, chunkSize) => {
-    let array = [];
-    for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      array.push(chunk);
+  const makeTemplateBannerChunks = (arr) => {
+
+    // extract first two initial banners
+    if (arr.length >= 2) {
+      const chunk = arr.slice(0, 2);
+      setInitialBanners(chunk);
     }
-    return array;
+    if (arr.length > 2) {
+      const chunk = arr.slice(2, arr.length);
+      setBanners(chunk);
+    } else {
+      setBanners(arr);
+    }
   }
 
   useEffect(() => {
 
     // split images array into 2 chunks
-    setBanners(makeTemplateBannerChunks(projectData[index]?.images, 2));
+    makeTemplateBannerChunks(projectData[index]?.images);
 
     const onScroll = function () {
       if (window.innerHeight + window.scrollY > document.body.offsetHeight - 500) {
@@ -81,49 +88,53 @@ function Template1(props) {
         className="main-proj-section"
         style={{ position: 'relative', height: '100%' }}
       >
-        {banners.map((item, itemIndex) => {
-          return (
-            itemIndex === 0 ?
-              <div className="row justify-content-end" style={{ height: '170vh', position: 'relative' }}>
-                <motion.div className="col-md-6 d-flex justify-content-end" key={itemIndex}>
-                  {item.map((banner, index) => {
-                    return index == 0 ?
-                      <motion.img
-                        className={"img-fluid"}
-                        src={`${base_url}` + "/img/projects/" + banner}
-                        style={{ position: 'absolute', top: '30%', right: '22%' }}
-                        animate={{ x: largeCircle.x, y: largeCircle.y }}
-                        key={index}
-                      /> :
-                      <img
-                        className={"img-fluid"}
-                        src={`${base_url}` + "/img/projects/" + banner}
-                        key={index}
-                      />
-                  })}
-                </motion.div>
-              </div>
-              : <div className="row my-5 py-5" style={{ height: '100%' }}>
-                <motion.div className={"col-md-12 d-flex " + (item.length > 1 ? "justify-content-between" : "justify-content-center")}
-                  style={{ zIndex: (banners.length - 1) === itemIndex || itemIndex % 2 == 1 ? "1000" : "0" }}
-                  key={itemIndex}>
-                  {item.map((banner, index) => {
-                    return index == 0 ?
-                      <motion.img
-                        className={"img-fluid"}
-                        src={`${base_url}` + "/img/projects/" + banner}
-                        key={index}
-                      /> :
-                      <img
-                        className={"img-fluid"}
-                        src={`${base_url}` + "/img/projects/" + banner}
-                        key={index}
-                      />
-                  })}
-                </motion.div>
-              </div>
-          )
-        })}
+        {initialBanners.length > 0 && (
+          <div className="row justify-content-end" style={{ height: '170vh', position: 'relative' }}>
+            <motion.div className="col-md-6 d-flex justify-content-end">
+              {initialBanners.map((banner, index) => {
+                return index == 0 ?
+                  <motion.img
+                    className={"img-fluid"}
+                    src={`${base_url}` + "/img/projects/" + banner}
+                    style={{ position: 'absolute', top: '30%', right: '22%' }}
+                    animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    key={index}
+                  /> :
+                  <img
+                    className={"img-fluid"}
+                    src={`${base_url}` + "/img/projects/" + banner}
+                    key={index}
+                  />
+              })}
+            </motion.div>
+          </div>
+        )}
+        {banners.length > 0 && (
+          <div className="row my-5 py-5" style={{ height: '100%' }}>
+            {banners.map((banner, index) => {
+              return <motion.div className={"col-md-12 d-flex justify-content-" + (index % 2 == 1 ? "end " : "center ") + (index !== 0 ? "my-5 py-5" : "")}
+                style={{ zIndex: index !== 0 && index % 2 == 0 ? "1000" : "0" }}
+                key={index}>
+
+                {index % 2 === 0 && index !== 0 ?
+                  <motion.img
+                    className={"img-fluid"}
+                    src={`${base_url}` + "/img/projects/" + banner}
+                    animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    key={index}
+                  />
+                  :
+                  <img
+                    className={"img-fluid"}
+                    src={`${base_url}` + "/img/projects/" + banner}
+                    key={index}
+                  />
+                }
+
+              </motion.div>
+            })}
+          </div>
+        )}
       </div>
       {
         index <= props.projectData.length - 1 && props.projectData[index + 1] ? (
