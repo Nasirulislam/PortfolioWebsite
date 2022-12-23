@@ -11,7 +11,7 @@ function Amoeba(props) {
       {amoebaImages.map((banner, key) => {
         if (key == 0) {
           return (
-            <motion.div className={"col-md-8 d-flex justify-content-center"}
+            <motion.div className={"col-md-8 d-flex justify-content-center amoeba"}
               animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}
               key={key}>
               <img

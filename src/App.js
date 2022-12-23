@@ -24,7 +24,7 @@ function App() {
   const [projectsData, setProjectsData] = useState([]);
   const [IndexText, setIndexText] = useState("INDEX");
   const [aboutText, setAboutText] = useState("ABOUT");
-  const [METext, setMEText] = useState("M-E");
+  const [METext, setMEText] = useState("START");
   const [Text00, set00Text] = useState("00");
   const [clicked, setClicked] = useState(true);
   const [Redhome, setHome] = useState(false);

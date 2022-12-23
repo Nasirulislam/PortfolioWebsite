@@ -12,7 +12,7 @@ function HomeIndex(props) {
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
-    setMediumCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
+    setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
     setFastCircle({ x: (e.clientX / 4) * -1, y: (e.clientY / 4) * -1 });
   };
 
@@ -29,12 +29,12 @@ function HomeIndex(props) {
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
     const ZOOM_SPEED = 50 // Lower is faster
-    const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 15) // When it should stop zooming in
+    const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
 
     // Fade --------------------------------------------------------------------------------------
-    const FADE_SPEED = 600 // Lower is faster
+    const FADE_SPEED = 200 // Lower is faster
     let fade = 1
     let prev = 0
     // -------------------------------------------------------------------------------------- Fade

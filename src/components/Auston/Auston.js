@@ -13,7 +13,7 @@ function Auston(props) {
   const fencerImages = props.images.slice(0,2);
 
   return (
-    <div className={"col-md-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100vh' }}>
+    <div className={"col-md-12 col-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100vh' }}>
       {fencerImages.map((banner, key) => {
         {
           if (key === 0) {

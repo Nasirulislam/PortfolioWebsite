@@ -62,11 +62,9 @@ function AddProject(props) {
     formData.append("slug", Slug);
     formData.append("color", color);
     Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
-    console.log(selectedImages)
 
 
     await axios.post(`${base_url}/project/new`, formData,{'Content-Type': 'multipart/form-data' }).then((response) => {
-      console.log(response);
       setDetail('');
       setTitle('');
       window.location.reload();

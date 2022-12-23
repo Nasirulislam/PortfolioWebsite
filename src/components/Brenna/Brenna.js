@@ -7,9 +7,9 @@ function Brenna(props) {
   const navigate = useNavigate();
 
   return (
-    <div className={"col-md-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")}>
+    <div className={"col-md-12 d-flex align-items-center brenna-master " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")}>
       {props.images.slice(0, 3).map((banner, key) => {
-        return key == 0 ? <motion.div className={"col-md-6 d-flex align-items-center justify-content-center"}
+        return key == 0 ? <motion.div className={"col-md-6 d-flex align-items-center justify-content-center brenna-first"}
           style={{ zIndex: 1 }}
           animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}
           key={key}>
@@ -22,7 +22,7 @@ function Brenna(props) {
           />
         </motion.div>
           : key == 1 ?
-            <motion.div className={"col-md-6 d-flex align-items-center justify-content-center"}
+            <motion.div className={"col-md-6 d-flex align-items-center justify-content-center brenna-start"}
               animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}
               key={key}>
               <img
@@ -33,7 +33,7 @@ function Brenna(props) {
                 onClick={() => props.handleSlug()}
               />
             </motion.div>
-            : key == 2 ? <motion.div className={"col-md-12 d-flex align-items-center justify-content-center"}
+            : key == 2 ? <motion.div className={"col-md-12 d-flex align-items-center justify-content-center brenna-first"}
               animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }} style={{ position: 'absolute', top: '35%', zIndex: 1 }}
               key={key}>
               <img

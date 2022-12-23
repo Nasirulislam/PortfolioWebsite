@@ -90,7 +90,7 @@ function HomeMain(props) {
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
 
   const mousemove = (e) => {
-    setLargeCircle({ x: (e.clientX / 30) * -1, y: (e.clientY / 30) * -1 });
+    setLargeCircle({ x: (e.clientX / 20) * -1, y: (e.clientY / 20) * -1 });
     setMediumCircle({ x: (e.clientX / 80) * -1, y: (e.clientY / 80) * -1 });
   };
 
@@ -112,14 +112,14 @@ function HomeMain(props) {
 
   return (
     <>
-      <div className="container-fluid" style={{ height: '100%' }}>
-        <div style={{ position: 'relative', width: '100%', height: '200vh' }}>          
+      <div className="container-fluid" style={{ height: '100%', maxWidth: '100vw' }}>
+        <div style={{ position: 'relative', width: '100%', height: '200vh' }} id="homeIndex">          
           {value.toLowerCase() !== "david ellis" && (
             <motion.div className="home-title change-title"
             initial={"hidden"}            
             animate={"visible"}
             variants={animateTxt}
-            transition={{y:200, duration: 5}}
+            transition={{y:200, duration: 4}}
             >
               <h1 style={{ cursor: 'pointer' }} onClick={handleSlug}>
                 <ReactTextTransition springConfig={presets.gentle} className="indexitem-button">
@@ -149,7 +149,7 @@ function HomeMain(props) {
             <>
               {e == 1 ?
                 <div
-                  className="" style={{ width: '100%', height: '130vh', position: 'relative' }}
+                  className="mobile-view mt-5" style={{ width: '100%', height: '130vh', position: 'relative' }}
                   ref={(el) => (GrouRef.current[index + 1] = el)}
                   data-bgcolor={project.color}
                   data-title={project.name}
@@ -169,7 +169,7 @@ function HomeMain(props) {
                   />
                 </div> : e == 2 ?
                   <div
-                    className="col-md-12 my-4" style={{ width: '100%', height: '160vh', position: 'relative' }}
+                    className="col-md-12 my-4 mobile-view" style={{ width: '100%', height: '160vh', position: 'relative' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
                     data-bgcolor={project.color}
                     data-title={project.name}
@@ -189,7 +189,7 @@ function HomeMain(props) {
                     />
                   </div> :
                   <div
-                    className="col-md-8" style={{ width: '100%', height: '210vh', position: 'relative' }}
+                    className="col-md-8 mobile-view" style={{ width: '100%', height: '210vh', position: 'relative' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
                     data-bgcolor={project.color}
                     data-title={project.name}

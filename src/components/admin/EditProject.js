@@ -24,7 +24,7 @@ function EditProject(props) {
   const [delteIcon, setDeleteIcon] = useState(false);
 
   const handleSelectedProject = (name) => {
-    if(name === "Projects"){
+    if (name === "Projects") {
       setTitle("");
       setIndex("");
       setTemplate("");
@@ -242,6 +242,22 @@ function EditProject(props) {
                   );
                 })}
             </div>
+            {
+              selectedImages.length > 0 && (
+                <label className="img-label">
+                  + Add Images
+                  <br />
+                  <span>up to 10 images</span>
+                  <input
+                    type="file"
+                    name="images"
+                    onChange={onSelectFile}
+                    multiple
+                    accept="image/png , image/jpeg, image/webp"
+                  />
+                </label>
+              )
+            }
           </section>
           <Button
             variant="primary"
