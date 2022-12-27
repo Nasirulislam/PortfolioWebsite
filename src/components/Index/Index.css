@@ -39,6 +39,8 @@
 }
 .indexitem-button{
   width: 100%;
+  mix-blend-mode: exclusion;
+  color: white;
 }
 .index-item-section .indexlist-props .indexitem-button:hover {
   margin-top: -1.5em;
