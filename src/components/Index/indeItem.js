@@ -49,9 +49,9 @@ function IndexItem(props) {
         >
           {props.text}
         </h3>
-        <div className="index-atend">
+        {/* <div className="index-atend">
           <p>{props.currentProject.slug}</p>
-        </div>
+        </div> */}
       </div>
       <motion.div
         className="index-image"
