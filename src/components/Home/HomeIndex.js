@@ -136,6 +136,7 @@ function HomeIndex(props) {
                   />
                 </motion.div>
                 : <motion.Card className=""
+                animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                   key={index}>
                   <img
                     className="img-fluid mover-1"
