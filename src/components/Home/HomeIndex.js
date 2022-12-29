@@ -112,7 +112,7 @@ function HomeIndex(props) {
           {props.value}
         </h1>
       </div>
-      <div className="col-md-12 d-flex justify-content-between align-items-center tech-slideshow flex-wrap" style={{ height: '100%' }}>
+      <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow flex-wrap" style={{ height: '100%' }}>
         {images.map((banner, index) => {
           return (
             <motion.div
@@ -125,18 +125,19 @@ function HomeIndex(props) {
               key={index}
               style={{ position: index == 1 ? 'relative' : '' }}
             >
-              {index % 2 == 1 ?
+              {index % 2 == 0 ?
                 <motion.div className="card"
-                  animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                  animate={{ x: 1 == 1 ? mediumCircle.x : largeCircle.x, y: 1 == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
                   key={index}
-                  style={{ position: index == 1 ? 'absolute' : '', top: '40%' }}>
+                  style={{ position: index == 1 ? 'absolute' : '', top: '0%' }}
+                >
                   <img
                     className="img-fluid mover-1"
                     src={`/images/index/${banner}`}
                   />
                 </motion.div>
-                : <motion.Card className=""
-                animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                : <motion.Card className="card"
+                  animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                   key={index}>
                   <img
                     className="img-fluid mover-1"

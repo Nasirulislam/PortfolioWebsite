@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function AddProject(props) {
   const [title, setTitle] = useState("");
@@ -14,10 +15,9 @@ function AddProject(props) {
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
   const [Slug, setSlug] = useState("");
-  const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
-  let selectedFilesArray = [];
+  const [loading, setLoading] = useState(false);
 
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
@@ -33,30 +33,24 @@ function AddProject(props) {
     let imagesFile = []
     Array.from(files).forEach(file=>imagesFile.push(file));
     setSelectedImages(imagesFile);
-
-    // const selectedFilesArray = Array.from(selectedFiles);
-    // const imagesArray = selectedFilesArray.map((file) => {
-    //   return URL.createObjectURL(file);
-    // });
-
-    // setSelectedImages(selectedFilesArray);
-
-    // console.log("Selected Files");
-    // console.log(displayImage);
-
-    // FOR BUG IN CHROME
-    // event.target.value = "";
   };
 
-  function deleteHandler(image) {
-    setSelectedImages(selectedImages.filter((e) => e !== image));
-    URL.revokeObjectURL(image);
+  function deleteHandler(imageIndex) {
+
+    let filtered = selectedImages.filter((e,key) => {
+        if(key !== imageIndex) {
+          return e;
+        }
+    });
+
+    setSelectedImages(filtered);
+    setdisplayImage(filtered);
+    // URL.revokeObjectURL(image);
   }
   const submitData = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", title);
-    // formData.append("detail", detail);
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
@@ -64,12 +58,24 @@ function AddProject(props) {
     Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
 
 
+    setLoading(true);
     await axios.post(`${base_url}/project/new`, formData,{'Content-Type': 'multipart/form-data' }).then((response) => {
+      setLoading(false);
       setDetail('');
       setTitle('');
-      window.location.reload();
+      setColor('');
+      setSlug('');
+      setIndex('');
+      setTemplate('');
+      setSelectedImages([]);
+      setdisplayImage([]);
+      toast("Portfolio added successfully");
+    }).catch(err => {
+      setLoading(false);
+      toast("an error occur please try again");
+      console.log(err);
     });
-    // setSelectedImages([]);
+
   };
 
   return (
@@ -156,7 +162,7 @@ function AddProject(props) {
                   return (
                     <div key={image} className="image">
                       <img src={image} width="150" alt="upload" />
-                      <button onClick={() => deleteHandler(image)}>
+                      <button type="button" onClick={() => deleteHandler(index)}>
                         delete image
                       </button>
                       <p>{index + 1}</p>
@@ -168,9 +174,12 @@ function AddProject(props) {
           <Button
             variant="primary"
             type="submit"
+            className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
+            disabled={loading || displayImage.length === 0  ? true : false}
           >
-            Submit
+            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"}/>
+            {loading ? "Uploading..." : "Submit"}
           </Button>
         </Form>
       </Card>

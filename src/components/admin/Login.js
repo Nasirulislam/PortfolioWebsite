@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
@@ -12,10 +12,11 @@ function Login() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(false);
 
   const submitLogin = async (e) => {
     // e.preventdefault();
+    setStatus(true);
     const body = {
       user: userName,
       password: password,
@@ -29,6 +30,7 @@ function Login() {
       } else {
         localStorage.setItem("Status", JSON.stringify("not_ok"));
       }
+      setStatus(false);
     });
   };
   return (
@@ -64,11 +66,14 @@ function Login() {
 
           <Button
             variant="primary"
+            className="d-flex align-items-center"
             // type="submit"
             onClick={(e) => {
               submitLogin(e);
             }}
+            disabled={(userName === "" || password === "") || status ? true : false}
           >
+            <Spinner animation="border" variant="light" className={status ? "me-2" : "d-none"}/>
             Login
           </Button>
         </Form>

@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
 import FileUploader from "../admin/FileUploder";
+import { toast } from "react-toastify";
 
 function EditImages(props) {
   const [title, setTitle] = useState("");
@@ -19,10 +20,12 @@ function EditImages(props) {
   const [projectsData, setProjectsData] = useState([]);
   const [selectImg, setSelectImg] = useState(false);
   const [temp, setTemp] = useState([]);
-  const [imgId, setImgId] = useState([]);
+  const [imgId, setImgId] = useState(null);
   const [projectId, setProjectId] = useState("");
   const [setting, setSetting] = useState(false);
   const [btnshow, setBtnShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const moveForward = () => {
     // console.log(selectedImages);
     for (var i = 0; i < selectedImages.length; i++) {
@@ -84,16 +87,20 @@ function EditImages(props) {
 
   const patchReq = async () => {
 
+    setLoading(true);
     const body = {
       images: selectedImages,
     };
-    console.log(selectedImages);
-    console.log(body);
 
     await axios
       .patch(`${base_url}/project/${projectId}`, body)
       .then((response) => {
-        window.location.reload();
+        if(response.status === 225) {
+          toast("Updated successfully");
+        } else {
+          toast("Please try later");
+        }
+        setLoading(false);
       });
   };
 
@@ -147,7 +154,7 @@ function EditImages(props) {
           </Form.Select>
 
           <section className="edit-section">
-            <Button className= {btnshow?"edit-image-btn":"invisible"} onClick={() => moveBackward()}>
+            <Button className={btnshow ? "edit-image-btn" : "invisible"} onClick={() => moveBackward()}>
               Prev
             </Button>
             <div className="edit-image-section">
@@ -161,8 +168,8 @@ function EditImages(props) {
                         setImgId(image);
                       }}
                       style={{
-                        border: selectImg
-                          ? "1px solid white"
+                        outline: imgId == image
+                          ? "5px solid green"
                           : "1px solid black",
                       }}
                     >
@@ -181,7 +188,7 @@ function EditImages(props) {
                 })}
             </div>
             <Button
-              className={btnshow?"edit-image-btn":"invisible"}
+              className={btnshow ? "edit-image-btn" : "invisible"}
               onClick={() => {
                 moveForward();
               }}
@@ -193,12 +200,14 @@ function EditImages(props) {
           <Button
             variant="primary"
             // type="submit"
-            className="button"
+            className="button d-flex align-items-center"
             onClick={() => {
               patchReq();
             }}
+            disabled={loading ? true : false}
           >
-            Update index
+            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
+            {loading ? "Updating..." : "Update index"}
           </Button>
         </Form>
       </Card>

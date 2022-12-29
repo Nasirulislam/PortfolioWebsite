@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.26444d00.css",
+    "main.css": "/static/css/main.b52068c0.css",
     "main.js": "/static/js/main.73ac19fe.js",
     "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
     "static/media/4.jpg": "/static/media/4.8a959995883d649541fb.jpg",
@@ -9,12 +9,12 @@
     "static/media/Vogue.ttf": "/static/media/Vogue.cc23cdc2582e9de16b77.ttf",
     "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/index.html",
-    "main.26444d00.css.map": "/static/css/main.26444d00.css.map",
+    "main.b52068c0.css.map": "/static/css/main.b52068c0.css.map",
     "main.73ac19fe.js.map": "/static/js/main.73ac19fe.js.map",
     "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.26444d00.css",
+    "static/css/main.b52068c0.css",
     "static/js/main.73ac19fe.js"
   ]
 }

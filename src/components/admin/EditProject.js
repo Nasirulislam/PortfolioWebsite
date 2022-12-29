@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Admin.css";
@@ -8,6 +8,7 @@ import base_url from "../../constants/url";
 import { useState } from "react";
 import FileUploader from "../admin/FileUploder";
 import { BsFillTrashFill } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 function EditProject(props) {
   const [title, setTitle] = useState("");
@@ -22,6 +23,8 @@ function EditProject(props) {
   const [displayImage, setdisplayImage] = useState([]);
   const [imageToSend, setimageToSend] = useState([]);
   const [delteIcon, setDeleteIcon] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingDel, setDelLoading] = useState(false);
 
   const handleSelectedProject = (name) => {
     if (name === "Projects") {
@@ -72,12 +75,19 @@ function EditProject(props) {
 
     const files = event.target.files;
     let imagesFile = [];
-    Array.from(files).forEach((file) => imagesFile.push(file));
+    Array.from(files).forEach((file) => {
+      console.log(file);
+      imagesFile.push(file)
+    });
+    console.log(imagesFile)
     setimageToSend(imagesFile);
   };
 
   const deleteProduct = async () => {
+    setDelLoading(true);
     await axios.delete(`${base_url}/project/${P_id}`).then((response) => {
+      toast("Deleted successfully");
+      setDelLoading(false);
       window.location.reload();
     });
   };
@@ -88,6 +98,7 @@ function EditProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", title);
     formData.append("index", index);
@@ -95,7 +106,7 @@ function EditProject(props) {
     formData.append("slug", Slug);
     let imagesTo = [];
 
-    console.log(imageToSend);
+    
 
     Array.from(imageToSend).forEach((file) => {
       imagesTo.push(file);
@@ -114,9 +125,11 @@ function EditProject(props) {
         "Content-Type": "multipart/form-data",
       })
       .then((response) => {
+        setLoading(false);
+        toast("Updated successfully");
         console.log(response);
-        setPId("");
-        setTitle("");
+        // setPId("");
+        // setTitle("");
         //   window.location.reload();
       });
   };
@@ -137,10 +150,12 @@ function EditProject(props) {
               })}
             </Form.Select>
             <Button
-              className={delteIcon ? "delete-icon m-2" : "d-none"}
+              className={"d-flex align-items-center "+delteIcon ? "delete-icon m-2" : "d-none"}
               onClick={() => deleteProduct()}
+              disabled={loadingDel || !uploadImg ? true : false}
             >
-              <BsFillTrashFill />
+              {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"}/> : <BsFillTrashFill />}
+              
             </Button>
           </div>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -262,9 +277,12 @@ function EditProject(props) {
           <Button
             variant="primary"
             type="submit"
+            className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
+            disabled={loading || !uploadImg ? true : false}
           >
-            Update
+            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"}/>
+            {loading ? "Updating..." : "Update"}
           </Button>
         </Form>
       </Card>

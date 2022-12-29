@@ -39,8 +39,8 @@
 }
 .indexitem-button{
   width: 100%;
-  mix-blend-mode: exclusion;
-  color: white;
+  /* mix-blend-mode: exclusion; */
+  /* color: black; */
 }
 .index-item-section .indexlist-props .indexitem-button:hover {
   margin-top: -1.5em;
@@ -48,13 +48,14 @@
 
 .index-item-section .indexlist-props .indexitem-button:after {
   content: attr(title);
+  color: attr(color);
   display: block;
   /* font-family: "Vogue"; */
   transition-property: margin-top;
 }
 
 .index-section-main-wrap {
-  background: url("./../../Assets/images/background3.jpg");
+  background: url("./../../Assets/images/background4.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   overflow-y: hidden;

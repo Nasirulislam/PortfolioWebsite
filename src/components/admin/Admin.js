@@ -2,18 +2,21 @@ import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-
 import AddProject from "./AddProject";
 import ChPass from "./ChPass";
 import EditImages from "./EditImages";
 import EditProject from "./EditProject";
-
 import NavBar from "./NavBar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import HomeIndex from "./HomeIndex";
+import IndexBackground from "./IndexBackground";
 
 function Admin() {
   return (
     <div className="admin-section">
       <NavBar />
+      <ToastContainer />
       <Tab.Container fluid id="left-tabs-example" defaultActiveKey="first">
         <Row>
           <Col sm={2} className="admin-side-bar">
@@ -41,10 +44,26 @@ function Admin() {
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link
+                    eventKey="five"
+                    style={{ color: "white", width: "160px" }}
+                  >
+                    Home Index
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
                     eventKey="third"
                     style={{ color: "white", width: "160px" }}
                   >
                     Edit Images Index
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    eventKey="six"
+                    style={{ color: "white", width: "160px" }}
+                  >
+                    Index Background
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -71,6 +90,12 @@ function Admin() {
               </Tab.Pane>
               <Tab.Pane eventKey="fourth">
                 <ChPass />
+              </Tab.Pane>
+              <Tab.Pane eventKey="five">
+                <HomeIndex />
+              </Tab.Pane>
+              <Tab.Pane eventKey="six">
+                <IndexBackground />
               </Tab.Pane>
             </Tab.Content>
           </Col>

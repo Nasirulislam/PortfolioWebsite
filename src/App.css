@@ -1,49 +1,82 @@
-*{
-  font-family:sans-serif;
+* {
+  font-family: sans-serif;
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
-body{
+
+body {
   /* overflow-y: scroll !important; */
   transition: 1s all ease-in-out;
   background: white;
   /* scroll-snap-type: smooth; */
 }
+
 .index-button {
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
   margin: 30px;
   font-weight: 700;
   writing-mode: vertical-rl;
-  z-index: 100;
+  z-index: 99999;
   cursor: pointer;
   right: 0;
   position: fixed;
 }
+
 .about-button {
-  margin: 30px;
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
+  margin: 30px 15px;
   font-weight: 700;
   writing-mode: vertical-rl;
-  z-index: 100;
+  z-index: 99999;
   cursor: pointer;
   right: 0;
   bottom: 0;
   position: fixed;
 }
+
+.about-button a {
+  color: white !important;
+}
+
+.index-button a {
+  color: white !important;
+}
+
+.null-button a {
+  color: white !important;
+}
+
 .ME-button {
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
   margin: 0px;
   font-weight: 700;
   margin-top: 50px;
   writing-mode: vertical-rl;
-  z-index: 100;
+  z-index: 99999;
   cursor: pointer;
   left: 0;
   position: fixed;
 }
+
+.ME-button a {
+  color: white;
+}
+
 .null-button {
-  margin: 30px;
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
+  margin: 30px 0px;
   font-weight: 700;
   writing-mode: vertical-rl;
-  z-index: 100;
+  z-index: 99999;
   cursor: pointer;
   left: 0;
   bottom: 0;
@@ -56,6 +89,7 @@ body{
   background-color: rgb(36, 124, 73);
   position: absolute;
 }
+
 .card2 {
   width: 100px;
   height: 100px;
@@ -81,16 +115,20 @@ img.hoverImages:hover {
   overflow: hidden;
   position: relative;
   display: inline-block;
+  z-index: 9999;
 }
 
 #style-2::before,
 #style-2::after {
- content: '';
+  content: '';
   position: absolute;
   width: 100%;
   left: 0;
-  color: black ;
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
 }
+
 #style-2::before {
   background-color: black;
   height: 2px;
@@ -98,7 +136,11 @@ img.hoverImages:hover {
   transform-origin: 100% 50%;
   transform: scaleX(0);
   transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
 }
+
 #style-2::after {
   content: attr(data-replace);
   height: 100%;
@@ -106,25 +148,36 @@ img.hoverImages:hover {
   transform-origin: 100% 50%;
   transform: translate3d(200%, 0, 0);
   transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  mix-blend-mode: difference;
+  background: transparent;
   color: black;
 }
 
 #style-2:hover::before {
   transform-origin: 0% 50%;
   transform: scaleX(1);
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
 }
+
 #style-2:hover::after {
   transform: translate3d(0, 0, 0);
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
 }
 
 #style-2 span {
   display: inline-block;
-  color: black;
   transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 #style-2:hover span {
   transform: translate3d(-200%, 0, 0);
+  mix-blend-mode: difference;
+  background: transparent;
+  color: black;
 }
-  
+
 /* home page start*/

@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 function IndexItem(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [display, setDisplay] = useState(true);
-  console.log("Index Page Items");
-  console.log(props);
 
-  const onMouseOver = (itemId) => {
+  const onMouseOver = (itemId, itemColor) => {
     setIsAnitmating(true);
+
+    document.getElementById(itemColor).style.color = itemColor;
 
     setDisplay(true);
     setTimeout(() => {
@@ -19,9 +19,10 @@ function IndexItem(props) {
     }, 8000);
   };
 
-  const onMouseLeave = (itemId) => {
+  const onMouseLeave = (itemId, itemColor) => {
     setIsAnitmating(false);
     setDisplay(false);
+    document.getElementById(itemColor).style.color = 'white';
   };
   const navigate = useNavigate();
   return (
@@ -30,9 +31,10 @@ function IndexItem(props) {
         <h3
           className="indexitem-button"
           title={props.text}
+          id={props.color}
           // data-replace={props.text}
-          onMouseEnter={() => onMouseOver(props.name)}
-          onMouseLeave={() => onMouseLeave(props.name)}
+          onMouseEnter={() => onMouseOver(props.name,props.color)}
+          onMouseLeave={() => onMouseLeave(props.name,props.color)}
           onClick={() => {
             props.setRedHome();
             props.closeIndex();

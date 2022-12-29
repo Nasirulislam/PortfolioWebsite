@@ -34,6 +34,7 @@ function Index(props) {
                 currentProject={item}
                 nextProject={props.projectData[index + 1]}
                 text={item.name}
+                color={item.color}
                 image={item.images[0]}
                 closeIndex={props.closeIndex}
                 setRedHome={setRedHome}
