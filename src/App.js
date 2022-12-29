@@ -60,7 +60,7 @@ function App() {
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
-    setMEText("M-E");
+    setMEText("START");
     set00Text("00");
   };
   const buttonToogle = () => {
