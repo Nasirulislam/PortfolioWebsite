@@ -14,12 +14,12 @@ import IndexBackground from "./IndexBackground";
 
 function Admin() {
   return (
-    <div className="admin-section">
+    <div className="admin-section bg-zinc-200 bgImg">
       <NavBar />
       <ToastContainer />
       <Tab.Container fluid id="left-tabs-example" defaultActiveKey="first">
         <Row>
-          <Col sm={2} className="admin-side-bar">
+          <Col sm={2} className="admin-side-bar bg-dark">
             <div>
               <Nav
                 variant="pills"
@@ -31,6 +31,8 @@ function Admin() {
                     eventKey="first"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-plus-square me-2" aria-hidden="true"></i>
+
                     Add Project
                   </Nav.Link>
                 </Nav.Item>
@@ -39,6 +41,7 @@ function Admin() {
                     eventKey="second"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-pencil-square me-2" aria-hidden="true"></i>
                     Edit Project
                   </Nav.Link>
                 </Nav.Item>
@@ -47,6 +50,7 @@ function Admin() {
                     eventKey="five"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-home me-2" aria-hidden="true"></i>
                     Home Index
                   </Nav.Link>
                 </Nav.Item>
@@ -55,6 +59,7 @@ function Admin() {
                     eventKey="third"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-pencil-square me-2" aria-hidden="true"></i>
                     Edit Images Index
                   </Nav.Link>
                 </Nav.Item>
@@ -63,7 +68,17 @@ function Admin() {
                     eventKey="six"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-h-square me-2" aria-hidden="true"></i>
                     Index Background
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    eventKey="seven"
+                    style={{ color: "white", width: "160px" }}
+                  >
+                    <i class="fa fa-building me-2" aria-hidden="true"></i>
+                    About
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -71,6 +86,7 @@ function Admin() {
                     eventKey="fourth"
                     style={{ color: "white", width: "160px" }}
                   >
+                    <i class="fa fa-unlock-alt me-2" aria-hidden="true"></i>
                     Change Password
                   </Nav.Link>
                 </Nav.Item>
@@ -95,6 +111,9 @@ function Admin() {
                 <HomeIndex />
               </Tab.Pane>
               <Tab.Pane eventKey="six">
+                <IndexBackground />
+              </Tab.Pane>
+              <Tab.Pane eventKey="seven">
                 <IndexBackground />
               </Tab.Pane>
             </Tab.Content>

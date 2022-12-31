@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { motion } from "framer-motion";
+import axios from "axios";
+import base_url from "../../constants/url";
 
 
 function HomeIndex(props) {
@@ -8,7 +10,6 @@ function HomeIndex(props) {
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
-
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
@@ -96,58 +97,77 @@ function HomeIndex(props) {
 
   useEffect(() => {
     window.addEventListener("mousemove", mousemove);
+
     return () => {
       window.removeEventListener("mousemove", mousemove);
     };
   });
 
-  const images = [
-    "pexels-ashish-sharma-917597.jpg", "pexels-motional-studio-1081685.jpg", "surreal-photography-platon-yurich-17.jpg", "mask-shape-element-kelly-brown-768x933.jpg", "surreal-photography-platon-yurich-30.jpg"
-  ];
-
   return (
     <div id="home-page" className="home-page row">
-      <div className="home-title change-title zoom" style={{background: 'transparent'}}>
+      <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
       <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow flex-wrap" style={{ height: '100%' }}>
-        {images.map((banner, index) => {
-          return (
-            <motion.div
-              className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap me-4"
-              animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 10,
-              }}
-              key={index}
-              style={{ position: index == 1 ? 'relative' : '' }}
-            >
-              {index % 2 == 0 ?
-                <motion.div className="card"
-                  animate={{ x: 1 == 1 ? mediumCircle.x : largeCircle.x, y: 1 == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
-                  key={index}
-                  style={{ position: index == 1 ? 'absolute' : '', top: '0%' }}
-                >
-                  <img
-                    className="img-fluid mover-1"
-                    src={`/images/index/${banner}`}
-                  />
-                </motion.div>
-                : <motion.Card className="card"
-                  animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-                  key={index}>
-                  <img
-                    className="img-fluid mover-1"
-                    src={`/images/index/${banner}`}
-                  />
-                </motion.Card>
-              }
+        {props.homeIndexImages.length > 0 && props.homeIndexImages.map((banner, index) => {
+          {
+            return index !== 0 && (
+              <motion.div
+                className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap me-4"
+                animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 10,
+                }}
+                key={index}
+                style={{ position: index == 1 ? 'relative' : '' }}
+              >
+                {index % 2 == 0 ?
+                  <motion.div className="card"
+                    animate={{ x: 1 == 1 ? mediumCircle.x : largeCircle.x, y: 1 == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                    key={index}
+                    style={{ position: index == 1 ? 'absolute' : '', top: '0%' }}
+                  >
+                    {banner.includes("mp4")
+                      ?
+                      <video autoPlay loop>
+                        <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
+                        <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                      :
+                      <img
+                        className="img-fluid mover-1"
+                        src={banner.includes("data:image") ? banner : `${base_url}/home/${banner}`}
+                      />
+                    }
 
-            </motion.div>
-          )
+
+                  </motion.div>
+                  : <motion.Card className="card"
+                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                    key={index}>
+                    {banner.includes("mp4")
+                      ?
+                      <video autoPlay loop>
+                        <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
+                        <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                      :
+                      <img
+                        className="img-fluid mover-1"
+                        src={banner.includes("data:image") ? banner : `${base_url}/home/${banner}`}
+                      />
+                    }
+                  </motion.Card>
+                }
+
+              </motion.div>
+            )
+          }
         })}
       </div>
     </div>

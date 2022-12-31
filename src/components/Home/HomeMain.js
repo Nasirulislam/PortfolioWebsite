@@ -139,6 +139,7 @@ function HomeMain(props) {
               randomIndex={randomIndex}
               projectsData={projectsData}
               value={value}
+              homeIndexImages={props.homeIndexImages}
             />
           </div>
         </div>
@@ -159,7 +160,7 @@ function HomeMain(props) {
                 >
                   <Auston
                     name={project.name}
-                    images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+                    images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
                     slug={"/".concat(project.slug)}
                     setCount={props.setCount}
                     nextProject={project[index + 1]}
@@ -179,7 +180,7 @@ function HomeMain(props) {
                   >
                     <Amoeba
                       name={project.name}
-                      images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+                      images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}
@@ -199,7 +200,7 @@ function HomeMain(props) {
                   >
                     {<Brenna
                       name={project.name}
-                      images={(index % 2 == 0) ? project.images.slice(0, 2) : project.images.slice(0, 3)}
+                      images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}

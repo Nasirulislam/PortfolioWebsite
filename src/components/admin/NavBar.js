@@ -18,7 +18,7 @@ function NavBar() {
 
   return (
     <>
-      <Navbar bg="light" expand="lg" className="admin-nav-bar">
+      <Navbar bg="light" expand="lg" className="admin-nav-bar bg-dark">
         <Container>
           <Navbar.Brand className="admin-brand">David Ellis</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

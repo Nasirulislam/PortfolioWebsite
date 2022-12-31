@@ -14,13 +14,22 @@ function Amoeba(props) {
             <motion.div className={"col-md-8 d-flex justify-content-center amoeba"}
               animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}
               key={key}>
-              <img
-                className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-                src={`${base_url}` + "/img/projects/" + banner}
-                key={key}
-                style={{ cursor: 'pointer' }}
-                onClick={() => props.handleSlug()}
-              />
+              {
+                banner.includes("mp4") ?
+                <video autoPlay loop>
+                <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
+                  <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                    Your browser does not support the video tag.
+                  </video>
+                  :
+                  <img
+                    className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
+                    src={`${base_url}` + "/projects/" + banner}
+                    key={key}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => props.handleSlug()}
+                  />
+              }
             </motion.div>
           )
         }

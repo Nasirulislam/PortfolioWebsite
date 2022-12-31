@@ -3,11 +3,15 @@ import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import base_url from "../../constants/url";
 
 
 export default function IndexBackground() {
     const [loading, setLoading] = useState(false);
+    const [homeIndexId, setHomeIndexId] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const MAX_LENGTH = 1;
 
     const convertToBase64 = (file) => {
@@ -23,7 +27,7 @@ export default function IndexBackground() {
     const onSelectFile = (e) => {
 
         let selectedFileLength = Array.from(e.target.files).length;
-        let uploadedFileLength = Array.from(imagesPreview).length;
+        let uploadedFileLength = (imagesPreview.length === 1 && imagesPreview[0] === "") ? 0 : Array.from(imagesPreview).length;
 
         if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
             e.preventDefault();
@@ -39,44 +43,108 @@ export default function IndexBackground() {
         Promise.all(promises).then(result => {
             setImagesPreview((old => [...old, ...result]));
         })
+
+        let imagesFile = []
+        Array.from(e.target.files).forEach(file => imagesFile.push(file));
+        setSelectedFiles(imagesFile);
     }
 
     const removePreviewImage = (index) => {
-        let filteredImages = imagesPreview.map((item, key) => {
+        let filteredImages = [];
+        let selectedImages = [];
+        imagesPreview.forEach((item, key) => {
             if (key !== index) {
-                return item;
+                filteredImages.push(item);
             }
         });
-        if(typeof filteredImages[0] == "undefined") {
+
+        selectedFiles.forEach((item, key) => {
+            if (key !== index) {
+                selectedImages.push(item);
+            }
+        });
+
+        if (typeof filteredImages[0] == "undefined") {
             filteredImages = [];
         }
         setImagesPreview(filteredImages);
+        setSelectedFiles(selectedImages);
     }
+
+    const submit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        let imagesArr = imagesPreview || [];
+        const formData = new FormData();
+        
+        for (let i = 0; i < imagesPreview.length; i++) {
+            if(imagesPreview[i].split(":")[0] !== "data") {
+                formData.append("images", imagesPreview[i]);
+            }
+        }
+        
+        Array.from(selectedFiles).forEach((file) => { formData.append("imagess", file) });
+
+        
+        if(imagesArr.length === 0) {
+            formData.append("images", []);            
+        }
+        await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
+            if (response.status == 210) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+                setImagesPreview([]);
+            }
+
+        }).catch(err => {
+            toast(JSON.stringify(err));
+        })
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        const loadIndexBackground = async () => {
+            const response = await axios.get(`${base_url}/project/home`);
+            if (response.status == 210) {
+                setImagesPreview(response.data.data.home[1]?.images || []);
+                setHomeIndexId(response.data.data.home[1]?._id || 0);
+            } else {
+                console.log(response.message);
+            }
+        }
+
+        loadIndexBackground();
+    }, [])
 
     return (
         <div className="d-flex align-items-center justify-content-center h-100">
             <Card className="p-3 my-5 form-card">
-                <Form>                    
+                <Form>
                     <section>
-                        <div className="images">
-                            {imagesPreview &&
+                    <div className="images">
+                            {(imagesPreview && imagesPreview.length > 0) &&
                                 imagesPreview.map((image, index) => {
-                                    return (
-                                        <div key={index} className="image">
-                                            <img src={image} width="150" alt="upload" />
-                                            <button type="button" onClick={() => removePreviewImage(index)}>
-                                                delete image
-                                            </button>
-                                            <p>{index + 1}</p>
-                                        </div>
-                                    );
+                                    {
+                                        return index !== 0 ?
+                                            <div key={index} className="image">
+                                                {
+                                                    // image.includes("mp4") ? <video src={base_url + "/home/" + image} />
+                                                    <img src={image.includes("data:image") ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                }
+                                                <button type="button" onClick={() => removePreviewImage(index)}>
+                                                    delete image
+                                                </button>
+                                                <p>{index}</p>
+                                            </div> : <></>
+
+                                    }
                                 })}
                             {
-                                imagesPreview.length === 0  && (
+                                (imagesPreview && imagesPreview.length < 6) && (
                                     <label className="img-label">
                                         + Add Images
                                         <br />
-                                        <span>up to 1 image</span>
+                                        <span>up to 5 images</span>
                                         <input
                                             type="file"
                                             name="images"
@@ -94,8 +162,8 @@ export default function IndexBackground() {
                         variant="primary"
                         type="submit"
                         className="d-flex align-items-center"
-                    // onClick={(e) => submitData(e)}
-                    // disabled={loading || displayImage.length === 0  ? true : false}
+                        onClick={(e) => submit(e)}
+                        disabled={loading ? true : false}
                     >
                         <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
                         {loading ? "Uploading..." : "Submit"}

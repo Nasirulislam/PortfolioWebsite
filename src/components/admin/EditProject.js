@@ -231,7 +231,7 @@ function EditProject(props) {
                   return (
                     <div key={image} className="image">
                       <img
-                        src={`${base_url}` + "/img/projects/" + image}
+                        src={`${base_url}` + "/projects/" + image}
                         width="150"
                         alt="upload"
                       />

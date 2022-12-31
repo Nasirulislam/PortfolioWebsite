@@ -31,16 +31,16 @@ function AddProject(props) {
 
     const files = event.target.files;
     let imagesFile = []
-    Array.from(files).forEach(file=>imagesFile.push(file));
+    Array.from(files).forEach(file => imagesFile.push(file));
     setSelectedImages(imagesFile);
   };
 
   function deleteHandler(imageIndex) {
 
-    let filtered = selectedImages.filter((e,key) => {
-        if(key !== imageIndex) {
-          return e;
-        }
+    let filtered = selectedImages.filter((e, key) => {
+      if (key !== imageIndex) {
+        return e;
+      }
     });
 
     setSelectedImages(filtered);
@@ -49,17 +49,19 @@ function AddProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
+    let imagesArr = [];
     const formData = new FormData();
     formData.append("name", title);
     formData.append("index", index);
     formData.append("template", template);
     formData.append("slug", Slug);
     formData.append("color", color);
-    Array.from(selectedImages).forEach((file)=>{formData.append("images",file)});
+    formData.append("images", imagesArr);
+    Array.from(selectedImages).forEach((file) => { formData.append("imagess", file) });
 
 
     setLoading(true);
-    await axios.post(`${base_url}/project/new`, formData,{'Content-Type': 'multipart/form-data' }).then((response) => {
+    await axios.post(`${base_url}/project/new`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
       setLoading(false);
       setDetail('');
       setTitle('');
@@ -94,7 +96,7 @@ function AddProject(props) {
             />
           </Form.Group>
 
-         
+
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Index/Possition</Form.Label>
             <Form.Control
@@ -161,7 +163,12 @@ function AddProject(props) {
                 displayImage.map((image, index) => {
                   return (
                     <div key={image} className="image">
-                      <img src={image} width="150" alt="upload" />
+                      {
+                        image.includes("mp4")
+                          ? <video src={image} />
+                          :
+                          <img src={image} width="150" alt="upload" />
+                      }
                       <button type="button" onClick={() => deleteHandler(index)}>
                         delete image
                       </button>
@@ -176,9 +183,9 @@ function AddProject(props) {
             type="submit"
             className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
-            disabled={loading || displayImage.length === 0  ? true : false}
+            disabled={loading || displayImage.length === 0 ? true : false}
           >
-            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"}/>
+            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
             {loading ? "Uploading..." : "Submit"}
           </Button>
         </Form>

@@ -10,7 +10,7 @@ import axios from "axios";
 import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
 import Admin from "./components/admin/Admin";
-import Login from "./components/admin/Login";
+import NewLogin from "./components/admin/NewLogin";
 import ScrollToTop from "./components/ScrollToTop";
 
 import {
@@ -29,6 +29,8 @@ function App() {
   const [clicked, setClicked] = useState(true);
   const [Redhome, setHome] = useState(false);
   const [dataFetc, setDataFetch] = useState(false);
+  const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [indexBackground, setIndexImages] = useState([]);
 
   function changeIndex(index) {
     if (index < 0) {
@@ -49,6 +51,17 @@ function App() {
         setDataFetch(true);
       });
     };
+    const getHomeIndex = async () => {
+      const response = await axios.get(base_url + "/project/home");
+      if (response.status === 210) {
+        setHomeIndexImages(response.data.data.home[0]?.images || []);
+        setIndexImages(response.data.data.home[1]?.images || []);
+        
+      } else {
+        console.log(response.message);
+      }
+    }
+    getHomeIndex();
     fetchProducts();
   }, []);
   const makeNull = () => {
@@ -166,6 +179,7 @@ function App() {
                         projectsData={projectsData}
                         onChange={changeIndex}
                         indexBtn={buttonToogle}
+                        homeIndexImages={homeIndexImages}
                       />
                     ) : (
                       <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>
@@ -193,7 +207,7 @@ function App() {
                     />
                   );
                 })}
-                <Route exact path="/admin" element={<Login />} />
+                <Route exact path="/admin" element={<NewLogin />} />
                 <Route
                   exact
                   path="/admin-login"
@@ -201,7 +215,7 @@ function App() {
                     JSON.parse(localStorage.getItem("Status")) === "ok" ? (
                       <Admin />
                     ) : (
-                      <Login />
+                      <NewLogin />
                     )
                   }
                 />
@@ -212,6 +226,7 @@ function App() {
               projectData={projectsData}
               closeIndex={buttonToogle}
               RedHome={setRedHome}
+              indexBackground={indexBackground}
             />
           )}
         </div>

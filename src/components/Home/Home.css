@@ -346,6 +346,7 @@
   }
   .home-title{
     max-width: 100vw !important;
+    width: 100vw;
   }
   .home-title>h1 {
     font-size: 15vw !important; 
