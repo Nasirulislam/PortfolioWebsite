@@ -27,7 +27,7 @@ export default function IndexBackground() {
     const onSelectFile = (e) => {
 
         let selectedFileLength = Array.from(e.target.files).length;
-        let uploadedFileLength = (imagesPreview.length === 1 && imagesPreview[0] === "") ? 0 : Array.from(imagesPreview).length;
+        let uploadedFileLength = Array.from(imagesPreview).length;
 
         if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
             e.preventDefault();
@@ -76,18 +76,18 @@ export default function IndexBackground() {
         setLoading(true);
         let imagesArr = imagesPreview || [];
         const formData = new FormData();
-        
+
         for (let i = 0; i < imagesPreview.length; i++) {
-            if(imagesPreview[i].split(":")[0] !== "data") {
+            if (imagesPreview[i].split(":")[0] !== "data") {
                 formData.append("images", imagesPreview[i]);
             }
         }
-        
+
         Array.from(selectedFiles).forEach((file) => { formData.append("imagess", file) });
 
-        
-        if(imagesArr.length === 0) {
-            formData.append("images", []);            
+
+        if (imagesArr.length === 0) {
+            formData.append("images", []);
         }
         await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
             if (response.status == 210) {
@@ -121,11 +121,11 @@ export default function IndexBackground() {
             <Card className="p-3 my-5 form-card">
                 <Form>
                     <section>
-                    <div className="images">
+                        <div className="images">
                             {(imagesPreview && imagesPreview.length > 0) &&
                                 imagesPreview.map((image, index) => {
                                     {
-                                        return index !== 0 ?
+                                        return (
                                             <div key={index} className="image">
                                                 {
                                                     // image.includes("mp4") ? <video src={base_url + "/home/" + image} />
@@ -135,8 +135,7 @@ export default function IndexBackground() {
                                                     delete image
                                                 </button>
                                                 <p>{index}</p>
-                                            </div> : <></>
-
+                                            </div>)
                                     }
                                 })}
                             {
