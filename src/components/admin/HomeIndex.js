@@ -76,31 +76,45 @@ export default function HomeIndex() {
         setLoading(true);
         let imagesArr = imagesPreview || [];
         const formData = new FormData();
-        
+
         for (let i = 0; i < imagesPreview.length; i++) {
-            if(imagesPreview[i].split(":")[0] !== "data") {
-                formData.append("images", imagesPreview[i]);
+            if (imagesPreview[i].split(":")[0] !== "data") {
+                formData.append("images["+i+"]", imagesPreview[i]);
             }
         }
-        
-        Array.from(selectedFiles).forEach((file) => { formData.append("imagess", file) });
 
-        
-        if(imagesArr.length === 0) {
-            formData.append("images", []);            
+        Array.from(selectedFiles).forEach((file,index) => { formData.append("imagess["+index+"]", file) });
+
+
+        if (imagesArr.length === 0) {
+            formData.append("images", []);
         }
-        console.log(imagesPreview)
-        await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-            if (response.status == 210) {
-                toast("Uploaded successfully");
-                setSelectedFiles([]);
-                setImagesPreview([]);
-            }
 
-        }).catch(err => {
-            toast(JSON.stringify(err));
-        })
-        setLoading(false);
+        if (homeIndexId == 0) {
+            await axios.post(`${base_url}/project/home`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
+                if (response.status == 210) {
+                    toast("Uploaded successfully");
+                    setSelectedFiles([]);
+                    setImagesPreview([]);
+                }
+
+            }).catch(err => {
+                toast(JSON.stringify(err));
+            })
+            setLoading(false);
+        } else {
+            await axios.post(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
+                if (response.status == 210) {
+                    toast("Uploaded successfully");
+                    setSelectedFiles([]);
+                    setImagesPreview([]);
+                }
+
+            }).catch(err => {
+                toast(JSON.stringify(err));
+            })
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -126,17 +140,17 @@ export default function HomeIndex() {
                             {(imagesPreview && imagesPreview.length > 0) &&
                                 imagesPreview.map((image, index) => {
                                     {
-                                        return index !== 0 ?
+                                        return (
                                             <div key={index} className="image">
                                                 {
                                                     // image.includes("mp4") ? <video src={base_url + "/home/" + image} />
-                                                    <img src={image.includes("data:image") ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                    <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
                                                 }
                                                 <button type="button" onClick={() => removePreviewImage(index)}>
                                                     delete image
                                                 </button>
                                                 <p>{index}</p>
-                                            </div> : <></>
+                                            </div>)
 
                                     }
                                 })}

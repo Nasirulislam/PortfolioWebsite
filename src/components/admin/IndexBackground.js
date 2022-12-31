@@ -29,7 +29,7 @@ export default function IndexBackground() {
         let selectedFileLength = Array.from(e.target.files).length;
         let uploadedFileLength = Array.from(imagesPreview).length;
 
-        if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
+        if (selectedFileLength > MAX_LENGTH) {
             e.preventDefault();
             alert(`Cannot upload files more than ${MAX_LENGTH}`);
             return;
@@ -74,32 +74,46 @@ export default function IndexBackground() {
     const submit = async (event) => {
         event.preventDefault();
         setLoading(true);
-        let imagesArr = imagesPreview || [];
         const formData = new FormData();
 
+        let counter = 0;
         for (let i = 0; i < imagesPreview.length; i++) {
             if (imagesPreview[i].split(":")[0] !== "data") {
-                formData.append("images", imagesPreview[i]);
+                formData.append("images["+i+"]", imagesPreview[i]);
+                counter++;
             }
         }
 
-        Array.from(selectedFiles).forEach((file) => { formData.append("imagess", file) });
-
-
-        if (imagesArr.length === 0) {
+        Array.from(selectedFiles).forEach((file,index) => { formData.append("imagess", file) });
+        // formData.append("imagess", selectedFiles)
+        if(counter == 0) {
             formData.append("images", []);
         }
-        await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-            if (response.status == 210) {
-                toast("Uploaded successfully");
-                setSelectedFiles([]);
-                setImagesPreview([]);
-            }
+        if (homeIndexId == 0) {
+            await axios.post(`${base_url}/project/home`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
+                if (response.status == 210) {
+                    toast("Uploaded successfully");
+                    setSelectedFiles([]);
+                    setImagesPreview([]);
+                }
 
-        }).catch(err => {
-            toast(JSON.stringify(err));
-        })
-        setLoading(false);
+            }).catch(err => {
+                toast(JSON.stringify(err));
+            })
+            setLoading(false);
+        } else {
+            await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
+                if (response.status == 225) {
+                    toast("Uploaded successfully");
+                    setSelectedFiles([]);
+                    setImagesPreview([]);
+                }
+
+            }).catch(err => {
+                toast(JSON.stringify(err));
+            })
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -129,7 +143,7 @@ export default function IndexBackground() {
                                             <div key={index} className="image">
                                                 {
                                                     // image.includes("mp4") ? <video src={base_url + "/home/" + image} />
-                                                    <img src={image.includes("data:image") ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                    <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
                                                 }
                                                 <button type="button" onClick={() => removePreviewImage(index)}>
                                                     delete image
