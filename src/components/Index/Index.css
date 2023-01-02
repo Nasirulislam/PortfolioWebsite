@@ -173,36 +173,15 @@
   align-items: center;
   display: none;
 }
-/* .index-list-props::before {
-  content: "";
-  height: 100%;
-  top: -100;
-  transform-origin: 100% 50%;
-  transform: translateY(250px);
-  transition: transform 0.1s cubic-bezier(0.76, 0, 0.24, 1);
-  color: white;
+#about-portfolio li a{
+  text-decoration: none;
+  font-size: 5vw;
+  font-weight: 700;
+  color: blue !important;
 }
-.index-item-button::before {
-  content: "";
-  height: 100%;
-  top: -100;
-  transform-origin: 100% 50%;
-  transform: translateY(250px);
-  transition: transform 0.1s cubic-bezier(0.76, 0, 0.24, 1);
-  color: white;
-} */
 
-/* .index-list-props:hover .index-item-button::before {
-  transform: translateY(-250px);
-
+.about-section h1 {
+  font-size: 5vw;
+  font-weight: 700;
+  color: blue;  
 }
-.index-list-props:hover .index-item-button::after {
-  transform: translate3d(0, 0, 0);
-
-} */
-
-/* .index-item-button span {
-  display: inline-block;
-  color: white;
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-} */

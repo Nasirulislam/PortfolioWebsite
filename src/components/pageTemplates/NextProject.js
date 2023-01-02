@@ -59,7 +59,7 @@ function NextProject(props) {
           <motion.img
             className="next-proj-img1"
             src={
-              `${base_url}` + "/img/projects/" + projectData[index + 1].images[0]
+              `${base_url}` + "/projects/" + projectData[index + 1].images[0]
             }
             animate={{ x: mediumCircle.x, y: mediumCircle.y }}
           />
@@ -69,7 +69,7 @@ function NextProject(props) {
             <motion.img
               className="next-proj-img2"
               src={
-                `${base_url}` + "/img/projects/" + projectData[index + 1].images[1]
+                `${base_url}` + "/projects/" + projectData[index + 1].images[1]
               }
               animate={{ x: largeCircle.x, y: largeCircle.y }}
             />

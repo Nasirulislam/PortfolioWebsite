@@ -23,7 +23,7 @@ function Auston(props) {
                 {
                   banner.includes("mp4") ?
                     <>
-                      <video autoplay loop>
+                      <video autoplay loop muted>
                         <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                           <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                             Your browser does not support the video tag.
@@ -46,7 +46,7 @@ function Auston(props) {
                         animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
                         {
                           banner.includes("mp4") ?
-                          <video autoPlay loop>
+                          <video autoPlay loop muted>
                           <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                             <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                               Your browser does not support the video tag.

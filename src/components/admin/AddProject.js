@@ -7,6 +7,7 @@ import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import API from '../../services/API';
 
 function AddProject(props) {
   const [title, setTitle] = useState("");
@@ -18,20 +19,39 @@ function AddProject(props) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
   const [loading, setLoading] = useState(false);
+  const MAX_LENGTH = 25;
 
-  const onSelectFile = (event) => {
-    const selectedFiles = event.target.files;
-    const selectedFilesArray = Array.from(selectedFiles);
-    const imagesArray = selectedFilesArray.map((file) => {
-      return URL.createObjectURL(file);
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result);
+      }
+    });
+  }
+
+  const onSelectFile = (e) => {
+    let selectedFileLength = Array.from(e.target.files).length;
+    let uploadedFileLength = Array.from(displayImage).length;
+
+    if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
+      e.preventDefault();
+      alert(`Cannot upload files more than ${MAX_LENGTH - 1}`);
+      return;
+    }
+
+    let promises = [];
+    [...e.target.files].forEach(file => {
+      promises.push(convertToBase64(file));
     });
 
-    setdisplayImage((previousImages) => previousImages.concat(imagesArray));
+    Promise.all(promises).then(result => {
+      setdisplayImage(current => [...current, ...result])
+    })
 
-
-    const files = event.target.files;
     let imagesFile = []
-    Array.from(files).forEach(file => imagesFile.push(file));
+    Array.from(e.target.files).forEach(file => imagesFile.push(file));
     setSelectedImages(imagesFile);
   };
 
@@ -49,20 +69,18 @@ function AddProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
-    let imagesArr = [];
-    const formData = new FormData();
-    formData.append("name", title);
-    formData.append("index", index);
-    formData.append("template", template);
-    formData.append("slug", Slug);
-    formData.append("color", color);
-    formData.append("images", imagesArr);
-    Array.from(selectedImages).forEach((file) => { formData.append("imagess", file) });
-
-
     setLoading(true);
-    await axios.post(`${base_url}/project/new`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-      setLoading(false);
+    let selectedMedia =  [...selectedImages];
+    const payload = {
+      name: title,
+      index: index,
+      template: template,
+      slug: Slug,
+      color: color,
+      imagess: selectedMedia
+    }
+    const response = await API.upload('project/new', payload);
+    if(response.status === 200) {
       setDetail('');
       setTitle('');
       setColor('');
@@ -72,12 +90,10 @@ function AddProject(props) {
       setSelectedImages([]);
       setdisplayImage([]);
       toast("Portfolio added successfully");
-    }).catch(err => {
-      setLoading(false);
-      toast("an error occur please try again");
-      console.log(err);
-    });
-
+    } else {
+      toast("please try again");
+    }
+    setLoading(false);    
   };
 
   return (
@@ -151,7 +167,7 @@ function AddProject(props) {
                 name="images"
                 onChange={onSelectFile}
                 multiple
-                accept="image/png , image/jpeg, image/webp"
+                accept="image/png , image/jpeg, image/webp video/mp4"
               />
             </label>
             <br />
@@ -163,11 +179,12 @@ function AddProject(props) {
                 displayImage.map((image, index) => {
                   return (
                     <div key={image} className="image">
-                      {
-                        image.includes("mp4")
-                          ? <video src={image} />
-                          :
-                          <img src={image} width="150" alt="upload" />
+                      {image.split("/")[0] === "data:video" ?
+                        <video autoPlay loop muted>
+                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/mp4" />
+                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/ogg" />
+                        </video>
+                        : <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
                       }
                       <button type="button" onClick={() => deleteHandler(index)}>
                         delete image

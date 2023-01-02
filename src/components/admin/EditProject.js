@@ -6,9 +6,9 @@ import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
-import FileUploader from "../admin/FileUploder";
 import { BsFillTrashFill } from "react-icons/bs";
 import { toast } from "react-toastify";
+import API from "../../services/API";
 
 function EditProject(props) {
   const [title, setTitle] = useState("");
@@ -25,6 +25,7 @@ function EditProject(props) {
   const [delteIcon, setDeleteIcon] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingDel, setDelLoading] = useState(false);
+  const MAX_LENGTH = 25;
 
   const handleSelectedProject = (name) => {
     if (name === "Projects") {
@@ -44,7 +45,7 @@ function EditProject(props) {
         setTemplate(project.template);
         setSlug(project.slug);
         setPId(project._id);
-        setSelectedImages(project.images);
+        setdisplayImage(project.images);
         console.log("Value Updated");
         console.log(project);
         setDeleteIcon(true);
@@ -63,24 +64,39 @@ function EditProject(props) {
     fetchProducts();
   }, []);
 
-  const onSelectFile = (event) => {
-    const selectedFiles = event.target.files;
-    // setSelectedImages(selectedFiles)
-    const selectedFilesArray = Array.from(selectedFiles);
-    const imagesArray = selectedFilesArray.map((file) => {
-      return URL.createObjectURL(file);
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result);
+      }
+    });
+  }
+
+
+  const onSelectFile = (e) => {
+    let selectedFileLength = Array.from(e.target.files).length;
+    let uploadedFileLength = Array.from(displayImage).length;
+
+    if (selectedFileLength > MAX_LENGTH) {
+      e.preventDefault();
+      alert(`Cannot upload files more than ${MAX_LENGTH}`);
+      return;
+    }
+
+    let promises = [];
+    [...e.target.files].forEach(file => {
+      promises.push(convertToBase64(file));
     });
 
-    setdisplayImage((previousImages) => previousImages.concat(imagesArray));
+    Promise.all(promises).then(result => {
+      setdisplayImage((old => [...old, ...result]));
+    })
 
-    const files = event.target.files;
-    let imagesFile = [];
-    Array.from(files).forEach((file) => {
-      console.log(file);
-      imagesFile.push(file)
-    });
-    console.log(imagesFile)
-    setimageToSend(imagesFile);
+    let imagesFile = []
+    Array.from(e.target.files).forEach(file => imagesFile.push(file));
+    setSelectedImages(imagesFile);
   };
 
   const deleteProduct = async () => {
@@ -92,46 +108,59 @@ function EditProject(props) {
     });
   };
 
-  function deleteHandler(image) {
-    setSelectedImages(selectedImages.filter((e) => e !== image));
-    URL.revokeObjectURL(image);
+  function deleteHandler(index) {
+    let filteredImages = [];
+    let selectedMedia = [];
+    displayImage.forEach((item, key) => {
+      if (key !== index) {
+        filteredImages.push(item);
+      }
+    });
+
+    selectedImages.forEach((item, key) => {
+      if (key !== index) {
+        selectedMedia.push(item);
+      }
+    });
+
+    if (typeof filteredImages[0] == "undefined") {
+      filteredImages = [];
+    }
+    setdisplayImage(filteredImages);
+    setSelectedImages(selectedMedia);
   }
   const submitData = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const formData = new FormData();
-    formData.append("name", title);
-    formData.append("index", index);
-    formData.append("template", template);
-    formData.append("slug", Slug);
-    let imagesTo = [];
+    let imagesArr = [];
+    let selectedImagesArr = [...selectedImages];
+    for (let i = 0; i < displayImage.length; i++) {
+      if (displayImage[i].split(":")[0] !== "data") {
+        imagesArr[i] = displayImage[i];
+      }
+    }
+    const payload = {
+      title: title,
+      slug: Slug,
+      template: template,
+      index: index,
+      images: imagesArr,
+      imagess: selectedImagesArr
+    }
 
-    
+    console.log(payload);
+    const response = await API.put(`project/${P_id}`, payload).then((response) => {
+      if (response.status == 225) {
+        toast("Uploaded successfully");
+        setSelectedImages([]);
+      } else {
+        toast(JSON.stringify(response));
+      }
 
-    Array.from(imageToSend).forEach((file) => {
-      imagesTo.push(file);
-    });
-    Array.from(selectedImages).forEach((file) => {
-      imagesTo.push(file);
-    });
-    setSelectedImages(imageToSend);
-
-    Array.from(selectedImages).forEach((file) => {
-      formData.append("images", file);
-    });
-
-    await axios
-      .put(`${base_url}/project/${P_id}`, formData, {
-        "Content-Type": "multipart/form-data",
-      })
-      .then((response) => {
-        setLoading(false);
-        toast("Updated successfully");
-        console.log(response);
-        // setPId("");
-        // setTitle("");
-        //   window.location.reload();
-      });
+    }).catch(err => {
+      toast(JSON.stringify(err));
+    })
+    setLoading(false);
   };
 
   return (
@@ -150,12 +179,12 @@ function EditProject(props) {
               })}
             </Form.Select>
             <Button
-              className={"d-flex align-items-center "+delteIcon ? "delete-icon m-2" : "d-none"}
+              className={"d-flex align-items-center " + delteIcon ? "delete-icon m-2" : "d-none"}
               onClick={() => deleteProduct()}
               disabled={loadingDel || !uploadImg ? true : false}
             >
-              {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"}/> : <BsFillTrashFill />}
-              
+              {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"} /> : <BsFillTrashFill />}
+
             </Button>
           </div>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -204,61 +233,39 @@ function EditProject(props) {
             />
           </Form.Group>
           <section>
-            {/* <label
-              className="img-label"
-              onClick={() => {
-                setUploadImg(false);
-              }}
-            >
-              + Add Images
-              <br />
-              <span>up to 10 images</span>
-              <input
-                type="file"
-                name="images"
-                onChange={onSelectFile}
-                multiple
-                accept="image/png , image/jpeg, image/webp"
-              />
-            </label>
-            <br />
-
-            <input type="file" multiple /> */}
-
-            <div className="images">
-              {selectedImages &&
-                selectedImages.map((image, index) => {
-                  return (
-                    <div key={image} className="image">
-                      <img
-                        src={`${base_url}` + "/projects/" + image}
-                        width="150"
-                        alt="upload"
-                      />
-                      <button onClick={() => deleteHandler(image)}>
-                        delete image
-                      </button>
-                      <p>{index + 1}</p>
-                    </div>
-                  );
-                })}
-            </div>
             <div className="images">
               {displayImage &&
                 displayImage.map((image, index) => {
-                  return (
-                    <div key={image} className="image">
-                      <img src={image} width="150" alt="upload" />
-                      <button onClick={() => deleteHandler(image)}>
-                        delete image
-                      </button>
-                      <p>{index + 1}</p>
-                    </div>
-                  );
+                  // <div key={image} className="image">
+                  {
+                    return image.includes("mp4") ?
+                      <div key={image} className="image">
+                        <video autoPlay loop muted>
+                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/mp4" />
+                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/ogg" />
+                        </video>
+                        <button type="button" onClick={() => deleteHandler(index)}>
+                          delete video
+                        </button>
+                        <p>{index + 1}</p>
+                      </div>
+                      :
+                      <div key={image} className="waheed">
+                        <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/projects/" + image)} width="150" alt="upload" />
+                        <button type="button" onClick={() => deleteHandler(index)}>
+                          delete image
+                        </button>
+                        <p>{index + 1}</p>
+                      </div>
+
+                  }
+                  // </div>
+
+
                 })}
             </div>
             {
-              selectedImages.length > 0 && (
+              displayImage.length < MAX_LENGTH && (
                 <label className="img-label">
                   + Add Images
                   <br />
@@ -281,7 +288,7 @@ function EditProject(props) {
             onClick={(e) => submitData(e)}
             disabled={loading || !uploadImg ? true : false}
           >
-            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"}/>
+            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
             {loading ? "Updating..." : "Update"}
           </Button>
         </Form>

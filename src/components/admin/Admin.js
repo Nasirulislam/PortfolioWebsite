@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeIndex from "./HomeIndex";
 import IndexBackground from "./IndexBackground";
+import About from "./About";
 
 function Admin() {
   return (
@@ -114,7 +115,7 @@ function Admin() {
                 <IndexBackground />
               </Tab.Pane>
               <Tab.Pane eventKey="seven">
-                <IndexBackground />
+                <About />
               </Tab.Pane>
             </Tab.Content>
           </Col>

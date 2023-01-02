@@ -124,15 +124,15 @@ function HomeIndex(props) {
                 key={index}
                 style={{ position: index == 1 ? 'relative' : '' }}
               >
-                {index % 2 == 0 ?
+                {index == 1 ?
                   <motion.div className="card"
-                    animate={{ x: 1 == 1 ? mediumCircle.x : largeCircle.x, y: 1 == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                     key={index}
                     style={{ position: index == 1 ? 'absolute' : '', top: '0%' }}
                   >
                     {banner.includes("mp4")
                       ?
-                      <video autoPlay loop>
+                      <video autoPlay loop muted>
                         <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
                         <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
                         Your browser does not support the video tag.
@@ -147,11 +147,13 @@ function HomeIndex(props) {
 
                   </motion.div>
                   : <motion.Card className="card"
-                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-                    key={index}>
+                    animate={{ x: index == 2 ? mediumCircle.x : largeCircle.x, y: index == 2 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                    key={index}
+                    style={{ position: index === 2 ? 'absolute' : '', top: '40%' }}
+                    >
                     {banner.includes("mp4")
                       ?
-                      <video autoPlay loop>
+                      <video autoPlay loop muted>
                         <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
                         <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
                         Your browser does not support the video tag.

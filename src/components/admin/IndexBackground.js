@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import base_url from "../../constants/url";
+import API from '../../services/API';
 
 
 export default function IndexBackground() {
@@ -74,26 +75,21 @@ export default function IndexBackground() {
     const submit = async (event) => {
         event.preventDefault();
         setLoading(true);
-        const formData = new FormData();
-
-        let counter = 0;
+        let imagesArr = [];
+        let selectedImagesArr = [...selectedFiles];
         for (let i = 0; i < imagesPreview.length; i++) {
             if (imagesPreview[i].split(":")[0] !== "data") {
-                formData.append("images["+i+"]", imagesPreview[i]);
-                counter++;
+                imagesArr[i] = imagesPreview[i];
             }
         }
-
-        Array.from(selectedFiles).forEach((file,index) => { formData.append("imagess", file) });
-        // formData.append("imagess", selectedFiles)
-        if(counter == 0) {
-            formData.append("images", []);
+        const payload = {
+            images: imagesArr,
+            imagess: selectedImagesArr
         }
         if (homeIndexId == 0) {
-            await axios.post(`${base_url}/project/home`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-                if (response.status == 210) {
+            await API.post(`project/home`, payload).then((response) => {
+                if (response.status == 225) {
                     toast("Uploaded successfully");
-                    setSelectedFiles([]);
                     setImagesPreview([]);
                 }
 
@@ -102,16 +98,13 @@ export default function IndexBackground() {
             })
             setLoading(false);
         } else {
-            await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-                if (response.status == 225) {
-                    toast("Uploaded successfully");
-                    setSelectedFiles([]);
-                    setImagesPreview([]);
-                }
-
-            }).catch(err => {
-                toast(JSON.stringify(err));
-            })
+            const response = await API.patch(`project/home/${homeIndexId}`, payload);
+            if (response.status == 225) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+            } else {
+                toast(JSON.stringify(response));                
+            }
             setLoading(false);
         }
     }
@@ -142,7 +135,6 @@ export default function IndexBackground() {
                                         return (
                                             <div key={index} className="image">
                                                 {
-                                                    // image.includes("mp4") ? <video src={base_url + "/home/" + image} />
                                                     <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
                                                 }
                                                 <button type="button" onClick={() => removePreviewImage(index)}>
@@ -153,7 +145,7 @@ export default function IndexBackground() {
                                     }
                                 })}
                             {
-                                (imagesPreview && imagesPreview.length < 6) && (
+                                (imagesPreview && imagesPreview.length == 0 ) && (
                                     <label className="img-label">
                                         + Add Images
                                         <br />

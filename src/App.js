@@ -19,6 +19,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import About from "./components/About";
 
 function App() {
   const [projectsData, setProjectsData] = useState([]);
@@ -31,6 +32,7 @@ function App() {
   const [dataFetc, setDataFetch] = useState(false);
   const [homeIndexImages, setHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
+  const [showAbout, setShowAbout] = useState(false);
 
   function changeIndex(index) {
     if (index < 0) {
@@ -56,7 +58,7 @@ function App() {
       if (response.status === 210) {
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
-        
+
       } else {
         console.log(response.message);
       }
@@ -91,7 +93,7 @@ function App() {
     }
   };
   const AboutToogle = () => {
-    if (clicked) {
+    if (!showAbout) {
       setAboutText("CLOSE");
       setIndexText("");
       setMEText("");
@@ -99,7 +101,7 @@ function App() {
     } else {
       setValues();
     }
-    setClicked(!clicked);
+    setClicked(true);
   };
   const METoogle = () => {
     if (clicked) {
@@ -143,7 +145,10 @@ function App() {
               </div>
 
               <div className="main-button">
-                <h3 onClick={AboutToogle} className="about-button">
+                <h3 onClick={() => {
+                  setShowAbout(!showAbout)
+                  AboutToogle()
+                }} className="about-button">
                   <a id="style-2" data-replace={aboutText}>
                     <span>{aboutText}</span>
                   </a>
@@ -167,7 +172,7 @@ function App() {
           ) : null}
 
           {clicked ? (
-            <div>
+            <div className={showAbout ? "d-none" : ""}>
               {/* <Template1/> */}
               <Routes>
                 <Route
@@ -221,14 +226,18 @@ function App() {
                 />
               </Routes>
             </div>
-          ) : (
-            <Index
-              projectData={projectsData}
-              closeIndex={buttonToogle}
-              RedHome={setRedHome}
-              indexBackground={indexBackground}
-            />
-          )}
+          ) :
+            (
+              <Index
+                projectData={projectsData}
+                closeIndex={buttonToogle}
+                RedHome={setRedHome}
+                indexBackground={indexBackground}
+                showAbout={showAbout}
+                clicked={clicked}
+              />
+            )}
+          <About portfolios={projectsData} showAbout={showAbout} />
         </div>
       </Router>
     </div>

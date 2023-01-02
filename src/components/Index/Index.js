@@ -28,7 +28,7 @@ function Index(props) {
   };
 
   return (
-    <div className="index-section-main-wrap" style={{ background: `url(${props.indexBackground.length > 0 ? `${base_url}/home/${props.indexBackground[1]}` : '../../Assets/images/background4.jpg'})`, backgroundRepeat: 'no-repeat',
+    <div className="index-section-main-wrap" style={{ background: `url(${props.indexBackground.length > 0 ? `${base_url}/home/${props.indexBackground[0]}` : '../../Assets/images/background4.jpg'})`, backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="index-section">
         <div className="index-innersection">

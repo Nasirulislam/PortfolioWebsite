@@ -1,10 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom/dist";
 import { motion } from "framer-motion";
 import base_url from "../../constants/url";
 
 function Brenna(props) {
-  const navigate = useNavigate();
 
   return (
     <div className={"col-md-12 d-flex align-items-center brenna-master " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")}>
@@ -15,7 +13,7 @@ function Brenna(props) {
           key={key}>
           {
             banner.includes("mp4") ?
-            <video autoPlay loop>
+            <video autoPlay loop muted>
             <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
               <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                 Your browser does not support the video tag.
@@ -36,7 +34,7 @@ function Brenna(props) {
               key={key}>
               {
                 banner.includes("mp4") ?
-                <video autoPlay loop>
+                <video autoPlay loop muted>
                 <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                     Your browser does not support the video tag.
@@ -56,7 +54,7 @@ function Brenna(props) {
               key={key}>
               {
                 banner.includes("mp4") ?
-                <video autoPlay loop>
+                <video autoPlay loop muted>
                 <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                     Your browser does not support the video tag.

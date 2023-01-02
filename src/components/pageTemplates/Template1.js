@@ -96,23 +96,34 @@ function Template1(props) {
             <motion.div className="col-md-6 d-flex justify-content-end">
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
-                  <motion.img
-                    className={"img-fluid"}
-                    src={`${base_url}` + "/img/projects/" + banner}
-                    style={{ position: 'absolute', top: '30%', right: '22%' }}
-                    animate={{ x: largeCircle.x, y: largeCircle.y }}
-                    key={index}
-                  /> :
-                  <img
-                    className={"img-fluid"}
-                    src={`${base_url}` + "/img/projects/" + banner}
-                    key={index}
-                  />
+                  banner.includes("mp4") ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video> :
+                    <motion.img
+                      className={"img-fluid"}
+                      src={`${base_url}` + "/projects/" + banner}
+                      style={{ position: 'absolute', top: '30%', right: '22%' }}
+                      animate={{ x: largeCircle.x, y: largeCircle.y }}
+                      key={index}
+                    /> : banner.includes("mp4") ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video> :
+                    <img
+                      className={"img-fluid"}
+                      src={`${base_url}` + "/projects/" + banner}
+                      key={index}
+                    />
               })}
             </motion.div>
           </div>
         )}
-        {banners.length > 0 && (
+        {/* {banners.length > 0 && (
           <div className="row my-5 py-5" style={{ height: '100%' }}>
             {banners.map((banner, index) => {
               return <motion.div className={"col-md-12 d-flex justify-content-" + (index % 2 == 1 ? "end " : "center ") + (index !== 0 ? "my-5 py-5" : "")}
@@ -120,25 +131,38 @@ function Template1(props) {
                 key={index}>
 
                 {index % 2 === 0 && index !== 0 ?
-                  <motion.img
-                    className={"img-fluid"}
-                    src={`${base_url}` + "/img/projects/" + banner}
-                    animate={{ x: largeCircle.x, y: largeCircle.y }}
-                    key={index}
-                  />
+                  banner.includes("mp4") ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video>
+                    :
+                    < motion.img
+                      className={"img-fluid"}
+                      src={`${base_url}` + "/projects/" + banner}
+                      animate={{ x: largeCircle.x, y: largeCircle.y }}
+                      key={index}
+                    />
                   :
-                  <motion.img
-                    className={"img-fluid"}
-                    src={`${base_url}` + "/img/projects/" + banner}
-                    key={index}
-                    animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-                  />
+                  banner.includes("mp4") ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
+                      <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video> :
+                    <motion.img
+                      className={"img-fluid"}
+                      src={`${base_url}` + "/projects/" + banner}
+                      key={index}
+                      animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+                    />
                 }
 
               </motion.div>
             })}
           </div>
-        )}
+        )} */}
       </div>
       {
         index <= props.projectData.length - 1 && props.projectData[index + 1] ? (
