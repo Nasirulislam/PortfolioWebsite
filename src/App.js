@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Index from "./components/Index/Index";
 import { useState } from "react";
@@ -237,7 +236,7 @@ function App() {
                 clicked={clicked}
               />
             )}
-          <About portfolios={projectsData} showAbout={showAbout} />
+          <About portfolios={projectsData} showAbout={showAbout}  changeAboutStatus={AboutToogle} setShowAbout={setShowAbout}/>
         </div>
       </Router>
     </div>

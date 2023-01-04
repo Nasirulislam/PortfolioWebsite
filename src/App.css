@@ -50,9 +50,11 @@ body {
 .null-button a {
   color: white !important;
 }
-h3{
+
+h3 {
   font-size: 1.75rem !important;
 }
+
 .ME-button {
   mix-blend-mode: difference;
   background: transparent;
@@ -120,7 +122,7 @@ img.hoverImages:hover {
   z-index: 9999;
 }
 
- #style-2::before,
+#style-2::before,
 #style-2::after {
   content: '';
   position: absolute;
@@ -130,6 +132,7 @@ img.hoverImages:hover {
   background: transparent;
   color: black;
 }
+
 /*
 #style-2::before {
   background-color: black;
@@ -161,7 +164,7 @@ img.hoverImages:hover {
   mix-blend-mode: difference;
   background: transparent;
   color: black !important;
-} 
+}
 
 #style-2:hover::before {
   transform-origin: 0% 50%;
@@ -181,6 +184,10 @@ img.hoverImages:hover {
   /* mix-blend-mode: difference; */
   /* background: transparent; */
   color: white !important;
+}
+
+button {
+  background-color: none !important;
 }
 
 /* home page start*/

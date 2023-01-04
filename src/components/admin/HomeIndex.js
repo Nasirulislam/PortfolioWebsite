@@ -173,7 +173,7 @@ export default function HomeIndex() {
                         type="submit"
                         className="d-flex align-items-center"
                         onClick={(e) => submit(e)}
-                        disabled={loading ? true : false}
+                        disabled={loading ? true : false}                        
                     >
                         <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
                         {loading ? "Uploading..." : "Submit"}
