@@ -51,7 +51,7 @@ body {
   color: white !important;
 }
 h3{
-  font-size: 1.75rem;
+  font-size: 1.75rem !important;
 }
 .ME-button {
   mix-blend-mode: difference;
