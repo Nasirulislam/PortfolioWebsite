@@ -41,7 +41,7 @@ export default function About(props) {
         navigate("/"+slug);
     }
     return (
-        <div className="bg-white" style={{ height: '100% !important',  display: props.showAbout ? 'block' : 'none' }}>
+        <div className="bg-white about-wrapper" style={{ height: '100% !important',  display: props.showAbout ? 'block' : 'none' }}>
             <div className="about-section">
                 {title !== "" && (
                     <div className="index-innersection h-100">
@@ -49,7 +49,7 @@ export default function About(props) {
                         <h1>{detail}</h1>
                         <h1>{locTxt}</h1>
                         <h1>{email}</h1>
-                        <h1>{instUrl}</h1>
+                        <a href={instUrl} target="_blank">Instagram</a>
                         <h1>{repName}</h1>
                     </div>
                 )}

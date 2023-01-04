@@ -179,9 +179,18 @@
   font-weight: 700;
   color: blue !important;
 }
-
+.about-wrapper{
+  width: 100%;
+  position: absolute;
+}
 .about-section h1 {
   font-size: 5vw;
   font-weight: 700;
   color: blue;  
+}
+.about-section a {
+  font-size: 5vw;
+  font-weight: 700;
+  color: blue;  
+  text-decoration: none;
 }

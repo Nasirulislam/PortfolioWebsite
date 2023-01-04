@@ -77,7 +77,7 @@ function IndexItem(props) {
       >
         <img
           className="img-fluid animated fadeOut"
-          src={`${base_url}` + "/img/projects/" + props.image}
+          src={`${base_url}` + "/projects/" + props.image}
         />
       </motion.div>
     </div>
