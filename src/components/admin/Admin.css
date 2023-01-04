@@ -33,25 +33,24 @@ section {
   color: white !important;
 }
 .admin-nav-bar {
-  /* background-image: url("./../../Assets/images/Background.jpg"); */
   width: 100%;
   padding: 0px;
-  /* margin-bottom: 5px; */
 }
 .admin-brand {
-  padding: 12px 47px;
   height: 80px;
   color: white;
   font-weight:700 ;
   font-size: 35px;
-  margin-left: -80px;
+  padding: 20px;
+}
+.typed {
+  color: white !important;
 }
 .admin-brand:hover{
   color: white !important;
 }
 
 .img-label {
-  /* margin: 0 auto; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -164,4 +163,7 @@ label:hover,
 }
 .nav-item a {
   width: 100% !important;
+}
+button{
+  background-color: none !important;
 }

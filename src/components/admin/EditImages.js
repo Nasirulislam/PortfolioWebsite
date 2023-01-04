@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Card, Container, Row, Col, Spinner } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
-import FileUploader from "../admin/FileUploder";
 import { toast } from "react-toastify";
 
 function EditImages(props) {
@@ -95,7 +94,7 @@ function EditImages(props) {
     await axios
       .patch(`${base_url}/project/${projectId}`, body)
       .then((response) => {
-        if(response.status === 225) {
+        if (response.status === 225) {
           toast("Updated successfully");
         } else {
           toast("Please try later");
@@ -173,12 +172,18 @@ function EditImages(props) {
                           : "1px solid black",
                       }}
                     >
-                      <img
-                        src={`${base_url}` + "/img/projects/" + image}
-                        width="150"
-                        height="150"
-                        alt="upload"
-                      />
+                      {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                        <img
+                          src={`${base_url}` + "/projects/" + image}
+                          width="150"
+                          height="150"
+                          alt="upload"
+                        />
+                        : <video autoPlay loop muted>
+                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/mp4" />
+                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/ogg" />
+                        </video>
+                      }
                       {/* <button onClick={() => deleteHandler(image)}>
                         delete image
                       </button> */}

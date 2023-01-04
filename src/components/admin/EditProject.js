@@ -233,12 +233,12 @@ function EditProject(props) {
             />
           </Form.Group>
           <section>
-            <div className="images">
+            <div className="images justify-content-around flex-wrap">
               {displayImage &&
                 displayImage.map((image, index) => {
                   {
                     return image.split("/")[0] === "data:image" || !image.includes("mp4") ?
-                      <div key={image} className="waheed">
+                      <div key={image} className="waheed mx-1">
                         <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/projects/" + image)} width="150" alt="upload" />
                         <button type="button" onClick={() => deleteHandler(index)}>
                           delete image
@@ -258,23 +258,24 @@ function EditProject(props) {
                       </div>
                   }
                 })}
+              {
+                displayImage.length < MAX_LENGTH && (
+                  <label className="img-label">
+                    + Add Images
+                    <br />
+                    <span>up to 10 images</span>
+                    <input
+                      type="file"
+                      name="images"
+                      onChange={onSelectFile}
+                      multiple
+                      accept="image/png , image/jpeg, image/webp"
+                    />
+                  </label>
+                )
+              }
             </div>
-            {
-              displayImage.length < MAX_LENGTH && (
-                <label className="img-label">
-                  + Add Images
-                  <br />
-                  <span>up to 10 images</span>
-                  <input
-                    type="file"
-                    name="images"
-                    onChange={onSelectFile}
-                    multiple
-                    accept="image/png , image/jpeg, image/webp"
-                  />
-                </label>
-              )
-            }
+
           </section>
           <Button
             variant="primary"

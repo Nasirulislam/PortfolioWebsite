@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import base_url from "../../constants/url";
 import { toast } from 'react-toastify';
+import API from '../../services/API';
 
 export default function HomeIndex() {
     const [loading, setLoading] = useState(false);
@@ -74,53 +74,47 @@ export default function HomeIndex() {
     const submit = async (event) => {
         event.preventDefault();
         setLoading(true);
-        let imagesArr = imagesPreview || [];
-        const formData = new FormData();
+        let imagesArr = [];
+        let selectedArr = [...selectedFiles];
 
         for (let i = 0; i < imagesPreview.length; i++) {
             if (imagesPreview[i].split(":")[0] !== "data") {
-                formData.append("images[" + i + "]", imagesPreview[i]);
+                imagesArr.push(imagesPreview[i]);
             }
         }
 
-        Array.from(selectedFiles).forEach((file, index) => { formData.append("imagess[" + index + "]", file) });
-
-
-        if (imagesArr.length === 0) {
-            formData.append("images", []);
+        const payload = {
+            images: imagesArr,
+            imagess: selectedArr
         }
 
-        if (homeIndexId == 0) {
-            await axios.post(`${base_url}/project/home`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-                if (response.status == 225) {
-                    toast("Uploaded successfully");
-                    setImagesPreview([]);
-                }
-
-            }).catch(err => {
-                toast(JSON.stringify(err));
-            })
-            setLoading(false);
+        if (homeIndexId === 0) {
+            const response = await API.upload(`project/home`, payload);
+            if (response.status == 200) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+            } else {
+                toast(JSON.stringify(response))
+            }
         } else {
-            await axios.patch(`${base_url}/project/home/${homeIndexId}`, formData, { 'Content-Type': 'multipart/form-data' }).then((response) => {
-                if (response.status == 225) {
-                    toast("Uploaded successfully");                    
-                    setImagesPreview([]);
-                }
-
-            }).catch(err => {
-                toast(JSON.stringify(err));
-            })
-            setLoading(false);
+            const response = await API.patch(`project/home/${homeIndexId}`, payload);
+            if (response.status == 225) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+            } else {
+                toast(JSON.stringify(response));
+            }
         }
+        setLoading(false);
     }
 
     useEffect(() => {
         const loadHomeIndexImages = async () => {
-            const response = await axios.get(`${base_url}/project/home`);
+            const response = await API.get(`project/home`);
+            console.log(response.data);
             if (response.status == 210) {
-                setImagesPreview(response.data.data.home[0]?.images || []);
-                setHomeIndexId(response.data.data.home[0]?._id || 0);
+                setImagesPreview(response.data.home[0]?.images || []);
+                setHomeIndexId(response.data.home[0]?._id || 0);
             } else {
                 console.log(response.message);
             }
@@ -140,12 +134,12 @@ export default function HomeIndex() {
                                     {
                                         return (
                                             <div key={index} className="image">
-                                                {image.split(";")[0] == "data:video/mp4" || image.includes("mp4") ?
-                                                    <video autoPlay loop muted>
+                                                {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                                                    <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                    : <video autoPlay loop muted>
                                                         <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
                                                         <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
                                                     </video>
-                                                    : <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
                                                 }
                                                 <button type="button" onClick={() => removePreviewImage(index)}>
                                                     delete image

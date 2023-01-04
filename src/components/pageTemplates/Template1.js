@@ -123,7 +123,7 @@ function Template1(props) {
             </motion.div>
           </div>
         )}
-        {/* {banners.length > 0 && (
+        {banners.length > 0 && (
           <div className="row my-5 py-5" style={{ height: '100%' }}>
             {banners.map((banner, index) => {
               return <motion.div className={"col-md-12 d-flex justify-content-" + (index % 2 == 1 ? "end " : "center ") + (index !== 0 ? "my-5 py-5" : "")}
@@ -162,7 +162,7 @@ function Template1(props) {
               </motion.div>
             })}
           </div>
-        )} */}
+        )}
       </div>
       {
         index <= props.projectData.length - 1 && props.projectData[index + 1] ? (

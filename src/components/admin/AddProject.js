@@ -70,7 +70,7 @@ function AddProject(props) {
   const submitData = async (e) => {
     e.preventDefault();
     setLoading(true);
-    let selectedMedia =  [...selectedImages];
+    let selectedMedia = [...selectedImages];
     const payload = {
       name: title,
       index: index,
@@ -80,7 +80,7 @@ function AddProject(props) {
       imagess: selectedMedia
     }
     const response = await API.upload('project/new', payload);
-    if(response.status === 200) {
+    if (response.status === 200) {
       setDetail('');
       setTitle('');
       setColor('');
@@ -93,7 +93,8 @@ function AddProject(props) {
     } else {
       toast("please try again");
     }
-    setLoading(false);    
+    setLoading(false);
+    window.location.reload();
   };
 
   return (
@@ -158,20 +159,6 @@ function AddProject(props) {
             />
           </Form.Group>
           <section>
-            <label className="img-label">
-              + Add Images
-              <br />
-              <span>up to 10 images</span>
-              <input
-                type="file"
-                name="images"
-                onChange={onSelectFile}
-                multiple
-                accept="image/png , image/jpeg, image/webp video/mp4"
-              />
-            </label>
-            <br />
-
             <input type="file" multiple />
 
             <div className="images">
@@ -193,6 +180,18 @@ function AddProject(props) {
                     </div>
                   );
                 })}
+              <label className="img-label">
+                + Add Images
+                <br />
+                <span>up to 10 images</span>
+                <input
+                  type="file"
+                  name="images"
+                  onChange={onSelectFile}
+                  multiple
+                  accept="image/png , image/jpeg, image/webp video/mp4"
+                />
+              </label>
             </div>
           </section>
           <Button
