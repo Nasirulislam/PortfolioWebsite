@@ -50,7 +50,9 @@ body {
 .null-button a {
   color: white !important;
 }
-
+h3{
+  font-size: 1.75rem;
+}
 .ME-button {
   mix-blend-mode: difference;
   background: transparent;
