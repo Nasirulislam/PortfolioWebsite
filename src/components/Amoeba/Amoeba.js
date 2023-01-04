@@ -9,7 +9,7 @@ function Amoeba(props) {
     <div className={"col-md-12 d-flex justify-content-center"} style={{ height: '100%' }}>
       {amoebaImages.map((banner, key) => {
         return (
-          <motion.div className={"col-md-8 d-flex amoeba " + (key === 1 ? "justify-content-start" : "justify-content-center")}
+          <motion.div className={"col-md-8 d-flex amoeba " + (key === 1 ? "justify-content-start" : "justify-content-end")}
             animate={{ x: key === 0 ? props.coords.x : 0, y: key === 0 ? props.coords.y : 0, opacity: 1, animationDelay: 200 }}
             key={key}>
             {
