@@ -113,13 +113,13 @@ function HomeMain(props) {
   return (
     <>
       <div className="container-fluid" style={{ height: '100%', maxWidth: '100vw' }}>
-        <div style={{ position: 'relative', width: '100%', height: '200vh' }} id="homeIndex">          
+        <div style={{ position: 'relative', width: '100%', height: '200vh' }} id="homeIndex">
           {value.toLowerCase() !== "david ellis" && (
             <motion.div className="home-title change-title"
-            initial={"hidden"}            
-            animate={"visible"}
-            variants={animateTxt}
-            transition={{y:200, duration: 4}}
+              initial={"hidden"}
+              animate={"visible"}
+              variants={animateTxt}
+              transition={{ y: 200, duration: 4 }}
             >
               <h1 style={{ cursor: 'pointer' }} onClick={handleSlug}>
                 <ReactTextTransition springConfig={presets.gentle} className="indexitem-button">
@@ -145,10 +145,10 @@ function HomeMain(props) {
         </div>
         {projectsData.map((project, index) => {
 
-          var e = parseInt(project.template);
+          var e = parseInt(project.template);          
           return (
             <>
-              {e == 1 ?
+              {e === 1 ?
                 <div
                   className="mobile-view mt-5" style={{ width: '100%', height: '130vh', position: 'relative' }}
                   ref={(el) => (GrouRef.current[index + 1] = el)}
@@ -168,7 +168,7 @@ function HomeMain(props) {
                     slowCoords={mediumCircle}
                     handleSlug={handleSlug}
                   />
-                </div> : e == 2 ?
+                </div> : e === 2 ?
                   <div
                     className="col-md-12 my-4 mobile-view" style={{ width: '100%', height: '160vh', position: 'relative' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
@@ -180,7 +180,7 @@ function HomeMain(props) {
                   >
                     <Amoeba
                       name={project.name}
-                      images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
+                      images={project.images}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}
@@ -200,7 +200,7 @@ function HomeMain(props) {
                   >
                     {<Brenna
                       name={project.name}
-                      images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
+                      images={project.images.slice(0, 3)}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}

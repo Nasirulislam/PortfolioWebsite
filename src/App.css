@@ -52,7 +52,7 @@ body {
 }
 
 h3 {
-  font-size: 1.75rem !important;
+  font-size: 1.45rem !important;
 }
 
 .ME-button {
@@ -186,8 +186,5 @@ img.hoverImages:hover {
   color: white !important;
 }
 
-button {
-  background-color: none !important;
-}
 
 /* home page start*/
