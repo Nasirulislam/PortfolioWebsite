@@ -70,6 +70,7 @@ function EditProject(props) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         resolve(reader.result);
+        console.log(reader.result);
       }
     });
   }
@@ -148,7 +149,6 @@ function EditProject(props) {
       imagess: selectedImagesArr
     }
 
-    console.log(payload);
     const response = await API.put(`project/${P_id}`, payload).then((response) => {
       if (response.status == 225) {
         toast("Uploaded successfully");
@@ -236,9 +236,16 @@ function EditProject(props) {
             <div className="images">
               {displayImage &&
                 displayImage.map((image, index) => {
-                  // <div key={image} className="image">
                   {
-                    return image.includes("mp4") ?
+                    return image.split("/")[0] === "data:image" || !image.includes("mp4") ?
+                      <div key={image} className="waheed">
+                        <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/projects/" + image)} width="150" alt="upload" />
+                        <button type="button" onClick={() => deleteHandler(index)}>
+                          delete image
+                        </button>
+                        <p>{index + 1}</p>
+                      </div>
+                      :
                       <div key={image} className="image">
                         <video autoPlay loop muted>
                           <source src={image.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/mp4" />
@@ -249,19 +256,7 @@ function EditProject(props) {
                         </button>
                         <p>{index + 1}</p>
                       </div>
-                      :
-                      <div key={image} className="waheed">
-                        <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/projects/" + image)} width="150" alt="upload" />
-                        <button type="button" onClick={() => deleteHandler(index)}>
-                          delete image
-                        </button>
-                        <p>{index + 1}</p>
-                      </div>
-
                   }
-                  // </div>
-
-
                 })}
             </div>
             {
