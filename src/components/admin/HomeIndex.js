@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import base_url from "../../constants/url";
 import { toast } from 'react-toastify';
+import "./Admin.css";
 import API from '../../services/API';
 
 export default function HomeIndex() {

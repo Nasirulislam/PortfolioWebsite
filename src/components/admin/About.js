@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import "./Admin.css";
 import { toast } from 'react-toastify';
 import url from '../../constants/url';
 

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { toast } from 'react-toastify';
+import "./Admin.css";
 import base_url from "../../constants/url";
 import API from '../../services/API';
 
