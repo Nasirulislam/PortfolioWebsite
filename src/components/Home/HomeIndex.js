@@ -113,7 +113,7 @@ function HomeIndex(props) {
       <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow flex-wrap" style={{ height: '100%' }}>
         {props.homeIndexImages.length > 0 && props.homeIndexImages.map((banner, index) => {
           {
-            return index !== 0 && (
+            return (
               <motion.div
                 className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap me-4"
                 animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
@@ -126,9 +126,9 @@ function HomeIndex(props) {
               >
                 {index == 1 ?
                   <motion.div className="card"
-                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                    animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
                     key={index}
-                    style={{ position: index == 1 ? 'absolute' : '', top: '0%' }}
+                    style={{ position: index == 1 ? 'absolute' : '', top: '40%' }}
                   >
                     {banner.includes("mp4")
                       ?
@@ -147,10 +147,11 @@ function HomeIndex(props) {
 
                   </motion.div>
                   : <motion.Card className="card"
-                    animate={{ x: index == 2 ? mediumCircle.x : largeCircle.x, y: index == 2 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+
                     key={index}
-                    style={{ position: index === 2 ? 'absolute' : '', top: '40%' }}
-                    >
+                    style={{ position: (props.homeIndexImages.length - 1) ===  index ? 'absolute' : '', top: (props.homeIndexImages.length - 1) ===  index ? '22%' : '0' }}
+                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                  >
                     {banner.includes("mp4")
                       ?
                       <video autoPlay loop muted>
