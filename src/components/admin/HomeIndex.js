@@ -171,7 +171,7 @@ export default function HomeIndex() {
                     </section>
                     <Button
                         variant="primary"
-                        type="submit"
+                        type="submit01"
                         className="d-flex align-items-center"
                         onClick={(e) => submit(e)}
                         disabled={loading ? true : false}                        

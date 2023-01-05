@@ -143,7 +143,7 @@ export default function About() {
                     </Form.Group>
                     <Button
                         variant="primary"
-                        type="submit"
+                        type="submit01"
                         className="d-flex align-items-center"
                         onClick={(e) => submitData(e)}
                         disabled={loading ? true : false}

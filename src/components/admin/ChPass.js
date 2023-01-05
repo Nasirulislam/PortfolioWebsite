@@ -86,7 +86,7 @@ function ChPass(props) {
             />
           </Form.Group>
 
-          <Button variant="primary" onClick={() => changePass()}>
+          <Button type="submit01" variant="primary" onClick={() => changePass()}>
             Update the Password
           </Button>
         </Form>

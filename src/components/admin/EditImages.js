@@ -204,7 +204,7 @@ function EditImages(props) {
 
           <Button
             variant="primary"
-            // type="submit"
+            type="submit01"
             className="button d-flex align-items-center"
             onClick={() => {
               patchReq();

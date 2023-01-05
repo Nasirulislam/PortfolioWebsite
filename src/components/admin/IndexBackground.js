@@ -165,8 +165,8 @@ export default function IndexBackground() {
                         <br />
                     </section>
                     <Button
-                        variant="primary"
-                        type="submit"
+                        variant="primary"                        
+                        type="submit01"
                         className="d-flex align-items-center"
                         onClick={(e) => submit(e)}
                         disabled={loading ? true : false}
