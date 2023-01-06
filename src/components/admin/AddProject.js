@@ -94,6 +94,7 @@ function AddProject(props) {
       toast("please try again");
     }
     setLoading(false);
+    return;
     window.location.reload();
   };
 

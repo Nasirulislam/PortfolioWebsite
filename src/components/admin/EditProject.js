@@ -136,7 +136,7 @@ function EditProject(props) {
     let imagesArr = [];
     let selectedImagesArr = [...selectedImages];
     for (let i = 0; i < displayImage.length; i++) {
-      if (displayImage[i].split(":")[0] !== "data" || displayImage[i] !== '') {
+      if (displayImage[i].split(":")[0] !== "data") {
         imagesArr[i] = displayImage[i];
       }
     }
@@ -179,6 +179,7 @@ function EditProject(props) {
               })}
             </Form.Select>
             <Button
+              type="submit12"
               className={"d-flex align-items-center " + delteIcon ? "delete-icon m-2" : "d-none"}
               onClick={() => deleteProduct()}
               disabled={loadingDel || !uploadImg ? true : false}

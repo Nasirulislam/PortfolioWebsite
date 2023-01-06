@@ -107,8 +107,8 @@ function getRandomString(length) {
 
 function convertToFormData(payload) {
   const formData = new FormData();
-  formData.append("images[]", []);
-  console.log(payload);
+  // formData.append("images[]", []);
+  // console.log(payload);
   for (const key in payload) {
     if (Array.isArray(payload[key])) {      
       for (let i = 0; i < payload[key].length; i++) {
