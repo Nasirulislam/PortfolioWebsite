@@ -71,12 +71,15 @@ function AddProject(props) {
     e.preventDefault();
     setLoading(true);
     let selectedMedia = [...selectedImages];
+    let image = [];
+    image[0] = "";
     const payload = {
       name: title,
       index: index,
       template: template,
       slug: Slug,
       color: color,
+      image: image,
       imagess: selectedMedia
     }
     const response = await API.upload('project/new', payload);
