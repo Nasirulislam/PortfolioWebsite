@@ -136,7 +136,7 @@ function EditProject(props) {
     let imagesArr = [];
     let selectedImagesArr = [...selectedImages];
     for (let i = 0; i < displayImage.length; i++) {
-      if (displayImage[i].split(":")[0] !== "data") {
+      if (displayImage[i].split(":")[0] !== "data" || displayImage[i] !== '') {
         imagesArr[i] = displayImage[i];
       }
     }
@@ -279,7 +279,7 @@ function EditProject(props) {
           </section>
           <Button
             variant="primary"
-            type="submit"
+            type="submit12"
             className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
             disabled={loading || !uploadImg ? true : false}
