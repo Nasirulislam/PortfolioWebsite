@@ -3,7 +3,6 @@ import Typed from 'react-typed';
 import './LoginUi.css';
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import base_url from "../../constants/url";
 import { Spinner } from "react-bootstrap";
@@ -11,7 +10,6 @@ import { Spinner } from "react-bootstrap";
 
 export default function NewLogin() {
 
-  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
@@ -27,8 +25,7 @@ export default function NewLogin() {
     await axios.post(`${base_url}/project/login`, body).then((response) => {
       if (response.data.status === "ok") {
         localStorage.setItem("Status", JSON.stringify("ok"));
-        // navigate("/admin-login");
-        window.location.reload();
+        window.location.href = 'admin-login';
       } else {
         localStorage.setItem("Status", JSON.stringify("not_ok"));
       }

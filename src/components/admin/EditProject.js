@@ -153,6 +153,7 @@ function EditProject(props) {
       if (response.status == 225) {
         toast("Uploaded successfully");
         setSelectedImages([]);
+        window.location.reload();
       } else {
         toast(JSON.stringify(response));
       }

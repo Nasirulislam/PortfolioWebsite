@@ -14,7 +14,7 @@ function Template1(props) {
   const [bottom, setBottom] = useState(false);
   const [initialBanners, setInitialBanners] = useState([]);
   const [banners, setBanners] = useState([]);
-  const [value, setValue] = useState(projectData[index].name);
+  const [value, setValue] = useState(props.projectData[index].name);
   const [nextPortfolioSlug, setSlug] = useState(projectData[index].slug);
   const currentPortfolioName = projectData[index].name;
 
@@ -34,7 +34,7 @@ function Template1(props) {
   }
 
   useEffect(() => {
-
+    window.scrollTo(0,0);
     // split images array into 2 chunks
     makeTemplateBannerChunks(projectData[index]?.images);
 
@@ -84,7 +84,7 @@ function Template1(props) {
       <div className={"home-title " + (currentPortfolioName === value ? "text-fill" : "")} style={{ cursor: 'pointer' }}>
         <h1><ReactTextTransition springConfig={presets.default} className="indexitem-button"
         >
-          {value || projectData[index].name}
+          {value || ""}
         </ReactTextTransition></h1>
       </div>
       <div

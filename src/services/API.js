@@ -26,7 +26,7 @@ class API {
     //payload will be sent as form data if content type is multipart/form-data
     if (options.method !== "GET") {
       if (contentType.toLowerCase() == "multipart/form-data") {
-        options.data = convertToFormData(payload);
+        options.data = convertToFormData(payload, options.method);
         console.log(options.data);
       } else if (payload && typeof payload === "object") {
         options.data = JSON.stringify(payload);
@@ -105,12 +105,15 @@ function getRandomString(length) {
 }
 
 
-function convertToFormData(payload) {
+function convertToFormData(payload, method) {
   const formData = new FormData();
-  formData.append("images[]", []);
+  if (method.toLowerCase() === "post") {
+    formData.append("images[]", []);
+  }
+
 
   for (const key in payload) {
-    if (Array.isArray(payload[key])) {      
+    if (Array.isArray(payload[key])) {
       for (let i = 0; i < payload[key].length; i++) {
         formData.append(key, payload[key][i]);
       }
@@ -119,7 +122,7 @@ function convertToFormData(payload) {
     }
 
   }
-    console.log(payload);
+  console.log(payload);
   return formData;
 }
 

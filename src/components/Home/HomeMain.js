@@ -190,7 +190,7 @@ function HomeMain(props) {
                     />
                   </div> :
                   <div
-                    className="col-md-8 mobile-view" style={{ width: '100%', height: '210vh', position: 'relative' }}
+                    className="col-md-8 mobile-view" style={{ width: '100%', height: '250vh', position: 'relative' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
                     data-bgcolor={project.color}
                     data-title={project.name}

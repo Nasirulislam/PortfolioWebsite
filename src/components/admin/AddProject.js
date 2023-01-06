@@ -19,7 +19,7 @@ function AddProject(props) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
   const [loading, setLoading] = useState(false);
-  const MAX_LENGTH = 25;
+  const MAX_LENGTH = 15;
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -63,8 +63,14 @@ function AddProject(props) {
       }
     });
 
+    let filteredDisplay = displayImage.filter((e, key) => {
+      if (key !== imageIndex) {
+        return e;
+      }
+    });
+
     setSelectedImages(filtered);
-    setdisplayImage(filtered);
+    setdisplayImage(filteredDisplay);
     // URL.revokeObjectURL(image);
   }
   const submitData = async (e) => {
@@ -93,12 +99,11 @@ function AddProject(props) {
       setSelectedImages([]);
       setdisplayImage([]);
       toast("Portfolio added successfully");
+      window.location.reload();
     } else {
       toast("please try again");
     }
     setLoading(false);
-    return;
-    window.location.reload();
   };
 
   return (

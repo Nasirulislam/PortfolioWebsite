@@ -12,7 +12,7 @@ export default function HomeIndex() {
     const [homeIndexId, setHomeIndexId] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
-    const MAX_LENGTH = 5;
+    const MAX_LENGTH = 10;
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -151,11 +151,11 @@ export default function HomeIndex() {
                                     }
                                 })}
                             {
-                                (imagesPreview && imagesPreview.length < 6) && (
+                                (imagesPreview && imagesPreview.length < 10) && (
                                     <label className="img-label">
                                         + Add Images
                                         <br />
-                                        <span>up to 5 images</span>
+                                        <span>up to 10 images</span>
                                         <input
                                             type="file"
                                             name="images"
