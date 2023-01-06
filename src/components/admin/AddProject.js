@@ -197,7 +197,7 @@ function AddProject(props) {
           </section>
           <Button
             variant="primary"
-            type="submit"
+            type="submit12"
             className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
             disabled={loading || displayImage.length === 0 ? true : false}

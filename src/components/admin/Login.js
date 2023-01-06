@@ -67,7 +67,7 @@ function Login() {
           <Button
             variant="primary"
             className="d-flex align-items-center"
-            // type="submit"
+            type="submit12"
             onClick={(e) => {
               submitLogin(e);
             }}

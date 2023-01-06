@@ -88,7 +88,7 @@ export default function IndexBackground() {
             imagess: selectedImagesArr
         }
         if (homeIndexId == 0) {
-            await API.post(`project/home`, payload).then((response) => {
+            await API.upload(`project/home`, payload).then((response) => {
                 if (response.status == 225) {
                     toast("Uploaded successfully");
                     setImagesPreview([]);
