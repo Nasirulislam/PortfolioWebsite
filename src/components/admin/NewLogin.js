@@ -27,7 +27,8 @@ export default function NewLogin() {
     await axios.post(`${base_url}/project/login`, body).then((response) => {
       if (response.data.status === "ok") {
         localStorage.setItem("Status", JSON.stringify("ok"));
-        navigate("/admin-login");
+        // navigate("/admin-login");
+        window.location.reload();
       } else {
         localStorage.setItem("Status", JSON.stringify("not_ok"));
       }
