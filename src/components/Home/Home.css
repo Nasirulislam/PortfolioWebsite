@@ -288,6 +288,9 @@
   .container-fluid{
     max-width: 100%;
   } */
+  .about-wrapper {
+    height: 100vh;
+  }
   .img-fluid{
     height: 100%;
   }
