@@ -64,7 +64,7 @@ function Brenna(props) {
                     className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
                     src={`${base_url}` + "/projects/" + banner}
                     key={key}
-                    style={{ cursor: 'pointer', maxHeight: 'auto', maxWidth: '100vh', width: '100%' }}
+                    style={{ cursor: 'pointer', maxHeight: 'auto', maxWidth: '100vh'}}
                     onClick={() => props.handleSlug()}
                   />
               }

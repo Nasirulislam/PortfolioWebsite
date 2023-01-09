@@ -55,7 +55,7 @@ function NextProject(props) {
       }}
     >
       <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>
-        <div className="col-md-4 d-flex justify-content-end">
+        <div className="col-md-6 d-flex justify-content-end">
           <motion.img
             className="next-proj-img1"
             src={
@@ -65,7 +65,7 @@ function NextProject(props) {
           />
         </div>
         {projectData[index + 1].images.length > 1 && (
-          <div className="col-md-4">
+          <div className="col-md-5">
             <motion.img
               className="next-proj-img2"
               src={
