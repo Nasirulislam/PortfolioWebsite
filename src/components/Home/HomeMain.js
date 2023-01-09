@@ -150,7 +150,7 @@ function HomeMain(props) {
             <>
               {e === 1 ?
                 <div
-                  className="mobile-view mt-5" style={{ width: '100%', height: '130vh', position: 'relative' }}
+                  className="mobile-view mt-5" style={{ width: '100%', height: '130vh', position: 'relative', marginBottom: '10rem' }}
                   ref={(el) => (GrouRef.current[index + 1] = el)}
                   data-bgcolor={project.color}
                   data-title={project.name}
@@ -170,7 +170,7 @@ function HomeMain(props) {
                   />
                 </div> : e === 2 ?
                   <div
-                    className="col-md-12 my-4 mobile-view" style={{ width: '100%', height: '160vh', position: 'relative' }}
+                    className="col-md-12 mobile-view" style={{ width: '100%', height: '100%', position: 'relative', marginBottom: '10rem' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
                     data-bgcolor={project.color}
                     data-title={project.name}
@@ -190,7 +190,7 @@ function HomeMain(props) {
                     />
                   </div> :
                   <div
-                    className="col-md-8 mobile-view" style={{ width: '100%', height: '250vh', position: 'relative' }}
+                    className="col-md-8 mobile-view" style={{ width: '100%', height: '100%', position: 'relative', marginBottom: '10rem' }}
                     ref={(el) => (GrouRef.current[index + 1] = el)}
                     data-bgcolor={project.color}
                     data-title={project.name}
