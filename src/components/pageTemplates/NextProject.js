@@ -82,7 +82,7 @@ function NextProject(props) {
             initial={"hidden"}
             animate={"visibility"}
             transition={{ type: "spring", duration: 2 }}
-            style={{ position: "absolute", bottom: "12%", left: "20%" }}
+            style={{ position: "absolute", bottom: "12%", left: "20%", fontSize: '2rem' }}
           >Next project</motion.h2>
         )}
 

@@ -6,12 +6,13 @@ import base_url from "../../constants/url";
 function Amoeba(props) {
   const amoebaImages = props.images.slice(0, 2);
   return (
-    <div className={"col-md-12 d-flex justify-content-center"} style={{ height: '100%' }}>
+    <div className={"col-md-12 d-flex justify-content-center"}>
       {amoebaImages.map((banner, key) => {
         return (
           <motion.div className={"col-md-6 d-flex amoeba " + (key === 1 ? "justify-content-start" : "justify-content-end")}
             animate={{ x: key === 0 ? props.coords.x : 0, y: key === 0 ? props.coords.y : 0, opacity: 1, animationDelay: 200 }}
-            key={key}>
+            key={key}
+            style={{height: '100%'}}>
             {
               banner.includes("mp4") ?
                 <video autoPlay loop muted>
