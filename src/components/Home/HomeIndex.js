@@ -115,7 +115,7 @@ function HomeIndex(props) {
           {
             return (
               <motion.div
-                className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap me-4"
+                className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap m-4"
                 animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
                 transition={{
                   type: "spring",
