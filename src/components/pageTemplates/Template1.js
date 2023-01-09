@@ -34,7 +34,7 @@ function Template1(props) {
   }
 
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     // split images array into 2 chunks
     makeTemplateBannerChunks(projectData[index]?.images);
 
@@ -92,8 +92,8 @@ function Template1(props) {
         style={{ position: 'relative', height: '100%' }}
       >
         {initialBanners.length > 0 && (
-          <div className="row justify-content-end image-parent" style={{ height: '170vh' }}>
-            <motion.div className="col-md-11 d-flex justify-content-end image-container" style={{position: 'relative'}}>
+          <div className="row justify-content-end image-parent">
+            <motion.div className="col-md-11 d-flex justify-content-end" style={{ position: 'relative',paddingLeft: '0px', paddingRight: '0px' }}>
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?
@@ -105,20 +105,32 @@ function Template1(props) {
                     <motion.img
                       className={"img-fluid bottom-img"}
                       src={`${base_url}` + "/projects/" + banner}
-                      style={{ position: 'absolute', bottom: '0px', left: '0px' }}
-                      animate={{ x: largeCircle.x, y: largeCircle.y }}
+                      // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
+                      // animate={{ x: largeCircle.x, y: largeCircle.y }}
                       key={index}
-                    /> : banner.includes("mp4") ?
+                    /> : <></>
+              })}
+            </motion.div>
+          </div>
+        )}
+        {initialBanners.length > 0 && (
+          <div className="row justify-content-end image-parent" style={{marginTop: '-10%'}}>
+            <motion.div className="col-md-11 d-flex justify-content-center">
+              {initialBanners.map((banner, index) => {
+                return index == 1 ?
+                  banner.includes("mp4") ?
                     <video autoPlay loop muted>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
                     </video> :
-                    <img
-                      className={"img-fluid"}
+                    <motion.img
+                      className={"img-fluid bottom-img"}
                       src={`${base_url}` + "/projects/" + banner}
+                      // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
+                      animate={{ x: largeCircle.x, y: largeCircle.y }}
                       key={index}
-                    />
+                    /> : <></>
               })}
             </motion.div>
           </div>
