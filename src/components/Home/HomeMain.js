@@ -150,7 +150,7 @@ function HomeMain(props) {
             <>
               {e === 1 ?
                 <div
-                  className="mobile-view mt-5" style={{ width: '100%', height: '130vh', position: 'relative', marginBottom: '10rem' }}
+                  className="mobile-view mt-5" style={{ width: '100%', height: '100%', position: 'relative', marginBottom: '10rem' }}
                   ref={(el) => (GrouRef.current[index + 1] = el)}
                   data-bgcolor={project.color}
                   data-title={project.name}

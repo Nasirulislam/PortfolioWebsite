@@ -288,13 +288,27 @@
   .container-fluid{
     max-width: 100%;
   } */
+  .img-fluid{
+    height: 100%;
+  }
+  .image-parent{
+    height: 100% !important;
+  }
+  .bottom-img {
+    position: relative !important;
+    margin-bottom: 12px;
+  }
+  .image-parent .image-container{
+    flex-direction: column;
+    height: 100% !important;
+  }
   #homeIndex {
     max-width: 100%;
     width: 100vw;
     height: 100vh !important;
   }
   .home-slide-section {
-    height: 20%;
+    height: 30%;
     width: 43%;
     margin-right: 0px !important;
   }
@@ -309,6 +323,8 @@
     left: 15px;
   }
   .image-container{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
     min-height: 0 !important;
     width: 100%;
     justify-content: center;

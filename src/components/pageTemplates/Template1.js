@@ -92,8 +92,8 @@ function Template1(props) {
         style={{ position: 'relative', height: '100%' }}
       >
         {initialBanners.length > 0 && (
-          <div className="row justify-content-end" style={{ height: '170vh' }}>
-            <motion.div className="col-md-11 d-flex justify-content-end" style={{position: 'relative'}}>
+          <div className="row justify-content-end image-parent" style={{ height: '170vh' }}>
+            <motion.div className="col-md-11 d-flex justify-content-end image-container" style={{position: 'relative'}}>
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?
@@ -103,7 +103,7 @@ function Template1(props) {
                       Your browser does not support the video tag.
                     </video> :
                     <motion.img
-                      className={"img-fluid"}
+                      className={"img-fluid bottom-img"}
                       src={`${base_url}` + "/projects/" + banner}
                       style={{ position: 'absolute', bottom: '0px', left: '0px' }}
                       animate={{ x: largeCircle.x, y: largeCircle.y }}
