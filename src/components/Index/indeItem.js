@@ -29,16 +29,15 @@ function IndexItem(props) {
     <div className="index-item-section">
       <div className="d-flex indexlist-props">
         <h3
-          className="indexitem-button"
+          className="indexitem-button text-size"
           title={props.text}
           id={props.color}
           // data-replace={props.text}
           onMouseEnter={() => onMouseOver(props.name,props.color)}
           onMouseLeave={() => onMouseLeave(props.name,props.color)}
           onClick={() => {
-            props.setRedHome();
-            props.closeIndex();
-            navigate(props.currentProject.slug, {
+            props.handleOnIndexLeave()
+            navigate("/"+props.currentProject.slug, {
               state: {
                 name: props.currentProject.name,
                 detail: props.currentProject.name,
@@ -48,6 +47,7 @@ function IndexItem(props) {
               },
             });
           }}
+          style={{marginBottom: '0px'}}
         >
           {props.text}
         </h3>

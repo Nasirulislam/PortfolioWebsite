@@ -136,15 +136,23 @@ export default function HomeIndex() {
                                         return (
                                             <div key={index} className="image">
                                                 {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
-                                                    <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                                                    : <video autoPlay loop muted>
-                                                        <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
-                                                        <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
-                                                    </video>
+                                                    <>
+                                                        <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                        <button type="button" onClick={() => removePreviewImage(index)}>
+                                                            delete image
+                                                        </button>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <video autoPlay loop muted>
+                                                            <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
+                                                            <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
+                                                        </video>
+                                                        <button type="button" onClick={() => removePreviewImage(index)}>
+                                                            delete video
+                                                        </button>
+                                                    </>
                                                 }
-                                                <button type="button" onClick={() => removePreviewImage(index)}>
-                                                    delete image
-                                                </button>
                                                 <p>{index}</p>
                                             </div>)
 
@@ -174,7 +182,7 @@ export default function HomeIndex() {
                         type="submit01"
                         className="d-flex align-items-center"
                         onClick={(e) => submit(e)}
-                        disabled={loading ? true : false}                        
+                        disabled={loading ? true : false}
                     >
                         <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
                         {loading ? "Uploading..." : "Submit"}

@@ -16,7 +16,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 import About from "./components/About";
 
@@ -32,6 +32,8 @@ function App() {
   const [homeIndexImages, setHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
+  const [hideOptions, setOptions] = useState(false);
+
 
   function changeIndex(index) {
     if (index < 0) {
@@ -128,6 +130,15 @@ function App() {
     return index;
   };
 
+  useEffect(() => {
+    console.log(hideOptions)
+  },[hideOptions])
+
+  const handleClose = () => {
+    setOptions(false);
+    window.history.go(-1)
+  }
+
   return (
     <div>
       <Router>
@@ -136,37 +147,54 @@ function App() {
           {path !== "/admin" && path !== "/admin-login" ? (
             <>
               <div className="main-button">
-                <h3 onClick={buttonToogle} className="index-button">
-                  <a id="style-2" data-replace={IndexText}>
-                    <span>{IndexText}</span>
-                  </a>
+                <h3 className="index-button">
+                  {
+                    !hideOptions ?
+                      <Link id="style-2" to="/index">
+                        <span>INDEX</span>
+                      </Link>
+                      :
+                      <a id="" onClick={handleClose}>
+                        <span>CLOSE</span>
+                      </a>
+                  }
                 </h3>
               </div>
 
-              <div className="main-button">
-                <h3 onClick={() => {
-                  setShowAbout(!showAbout)
-                  AboutToogle()
-                }} className="about-button">
-                  <a id="style-2" data-replace={aboutText}>
-                    <span>{aboutText}</span>
-                  </a>
-                </h3>
-              </div>
-              <div className="main-button">
-                <h3 onClick={METoogle} className="ME-button">
-                  <Link to="/" id="style-2" data-replace={METext}>
-                    <span>{METext}</span>
-                  </Link>
-                </h3>
-              </div>
-              <div className="main-button">
-                <h3 onClick={NullToogle} className="null-button">
-                  <a id="style-2" data-replace={Text00}>
-                    <span>{Text00}</span>
-                  </a>
-                </h3>
-              </div>
+              {
+                !hideOptions && (
+                  <div className="main-button">
+                    <h3 onClick={() => {
+                      setShowAbout(!showAbout)
+                      AboutToogle()
+                    }} className="about-button">
+                      <a id="style-2" data-replace={aboutText}>
+                        <span>{aboutText}</span>
+                      </a>
+                    </h3>
+                  </div>
+                )}
+              {
+                !hideOptions && (
+                  <div className="main-button">
+                    <h3 onClick={METoogle} className="ME-button">
+                      <Link to="/" id="style-2" data-replace={METext}>
+                        <span>{METext}</span>
+                      </Link>
+                    </h3>
+                  </div>
+                )
+              }
+              {
+                !hideOptions && (
+                  <div className="main-button">
+                    <h3  className="null-button">
+                      <a id="style-2" data-replace={Text00}>
+                        <span>{Text00}</span>
+                      </a>
+                    </h3>
+                  </div>
+                )}
             </>
           ) : null}
 
@@ -211,6 +239,12 @@ function App() {
                     />
                   );
                 })}
+                <Route exact path="/index" element={<Index
+                  projectData={projectsData}
+                  indexBackground={indexBackground}
+                  setOptions={setOptions}
+                />}
+                />
                 <Route exact path="/admin" element={<NewLogin />} />
                 <Route
                   exact
@@ -227,16 +261,17 @@ function App() {
             </div>
           ) :
             (
-              <Index
-                projectData={projectsData}
-                closeIndex={buttonToogle}
-                RedHome={setRedHome}
-                indexBackground={indexBackground}
-                showAbout={showAbout}
-                clicked={clicked}
-              />
+              // <Index
+              //   projectData={projectsData}
+              //   closeIndex={buttonToogle}
+              //   RedHome={setRedHome}
+              //   indexBackground={indexBackground}
+              //   showAbout={showAbout}
+              //   clicked={clicked}
+              // />
+              <></>
             )}
-          <About portfolios={projectsData} showAbout={showAbout}  changeAboutStatus={AboutToogle} setShowAbout={setShowAbout}/>
+          <About portfolios={projectsData} showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} />
         </div>
       </Router>
     </div>

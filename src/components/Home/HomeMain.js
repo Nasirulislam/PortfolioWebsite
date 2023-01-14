@@ -6,7 +6,7 @@ import base_url from "../../constants/url";
 import axios from "axios";
 import ViewAll from "./ViewAll";
 import ReactTextTransition, { presets } from "react-text-transition";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Auston from "../Auston/Auston";
 import Amoeba from "../Amoeba/Amoeba";
 import Brenna from "../Brenna/Brenna";
@@ -145,7 +145,7 @@ function HomeMain(props) {
         </div>
         {projectsData.map((project, index) => {
 
-          var e = parseInt(project.template);          
+          var e = parseInt(project.template);
           return (
             <>
               {e === 1 ?
@@ -230,11 +230,12 @@ function HomeMain(props) {
         data-index={projectsData.length}
       >
 
-        <ViewAll
-          name="View All Projects"
-          slug="viewAll"
-          indexBtn={ViewAllClick}
-        />
+       
+          <ViewAll
+            name="View All Projects"
+            slug="viewAll"
+            indexBtn={ViewAllClick}
+          />
       </div>
     </>
   );

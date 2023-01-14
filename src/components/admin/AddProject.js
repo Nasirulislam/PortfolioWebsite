@@ -132,6 +132,7 @@ function AddProject(props) {
               onChange={(e) => {
                 setIndex(e.target.value);
               }}
+              min="0"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -143,6 +144,8 @@ function AddProject(props) {
               onChange={(e) => {
                 setTemplate(e.target.value);
               }}
+              min="1"
+              max="3"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -176,15 +179,24 @@ function AddProject(props) {
                   return (
                     <div key={image} className="image">
                       {image.split("/")[0] === "data:video" ?
-                        <video autoPlay loop muted>
-                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/mp4" />
-                          <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/ogg" />
-                        </video>
-                        : <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                        <>
+                          <video autoPlay loop muted>
+                            <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/mp4" />
+                            <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/ogg" />
+                          </video>
+                          <button type="button" onClick={() => deleteHandler(index)}>
+                            delete video
+                          </button>
+                        </>
+
+                        :
+                        <>
+                          <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                          <button type="button" onClick={() => deleteHandler(index)}>
+                            delete image
+                          </button>
+                        </>
                       }
-                      <button type="button" onClick={() => deleteHandler(index)}>
-                        delete image
-                      </button>
                       <p>{index + 1}</p>
                     </div>
                   );
