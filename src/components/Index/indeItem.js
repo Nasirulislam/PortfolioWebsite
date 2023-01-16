@@ -26,18 +26,18 @@ function IndexItem(props) {
   };
   const navigate = useNavigate();
   return (
-    <div className="index-item-section">
-      <div className="d-flex indexlist-props" style={{position: 'relative'}}>
+    <div className="index-item-section" style={{ position: 'relative' }}>
+      <div className="d-flex indexlist-props">
         <h3
           className="indexitem-button text-size"
           title={props.text}
           id={props.color}
           // data-replace={props.text}
-          onMouseEnter={() => onMouseOver(props.name,props.color)}
-          onMouseLeave={() => onMouseLeave(props.name,props.color)}
+          onMouseEnter={() => onMouseOver(props.name, props.color)}
+          onMouseLeave={() => onMouseLeave(props.name, props.color)}
           onClick={() => {
             props.handleOnIndexLeave()
-            navigate("/"+props.currentProject.slug, {
+            navigate("/" + props.currentProject.slug, {
               state: {
                 name: props.currentProject.name,
                 detail: props.currentProject.name,
@@ -47,13 +47,14 @@ function IndexItem(props) {
               },
             });
           }}
-          style={{marginBottom: '0px'}}
+          style={{ marginBottom: '0px' }}
         >
           {props.text}
         </h3>
-        <motion.div
+      </div>
+      <motion.div
         className="mobile-wrapper"
-        style={{ display: display ? "inline" : "none", position: 'absolute', top: '0px'}}
+        style={{ display: display ? "inline" : "none", position: 'absolute', top: '0px' }}
         animate={{
           y: isAnimating ? 500 : 500,
           opacity: isAnimating ? 1 : 0,
@@ -80,7 +81,7 @@ function IndexItem(props) {
       <motion.div
         className="index-image"
         id="in-image"
-        style={{ display: display ? "inline" : "none" }}
+        style={{ display: display ? "inline" : "none", position: 'absolute' }}
         animate={{
           x: isAnimating ? 500 : "200vh",
           opacity: isAnimating ? 1 : 0,
@@ -102,11 +103,6 @@ function IndexItem(props) {
           src={`${base_url}` + "/projects/" + props.image}
         />
       </motion.div>
-
-      </div>
-      
-
-      
     </div>
   );
 }

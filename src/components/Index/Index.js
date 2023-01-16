@@ -70,7 +70,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
         backgroundSize: 'cover', backgroundPosition: 'center'
       }}>
         <div className="index-section">
-          <div className="index-innersection">
+          <div className="index-innersection" style={{maxHeight: '100vh', overflowY: 'scroll'}}>
             {projects.map((item, index) => {
               return (
                 <IndexItem
