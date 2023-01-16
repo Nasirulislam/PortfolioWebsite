@@ -54,6 +54,9 @@ function Template1(props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [index]);
 
+  useEffect(() => {
+    props.setMEText("BACK");
+  }, [])
 
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
@@ -97,7 +100,7 @@ function Template1(props) {
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted>
+                    <video autoPlay loop muted style={{zIndex: "1"}}>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.

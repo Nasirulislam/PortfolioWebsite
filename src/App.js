@@ -131,12 +131,30 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(hideOptions)
-  },[hideOptions])
+  }, [hideOptions])
+
+  const handleEvent = () => {
+    let uri = window.location.pathname;
+    if(uri === "/") setMEText("START");
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", handleEvent);
+    return () => window.removeEventListener("popstate", handleEvent);
+  }, [])
 
   const handleClose = () => {
     setOptions(false);
     window.history.go(-1)
+  }
+
+  const handleME = (e) => {
+    e.preventDefault();
+    if (METext === "START") {
+      window.scrollTo(0, 0);
+    } else {
+      window.history.go(-1);
+    }
   }
 
   return (
@@ -178,7 +196,7 @@ function App() {
                 !hideOptions && (
                   <div className="main-button">
                     <h3 onClick={METoogle} className="ME-button">
-                      <Link to="/" id="style-2" data-replace={METext}>
+                      <Link onClick={handleME} to="/" id="style-2" data-replace={METext}>
                         <span>{METext}</span>
                       </Link>
                     </h3>
@@ -188,7 +206,7 @@ function App() {
               {
                 !hideOptions && (
                   <div className="main-button">
-                    <h3  className="null-button">
+                    <h3 className="null-button">
                       <a id="style-2" data-replace={Text00}>
                         <span>{Text00}</span>
                       </a>
@@ -234,7 +252,7 @@ function App() {
                       exact
                       path={"/".concat(project.slug)}
                       element={
-                        <Template1 projectData={projectsData} index={pindex} />
+                        <Template1 projectData={projectsData} index={pindex} setMEText={setMEText} />
                       }
                     />
                   );

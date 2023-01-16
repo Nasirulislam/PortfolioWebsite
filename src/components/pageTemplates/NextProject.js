@@ -48,7 +48,7 @@ function NextProject(props) {
       onClick={() => {
         navigate(
           index + 1 < projectData.length - 1
-            ? `${projectData[index + 1].slug}`
+            ? `/${projectData[index + 1].slug}`
             : "/"
         );
         window.scrollTo(0, 0);
@@ -56,23 +56,39 @@ function NextProject(props) {
     >
       <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>
         <div className="col-md-6 d-flex justify-content-end">
-          <motion.img
-            className="next-proj-img1"
-            src={
-              `${base_url}` + "/projects/" + projectData[index + 1].images[0]
-            }
-            animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-          />
+          {
+            projectData[index + 1].images[0].includes("mp4") ?
+              <motion.video autoPlay loop muted>
+                <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[0]} type="video/mp4" />
+                <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[0]} type="video/ogg" />
+                Your browser does not support the video tag.
+              </motion.video> :
+              <motion.img
+                className="next-proj-img1"
+                src={
+                  `${base_url}` + "/projects/" + projectData[index + 1].images[0]
+                }
+                animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+              />
+          }
         </div>
         {projectData[index + 1].images.length > 1 && (
           <div className="col-md-5">
-            <motion.img
-              className="next-proj-img2"
-              src={
-                `${base_url}` + "/projects/" + projectData[index + 1].images[1]
-              }
-              animate={{ x: largeCircle.x, y: largeCircle.y }}
-            />
+            {
+              projectData[index + 1].images[1].includes("mp4") ?
+                <motion.video autoPlay loop muted>
+                  <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[1]} type="video/mp4" />
+                  <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[1]} type="video/ogg" />
+                  Your browser does not support the video tag.
+                </motion.video> :
+                <motion.img
+                  className="next-proj-img2"
+                  src={
+                    `${base_url}` + "/projects/" + projectData[index + 1].images[1]
+                  }
+                  animate={{ x: largeCircle.x, y: largeCircle.y }}
+                />
+            }
           </div>
         )}
         {props.showDescription && (
