@@ -27,49 +27,50 @@ function IndexItem(props) {
   const navigate = useNavigate();
   return (
     <div className="index-item-section" style={{ position: 'relative' }}>
-      <div className="d-flex indexlist-props">
-        <h3
+      <div className="d-flex indexlist-props"
+        onClick={() => {
+          props.handleOnIndexLeave()
+          navigate("/" + props.currentProject.slug, {
+            state: {
+              name: props.currentProject.name,
+              detail: props.currentProject.name,
+              images: [...props.currentProject.images],
+              projects: props.projects,
+              nextProject: props.nextProject,
+            },
+          });
+        }}>
+        <motion.h3
           className="indexitem-button text-size"
           title={props.text}
           id={props.color}
           // data-replace={props.text}
+          whileHover={() => onMouseOver(props.name, props.color)}
           onMouseEnter={() => onMouseOver(props.name, props.color)}
           onMouseLeave={() => onMouseLeave(props.name, props.color)}
-          onClick={() => {
-            props.handleOnIndexLeave()
-            navigate("/" + props.currentProject.slug, {
-              state: {
-                name: props.currentProject.name,
-                detail: props.currentProject.name,
-                images: [...props.currentProject.images],
-                projects: props.projects,
-                nextProject: props.nextProject,
-              },
-            });
-          }}
           style={{ marginBottom: '0px' }}
         >
           {props.text}
-        </h3>
+        </motion.h3>
       </div>
       <motion.div
         className="mobile-wrapper"
         style={{ display: display ? "inline" : "none", position: 'absolute', top: '0px' }}
         animate={{
-          y: isAnimating ? 500 : 500,
+          x: isAnimating ? 100 : 20,
           opacity: isAnimating ? 1 : 0,
           position: "absolute",
         }}
         initial={{
           opacity: 0,
           position: "absolute",
-          left: "100px",
-          y: 500,
+          x: -100,
           rotate: 0,
         }}
         transition={{
           type: "spring",
           stiffness: 60,
+          duration: 3
         }}
       >
         <img

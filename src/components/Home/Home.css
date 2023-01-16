@@ -281,6 +281,7 @@
 @media only screen and (max-width: 470px) {
   .mobile-wrapper {
     display: inline !important;
+    z-index: 999 !important;
   }
   .about-wrapper {
     height: 100vh;

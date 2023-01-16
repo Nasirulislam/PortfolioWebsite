@@ -16,6 +16,8 @@ function EditProject(props) {
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
   const [Slug, setSlug] = useState("");
+  const [titleColor, setTitleColor] = useState("");
+  const [color, setColor] = useState("");
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [projectsData, setProjectsData] = useState([]);
@@ -145,6 +147,8 @@ function EditProject(props) {
       slug: Slug,
       template: template,
       index: index,
+      titleColor: titleColor,
+      // color: color,
       images: imagesArr,
       imagess: selectedImagesArr
     }
@@ -212,6 +216,28 @@ function EditProject(props) {
               }}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Title Color</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Title color"
+              value={titleColor}
+              onChange={(e) => {
+                setTitleColor(e.target.value);
+              }}
+            />
+          </Form.Group>
+          {/* <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Color</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Title color"
+              value={color}
+              onChange={(e) => {
+                setColor(e.target.value);
+              }}
+            />
+          </Form.Group> */}
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Templates</Form.Label>
             <Form.Control
