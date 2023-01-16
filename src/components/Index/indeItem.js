@@ -27,7 +27,7 @@ function IndexItem(props) {
   const navigate = useNavigate();
   return (
     <div className="index-item-section">
-      <div className="d-flex indexlist-props">
+      <div className="d-flex indexlist-props" style={{position: 'relative'}}>
         <h3
           className="indexitem-button text-size"
           title={props.text}
@@ -51,10 +51,32 @@ function IndexItem(props) {
         >
           {props.text}
         </h3>
-        {/* <div className="index-atend">
-          <p>{props.currentProject.slug}</p>
-        </div> */}
-      </div>
+        <motion.div
+        className="mobile-wrapper"
+        style={{ display: display ? "inline" : "none", position: 'absolute', top: '0px'}}
+        animate={{
+          y: isAnimating ? 500 : 500,
+          opacity: isAnimating ? 1 : 0,
+          position: "absolute",
+        }}
+        initial={{
+          opacity: 0,
+          position: "absolute",
+          left: "100px",
+          y: 500,
+          rotate: 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 60,
+        }}
+      >
+        <img
+          className="img-fluid animated fadeOut"
+          src={`${base_url}` + "/projects/" + props.image}
+        />
+      </motion.div>
+
       <motion.div
         className="index-image"
         id="in-image"
@@ -80,6 +102,11 @@ function IndexItem(props) {
           src={`${base_url}` + "/projects/" + props.image}
         />
       </motion.div>
+
+      </div>
+      
+
+      
     </div>
   );
 }

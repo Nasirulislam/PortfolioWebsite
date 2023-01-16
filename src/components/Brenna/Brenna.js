@@ -21,7 +21,7 @@ function Brenna(props) {
             key={key}>
             {
               banner.includes("mp4") ?
-                <video autoPlay loop muted>
+                <video autoPlay loop muted onClick={() => props.handleSlug()}>
                   <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                   Your browser does not support the video tag.
@@ -42,7 +42,7 @@ function Brenna(props) {
                 key={key}>
                 {
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted>
+                    <video autoPlay loop muted onClick={() => props.handleSlug()}>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -68,7 +68,7 @@ function Brenna(props) {
             style={{position: 'relative', marginTop: '-5%', zIndex: '1'}}>
             {
               thirdImage.includes("mp4") ?
-                <video autoPlay loop muted>
+                <video autoPlay loop muted onClick={() => props.handleSlug()}>
                   <source src={`${base_url}` + "/projects/" + thirdImage} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + thirdImage} type="video/ogg" />
                   Your browser does not support the video tag.

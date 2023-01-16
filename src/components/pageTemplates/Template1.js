@@ -96,7 +96,7 @@ function Template1(props) {
       >
         {initialBanners.length > 0 && (
           <div className="row justify-content-end image-parent">
-            <motion.div className="col-md-11 d-flex justify-content-end" style={{ position: 'relative',paddingLeft: '0px', paddingRight: '0px' }}>
+            <motion.div className="col-md-11 d-flex justify-content-end video-wrapper" style={{ position: 'relative',paddingLeft: '0px', paddingRight: '0px' }}>
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?

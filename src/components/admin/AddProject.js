@@ -12,6 +12,7 @@ import API from '../../services/API';
 function AddProject(props) {
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
+  const [titleColor, setTitleColor] = useState("");
   const [detail, setDetail] = useState("");
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
@@ -85,6 +86,7 @@ function AddProject(props) {
       template: template,
       slug: Slug,
       color: color,
+      titleColor: titleColor,
       image: image,
       imagess: selectedMedia
     }
@@ -156,6 +158,17 @@ function AddProject(props) {
               value={Slug}
               onChange={(e) => {
                 setSlug(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Title Color</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter project title color"
+              value={titleColor}
+              onChange={(e) => {
+                setTitleColor(e.target.value);
               }}
             />
           </Form.Group>

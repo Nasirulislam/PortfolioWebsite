@@ -274,20 +274,14 @@
   -webkit-text-fill-color: rgba(255, 255, 255, 0);
   -webkit-text-stroke-width: 3px
 }
+.mobile-wrapper {
+  display: none !important;
+}
 
 @media only screen and (max-width: 470px) {
-  /* html{
-    width: 100vw !important;
+  .mobile-wrapper {
+    display: inline !important;
   }
-  body{
-    width: 100vw !important;
-  }
-  .App{
-    max-width: 100%;    
-  }
-  .container-fluid{
-    max-width: 100%;
-  } */
   .about-wrapper {
     height: 100vh;
   }
@@ -370,7 +364,15 @@
   .home-title>h1 {
     font-size: 15vw !important; 
   }
-
+  .index-image {
+    display: none !important;
+  }
+  .text-size {
+    font-size: 2.0rem !important;
+  }
+  .index-item-section .indexlist-props {
+    height: 2em;
+  }
   /* .card image {
     width: 100%;
   }

@@ -15,7 +15,7 @@ function Amoeba(props) {
             style={{height: '100%'}}>
             {
               banner.includes("mp4") ?
-                <video autoPlay loop muted>
+                <video autoPlay loop muted onClick={() => props.handleSlug()}>
                   <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                   Your browser does not support the video tag.

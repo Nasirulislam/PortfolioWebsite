@@ -186,5 +186,7 @@ img.hoverImages:hover {
   color: white !important;
 }
 
-
+.video-wrapper video{
+  z-index: 10;
+}
 /* home page start*/
