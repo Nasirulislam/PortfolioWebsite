@@ -10,8 +10,8 @@ function IndexItem(props) {
 
   const onMouseOver = (itemId, itemColor) => {
     setIsAnitmating(true);
-
-    document.getElementById(itemColor).style.color = itemColor;
+    let el = document.getElementById(itemColor);
+    if(el) el.style.color = itemColor;    
 
     setDisplay(true);
     setTimeout(() => {
@@ -22,7 +22,8 @@ function IndexItem(props) {
   const onMouseLeave = (itemId, itemColor) => {
     setIsAnitmating(false);
     setDisplay(false);
-    document.getElementById(itemColor).style.color = 'white';
+    let el = document.getElementById(itemColor);
+    if(el) el.style.color = 'white';
   };
   const navigate = useNavigate();
   return (
