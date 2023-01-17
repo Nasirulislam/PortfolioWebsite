@@ -33,6 +33,7 @@ function App() {
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
   const [hideOptions, setOptions] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
 
   function changeIndex(index) {
@@ -102,6 +103,7 @@ function App() {
     } else {
       setValues();
     }
+    setIsShow(!isShow);
     setClicked(true);
   };
   const METoogle = () => {
@@ -135,7 +137,7 @@ function App() {
 
   const handleEvent = () => {
     let uri = window.location.pathname;
-    if(uri === "/") setMEText("START");
+    if (uri === "/") setMEText("START");
   };
 
   useEffect(() => {
@@ -167,14 +169,17 @@ function App() {
               <div className="main-button">
                 <h3 className="index-button">
                   {
-                    !hideOptions ?
-                      <Link id="style-2" to="/index">
-                        <span>INDEX</span>
-                      </Link>
-                      :
-                      <a id="" onClick={handleClose}>
-                        <span>CLOSE</span>
-                      </a>
+                    !isShow ?
+
+                      !hideOptions ?
+                        <Link id="style-2" to="/index">
+                          <span>INDEX</span>
+                        </Link>
+                        :
+                        <a id="" onClick={handleClose}>
+                          <span>CLOSE</span>
+                        </a>
+                      : <></>
                   }
                 </h3>
               </div>
