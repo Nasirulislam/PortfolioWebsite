@@ -277,7 +277,11 @@
 .mobile-wrapper {
   display: none !important;
 }
-
+@media only screen and (max-width: 900px) {
+  .indexlist-props{
+    height: 2rem !important;
+  }
+}
 @media only screen and (max-width: 470px) {
   .mobile-wrapper {
     display: inline !important;
