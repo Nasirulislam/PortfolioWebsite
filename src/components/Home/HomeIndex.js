@@ -17,11 +17,32 @@ function HomeIndex(props) {
     setFastCircle({ x: (e.clientX / 4) * -1, y: (e.clientY / 4) * -1 });
   };
 
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowWidth, setWindow] = useState(130);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     const zoomElement = document.querySelector('.zoom')
     if (!zoomElement) {
       return;
     }
+
     const fadeElement = document.querySelector('#home-page')
     // const afterZoomElement = document.querySelector('.afterzoom')
     const imgElement = document.querySelector('h1')
@@ -29,7 +50,7 @@ function HomeIndex(props) {
     const HEIGHT = zoomElement.clientHeight
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
-    const ZOOM_SPEED = 100 // Lower is faster
+    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 140; // Lower is faster
     const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
@@ -149,7 +170,7 @@ function HomeIndex(props) {
                   : <motion.Card className="card"
 
                     key={index}
-                    style={{ position: (props.homeIndexImages.length - 1) ===  index ? 'absolute' : '', top: (props.homeIndexImages.length - 1) ===  index ? '22%' : '0' }}
+                    style={{ position: (props.homeIndexImages.length - 1) === index ? 'absolute' : '', top: (props.homeIndexImages.length - 1) === index ? '22%' : '0' }}
                     animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                   >
                     {banner.includes("mp4")
