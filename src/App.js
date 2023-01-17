@@ -235,6 +235,7 @@ function App() {
                         onChange={changeIndex}
                         indexBtn={buttonToogle}
                         homeIndexImages={homeIndexImages}
+                        indexBackground={indexBackground}
                       />
                     ) : (
                       <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>

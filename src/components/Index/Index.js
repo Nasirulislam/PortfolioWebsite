@@ -32,6 +32,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
   }
 
   useEffect(() => {
+    alert(true)
     setOptions(true);
   }, [])
 
@@ -50,11 +51,11 @@ export default function Index({ projectData, indexBackground, setOptions }) {
         console.log(response.message);
       }
     }
-    if (typeof indexBackground === "undefined" || indexBackground.length === 0) {
+    // if (typeof indexBackground === "undefined" || indexBackground.length === 0) {
       getHomeIndex();
-    } else {
-      setIndexImages(indexBackground);
-    }
+    // } else {
+      // setIndexImages(indexBackground);
+    // }
 
     if (typeof projectData === "undefined" || projectData.length === 0) {
       fetchProducts();
@@ -66,12 +67,14 @@ export default function Index({ projectData, indexBackground, setOptions }) {
 
   return (
     <div className="w-100 h-100">
+      waheed
       {
         images.length > 0 ?
           <div className="index-section-main-wrap" style={{
             background: `url(${images?.length > 0 ? `${base_url}/home/${images[0]}` : '../../Assets/images/background4.jpg'})`, backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover', backgroundPosition: 'center'
           }}>
+            {JSON.stringify(projects)}
             <div className="index-section">
               <div className="index-innersection" style={{ maxHeight: '100vh', overflowY: 'scroll' }}>
                 {projects.map((item, index) => {

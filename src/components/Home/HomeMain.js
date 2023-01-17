@@ -70,11 +70,7 @@ function HomeMain(props) {
     fetchProducts();
   }, []);
 
-  const [value, setValue] = useState("David Ellis");
-
-  const ViewAllClick = () => {
-    navigate("/index");
-  };
+  const [value, setValue] = useState("David Ellis");  
 
   const handleSlug = () => {
     if (value === "View All Projects") {
@@ -232,7 +228,9 @@ function HomeMain(props) {
           <ViewAll
             name="View All Projects"
             slug="viewAll"
-            indexBtn={ViewAllClick}
+            // indexBtn={ViewAllClick}
+            projectData={projectsData}
+            indexBackground={props.indexBackground}
           />
       </div>
     </>

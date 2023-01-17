@@ -46,10 +46,10 @@ function EditProject(props) {
         setIndex(project.index);
         setTemplate(project.template);
         setSlug(project.slug);
+        setColor(project.color);
+        setTitleColor(project.titleColor);
         setPId(project._id);
         setdisplayImage(project.images);
-        console.log("Value Updated");
-        console.log(project);
         setDeleteIcon(true);
       }
     });
@@ -143,12 +143,12 @@ function EditProject(props) {
       }
     }
     const payload = {
-      title: title,
+      name: title,
       slug: Slug,
       template: template,
       index: index,
       titleColor: titleColor,
-      // color: color,
+      color: color,
       images: imagesArr,
       imagess: selectedImagesArr
     }
@@ -156,7 +156,7 @@ function EditProject(props) {
     const response = await API.put(`project/${P_id}`, payload).then((response) => {
       if (response.status == 225) {
         toast("Uploaded successfully");
-        setSelectedImages([]);
+        setSelectedImages([]);return;
         window.location.reload();
       } else {
         toast(JSON.stringify(response));
@@ -224,6 +224,17 @@ function EditProject(props) {
               value={titleColor}
               onChange={(e) => {
                 setTitleColor(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Background Color</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Title color"
+              value={color}
+              onChange={(e) => {
+                setColor(e.target.value);
               }}
             />
           </Form.Group>

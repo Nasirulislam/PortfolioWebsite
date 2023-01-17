@@ -8,10 +8,11 @@ function ViewAll(props) {
     navigate('/index')
   }
   return (
-    <div className="viewAll-projects" onClick={() => props.indexBtn()}>
+    <div className="viewAll-projects" onClick={() => navigate("/index")}>
       <div className="viewall" >
-          <h1 data-text={"view All Projects"}>
-          View All Projects</h1>
+        <h1 data-text={"view All Projects"}>
+          View All Projects
+        </h1>
       </div>
     </div>
   );
