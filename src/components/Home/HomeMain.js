@@ -73,9 +73,7 @@ function HomeMain(props) {
   const [value, setValue] = useState("David Ellis");
 
   const ViewAllClick = () => {
-    if (changeClass) {
-      props.indexBtn();
-    }
+    navigate("/index");
   };
 
   const handleSlug = () => {

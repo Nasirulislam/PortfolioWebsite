@@ -100,7 +100,7 @@ function Template1(props) {
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted style={{zIndex: "1"}}>
+                    <video autoPlay controls style={{zIndex: "1"}}>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -122,7 +122,7 @@ function Template1(props) {
               {initialBanners.map((banner, index) => {
                 return index == 1 ?
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted>
+                    <video autoPlay controls muted>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -147,7 +147,7 @@ function Template1(props) {
 
                 {index % 2 === 0 && index !== 0 ?
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted>
+                    <video autoPlay controls>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -161,7 +161,7 @@ function Template1(props) {
                     />
                   :
                   banner.includes("mp4") ?
-                    <video autoPlay loop muted>
+                    <video autoPlay controls >
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.

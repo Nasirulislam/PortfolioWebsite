@@ -46,7 +46,7 @@ function IndexItem(props) {
           title={props.text}
           id={props.color}
           // data-replace={props.text}
-          whileHover={() => onMouseOver(props.name, props.color)}
+          // whileHover={() => onMouseOver(props.name, props.color)}
           onMouseEnter={() => onMouseOver(props.name, props.color)}
           onMouseLeave={() => onMouseLeave(props.name, props.color)}
           style={{ marginBottom: '0px' }}
