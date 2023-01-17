@@ -4,11 +4,10 @@ import "./Home.css";
 function ViewAll(props) {
 
   const navigate = useNavigate();
-  const handleViewAll = () => {
-    navigate('/index')
-  }
+  const handleViewAll = () => navigate('/index');
+  
   return (
-    <div className="viewAll-projects" onClick={() => navigate("/index")}>
+    <div className="viewAll-projects" onClick={handleViewAll}>
       <div className="viewall" >
         <h1 data-text={"view All Projects"}>
           View All Projects

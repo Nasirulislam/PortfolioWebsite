@@ -220,7 +220,7 @@ function HomeMain(props) {
         ref={(el) => (GrouRef.current[projectsData.length + 1] = el)}
         data-bgcolor="white"
         data-title="View All Projects"
-        onClick={props.indexBtn}
+        // onClick={props.indexBtn}
         data-index={projectsData.length}
       >
 
