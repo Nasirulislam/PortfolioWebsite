@@ -97,8 +97,10 @@ function AddProject(props) {
     formdata.append("slug",Slug);
     formdata.append("color",color);
     formdata.append("titleColor",titleColor);
-    formdata.append("images",JSON.stringify(image));
-    formdata.append("imagess[]",selectedMedia);
+    image.forEach(item => formdata.append("images[]", item));
+    selectedMedia.forEach(item => formdata.append("imagess[]", item));
+    // formdata.append("images[]",image);
+    // formdata.append("imagess[]",selectedMedia);
   
     const response = await axios.post(base_url+"/project/new", formdata);
     // const response = await API.upload('project/new', payload);
