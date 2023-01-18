@@ -287,6 +287,11 @@
     height: 2rem !important;
   }
 }
+@media only screen and (min-width: 1500px) {
+  .indexlist-props{
+    height: 3.5rem !important;
+  }
+}
 @media only screen and (max-width: 740px) {
   .mobile-wrapper {
     visibility: visible !important;

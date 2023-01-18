@@ -142,6 +142,10 @@ function EditProject(props) {
         imagesArr[i] = displayImage[i];
       }
     }
+    if (imagesArr.length<2){
+      imagesArr.push('')
+      imagesArr.reverse()
+    }
     const payload = {
       name: title,
       slug: Slug,

@@ -107,7 +107,7 @@ function getRandomString(length) {
 
 function convertToFormData(payload, method) {
   const formData = new FormData();
-  if (method.toLowerCase() === "post" || payload.images?.length === 0) {
+  if (payload.images?.length === 0) {
     formData.append("images[]", []);
   }
 
@@ -122,7 +122,6 @@ function convertToFormData(payload, method) {
     }
 
   }
-  console.log(payload);
   return formData;
 }
 

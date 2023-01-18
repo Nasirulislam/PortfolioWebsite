@@ -39,6 +39,7 @@
 }
 .indexitem-button{
   width: 100%;
+  -webkit-backface-visibility: hidden;
   /* mix-blend-mode: exclusion; */
   /* color: black; */
 }
