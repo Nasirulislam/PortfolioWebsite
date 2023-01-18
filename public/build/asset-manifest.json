@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.1e21b38b.css",
-    "main.js": "/static/js/main.e1ce53c5.js",
+    "main.js": "/static/js/main.e38d5d66.js",
     "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
     "static/media/bg.png": "/static/media/bg.3c590ed511049f53da07.png",
     "static/media/Vogue.ttf": "/static/media/Vogue.cc23cdc2582e9de16b77.ttf",
     "index.html": "/index.html",
     "main.1e21b38b.css.map": "/static/css/main.1e21b38b.css.map",
-    "main.e1ce53c5.js.map": "/static/js/main.e1ce53c5.js.map",
+    "main.e38d5d66.js.map": "/static/js/main.e38d5d66.js.map",
     "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1e21b38b.css",
-    "static/js/main.e1ce53c5.js"
+    "static/js/main.e38d5d66.js"
   ]
 }
