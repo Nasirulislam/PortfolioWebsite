@@ -97,7 +97,7 @@ function AddProject(props) {
     formdata.append("slug",Slug);
     formdata.append("color",color);
     formdata.append("titleColor",titleColor);
-    formdata.append("images[]",image);
+    formdata.append("images",JSON.stringify(image));
     formdata.append("imagess",selectedMedia);
   
     const response = await axios.post(base_url+"/project/new", formdata);
