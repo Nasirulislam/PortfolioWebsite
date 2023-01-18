@@ -275,7 +275,7 @@
   -webkit-text-stroke-width: 3px
 }
 .mobile-wrapper {
-  display: none !important;
+  visibility: hidden;
 }
 @media only screen and (max-width: 600px) {
   .indexlist-props{
@@ -287,9 +287,9 @@
     height: 2rem !important;
   }
 }
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 740px) {
   .mobile-wrapper {
-    display: inline !important;
+    visibility: visible !important;
     z-index: 999 !important;
   }
   .about-wrapper {
@@ -317,7 +317,7 @@
   .home-slide-section {
     height: 30%;
     width: 43%;
-    margin-right: 0px !important;
+    margin: 0px !important;
   }
   .ME-button{
     margin-top: 20px !important;

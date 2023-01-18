@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function IndexItem(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
 
   const onMouseOver = (itemId, itemColor) => {
     setIsAnitmating(true);
