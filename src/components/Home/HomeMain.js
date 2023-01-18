@@ -107,7 +107,7 @@ function HomeMain(props) {
   return (
     <>
       <div className="container-fluid" style={{ height: '100%', maxWidth: '100vw' }}>
-        <div style={{ position: 'relative', width: '100%', height: '100%' }} id="homeIndex">
+        <div style={{ position: 'relative', width: '100%', height: '100%', }} id="homeIndex">
           {value.toLowerCase() !== "david ellis" && (
             <motion.div className="home-title change-title"
               initial={"hidden"}
@@ -127,7 +127,7 @@ function HomeMain(props) {
             data-title="David Ellis"
             data-slug="/"
             data-index="00"
-            style={{ height: "100%" }}
+            style={{ height: "100%", position: 'relative' }}
           >
             <HomeIndex
               randomIndex={randomIndex}

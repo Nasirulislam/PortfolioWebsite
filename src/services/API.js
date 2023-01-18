@@ -108,7 +108,7 @@ function getRandomString(length) {
 function convertToFormData(payload, method) {
   const formData = new FormData();
   // if (method.toLowerCase() === "post") {
-    formData.append("images[]", []);
+    // formData.append("images[]", []);
   // }
 
 

@@ -50,7 +50,7 @@ function HomeIndex(props) {
     const HEIGHT = zoomElement.clientHeight
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
-    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 140; // Lower is faster
+    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 180; // Lower is faster
     const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
@@ -149,7 +149,7 @@ function HomeIndex(props) {
                   <motion.div className="card"
                     animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
                     key={index}
-                    style={{ position: index == 1 ? 'absolute' : '', top: '40%' }}
+                    style={{ marginTop: index == 1 ?  '10%' : '' }}
                   >
                     {banner.includes("mp4")
                       ?
@@ -170,7 +170,7 @@ function HomeIndex(props) {
                   : <motion.Card className="card"
 
                     key={index}
-                    style={{ position: (props.homeIndexImages.length - 1) === index ? 'absolute' : '', top: (props.homeIndexImages.length - 1) === index ? '22%' : '0' }}
+                    style={{ paddingLeft: index%2===0 ? '20px' : '', top: (props.homeIndexImages.length - 1) === index ? '22%' : '0' }}
                     animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                   >
                     {banner.includes("mp4")
