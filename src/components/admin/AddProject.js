@@ -80,7 +80,6 @@ function AddProject(props) {
     let selectedMedia = [...selectedImages];
     let image = [];
     image[0] = "";
-    image[1] = "";
     const payload = {
       name: title,
       index: index,
@@ -101,7 +100,7 @@ function AddProject(props) {
     formdata.append("images[]",image);
     formdata.append("imagess",selectedMedia);
   
-    const response = await axios.post("/project/new", formdata);
+    const response = await axios.post(base_url+"/project/new", formdata);
     // const response = await API.upload('project/new', payload);
     if (response.status === 200) {
       setDetail('');
