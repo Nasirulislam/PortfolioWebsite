@@ -87,7 +87,7 @@ function AddProject(props) {
       slug: Slug,
       color: color,
       titleColor: titleColor,
-      image: image,
+      images: image,
       imagess: selectedMedia
     }
     const response = await API.upload('project/new', payload);
