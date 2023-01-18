@@ -153,9 +153,9 @@ function EditImages(props) {
           </Form.Select>
 
           <section className="edit-section">
-            <Button className={btnshow ? "edit-image-btn" : "invisible"} onClick={() => moveBackward()}>
+            <button type="button12" className={btnshow ? "edit-image-btn" : "invisible"} onClick={() => moveBackward()}>
               Prev
-            </Button>
+            </button>
             <div className="edit-image-section">
               {selectedImages &&
                 selectedImages.map((image, index) => {
@@ -192,14 +192,15 @@ function EditImages(props) {
                   );
                 })}
             </div>
-            <Button
+            <button
+            type="button12"
               className={btnshow ? "edit-image-btn" : "invisible"}
               onClick={() => {
                 moveForward();
               }}
             >
               Next
-            </Button>
+            </button>
           </section>
 
           <Button
