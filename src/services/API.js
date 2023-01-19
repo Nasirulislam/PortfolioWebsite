@@ -9,7 +9,8 @@ class API {
     route,
     payload = null,
     method = "GET",
-    contentType = "application/json"
+    contentType = "application/json",
+    isNew = null
   ) {
 
     let options = {
@@ -26,7 +27,7 @@ class API {
     //payload will be sent as form data if content type is multipart/form-data
     if (options.method !== "GET") {
       if (contentType.toLowerCase() == "multipart/form-data") {
-        options.data = convertToFormData(payload, options.method);
+        options.data = convertToFormData(payload, options.method, isNew);
         console.log(options.data);
       } else if (payload && typeof payload === "object") {
         options.data = JSON.stringify(payload);
@@ -73,7 +74,7 @@ class API {
   }
 
   async formData(route, payload = null) {
-    return await this.request(route, payload, "POST", "multipart/form-data");
+    return await this.request(route, payload, "POST", "multipart/form-data", true);
   }
 
   appendParams(route, payload) {
@@ -105,9 +106,9 @@ function getRandomString(length) {
 }
 
 
-function convertToFormData(payload, method) {
+function convertToFormData(payload, method, isNew) {
   const formData = new FormData();
-  if (payload.images?.length === 0) {
+  if (isNew !== null) {
     formData.append("images[]", []);
   }
 
