@@ -25,7 +25,8 @@ function EditImages(props) {
   const [btnshow, setBtnShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const moveForward = () => {
+  const moveForward = (e) => {
+    e.preventDefault();
     // console.log(selectedImages);
     for (var i = 0; i < selectedImages.length; i++) {
       if (selectedImages[i] === imgId) {
@@ -38,7 +39,8 @@ function EditImages(props) {
     }
     setting == true ? setSetting(false) : setSetting(true);
   };
-  const moveBackward = () => {
+  const moveBackward = (e) => {
+    e.preventDefault();
     // console.log(selectedImages);
     for (var i = 1; i < selectedImages.length; i++) {
       if (selectedImages[i] === imgId) {
