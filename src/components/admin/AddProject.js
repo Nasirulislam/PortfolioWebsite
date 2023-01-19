@@ -76,6 +76,10 @@ function AddProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
+    if (title === "admin") {
+      alert("cannot add admin preserved name");
+      return;
+    }
     setLoading(true);
     let selectedMedia = [...selectedImages];
     const payload = {
@@ -105,6 +109,8 @@ function AddProject(props) {
     }
     setLoading(false);
   };
+
+
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">

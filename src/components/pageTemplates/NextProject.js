@@ -57,7 +57,7 @@ function NextProject(props) {
       <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>
         <div className="col-md-6 d-flex justify-content-end">
           {
-            projectData[index + 1].images[0].includes("mp4") ?
+            projectData[index + 1].images[0]?.includes("mp4") ?
               <motion.video autoPlay loop muted>
                 <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[0]} type="video/mp4" />
                 <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[0]} type="video/ogg" />
@@ -75,7 +75,7 @@ function NextProject(props) {
         {projectData[index + 1].images.length > 1 && (
           <div className="col-md-5">
             {
-              projectData[index + 1].images[1].includes("mp4") ?
+              projectData[index + 1].images[1]?.includes("mp4") ?
                 <motion.video autoPlay loop muted>
                   <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[1]} type="video/mp4" />
                   <source src={`${base_url}` + "/projects/" + projectData[index + 1].images[1]} type="video/ogg" />
