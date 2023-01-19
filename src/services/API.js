@@ -66,7 +66,7 @@ class API {
   }
 
   async patch(route, payload = null) {
-    return await this.request(route, payload, "PATCH", "multipart/form-data");
+    return await this.request(route, payload, "PATCH", "multipart/form-data", true);
   }
 
   async upload(route, payload = null) {
