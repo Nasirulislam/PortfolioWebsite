@@ -78,8 +78,8 @@ function AddProject(props) {
     e.preventDefault();
     setLoading(true);
     let selectedMedia = [...selectedImages];
-    let image = [];
-    image[0] = "";
+    let images = [];
+    // images[0] = "";
     const payload = {
       name: title,
       index: index,
@@ -87,22 +87,28 @@ function AddProject(props) {
       slug: Slug,
       color: color,
       titleColor: titleColor,
-      images: image,
+      // images: image,
       imagess: selectedMedia
     }
     const formdata = new FormData();
     formdata.append("name", title);
     formdata.append("index", index);
     formdata.append("template", template);
-    formdata.append("slug",Slug);
-    formdata.append("color",color);
-    formdata.append("titleColor",titleColor);
-    image.forEach(item => formdata.append("images[]", item));
+    formdata.append("slug", Slug);
+    formdata.append("color", color);
+    formdata.append("titleColor", titleColor);
+    // image.forEach(item => formdata.append("images[]", item));
     // selectedMedia.forEach(item => formdata.append("imagess[]", item));
-    // formdata.append("images[]",image);
-    formdata.append("imagess",selectedMedia);
-  
-    const response = await axios.post(base_url+"/project/new", formdata);
+    formdata.append(images + '[]', []);
+    formdata.append("imagess", selectedMedia);
+
+    const response = await axios.post(base_url + "/project/new", formdata,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+        },
+      });
     // const response = await API.upload('project/new', payload);
     if (response.status === 200) {
       setDetail('');
