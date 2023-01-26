@@ -112,7 +112,6 @@ export default function HomeIndex() {
     useEffect(() => {
         const loadHomeIndexImages = async () => {
             const response = await API.get(`project/home`);
-            console.log(response.data);
             if (response.status == 210) {
                 setImagesPreview(response.data.home[0]?.images || []);
                 setHomeIndexId(response.data.home[0]?._id || 0);

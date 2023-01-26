@@ -15,8 +15,10 @@ import { motion } from "framer-motion";
 
 function HomeMain(props) {
   const [projectsData, setProjectsData] = useState([]);
+  const [displayProjects, setProjectToDisplay] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
   const [changeClass, setChangeClass] = useState(false);
+  
   const [slug, setSlug] = useState();
 
 
@@ -63,8 +65,12 @@ function HomeMain(props) {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
+        if(response.data.data.sortedProjects.length > 20) {
+          setProjectToDisplay(response.data.data.sortedProjects.slice(0,20));
+        } else {
+          setProjectToDisplay(response.data.data.sortedProjects);
+        }
       });
     };
     fetchProducts();
@@ -137,7 +143,7 @@ function HomeMain(props) {
             />
           </div>
         </div>
-        {projectsData.map((project, index) => {
+        {displayProjects.map((project, index) => {
 
           var e = parseInt(project.template);
           return (
@@ -217,11 +223,11 @@ function HomeMain(props) {
           overflowY: "hidden",
           cursor: 'pointer'
         }}
-        ref={(el) => (GrouRef.current[projectsData.length + 1] = el)}
+        ref={(el) => (GrouRef.current[displayProjects.length + 1] = el)}
         data-bgcolor="white"
         data-title="View All Projects"
         // onClick={props.indexBtn}
-        data-index={projectsData.length}
+        data-index={displayProjects.length}
       >
 
        

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomeIndex from "./HomeIndex";
 import IndexBackground from "./IndexBackground";
 import About from "./About";
+import EditProjectIndex from "./EditProjectIndex";
 
 function Admin({ projectData }) {
   return (
@@ -66,6 +67,15 @@ function Admin({ projectData }) {
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link
+                    eventKey="eight"
+                    style={{ color: "white", width: "160px" }}
+                  >
+                    <i class="fa fa-pencil-square me-2" aria-hidden="true"></i>
+                    Edit Project Index
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
                     eventKey="six"
                     style={{ color: "white", width: "160px" }}
                   >
@@ -97,7 +107,7 @@ function Admin({ projectData }) {
           <Col sm={10}>
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                <AddProject projects={projectData}/>
+                <AddProject projects={projectData} />
               </Tab.Pane>
               <Tab.Pane eventKey="second">
                 <EditProject />
@@ -116,6 +126,9 @@ function Admin({ projectData }) {
               </Tab.Pane>
               <Tab.Pane eventKey="seven">
                 <About />
+              </Tab.Pane>
+              <Tab.Pane eventKey="eight">
+                <EditProjectIndex />
               </Tab.Pane>
             </Tab.Content>
           </Col>

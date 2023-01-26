@@ -8,7 +8,7 @@ import base_url from "../../constants/url";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-function EditImages(props) {
+function EditProjectIndex(props) {
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [index, setIndex] = useState("");
@@ -22,16 +22,16 @@ function EditImages(props) {
   const [imgId, setImgId] = useState(null);
   const [projectId, setProjectId] = useState("");
   const [setting, setSetting] = useState(false);
-  const [btnshow, setBtnShow] = useState(false);
+  const [btnshow, setBtnShow] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const moveForward = (e) => {
     e.preventDefault();
-    for (var i = 0; i < selectedImages.length; i++) {
-      if (selectedImages[i] === imgId && (selectedImages.length - 1) !== i) {
-        temp.push(selectedImages[i + 1]);
-        selectedImages[i + 1] = selectedImages[i];
-        selectedImages[i] = temp[0];
+    for (var i = 0; i < projectsData.length; i++) {
+      if (projectsData[i]._id === imgId) {
+        temp.push(projectsData[i + 1]);
+        projectsData[i + 1] = projectsData[i];
+        projectsData[i] = temp[0];
         temp.pop();
         break;
       }
@@ -40,11 +40,12 @@ function EditImages(props) {
   };
   const moveBackward = (e) => {
     e.preventDefault();
-    for (var i = 1; i < selectedImages.length; i++) {
-      if (selectedImages[i] === imgId) {
-        temp.push(selectedImages[i - 1]);
-        selectedImages[i - 1] = selectedImages[i];
-        selectedImages[i] = temp[0];
+    // console.log(selectedImages);
+    for (var i = 1; i < projectsData.length; i++) {
+      if (projectsData[i]._id === imgId) {
+        temp.push(projectsData[i - 1]);
+        projectsData[i - 1] = projectsData[i];
+        projectsData[i] = temp[0];
         temp.pop();
         break;
       }
@@ -52,64 +53,49 @@ function EditImages(props) {
 
     setting == true ? setSetting(false) : setSetting(true);
   };
-  const handleSelectedProject = (name) => {
-    if (name === "Projects") {
-      setTitle("");
-      setIndex("");
-      setTemplate("");
-      setSelectedImages([]);
-      setBtnShow(false);
-      return;
-    }
-    projectsData.map((project, index) => {
-      if (project.name === name) {
-        setProjectId(project._id);
-        setTitle(project.name);
-        setIndex(project.index);
-        setTemplate(project.template);
-        setSlug(project.slug);
-        setSelectedImages(project.images);
-        setBtnShow(true);
-      }
-    });
-  };
 
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
       });
     };
     fetchProducts();
   }, []);
 
-  const patchReq = async () => {
 
+  const updateProjectIndex = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    const body = {
-      images: selectedImages,
-    };
+    let tempArr = [];
+    tempArr = projectsData.map((item,index) => {
+      return {
+        id: item._id,
+        index: index.toString()
+      }
+    })
 
-    await axios
-      .patch(`${base_url}/project/${projectId}`, body)
-      .then((response) => {
-        if (response.status === 225) {
-          toast("Updated successfully");
-        } else {
-          toast("Please try later");
-        }
-        setLoading(false);
-      });
-  };
+    const payload = {
+      projects: tempArr
+    }
 
+    const response = await axios.post(`${base_url}/project/updateProjectIndexes`, payload);
+    if(response.status === 262) {
+      toast("Indexes updated successfully");
+      setProjectsData(response.data.data);
+    } else {
+      toast("unable to process request");      
+    }
+
+    setLoading(false);
+  }
 
   return (
     <div className="d-flex align-items-center justify-content-center edit-images-section">
       <Card className="p-3 my-5 edit-form-card">
         <Form>
           <Form.Label className="mb-0">Select any Project</Form.Label>
-          <Form.Select
+          {/* <Form.Select
             aria-label="Default select example"
             className="mb-4 mt-2"
             onChange={(e) => handleSelectedProject(e.target.value)}
@@ -118,50 +104,50 @@ function EditImages(props) {
             {projectsData.map((project, index) => {
               return <option>{project.name}</option>;
             })}
-          </Form.Select>
+          </Form.Select> */}
 
           <section className="edit-section">
             <button type="button12" className={btnshow ? "edit-image-btn" : "invisible"} onClick={moveBackward}>
               Prev
             </button>
             <div className="edit-image-section">
-              {selectedImages &&
-                selectedImages.map((image, index) => {
+              {projectsData &&
+                projectsData.map((project, index) => {
                   return (
                     <div
-                      key={image}
+                      key={index}
                       className="edit-image"
                       onClick={() => {
-                        setImgId(image);
+                        setImgId(project._id);
                       }}
                       style={{
-                        outline: imgId == image
+                        outline: imgId === project._id
                           ? "5px solid green"
                           : "1px solid black",
                       }}
                     >
-                      {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                      {project.images[0].split("/")[0] == "data:image" || !project.images[0].includes("mp4") ?
                         <img
-                          src={`${base_url}` + "/projects/" + image}
+                          src={`${base_url}` + "/projects/" + project.images[0]}
                           width="150"
                           height="150"
                           alt="upload"
                         />
                         : <video autoPlay loop muted>
-                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/mp4" />
-                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/ogg" />
+                          <source src={project.images[0].split(":")[0] === "data" ? project.images[0] : base_url + "/projects/" + project.images[0]} type="video/mp4" />
+                          <source src={project.images[0].split(":")[0] === "data" ? project.images[0] : base_url + "/projects/" + project.images[0]} type="video/ogg" />
                         </video>
                       }
                       {/* <button onClick={() => deleteHandler(image)}>
                         delete image
                       </button> */}
-                      <p>{index + 1}</p>
+                      <p>{project.name}</p>
                     </div>
                   );
                 })}
             </div>
             <button
-            type="button12"
+              type="button12"
               className={btnshow ? "edit-image-btn" : "invisible"}
               onClick={moveForward}
             >
@@ -173,8 +159,8 @@ function EditImages(props) {
             variant="primary"
             type="submit01"
             className="button d-flex align-items-center"
-            onClick={() => {
-              patchReq();
+            onClick={(e) => {
+              updateProjectIndex(e);
             }}
             disabled={loading ? true : false}
           >
@@ -187,4 +173,4 @@ function EditImages(props) {
   );
 }
 
-export default EditImages;
+export default EditProjectIndex;

@@ -183,7 +183,7 @@
 .about-wrapper{
   width: 100%;
   position: absolute;
-  height: 100vh;
+  /* height: 100vh; */
 }
 .about-section h1 {
   font-size: 5vw;

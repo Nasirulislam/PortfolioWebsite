@@ -17,6 +17,7 @@ function AddProject({ projects }) {
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
   const [Slug, setSlug] = useState("");
+  const [templateError, setTemplateError] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -80,10 +81,12 @@ function AddProject({ projects }) {
       alert("cannot add admin preserved name");
       return;
     }
+    if (templateError !== "") return;
+
     let project = projects.filter(item => item.slug == Slug);
-    if(project[0]?.slug === Slug){
+    if (project[0]?.slug === Slug) {
       alert("slug already exit");
-      return;      
+      return;
     }
     setLoading(true);
     let selectedMedia = [...selectedImages];
@@ -116,7 +119,15 @@ function AddProject({ projects }) {
     setLoading(false);
   };
 
-
+  const handleTemplate = (e) => {
+    e.preventDefault();
+    if (e.target.value > 3 || e.target.value <= 0) {
+      setTemplateError("template should between 1-3")
+    } else {
+      setTemplateError("")
+    }
+    setTemplate(e.target.value)
+  }
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
@@ -161,13 +172,12 @@ function AddProject({ projects }) {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Templates</Form.Label>
+            <strong className="text-danger"> {templateError}</strong>
             <Form.Control
               type="number"
-              placeholder="Enter between 1-7"
+              placeholder="Enter between 1-3"
               value={template}
-              onChange={(e) => {
-                setTemplate(e.target.value);
-              }}
+              onChange={handleTemplate}
               min="1"
               max="3"
             />

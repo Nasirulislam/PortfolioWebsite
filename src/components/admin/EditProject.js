@@ -9,6 +9,7 @@ import { useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import API from "../../services/API";
+import ConfirmDelete from "../ConfirmDelete";
 
 function EditProject(props) {
   const [title, setTitle] = useState("");
@@ -28,6 +29,7 @@ function EditProject(props) {
   const [delteIcon, setDeleteIcon] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingDel, setDelLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const MAX_LENGTH = 25;
 
   const handleSelectedProject = (name) => {
@@ -42,7 +44,7 @@ function EditProject(props) {
       return;
     }
     projectsData.map((project, index) => {
-      if (project.name === name) {
+      if (project.slug === name) {
         setTitle(project.name);
         setDescription(project.description);
         setIndex(project.index);
@@ -61,7 +63,6 @@ function EditProject(props) {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
       });
     };
@@ -74,7 +75,6 @@ function EditProject(props) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         resolve(reader.result);
-        console.log(reader.result);
       }
     });
   }
@@ -104,13 +104,9 @@ function EditProject(props) {
     setSelectedImages(imagesFile);
   };
 
-  const deleteProduct = async () => {
-    setDelLoading(true);
-    await axios.delete(`${base_url}/project/${P_id}`).then((response) => {
-      toast("Deleted successfully");
-      setDelLoading(false);
-      window.location.reload();
-    });
+  const deleteProduct = async (e) => {
+    e.preventDefault();
+    setShowConfirmModal(true);
   };
 
   function deleteHandler(index) {
@@ -144,7 +140,7 @@ function EditProject(props) {
         imagesArr[i] = displayImage[i];
       }
     }
-    if (imagesArr.length<2){
+    if (imagesArr.length < 2) {
       imagesArr.push('')
       imagesArr.reverse()
     }
@@ -187,13 +183,13 @@ function EditProject(props) {
             >
               <option>Projects</option>
               {projectsData.map((project, index) => {
-                return <option key={index}>{project.name}</option>;
+                return <option key={index} value={project.slug}>{project.name}</option>;
               })}
             </Form.Select>
             <Button
               type="submit12"
               className={"d-flex align-items-center " + delteIcon ? "delete-icon m-2" : "d-none"}
-              onClick={() => deleteProduct()}
+              onClick={deleteProduct}
               disabled={loadingDel || !uploadImg ? true : false}
             >
               {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"} /> : <BsFillTrashFill />}
@@ -272,7 +268,7 @@ function EditProject(props) {
             <Form.Label>Templates</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Detail"
+              placeholder="Template"
               value={template}
               onChange={(e) => {
                 setTemplate(e.target.value);
@@ -347,6 +343,14 @@ function EditProject(props) {
           </Button>
         </Form>
       </Card>
+      {
+        showConfirmModal ? <ConfirmDelete
+          itemName={title} productId={P_id}
+          show={showConfirmModal}
+          onHide={() => setShowConfirmModal(false)}
+        /> : <></>
+      }
+
     </div>
   );
 }

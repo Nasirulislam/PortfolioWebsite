@@ -297,9 +297,6 @@
     visibility: visible !important;
     z-index: 999 !important;
   }
-  .about-wrapper {
-    height: 100vh;
-  }
   .img-fluid{
     height: 100%;
   }
