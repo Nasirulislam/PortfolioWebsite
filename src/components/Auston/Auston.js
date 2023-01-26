@@ -13,12 +13,12 @@ function Auston(props) {
   const fencerImages = props.images.slice(0, 1);
 
   return (
-    <div className={"col-md-12 col-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100vh' }}>
+    <div className={"col-md-12 col-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100%' }}>
       {fencerImages.map((banner, key) => {
         {
           if (key === 0) {
             return (
-              <motion.div className={"col-md-7 d-flex align-items-center justify-content-end"}
+              <motion.div className={"col-md-10 d-flex align-items-center justify-content-center"}
                 animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
                 {
                   banner.includes("mp4") ?
@@ -32,7 +32,7 @@ function Auston(props) {
                     :
                     <img
                       className="image-container"
-                      style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100vh' }}
+                      style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
                       src={`${base_url}` + "/projects/" + banner}
                       key={key}
                       onClick={() => props.handleSlug()}
@@ -42,7 +42,7 @@ function Auston(props) {
             )
           } else {
             return (
-              <motion.div className={"col-md-5 d-flex align-items-center"} style={{ height: '100vh' }}
+              <motion.div className={"col-md-10 d-flex align-items-center justify-content-center"} style={{ height: '100%' }}
                 animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
                 {
                   banner.includes("mp4") ?

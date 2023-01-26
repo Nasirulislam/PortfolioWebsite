@@ -275,7 +275,7 @@ function App() {
                   path="/admin-login"
                   element={
                     JSON.parse(localStorage.getItem("Status")) === "ok" ? (
-                      <Admin />
+                      <Admin projectData={projectsData} />
                     ) : (
                       <NewLogin />
                     )

@@ -13,7 +13,7 @@ import HomeIndex from "./HomeIndex";
 import IndexBackground from "./IndexBackground";
 import About from "./About";
 
-function Admin() {
+function Admin({ projectData }) {
   return (
     <div className="admin-section bg-zinc-200 bgImg">
       <NavBar />
@@ -97,7 +97,7 @@ function Admin() {
           <Col sm={10}>
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                <AddProject />
+                <AddProject projects={projectData}/>
               </Tab.Pane>
               <Tab.Pane eventKey="second">
                 <EditProject />

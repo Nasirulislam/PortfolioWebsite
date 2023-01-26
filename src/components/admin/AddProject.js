@@ -9,7 +9,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import API from '../../services/API';
 
-function AddProject(props) {
+function AddProject({ projects }) {
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
   const [titleColor, setTitleColor] = useState("");
@@ -76,14 +76,20 @@ function AddProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
-    if (title === "admin") {
+    if (Slug === "admin") {
       alert("cannot add admin preserved name");
       return;
+    }
+    let project = projects.filter(item => item.slug == Slug);
+    if(project[0]?.slug === Slug){
+      alert("slug already exit");
+      return;      
     }
     setLoading(true);
     let selectedMedia = [...selectedImages];
     const payload = {
       name: title,
+      description: detail,
       index: index,
       template: template,
       slug: Slug,
@@ -124,6 +130,18 @@ function AddProject(props) {
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Description"
+              value={detail}
+              onChange={(e) => {
+                setDetail(e.target.value);
               }}
             />
           </Form.Group>

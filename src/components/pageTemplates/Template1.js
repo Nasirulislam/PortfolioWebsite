@@ -28,8 +28,6 @@ function Template1(props) {
     if (arr.length > 2) {
       const chunk = arr.slice(2, arr.length);
       setBanners(chunk);
-    } else {
-      setBanners(arr);
     }
   }
 
@@ -90,17 +88,18 @@ function Template1(props) {
           {value || ""}
         </ReactTextTransition></h1>
       </div>
+      <h3 className="project-description text-fill">{props.projectData[index]?.description}</h3>
       <div
         className="main-proj-section"
-        style={{ position: 'relative', height: '100%' }}
+        style={{ position: 'relative', height: '100%', marginBottom: '50px' }}
       >
         {initialBanners.length > 0 && (
           <div className="row justify-content-end image-parent">
-            <motion.div className="col-md-11 d-flex justify-content-end video-wrapper" style={{ position: 'relative',paddingLeft: '0px', paddingRight: '0px' }}>
+            <motion.div className="col-md-11 d-flex justify-content-end video-wrapper" style={{ position: 'relative', paddingLeft: '0px', paddingRight: '0px' }}>
               {initialBanners.map((banner, index) => {
                 return index == 0 ?
                   banner.includes("mp4") ?
-                    <video autoPlay controls style={{zIndex: "1"}}>
+                    <video autoPlay controls style={{ zIndex: "1" }}>
                       <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
                       <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -117,7 +116,7 @@ function Template1(props) {
           </div>
         )}
         {initialBanners.length > 0 && (
-          <div className="row justify-content-end image-parent" style={{marginTop: '-10%'}}>
+          <div className="row justify-content-end image-parent" style={{ marginTop: '-10%' }}>
             <motion.div className="col-md-11 d-flex justify-content-center">
               {initialBanners.map((banner, index) => {
                 return index == 1 ?

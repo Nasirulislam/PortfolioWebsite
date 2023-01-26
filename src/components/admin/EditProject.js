@@ -12,6 +12,7 @@ import API from "../../services/API";
 
 function EditProject(props) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [P_id, setPId] = useState("");
   const [index, setIndex] = useState("");
   const [template, setTemplate] = useState("");
@@ -43,6 +44,7 @@ function EditProject(props) {
     projectsData.map((project, index) => {
       if (project.name === name) {
         setTitle(project.name);
+        setDescription(project.description);
         setIndex(project.index);
         setTemplate(project.template);
         setSlug(project.slug);
@@ -148,6 +150,7 @@ function EditProject(props) {
     }
     const payload = {
       name: title,
+      description: description,
       slug: Slug,
       template: template,
       index: index,
@@ -160,7 +163,7 @@ function EditProject(props) {
     const response = await API.put(`project/${P_id}`, payload).then((response) => {
       if (response.status == 225) {
         toast("Uploaded successfully");
-        setSelectedImages([]);return;
+        setSelectedImages([]);
         window.location.reload();
       } else {
         toast(JSON.stringify(response));
@@ -205,6 +208,18 @@ function EditProject(props) {
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Description"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
               }}
             />
           </Form.Group>
