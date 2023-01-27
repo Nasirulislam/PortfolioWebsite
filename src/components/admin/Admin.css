@@ -76,8 +76,25 @@ input[type="file"] {
 .edit-image-section {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: scroll !important; 
+
 }
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px black !important;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+  opacity: 0.6;
+  transition: 0.1s;
+}
+/* .edit-image-section::-webkit-scrollbar {
+  width: 10px !important;
+} */
+
+
 .images {
   display: flex;
   flex-direction: row;
@@ -167,3 +184,5 @@ label:hover,
 /* button{
   background-color: inherit !important;
 } */
+
+

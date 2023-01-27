@@ -81,7 +81,7 @@ function IndexItem(props) {
       </div>
       <motion.div
         className="mobile-wrapper"
-        style={{ display: display ? "inline" : "none", position: 'absolute', width: '100%', height: '100%', objectFit: 'contain', bottom: '0px', top: '10px' }}
+        style={{ display: display ? "inline" : "none", position: 'absolute', width: '100%', height: '25vh', objectFit: 'contain', top: '0' }}
         animate={{
           x: isAnimating ? 100 : 20,
           opacity: isAnimating ? 1 : 0,
@@ -102,7 +102,7 @@ function IndexItem(props) {
         <img
           className="img-fluid animated fadeOut"
           src={`${base_url}` + "/projects/" + props.image}
-          style={{ zIndex: '-1' }}
+          // style={{ zIndex: '-1' }}
         />
       </motion.div>
 
