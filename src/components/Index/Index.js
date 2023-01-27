@@ -65,7 +65,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
   }, []);
 
   return (
-    <div className="w-100 h-100">
+    <div className="w-100 h-100" style={{position: 'relative', maxHeight: '100vh', overflowY: 'hidden'}}>
       {
         images.length > 0 ?
           <div className="index-section-main-wrap" style={{
@@ -73,7 +73,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
             backgroundSize: 'cover', backgroundPosition: 'center'
           }}>
             <div className="index-section">
-              <div className="index-innersection" style={{ maxHeight: '100vh', overflowY: 'scroll' }}>
+              <div className="index-innersection" style={{ overflowY: 'scroll' }}>
                 {projects.map((item, index) => {
                   return (
                     <IndexItem
@@ -86,6 +86,8 @@ export default function Index({ projectData, indexBackground, setOptions }) {
                       // closeIndex={closeIndex}
                       setRedHome={setRedHome}
                       handleOnIndexLeave={handleOnIndexLeave}
+                      key={index}
+                      index={index}
                     />
                   );
                 })}

@@ -107,7 +107,7 @@ function EditProjectIndex(props) {
           </Form.Select> */}
 
           <section className="edit-section">
-            <button type="button12" className={btnshow ? "edit-image-btn" : "invisible"} onClick={moveBackward}>
+            <button type="button12" className={"btn btn-primary " +(btnshow ? "edit-image-btn" : "invisible")} onClick={moveBackward}>
               Prev
             </button>
             <div className="edit-image-section">
@@ -148,7 +148,7 @@ function EditProjectIndex(props) {
             </div>
             <button
               type="button12"
-              className={btnshow ? "edit-image-btn" : "invisible"}
+              className={"btn btn-primary ms-2 " +(btnshow ? "edit-image-btn" : "invisible")}
               onClick={moveForward}
             >
               Next

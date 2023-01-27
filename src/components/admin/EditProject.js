@@ -30,6 +30,7 @@ function EditProject(props) {
   const [loading, setLoading] = useState(false);
   const [loadingDel, setDelLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [templateError, setTemplateError] = useState("");
   const MAX_LENGTH = 25;
 
   const handleSelectedProject = (name) => {
@@ -132,6 +133,10 @@ function EditProject(props) {
   }
   const submitData = async (e) => {
     e.preventDefault();
+    if (templateError !== "") {
+      window.scrollTo(0,0)
+      return;
+    }
     setLoading(true);
     let imagesArr = [];
     let selectedImagesArr = [...selectedImages];
@@ -170,6 +175,16 @@ function EditProject(props) {
     })
     setLoading(false);
   };
+
+  const handleTemplate = (e) => {
+    e.preventDefault();
+    if (e.target.value > 3 || e.target.value <= 0) {
+      setTemplateError("template should between 1-3")
+    } else {
+      setTemplateError("")
+    }
+    setTemplate(e.target.value)
+  }
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
@@ -265,14 +280,13 @@ function EditProject(props) {
             />
           </Form.Group> */}
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Templates</Form.Label>
+            <Form.Label>Templates </Form.Label>
+            <strong className="text-danger"> {templateError}</strong>
             <Form.Control
               type="number"
               placeholder="Template"
               value={template}
-              onChange={(e) => {
-                setTemplate(e.target.value);
-              }}
+              onChange={handleTemplate}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">

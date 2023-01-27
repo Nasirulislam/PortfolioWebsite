@@ -7,11 +7,35 @@ import { useNavigate } from "react-router-dom";
 function IndexItem(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [display, setDisplay] = useState(false);
+  const [showUpward, setUpward] = useState(false); 
+  const [showDownward, setDownward] = useState(false);
 
-  const onMouseOver = (itemId, itemColor) => {
+
+  const onMouseOver = (e, itemId, itemColor) => {
+    e.preventDefault();
+    e.target.style.zIndex = '999';
     setIsAnitmating(true);
     let el = document.getElementById(itemColor);
-    if(el) el.style.color = itemColor;    
+    if (el) el.style.color = itemColor;
+
+
+    // calculate window height
+    const windowWidth = document.getElementsByTagName("body")[0].clientHeight;
+    const item = e.target.getBoundingClientRect();
+
+    console.log("window height:- ",windowWidth)
+    console.log("item height:- ",item.height)
+    console.log("item y-axis:- ",item.y)
+    if (item.height + item.y > (windowWidth-200)) {
+      // show image upward
+      setUpward(true);
+      setDownward(false);
+    } else {
+      // show image downward
+      setDownward(true);
+      setUpward(false);
+    }
+
 
     setDisplay(true);
     setTimeout(() => {
@@ -19,11 +43,12 @@ function IndexItem(props) {
     }, 8000);
   };
 
-  const onMouseLeave = (itemId, itemColor) => {
+  const onMouseLeave = (e, itemId, itemColor) => {
     setIsAnitmating(false);
     setDisplay(false);
+    e.target.style.zIndex = '1';
     let el = document.getElementById(itemColor);
-    if(el) el.style.color = 'white';
+    if (el) el.style.color = 'white';
   };
   const navigate = useNavigate();
   return (
@@ -47,8 +72,8 @@ function IndexItem(props) {
           id={props.color}
           // data-replace={props.text}
           // whileHover={() => onMouseOver(props.name, props.color)}
-          onMouseEnter={() => onMouseOver(props.name, props.color)}
-          onMouseLeave={() => onMouseLeave(props.name, props.color)}
+          onMouseEnter={(e) => onMouseOver(e, props.name, props.color)}
+          onMouseLeave={(e) => onMouseLeave(e, props.name, props.color)}
           style={{ marginBottom: '0px' }}
         >
           {props.text}
@@ -56,15 +81,15 @@ function IndexItem(props) {
       </div>
       <motion.div
         className="mobile-wrapper"
-        style={{ display: display ? "inline" : "none", position: 'absolute', top: '0px' }}
+        style={{ display: display ? "inline" : "none", position: 'absolute', width: '100%', height: '100%', objectFit: 'contain', bottom: '0px', top: '10px' }}
         animate={{
           x: isAnimating ? 100 : 20,
           opacity: isAnimating ? 1 : 0,
-          position: "absolute",
+          // position: "absolute",
         }}
         initial={{
           opacity: 0,
-          position: "absolute",
+          // position: "absolute",
           x: -100,
           rotate: 0,
         }}
@@ -77,13 +102,14 @@ function IndexItem(props) {
         <img
           className="img-fluid animated fadeOut"
           src={`${base_url}` + "/projects/" + props.image}
+          style={{ zIndex: '-1' }}
         />
       </motion.div>
 
       <motion.div
         className="index-image"
         id="in-image"
-        style={{ display: display ? "inline" : "none", position: 'absolute' }}
+        style={{ display: display ? "block" : "none", bottom: showUpward ? '0px' : '', top: showDownward ? '0px' : '' }}
         animate={{
           x: isAnimating ? 500 : "200vh",
           opacity: isAnimating ? 1 : 0,
@@ -91,7 +117,7 @@ function IndexItem(props) {
         }}
         initial={{
           opacity: 0,
-          position: "relative",
+          position: "absolute",
           x: "200vh",
           rotate: 0,
         }}
@@ -103,6 +129,7 @@ function IndexItem(props) {
         <img
           className="img-fluid animated fadeOut"
           src={`${base_url}` + "/projects/" + props.image}
+        // style={{height: '25vh'}}
         />
       </motion.div>
     </div>

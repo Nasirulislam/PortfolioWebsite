@@ -295,7 +295,7 @@
 @media only screen and (max-width: 740px) {
   .mobile-wrapper {
     visibility: visible !important;
-    z-index: 999 !important;
+    z-index: 10 !important;
   }
   .img-fluid{
     height: 100%;
