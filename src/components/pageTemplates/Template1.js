@@ -18,16 +18,38 @@ function Template1(props) {
   const [nextPortfolioSlug, setSlug] = useState(projectData[index].slug);
   const currentPortfolioName = projectData[index].name;
 
-  const makeTemplateBannerChunks = (arr) => {
 
-    // extract first two initial banners
-    if (arr.length >= 2) {
-      const chunk = arr.slice(0, 2);
-      setInitialBanners(chunk);
+  function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
     }
-    if (arr.length > 2) {
-      const chunk = arr.slice(2, arr.length);
-      setBanners(chunk);
+    return array;
+  }
+
+  const makeTemplateBannerChunks = (arr) => {
+    let tempArr = [];
+    let tempImages = [];
+    if (arr.length > 0) {
+      tempArr[0] = projectData[index]?.images[0];
+      tempImages = arr.filter((item, key) => {
+        if (key !== 0) {
+          return item;
+        }
+      })
+      arr = shuffleArray(tempImages);
+      if (arr.length >= 2) {
+        tempArr[1] = arr[0];
+        setInitialBanners(tempArr);
+        const chunk = arr.filter((item, key) => {
+          if (key !== 0) {
+            return item;
+          }
+        });
+        setBanners(chunk);
+      }
     }
   }
 
@@ -91,7 +113,7 @@ function Template1(props) {
       <h3 className="project-description text-fill">{props.projectData[index]?.description}</h3>
       <div
         className="main-proj-section"
-        style={{ position: 'relative', height: '100%', marginBottom: '50px' }}
+        style={{ position: 'relative', height: '100%', marginBottom: '100px' }}
       >
         {initialBanners.length > 0 && (
           <div className="row justify-content-end image-parent">

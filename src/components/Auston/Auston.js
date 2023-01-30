@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import "./Auston.css";
-import { useNavigate } from "react-router-dom/dist";
 import base_url from "../../constants/url";
 import {
   motion
@@ -9,12 +8,9 @@ import {
 
 function Auston(props) {
 
-  const navigate = useNavigate();
-  const fencerImages = props.images.slice(0, 1);
-
   return (
-    <div className={"col-md-12 col-12 d-flex align-items-center " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")} style={{ height: '100%' }}>
-      {fencerImages.map((banner, key) => {
+    <div className={"col-md-12 col-12 d-flex align-items-center justify-content-center"} style={{ height: '100%' }}>
+      {props.images.map((banner, key) => {
         {
           if (key === 0) {
             return (
@@ -33,28 +29,6 @@ function Auston(props) {
                     <img
                       className="image-container"
                       style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
-                      src={`${base_url}` + "/projects/" + banner}
-                      key={key}
-                      onClick={() => props.handleSlug()}
-                    />
-                }
-              </motion.div>
-            )
-          } else {
-            return (
-              <motion.div className={"col-md-10 d-flex align-items-center justify-content-center"} style={{ height: '100%' }}
-                animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}>
-                {
-                  banner.includes("mp4") ?
-                    <video autoPlay loop muted onClick={() => props.handleSlug()}>
-                      <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
-                      <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
-                      Your browser does not support the video tag.
-                    </video>
-                    :
-                    <img
-                      className={"col-md-6 " + ((props.images.length - 1) === key && props.images.length > 2) ? " last-image" : " image-container "}
-                      style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', cursor: 'pointer' }}
                       src={`${base_url}` + "/projects/" + banner}
                       key={key}
                       onClick={() => props.handleSlug()}

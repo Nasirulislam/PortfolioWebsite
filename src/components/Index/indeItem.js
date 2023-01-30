@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Index.css";
 import { motion } from "framer-motion";
 import base_url from "../../constants/url";
@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 function IndexItem(props) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [showUpward, setUpward] = useState(false); 
+  const [showUpward, setUpward] = useState(false);
   const [showDownward, setDownward] = useState(false);
+  const [image, setItemImage] = useState("");
 
 
   const onMouseOver = (e, itemId, itemColor) => {
@@ -23,10 +24,7 @@ function IndexItem(props) {
     const windowWidth = document.getElementsByTagName("body")[0].clientHeight;
     const item = e.target.getBoundingClientRect();
 
-    console.log("window height:- ",windowWidth)
-    console.log("item height:- ",item.height)
-    console.log("item y-axis:- ",item.y)
-    if (item.height + item.y > (windowWidth-200)) {
+    if (item.height + item.y > (windowWidth - 200)) {
       // show image upward
       setUpward(true);
       setDownward(false);
@@ -50,9 +48,24 @@ function IndexItem(props) {
     let el = document.getElementById(itemColor);
     if (el) el.style.color = 'white';
   };
+
+  useEffect(() => {
+    if (props.image.length > 0) {
+      let tempArr = props.image.filter((item, key) => {
+        if (!item.includes("mp4")) {
+          return item;
+        }
+      })
+      setItemImage(tempArr[0]);
+    } else {
+      setItemImage(props.image[0]);      
+    }
+  }, []);
+
   const navigate = useNavigate();
+
   return (
-    <div className="index-item-section" style={{ position: 'relative' }}>
+    <div className="index-item-section" style={{ position: 'relative' }} key={props.currentProject._id}>
       <div className="d-flex indexlist-props"
         onClick={() => {
           props.handleOnIndexLeave()
@@ -101,8 +114,8 @@ function IndexItem(props) {
       >
         <img
           className="img-fluid animated fadeOut"
-          src={`${base_url}` + "/projects/" + props.image}
-          // style={{ zIndex: '-1' }}
+          src={`${base_url}` + "/projects/" + image}
+        // style={{ zIndex: '-1' }}
         />
       </motion.div>
 
@@ -128,7 +141,7 @@ function IndexItem(props) {
       >
         <img
           className="img-fluid animated fadeOut"
-          src={`${base_url}` + "/projects/" + props.image}
+          src={`${base_url}` + "/projects/" + image}
         // style={{height: '25vh'}}
         />
       </motion.div>

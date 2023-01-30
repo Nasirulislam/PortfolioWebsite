@@ -82,7 +82,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
                       nextProject={projects[index + 1]}
                       text={item.name}
                       color={typeof item.titleColor !== "undefined" ? item.titleColor : item.color}
-                      image={item.images[0]}
+                      image={item.images}
                       // closeIndex={closeIndex}
                       setRedHome={setRedHome}
                       handleOnIndexLeave={handleOnIndexLeave}

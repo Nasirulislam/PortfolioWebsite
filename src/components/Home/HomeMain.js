@@ -160,7 +160,7 @@ function HomeMain(props) {
                 >
                   <Auston
                     name={project.name}
-                    images={(index % 2 == 0) ? project.images.slice(1, 2) : project.images.slice(1, 3)}
+                    images={project.images}
                     slug={"/".concat(project.slug)}
                     setCount={props.setCount}
                     nextProject={project[index + 1]}
