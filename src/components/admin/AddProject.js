@@ -21,6 +21,10 @@ function AddProject({ projects }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [titleError, setTitleError] = useState("");
+  const [slugError, setSlugError] = useState("");
+
   const MAX_LENGTH = 15;
 
   const convertToBase64 = (file) => {
@@ -73,10 +77,22 @@ function AddProject({ projects }) {
 
     setSelectedImages(filtered);
     setdisplayImage(filteredDisplay);
-    // URL.revokeObjectURL(image);
   }
   const submitData = async (e) => {
     e.preventDefault();
+
+    if (title === "") {
+      setTitleError("Please enter a title");
+      window.scrollTo(0,0);
+      return;
+    }
+
+    if (Slug === "") {
+      setSlugError("Please enter a slug");
+      window.scrollTo(0,0);
+      return;
+    }
+
     if (Slug === "admin") {
       alert("cannot add admin preserved name");
       return;
@@ -88,6 +104,19 @@ function AddProject({ projects }) {
       alert("slug already exit");
       return;
     }
+
+    let count = 0;
+    displayImage.filter((item, key) => {
+      if (item.split("/")[0] === "data:image") {
+        count += 1
+      }
+    });
+
+    if (count === 0) {
+      alert("Atleast select any one image to continue");
+      return;
+    }
+
     setLoading(true);
     let selectedMedia = [...selectedImages];
     const payload = {
@@ -129,19 +158,30 @@ function AddProject({ projects }) {
     setTemplate(e.target.value)
   }
 
+  const handleTitle = (e) => {
+    e.preventDefault();
+    setTitle(e.target.value);
+    setTitleError("");
+  }
+
+  const handleSlug = (e) => {
+    e.preventDefault();
+    setSlug(e.target.value);
+    setSlugError("");
+  }
+
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
       <Card className="p-3 my-5 form-card">
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Title</Form.Label>
+            <strong className="text-danger"> {titleError}</strong>
             <Form.Control
               type="text"
               placeholder="Enter Title"
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
+              onChange={handleTitle}
             />
           </Form.Group>
 
@@ -184,13 +224,12 @@ function AddProject({ projects }) {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Slug</Form.Label>
+            <strong className="text-danger"> {slugError}</strong>
             <Form.Control
               type="text"
               placeholder="Enter project Slug"
               value={Slug}
-              onChange={(e) => {
-                setSlug(e.target.value);
-              }}
+              onChange={handleSlug}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">

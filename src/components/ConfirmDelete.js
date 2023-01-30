@@ -37,8 +37,8 @@ export default function ConfirmDelete(props) {
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-                <Button onClick={deleteProduct} className="btn btn-danger d-flex align-items-center"
+                <Button onClick={props.onHide} type="button12">Close</Button>
+                <Button onClick={deleteProduct} className="btn btn-danger d-flex align-items-center" type="button12"
                     disabled={loading}
                     >
                     <Spinner animation="border" variant="light" className={"me-2 " + (loading ? "" : "d-none")} />
