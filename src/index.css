@@ -8,6 +8,7 @@ body {
   -webkit-scrollbar: none;
   -moz-osx-font-smoothing: grayscale;
   background-color: white;
+  /* overflow: hidden; */
 }
 
 ::-webkit-scrollbar {
