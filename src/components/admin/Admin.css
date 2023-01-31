@@ -3,7 +3,13 @@
   margin: 0px;
   box-sizing: border-box;
 }
-
+body{
+  -webkit-scrollbar: none !important;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  display: block !important;
+}
 .form-card {
   margin-top: 5%;
   width: 50%;
