@@ -45,7 +45,7 @@ export default function About(props) {
                                 <>
                                     <h1>{title}</h1>
                                     <h1>{detail}</h1>
-                                    <br /><br /><br /><br />
+                                    <br /><br />
                                 </>
                             )
                         }

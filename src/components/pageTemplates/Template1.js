@@ -32,6 +32,12 @@ function Template1(props) {
   const makeTemplateBannerChunks = (arr) => {
     let tempArr = [];
     let tempImages = [];
+
+    if(arr.length === 1) {
+      tempArr[0] = arr[0];
+      setInitialBanners(tempArr);
+      return;
+    }
     if (arr.length > 0) {
       tempArr[0] = projectData[index]?.images[0];
       tempImages = arr.filter((item, key) => {
