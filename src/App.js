@@ -25,7 +25,7 @@ function App() {
   const [IndexText, setIndexText] = useState("INDEX");
   const [aboutText, setAboutText] = useState("ABOUT");
   const [METext, setMEText] = useState("START");
-  const [Text00, set00Text] = useState("00");
+  const [Text00, set00Text] = useState("CONTACT");
   const [clicked, setClicked] = useState(true);
   const [Redhome, setHome] = useState(false);
   const [dataFetc, setDataFetch] = useState(false);
@@ -34,6 +34,7 @@ function App() {
   const [showAbout, setShowAbout] = useState(false);
   const [hideOptions, setOptions] = useState(false);
   const [isShow, setIsShow] = useState(false);
+  const [fromAbout, setFromAbout] = useState(false);
 
 
   function changeIndex(index) {
@@ -43,7 +44,7 @@ function App() {
     if (parseInt(index) < 10 && index !== "00") {
       index = `0${index}`;
     }
-    set00Text(index);
+    // set00Text(index);
   }
   const setRedHome = () => {
     setHome(true);
@@ -78,7 +79,7 @@ function App() {
     setIndexText("INDEX");
     setAboutText("ABOUT");
     setMEText("START");
-    set00Text("00");
+    set00Text("CONTACT");
   };
   const buttonToogle = () => {
     if (clicked) {
@@ -189,6 +190,7 @@ function App() {
                   <div className="main-button">
                     <h3 onClick={() => {
                       setShowAbout(!showAbout)
+                      setFromAbout(true)
                       AboutToogle()
                     }} className="about-button">
                       <a id="style-2" data-replace={aboutText}>
@@ -211,8 +213,12 @@ function App() {
               {
                 !hideOptions && (
                   <div className="main-button">
-                    <h3 className="null-button">
-                      <a id="style-2" data-replace={Text00}>
+                    <h3 className="null-button" onClick={() => {
+                      setShowAbout(!showAbout)
+                      setFromAbout(false)
+                      AboutToogle()
+                    }}>
+                      <a id="style-2" >
                         <span>{Text00}</span>
                       </a>
                     </h3>
@@ -295,7 +301,7 @@ function App() {
               // />
               <></>
             )}
-          <About portfolios={projectsData} showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} />
+          <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout}/>
         </div>
       </Router>
     </div>

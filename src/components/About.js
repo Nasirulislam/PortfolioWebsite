@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import "./Index/Index.css";
 import url from '../constants/url';
 import { useNavigate } from 'react-router-dom';
+import AboutImage from '../Assets/images/unnamed.png';
 
 export default function About(props) {
     const [title, setTitle] = useState("");
@@ -21,7 +22,7 @@ export default function About(props) {
         const getAboutPayload = async () => {
             const response = await axios.get(`${url}/project/getAbout`);
             if (response.status == 210) {
-                let payload = response.data.data;                
+                let payload = response.data.data;
                 setTitle(payload.title);
                 setDetail(payload.detail);
                 setLocTxt(payload.locTxt);
@@ -34,27 +35,32 @@ export default function About(props) {
         getAboutPayload();
     }, [])
 
-    const gotoPortfolio = (e,slug) => {
-        e.preventDefault();
-        props.setShowAbout(false);
-        props.changeAboutStatus();
-        navigate("/"+slug);
-    }
     return (
-        <div className="bg-white about-wrapper" style={{ height: '100% !important',  display: props.showAbout ? 'block' : 'none' }}>
+        <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black' }}>
             <div className="about-section">
                 {title !== "" && (
                     <div className="index-innersection h-100">
-                        <h1>{title}</h1>
-                        <h1>{detail}</h1>
-                        <h1>{locTxt}</h1>
-                        <h1>{email}</h1>
-                        <a href={instUrl} target="_blank">Instagram</a>
-                        <h1>{repName}</h1>
+                        {
+                            props.fromAbout && (
+                                <>
+                                    <h1>{title}</h1>
+                                    <h1>{detail}</h1>
+                                    <br /><br />
+                                </>
+                            )
+                        }
+                        <>
+                            <h1>{locTxt}</h1>
+                            <h1>{email}</h1>
+                            <a href={instUrl} target="_blank">Instagram</a>
+                            <h1>{repName}</h1>
+                        </>
                     </div>
                 )}
 
-                {props.portfolios.length > 0 && (
+                <img src={AboutImage} className="w-100" />
+
+                {/* {props.portfolios.length > 0 && (
                     <ul id="about-portfolio">
                         {
                             props.portfolios.map((item, index) => {
@@ -64,7 +70,7 @@ export default function About(props) {
                             })
                         }
                     </ul>
-                )}
+                )} */}
 
             </div>
         </div>

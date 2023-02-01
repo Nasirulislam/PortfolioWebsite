@@ -11,6 +11,7 @@ export default function HomeIndex() {
     const [loading, setLoading] = useState(false);
     const [homeIndexId, setHomeIndexId] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
+    const [portraitImagesPreview, setPortraitImagesPreview] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const MAX_LENGTH = 10;
 
@@ -49,6 +50,29 @@ export default function HomeIndex() {
         setSelectedFiles(imagesFile);
     }
 
+    const onPortraitSelectFile = (e) => {
+        let selectedFileLength = Array.from(e.target.files).length;
+        let uploadedFileLength = Array.from(imagesPreview).length;
+        if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
+            e.preventDefault();
+            alert(`Cannot upload files more than ${MAX_LENGTH - 1}`);
+            return;
+        }
+
+        let promises = [];
+        [...e.target.files].forEach(file => {
+            promises.push(convertToBase64(file));
+        });
+
+        Promise.all(promises).then(result => {
+            setPortraitImagesPreview(current => [...current, ...result])
+        })
+
+        let imagesFile = []
+        Array.from(e.target.files).forEach(file => imagesFile.push(file));
+        setSelectedFiles(imagesFile);
+    }
+
     const removePreviewImage = (index) => {
 
         let filteredImages = [];
@@ -69,6 +93,29 @@ export default function HomeIndex() {
             filteredImages = [];
         }
         setImagesPreview(filteredImages);
+        setSelectedFiles(selectedImages);
+    }
+
+    const removePortraitPreviewImage = (index) => {
+
+        let filteredImages = [];
+        let selectedImages = [];
+        portraitImagesPreview.forEach((item, key) => {
+            if (key !== index) {
+                filteredImages.push(item);
+            }
+        });
+
+        selectedFiles.forEach((item, key) => {
+            if (key !== index) {
+                selectedImages.push(item);
+            }
+        });
+
+        if (typeof filteredImages[0] == "undefined") {
+            filteredImages = [];
+        }
+        setPortraitImagesPreview(filteredImages);
         setSelectedFiles(selectedImages);
     }
 
@@ -129,50 +176,98 @@ export default function HomeIndex() {
                 <Form>
                     <section>
                         <div className="images">
-                            {(imagesPreview && imagesPreview.length > 0) &&
-                                imagesPreview.map((image, index) => {
-                                    {
-                                        return (
-                                            <div key={index} className="image">
-                                                {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
-                                                    <>
-                                                        <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                                                        <button type="button" onClick={() => removePreviewImage(index)}>
-                                                            delete image
-                                                        </button>
-                                                    </>
-                                                    :
-                                                    <>
-                                                        <video autoPlay loop muted>
-                                                            <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
-                                                            <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
-                                                        </video>
-                                                        <button type="button" onClick={() => removePreviewImage(index)}>
-                                                            delete video
-                                                        </button>
-                                                    </>
-                                                }
-                                                <p>{index}</p>
-                                            </div>)
+                            <h1><strong>Portrait Images</strong></h1>
+                            <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
+                                {(portraitImagesPreview && portraitImagesPreview.length > 0) &&
+                                    portraitImagesPreview.map((image, index) => {
+                                        {
+                                            return (
+                                                <div key={index} className="image">
+                                                    {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                                                        <>
+                                                            <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                            <button type="button" onClick={() => removePortraitPreviewImage(index)}>
+                                                                delete image
+                                                            </button>
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <video autoPlay loop muted>
+                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
+                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
+                                                            </video>
+                                                            <button type="button" onClick={() => removePortraitPreviewImage(index)}>
+                                                                delete video
+                                                            </button>
+                                                        </>
+                                                    }
+                                                    <p>{index}</p>
+                                                </div>)
 
-                                    }
-                                })}
-                            {
-                                (imagesPreview && imagesPreview.length < 10) && (
-                                    <label className="img-label">
-                                        + Add Images
-                                        <br />
-                                        <span>up to 10 images</span>
-                                        <input
-                                            type="file"
-                                            name="images"
-                                            onChange={onSelectFile}
-                                            multiple
-                                            accept="image/png , image/jpeg, image/webp"
-                                        />
-                                    </label>
-                                )
-                            }
+                                        }
+                                    })}
+                                <label className="img-label">
+                                    + Add Images
+                                    <br />
+                                    <span>up to 10 images</span>
+                                    <input
+                                        type="file"
+                                        name="images"
+                                        onChange={onPortraitSelectFile}
+                                        multiple
+                                        accept="image/png , image/jpeg, image/webp"
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                        <div className="images">
+                            <h1><strong>Landscape Images</strong></h1>
+                            <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
+                                {(imagesPreview && imagesPreview.length > 0) &&
+                                    imagesPreview.map((image, index) => {
+                                        {
+                                            return (
+                                                <div key={index} className="image">
+                                                    {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                                                        <>
+                                                            <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
+                                                            <button type="button" onClick={() => removePreviewImage(index)}>
+                                                                delete image
+                                                            </button>
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <video autoPlay loop muted>
+                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
+                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
+                                                            </video>
+                                                            <button type="button" onClick={() => removePreviewImage(index)}>
+                                                                delete video
+                                                            </button>
+                                                        </>
+                                                    }
+                                                    <p>{index}</p>
+                                                </div>)
+
+                                        }
+                                    })}
+                                {
+                                    (imagesPreview && imagesPreview.length < 10) && (
+                                        <label className="img-label">
+                                            + Add Images
+                                            <br />
+                                            <span>up to 10 images</span>
+                                            <input
+                                                type="file"
+                                                name="images"
+                                                onChange={onSelectFile}
+                                                multiple
+                                                accept="image/png , image/jpeg, image/webp"
+                                            />
+                                        </label>
+                                    )
+                                }
+                            </div>
                         </div>
                         <br />
                     </section>

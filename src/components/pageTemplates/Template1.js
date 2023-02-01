@@ -40,9 +40,10 @@ function Template1(props) {
         }
       })
       arr = shuffleArray(tempImages);
-      if (arr.length >= 2) {
+      if (arr.length > 0) {
         tempArr[1] = arr[0];
         setInitialBanners(tempArr);
+
         const chunk = arr.filter((item, key) => {
           if (key !== 0) {
             return item;
@@ -110,7 +111,7 @@ function Template1(props) {
           {value || ""}
         </ReactTextTransition></h1>
       </div>
-      <h3 className="project-description text-fill">{props.projectData[index]?.description}</h3>
+      <h1 className="project-description">{props.projectData[index]?.description}</h1>
       <div
         className="main-proj-section"
         style={{ position: 'relative', height: '100%', marginBottom: '100px' }}

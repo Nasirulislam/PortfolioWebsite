@@ -31,7 +31,7 @@
   padding: 0;
   font-weight: 600 !important;
   font-size: 35px;
-  font-family: "Heebo";
+  font-family: "lato";
   transition-property: margin-top;
   transition-duration: 0.2s;
   transition-timing-function: linear;
@@ -210,16 +210,18 @@
 }
 
 .about-section h1 {
-  font-size: 5vw;
-  font-weight: 700;
-  color: blue;
+  font-size: 3vw;
+  font-weight: 100;
+  color: white;
+  font-family: 'lato';
 }
 
 .about-section a {
-  font-size: 5vw;
-  font-weight: 700;
-  color: blue;
+  font-size: 3vw;
+  font-weight: 100;
+  color: white;
   text-decoration: none;
+  font-family: 'lato';
 }
 
 .text-size {
