@@ -176,7 +176,7 @@ export default function HomeIndex() {
                 <Form>
                     <section>
                         <div className="images">
-                            <h1><strong>Portrait Images</strong></h1>
+                            <h1 style={{fontSize: '2.5rem'}}><strong>Portrait Images</strong></h1>
                             <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
                                 {(portraitImagesPreview && portraitImagesPreview.length > 0) &&
                                     portraitImagesPreview.map((image, index) => {
@@ -221,7 +221,7 @@ export default function HomeIndex() {
                             </div>
                         </div>
                         <div className="images">
-                            <h1><strong>Landscape Images</strong></h1>
+                            <h1 style={{fontSize: '2.5rem'}}><strong>Landscape Images</strong></h1>
                             <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
                                 {(imagesPreview && imagesPreview.length > 0) &&
                                     imagesPreview.map((image, index) => {
