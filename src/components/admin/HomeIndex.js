@@ -9,6 +9,7 @@ import API from '../../services/API';
 
 export default function HomeIndex() {
     const [loading, setLoading] = useState(false);
+    const [loadingPortrait, setLoadingPortrait] = useState(false);
     const [homeIndexId, setHomeIndexId] = useState(0);
     const [imagesPreview, setImagesPreview] = useState([]);
     const [landscapeHomeIndexId, setLandscapeHomeIndexId] = useState(0);
@@ -123,7 +124,7 @@ export default function HomeIndex() {
 
     const submit = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        setLoadingPortrait(true);
         let imagesArr = [];
         let selectedArr = [...selectedFiles];
 
@@ -155,7 +156,7 @@ export default function HomeIndex() {
                 toast(JSON.stringify(response));
             }
         }
-        setLoading(false);
+        setLoadingPortrait(false);
     }
 
     const submitLandscape = async (event) => {
@@ -329,10 +330,10 @@ export default function HomeIndex() {
                             type="submit01"
                             className="d-flex align-items-center"
                             onClick={(e) => submit(e)}
-                            disabled={loading ? true : false}
+                            disabled={loadingPortrait ? true : false}
                         >
-                            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
-                            {loading ? "Uploading..." : "Submit"}
+                            <Spinner animation="border" variant="light" className={loadingPortrait ? "me-2" : "d-none"} />
+                            {loadingPortrait ? "Uploading..." : "Submit"}
                         </Button>
                     </div>
                 </Form>

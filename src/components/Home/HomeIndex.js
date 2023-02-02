@@ -10,6 +10,7 @@ function HomeIndex(props) {
   const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
+  const [homeIndexImages, setHomeIndexImages] = useState([]);
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
@@ -124,78 +125,119 @@ function HomeIndex(props) {
     };
   });
 
-  return (
-    <div id="home-page" className="home-page row">
-      <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
-        <h1 style={{ cursor: 'pointer' }}>
-          {props.value}
-        </h1>
-      </div>
-      <div className="col-md-12 d-flex justify-content-around align-items-center tech-slideshow flex-wrap" style={{ height: '100%' }}>
-        {props.homeIndexImages.length > 0 && props.homeIndexImages.map((banner, index) => {
-          {
-            return (
-              <motion.div
-                className="home-slide-section col-md-6 d-flex justify-content-between align-items-center flex-wrap m-4"
-                animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 10,
-                }}
-                key={index}
-                style={{ position: index == 1 ? 'relative' : '' }}
-              >
-                {index == 1 ?
-                  <motion.div className="card"
-                    animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
-                    key={index}
-                    style={{ marginTop: index == 1 ?  '10%' : '' }}
-                  >
-                    {banner.includes("mp4")
-                      ?
-                      <video autoPlay loop muted>
-                        <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
-                        <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
-                        Your browser does not support the video tag.
-                      </video>
-                      :
-                      <img
-                        className="img-fluid mover-1"
-                        src={banner.includes("data:image") ? banner : `${base_url}/home/${banner}`}
-                      />
-                    }
+  useEffect(() => {
+    const mergeIndexImages = () => {
+      let portraitIndex = props.homeIndexImages;
+      let landscapeIndex = props.landscapeHomeIndexImages;
 
+      let tempPortArr = portraitIndex.map((item, key) => {
+        return {
+          'type': 'portrait',
+          'image': item
+        }
+      })
 
-                  </motion.div>
-                  : <motion.Card className="card"
+      let tempLandArr = landscapeIndex.map((item, key) => {
+        return {
+          'type': 'landscape',
+          'image': item
+        }
+      })
+      let tempArr = tempPortArr.concat(tempLandArr);
+      let zigZagArr = [];
+      let j = 0;
+      let k = 0;
+      for (let i = 0; i < tempArr.length; i++) {
+        if (i % 2 === 0) {
+          zigZagArr.push({
+            'type': 'landscape',
+            'image': landscapeIndex[j]
+          });
+          j = j + 1;
+        } else {
+          zigZagArr.push({
+            'type': 'portrait',
+            'image': typeof portraitIndex[k] === "undefined" ? landscapeIndex[j] : portraitIndex[k]
+          });
+          k = k + 1;
+        }       
 
-                    key={index}
-                    style={{ paddingLeft: index%2===0 ? '20px' : '', top: (props.homeIndexImages.length - 1) === index ? '22%' : '0' }}
-                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-                  >
-                    {banner.includes("mp4")
-                      ?
-                      <video autoPlay loop muted>
-                        <source src={`${base_url}` + "/home/" + banner} type="video/mp4" />
-                        <source src={`${base_url}` + "/home/" + banner} type="video/ogg" />
-                        Your browser does not support the video tag.
-                      </video>
-                      :
-                      <img
-                        className="img-fluid mover-1"
-                        src={banner.includes("data:image") ? banner : `${base_url}/home/${banner}`}
-                      />
-                    }
-                  </motion.Card>
-                }
+      }
+      console.log("temp arr:- ", zigZagArr);
+      setHomeIndexImages(zigZagArr);
+    }
+    mergeIndexImages();
+}, []);
 
-              </motion.div>
-            )
-          }
-        })}
-      </div>
+return (
+  <div id="home-page" className="home-page row">
+    <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
+      <h1 style={{ cursor: 'pointer' }}>
+        {props.value}
+      </h1>
     </div>
-  );
+    <div className="col-md-12 px-0 d-flex justify-content-around tech-slideshow flex-wrap" style={{ height: '100%', marginBottom: '10%', marginTop: '5%' }}>
+      {homeIndexImages.map((banner, index) => {
+        {
+          return (
+            <motion.div
+              className={"home-slide-section d-flex align-items-center "+((homeIndexImages.length-1) === index ? "col-md-12 px-0 justify-content-end" : "col-md-4")}
+              animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 10,
+              }}
+              key={index}
+              style={{maxHeight: '60vh', width: (homeIndexImages.length-1) === index ? '40vw' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length-1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index===6 ?'10%':'', marginLeft: index===6 ?'10%':'' }}
+            >
+              {index % 2 === 0 ?
+                <motion.div className="card"
+                  animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                  key={index}
+                  style={{ marginLeft: index === 4 ? '100px' : '', top: index === 4 ? '-60px' : '', right: index === 4 ? '-220px' : '' }}
+                >
+                  {banner.image.includes("mp4")
+                    ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
+                      <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video>
+                    :
+                    <img
+                      className="img-fluid mover-1"
+                      src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
+                    />
+                  }
+                </motion.div>
+                :
+                <motion.Card className="card"
+                  key={index}                 
+                  animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                >
+                  {banner.image.includes("mp4")
+                    ?
+                    <video autoPlay loop muted>
+                      <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
+                      <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
+                      Your browser does not support the video tag.
+                    </video>
+                    :
+                    <img
+                      className="img-fluid mover-1"
+                      src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
+                    />
+                  }
+                </motion.Card>
+              }
+
+            </motion.div>
+          )
+        }
+      })}
+    </div>
+  </div>
+);
 }
 
 export default HomeIndex;
