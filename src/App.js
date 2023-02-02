@@ -30,6 +30,7 @@ function App() {
   const [Redhome, setHome] = useState(false);
   const [dataFetc, setDataFetch] = useState(false);
   const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [landscapeHomeIndexImages, setLandscapeHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
   const [hideOptions, setOptions] = useState(false);
@@ -61,6 +62,7 @@ function App() {
       if (response.status === 210) {
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
+        setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
 
       } else {
         console.log(response.message);
@@ -241,6 +243,7 @@ function App() {
                         onChange={changeIndex}
                         indexBtn={buttonToogle}
                         homeIndexImages={homeIndexImages}
+                        landscapeHomeIndexImages={landscapeHomeIndexImages}
                         indexBackground={indexBackground}
                       />
                     ) : (
@@ -301,7 +304,7 @@ function App() {
               // />
               <></>
             )}
-          <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout}/>
+          <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout} />
         </div>
       </Router>
     </div>

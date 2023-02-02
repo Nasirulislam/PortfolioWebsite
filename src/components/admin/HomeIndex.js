@@ -9,10 +9,12 @@ import API from '../../services/API';
 
 export default function HomeIndex() {
     const [loading, setLoading] = useState(false);
-    const [homeIndexId, setHomeIndexId] = useState([]);
+    const [homeIndexId, setHomeIndexId] = useState(0);
     const [imagesPreview, setImagesPreview] = useState([]);
-    const [portraitImagesPreview, setPortraitImagesPreview] = useState([]);
+    const [landscapeHomeIndexId, setLandscapeHomeIndexId] = useState(0);
+    const [landscapeImagesPreview, setLandscapeImagesPreview] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [landscapeSelectedFiles, setLandscapeSelectedFiles] = useState([]);
     const MAX_LENGTH = 10;
 
     const convertToBase64 = (file) => {
@@ -50,7 +52,7 @@ export default function HomeIndex() {
         setSelectedFiles(imagesFile);
     }
 
-    const onPortraitSelectFile = (e) => {
+    const onLandscapeSelectFile = (e) => {
         let selectedFileLength = Array.from(e.target.files).length;
         let uploadedFileLength = Array.from(imagesPreview).length;
         if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
@@ -65,12 +67,12 @@ export default function HomeIndex() {
         });
 
         Promise.all(promises).then(result => {
-            setPortraitImagesPreview(current => [...current, ...result])
+            setLandscapeImagesPreview(current => [...current, ...result])
         })
 
         let imagesFile = []
         Array.from(e.target.files).forEach(file => imagesFile.push(file));
-        setSelectedFiles(imagesFile);
+        setLandscapeSelectedFiles(imagesFile);
     }
 
     const removePreviewImage = (index) => {
@@ -96,11 +98,11 @@ export default function HomeIndex() {
         setSelectedFiles(selectedImages);
     }
 
-    const removePortraitPreviewImage = (index) => {
+    const removeLandscapePreviewImage = (index) => {
 
         let filteredImages = [];
         let selectedImages = [];
-        portraitImagesPreview.forEach((item, key) => {
+        landscapeImagesPreview.forEach((item, key) => {
             if (key !== index) {
                 filteredImages.push(item);
             }
@@ -115,7 +117,7 @@ export default function HomeIndex() {
         if (typeof filteredImages[0] == "undefined") {
             filteredImages = [];
         }
-        setPortraitImagesPreview(filteredImages);
+        setLandscapeImagesPreview(filteredImages);
         setSelectedFiles(selectedImages);
     }
 
@@ -156,12 +158,51 @@ export default function HomeIndex() {
         setLoading(false);
     }
 
+    const submitLandscape = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        let imagesArr = [];
+        let selectedArr = [...landscapeSelectedFiles];
+
+        for (let i = 0; i < landscapeImagesPreview.length; i++) {
+            if (landscapeImagesPreview[i].split(":")[0] !== "data") {
+                imagesArr.push(landscapeImagesPreview[i]);
+            }
+        }
+
+        const payload = {
+            images: imagesArr,
+            imagess: selectedArr
+        }
+
+        if (landscapeHomeIndexId === 0) {
+            const response = await API.formData(`project/home`, payload);
+            if (response.status == 200) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+            } else {
+                toast(JSON.stringify(response))
+            }
+        } else {
+            const response = await API.patch(`project/home/${landscapeHomeIndexId}`, payload);
+            if (response.status == 225) {
+                toast("Uploaded successfully");
+                setSelectedFiles([]);
+            } else {
+                toast(JSON.stringify(response));
+            }
+        }
+        setLoading(false);
+    }
+
     useEffect(() => {
         const loadHomeIndexImages = async () => {
             const response = await API.get(`project/home`);
             if (response.status == 210) {
                 setImagesPreview(response.data.home[0]?.images || []);
                 setHomeIndexId(response.data.home[0]?._id || 0);
+                setLandscapeImagesPreview(response.data.home[2]?.images || []);
+                setLandscapeHomeIndexId(response.data.home[2]?._id || 0);
             } else {
                 console.log(response.message);
             }
@@ -176,17 +217,17 @@ export default function HomeIndex() {
                 <Form>
                     <section>
                         <div className="images">
-                            <h1 style={{fontSize: '2.5rem'}}><strong>Portrait Images</strong></h1>
+                            <h1 style={{ fontSize: '2.5rem' }}><strong>Landscape Images</strong></h1>
                             <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
-                                {(portraitImagesPreview && portraitImagesPreview.length > 0) &&
-                                    portraitImagesPreview.map((image, index) => {
+                                {(landscapeImagesPreview && landscapeImagesPreview.length > 0) &&
+                                    landscapeImagesPreview.map((image, index) => {
                                         {
                                             return (
                                                 <div key={index} className="image">
                                                     {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
                                                         <>
                                                             <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                                                            <button type="button" onClick={() => removePortraitPreviewImage(index)}>
+                                                            <button type="button" onClick={() => removeLandscapePreviewImage(index)}>
                                                                 delete image
                                                             </button>
                                                         </>
@@ -196,7 +237,7 @@ export default function HomeIndex() {
                                                                 <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
                                                                 <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
                                                             </video>
-                                                            <button type="button" onClick={() => removePortraitPreviewImage(index)}>
+                                                            <button type="button" onClick={() => removeLandscapePreviewImage(index)}>
                                                                 delete video
                                                             </button>
                                                         </>
@@ -213,15 +254,26 @@ export default function HomeIndex() {
                                     <input
                                         type="file"
                                         name="images"
-                                        onChange={onPortraitSelectFile}
+                                        onChange={onLandscapeSelectFile}
                                         multiple
                                         accept="image/png , image/jpeg, image/webp"
                                     />
                                 </label>
                             </div>
+                            <Button
+                                variant="primary"
+                                type="submit01"
+                                className="d-flex align-items-center"
+                                onClick={(e) => submitLandscape(e)}
+                                disabled={loading ? true : false}
+                            >
+                                <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
+                                {loading ? "Uploading..." : "Submit"}
+                            </Button>
                         </div>
+                        <hr />
                         <div className="images">
-                            <h1 style={{fontSize: '2.5rem'}}><strong>Landscape Images</strong></h1>
+                            <h1 style={{ fontSize: '2.5rem' }}><strong>Portrait Images</strong></h1>
                             <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
                                 {(imagesPreview && imagesPreview.length > 0) &&
                                     imagesPreview.map((image, index) => {
@@ -271,16 +323,18 @@ export default function HomeIndex() {
                         </div>
                         <br />
                     </section>
-                    <Button
-                        variant="primary"
-                        type="submit01"
-                        className="d-flex align-items-center"
-                        onClick={(e) => submit(e)}
-                        disabled={loading ? true : false}
-                    >
-                        <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
-                        {loading ? "Uploading..." : "Submit"}
-                    </Button>
+                    <div className="d-flex justify-content-center">
+                        <Button
+                            variant="primary"
+                            type="submit01"
+                            className="d-flex align-items-center"
+                            onClick={(e) => submit(e)}
+                            disabled={loading ? true : false}
+                        >
+                            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
+                            {loading ? "Uploading..." : "Submit"}
+                        </Button>
+                    </div>
                 </Form>
             </Card>
         </div>

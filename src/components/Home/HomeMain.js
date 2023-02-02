@@ -140,6 +140,7 @@ function HomeMain(props) {
               projectsData={projectsData}
               value={value}
               homeIndexImages={props.homeIndexImages}
+              landscapeHomeIndexImages={props.landscapeHomeIndexImages}
             />
           </div>
         </div>

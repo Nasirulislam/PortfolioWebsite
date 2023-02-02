@@ -13,6 +13,7 @@ import HomeIndex from "./HomeIndex";
 import IndexBackground from "./IndexBackground";
 import About from "./About";
 import EditProjectIndex from "./EditProjectIndex";
+import EditHomeIndex from "./EditHomeIndex";
 
 function Admin({ projectData }) {
   return (
@@ -76,6 +77,15 @@ function Admin({ projectData }) {
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link
+                    eventKey="nine"
+                    style={{ color: "white", width: "160px" }}
+                  >
+                    <i class="fa fa-pencil-square me-2" aria-hidden="true"></i>
+                    Edit Home Index
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
                     eventKey="six"
                     style={{ color: "white", width: "160px" }}
                   >
@@ -129,6 +139,9 @@ function Admin({ projectData }) {
               </Tab.Pane>
               <Tab.Pane eventKey="eight">
                 <EditProjectIndex />
+              </Tab.Pane>
+              <Tab.Pane eventKey="nine">
+                <EditHomeIndex />
               </Tab.Pane>
             </Tab.Content>
           </Col>

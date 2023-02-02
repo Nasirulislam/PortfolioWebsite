@@ -58,27 +58,27 @@ function IndexItem(props) {
       })
       setItemImage(tempArr[0]);
     } else {
-      setItemImage(props.image[0]);      
+      setItemImage(props.image[0]);
     }
   }, []);
 
   const navigate = useNavigate();
 
   return (
-    <div className="index-item-section" style={{ position: 'relative' }} key={props.currentProject._id}>
+    <div className="index-item-section" style={{ position: 'relative' }} key={props.currentProject._id} onClick={() => {
+      props.handleOnIndexLeave()
+      navigate("/" + props.currentProject.slug, {
+        state: {
+          name: props.currentProject.name,
+          detail: props.currentProject.name,
+          images: [...props.currentProject.images],
+          projects: props.projects,
+          nextProject: props.nextProject,
+        },
+      });
+    }}>
       <div className="d-flex indexlist-props"
-        onClick={() => {
-          props.handleOnIndexLeave()
-          navigate("/" + props.currentProject.slug, {
-            state: {
-              name: props.currentProject.name,
-              detail: props.currentProject.name,
-              images: [...props.currentProject.images],
-              projects: props.projects,
-              nextProject: props.nextProject,
-            },
-          });
-        }}>
+      >
         <motion.h3
           className="indexitem-button text-size"
           title={props.text}
