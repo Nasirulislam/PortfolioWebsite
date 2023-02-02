@@ -160,84 +160,91 @@ function HomeIndex(props) {
             'image': typeof portraitIndex[k] === "undefined" ? landscapeIndex[j] : portraitIndex[k]
           });
           k = k + 1;
-        }       
+        }
 
       }
       console.log("temp arr:- ", zigZagArr);
       setHomeIndexImages(zigZagArr);
     }
     mergeIndexImages();
-}, []);
+  }, []);
 
-return (
-  <div id="home-page" className="home-page row">
-    <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
-      <h1 style={{ cursor: 'pointer' }}>
-        {props.value}
-      </h1>
-    </div>
-    <div className="col-md-12 px-0 d-flex justify-content-around tech-slideshow flex-wrap" style={{ height: '100%', marginBottom: '10%', marginTop: '5%' }}>
-      {homeIndexImages.map((banner, index) => {
-        {
-          return (
-            <motion.div
-              className={"home-slide-section d-flex align-items-center "+((homeIndexImages.length-1) === index ? "col-md-12 px-0 justify-content-end" : "col-md-4")}
-              animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 10,
-              }}
-              key={index}
-              style={{maxHeight: '60vh', width: (homeIndexImages.length-1) === index ? '40vw' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length-1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index===6 ?'10%':'', marginLeft: index===6 ?'10%':'' }}
-            >
-              {index % 2 === 0 ?
-                <motion.div className="card"
-                  animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
-                  key={index}
-                  style={{ marginLeft: index === 4 ? '100px' : '', top: index === 4 ? '-60px' : '', right: index === 4 ? '-220px' : '' }}
-                >
-                  {banner.image.includes("mp4")
-                    ?
-                    <video autoPlay loop muted>
-                      <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
-                      <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
-                      Your browser does not support the video tag.
-                    </video>
-                    :
-                    <img
-                      className="img-fluid mover-1"
-                      src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
-                    />
-                  }
-                </motion.div>
-                :
-                <motion.Card className="card"
-                  key={index}                 
-                  animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-                >
-                  {banner.image.includes("mp4")
-                    ?
-                    <video autoPlay loop muted>
-                      <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
-                      <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
-                      Your browser does not support the video tag.
-                    </video>
-                    :
-                    <img
-                      className="img-fluid mover-1"
-                      src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
-                    />
-                  }
-                </motion.Card>
-              }
+  return (
+    <div id="home-page" className="home-page row">
+      <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
+        <h1 style={{ cursor: 'pointer' }}>
+          {props.value}
+        </h1>
+      </div>
+      <div className="col-md-12 px-0 d-flex justify-content-around tech-slideshow flex-wrap" style={{ height: '100%', marginBottom: '10%', marginTop: '5%' }}>
+        {homeIndexImages.map((banner, index) => {
+          {
+            return (
+              <motion.div
+                className={"home-slide-section d-flex  " + ((homeIndexImages.length - 1) === index ? "col-md-12 px-0 justify-content-end " : index === 7 ? "align-items-end " : index === 5 ? 'margin-left' : "col-md-4 align-items-center")}
+                animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 10,
+                }}
+                key={index}
+                style={{ maxHeight: '60vh', width: (homeIndexImages.length - 1) === index ? '100%' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length - 1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index === 6 ? '10%' : '', marginLeft: index === 6 ? '10%' : '', marginRight: index === 7 ? '21%' : '' }}
+              >
+                {index % 2 === 0 ?
+                  <motion.div className="card"
+                    animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                    key={index}
+                    style={{ marginLeft: index === 4 ? '100px' : '', top: index === 4 ? '-60px' : '', right: index === 4 ? '-220px' : '' }}
+                  >
+                    {banner.image.includes("mp4")
+                      ?
+                      <video autoPlay loop muted
+                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '' }}
+                      >
+                        <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
+                        <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                      :
+                      <img
+                        className="img-fluid mover-1"
+                        src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
+                        style={{ width: (homeIndexImages.length - 1) === index ? '18vw' : '', height: (homeIndexImages.length - 1) === index ? '35vh' : '', objectFit: 'contain', marginTop: index === 8 ? '-45%' : '', marginTop: index === (homeIndexImages.length - 1) ? '-22%' : '' }}
+                      />
+                    }
+                  </motion.div>
+                  :
+                  <motion.Card className="card"
+                    key={index}
+                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                    style={{ marginTop: index === 7 ? '100px' : '' }}
+                  >
+                    {banner.image.includes("mp4")
+                      ?
+                      <video autoPlay loop muted
+                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '' }}
+                      >
+                        <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
+                        <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                      :
+                      <img
+                        className="img-fluid mover-1"
+                        src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
+                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '', marginTop: index === (homeIndexImages.length - 1) ? '-22%' : '' }}
+                      />
+                    }
+                  </motion.Card>
+                }
 
-            </motion.div>
-          )
-        }
-      })}
+              </motion.div>
+            )
+          }
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default HomeIndex;
