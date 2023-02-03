@@ -21,7 +21,7 @@ body {
   writing-mode: vertical-rl;
   z-index: 99999;
   cursor: pointer;
-  right: 15px;
+  right: 30px;
   position: fixed;
 }
 
@@ -34,7 +34,7 @@ body {
   writing-mode: vertical-rl;
   z-index: 99999;
   cursor: pointer;
-  right: 15px;
+  right: 30px;
   bottom: 0;
   position: fixed;
 }
