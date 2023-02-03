@@ -15,7 +15,7 @@ function HomeIndex(props) {
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
     setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
-    setFastCircle({ x: (e.clientX / 4) * -1, y: (e.clientY / 4) * -1 });
+    setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
   };
 
   function getWindowDimensions() {
@@ -51,13 +51,13 @@ function HomeIndex(props) {
     const HEIGHT = zoomElement.clientHeight
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
-    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 180; // Lower is faster
+    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 130; // Lower is faster
     const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
 
     // Fade --------------------------------------------------------------------------------------
-    const FADE_SPEED = 500 // Lower is faster
+    const FADE_SPEED = 400 // Lower is faster
     let fade = 1
     let prev = 0
     // -------------------------------------------------------------------------------------- Fade
@@ -170,29 +170,29 @@ function HomeIndex(props) {
   }, []);
 
   return (
-    <div id="home-page" className="home-page row">
+    <div id="home-page" className="home-page">
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
-      <div className="col-md-12 px-0 d-flex justify-content-around tech-slideshow flex-wrap" style={{ height: '100%', marginBottom: '10%', marginTop: '5%' }}>
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '120%', height: '100%', marginBottom: '10%', marginTop: '5%' }}>
         {homeIndexImages.map((banner, index) => {
           {
             return (
               <motion.div
-                className={"home-slide-section d-flex  " + ((homeIndexImages.length - 1) === index ? "col-md-12 px-0 justify-content-end " : index === 7 ? "align-items-end " : index === 5 ? 'margin-left' : "col-md-4 align-items-center")}
+                className={"home-slide-section d-flex  " + ((homeIndexImages.length - 1) === index ? "col-md-12 px-0 justify-content-end " : index === 7 ? "align-items-end " : index === 5 ? 'margin-left ' : "col-md-4 align-items-center ", (index === homeIndexImages.length - 1) ? "is-last-image " : "")}
                 animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
                 transition={{
                   type: "spring",
-                  stiffness: 10,
+                  stiffness: 25,
                 }}
                 key={index}
                 style={{ maxHeight: '60vh', width: (homeIndexImages.length - 1) === index ? '100%' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length - 1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index === 6 ? '10%' : '', marginLeft: index === 6 ? '10%' : '', marginRight: index === 7 ? '21%' : '' }}
               >
                 {index % 2 === 0 ?
-                  <motion.div className="card"
-                    animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
+                  <motion.div className={" "+(index === 4 ? "custom-position" : "")}
+                    // animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
                     key={index}
                     style={{ marginLeft: index === 4 ? '100px' : '', top: index === 4 ? '-60px' : '', right: index === 4 ? '-220px' : '' }}
                   >
@@ -214,9 +214,9 @@ function HomeIndex(props) {
                     }
                   </motion.div>
                   :
-                  <motion.Card className="card"
+                  <motion.Card
                     key={index}
-                    animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
+                    // animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
                     style={{ marginTop: index === 7 ? '100px' : '' }}
                   >
                     {banner.image.includes("mp4")

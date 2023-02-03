@@ -112,7 +112,7 @@ function HomeMain(props) {
 
   return (
     <>
-      <div className="container-fluid" style={{ height: '100%', maxWidth: '100vw' }}>
+      <div className="" style={{ height: '100%' }}>
         <div style={{ position: 'relative', width: '100%', height: '100%', }} id="homeIndex">
           {value.toLowerCase() !== "david ellis" && (
             <motion.div className="home-title change-title"

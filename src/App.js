@@ -293,15 +293,7 @@ function App() {
               </Routes>
             </div>
           ) :
-            (
-              // <Index
-              //   projectData={projectsData}
-              //   closeIndex={buttonToogle}
-              //   RedHome={setRedHome}
-              //   indexBackground={indexBackground}
-              //   showAbout={showAbout}
-              //   clicked={clicked}
-              // />
+            (              
               <></>
             )}
           <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout} />
