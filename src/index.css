@@ -20,10 +20,10 @@ code {
     monospace;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Heebo";
   src: url("/src/Assets/font/Heebo.eot");
-  src: url("/src/Assets/font/Heebo.woff") format("woff"),
+  src: url("/src/Assets/font/Heebo.woff") format("woff"), */
     /* url("CustomFont.otf") format("opentype"),
   url("CustomFont.svg#filename") format("svg"); */
-}
+/* } */

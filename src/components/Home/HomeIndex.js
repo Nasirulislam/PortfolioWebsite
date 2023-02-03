@@ -176,7 +176,7 @@ function HomeIndex(props) {
           {props.value}
         </h1>
       </div>
-      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '120%', height: '100%', marginBottom: '10%', marginTop: '5%' }}>
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '120%', height: '100%', marginBottom: '10%' }}>
         {homeIndexImages.map((banner, index) => {
           {
             return (
