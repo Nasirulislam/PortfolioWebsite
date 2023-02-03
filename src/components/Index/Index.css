@@ -20,7 +20,7 @@
   display: block;
   background: transparent;
   /* margin: 5px 0; */
-  overflow: scroll;
+  overflow: hidden;
   /* height: 6vh; */
   padding: 0px;
   color: white;
