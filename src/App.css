@@ -59,15 +59,14 @@ h3 {
   mix-blend-mode: difference;
   background: transparent;
   color: black;
-  margin: 0px;
   font-weight: 700;
   margin-top: 50px;
+  margin-left: 15px;
   writing-mode: vertical-rl;
   z-index: 99999;
   cursor: pointer;
   left: 0;
   position: fixed;
-  margin-right: 15px;
 }
 
 .ME-button a {
