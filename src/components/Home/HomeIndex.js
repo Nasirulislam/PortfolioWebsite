@@ -185,7 +185,8 @@ function HomeIndex(props) {
                 animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
                 transition={{
                   type: "spring",
-                  stiffness: 25,
+                  // mass: 0.5,
+                  stiffness: 30,
                 }}
                 key={index}
                 style={{ maxHeight: '60vh', width: (homeIndexImages.length - 1) === index ? '100%' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length - 1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index === 6 ? '10%' : '', marginLeft: index === 6 ? '10%' : '', marginRight: index === 7 ? '21%' : '' }}

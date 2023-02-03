@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import "./Index/Index.css";
 import url from '../constants/url';
 import { useNavigate } from 'react-router-dom';
-import AboutImage from '../Assets/images/unnamed.png';
+import AboutImage from '../Assets/images/WEB_LOGO_LAYOUT.jpg';
 
 export default function About(props) {
     const [title, setTitle] = useState("");
@@ -44,15 +44,19 @@ export default function About(props) {
                             props.fromAbout && (
                                 <>
                                     <h1>{title}</h1>
-                                    <h1>{detail}</h1>
+                                    <h1 style={{whiteSpace: 'pre-line'}}>{detail}</h1>
                                     <br /><br />
                                 </>
                             )
                         }
                         <>
+                        <br /><br />
                             <h1>{locTxt}</h1>
+                            <br /><br />
                             <h1>{email}</h1>
+                            <br /><br />
                             <a href={instUrl} target="_blank">Instagram</a>
+                            <br /><br />
                             <h1>{repName}</h1>
                         </>
                     </div>
