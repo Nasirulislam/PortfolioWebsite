@@ -185,7 +185,6 @@ function HomeIndex(props) {
                 animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
                 transition={{
                   type: "spring",
-                  // mass: 0.5,
                   stiffness: 30,
                 }}
                 key={index}

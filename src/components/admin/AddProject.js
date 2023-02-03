@@ -255,7 +255,7 @@ function AddProject({ projects }) {
             />
           </Form.Group>
           <section>
-            <input type="file" multiple />
+            <input type="file"  multiple />
 
             <div className="images">
               {displayImage &&
@@ -294,7 +294,7 @@ function AddProject({ projects }) {
                   name="images"
                   onChange={onSelectFile}
                   multiple
-                  accept="image/png , image/jpeg, image/webp video/mp4"
+                  accept="image/png , image/jpeg, image/webp video/* image/gif"
                 />
               </label>
             </div>
