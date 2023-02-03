@@ -67,6 +67,7 @@ h3 {
   cursor: pointer;
   left: 0;
   position: fixed;
+  margin-right: 15px;
 }
 
 .ME-button a {
