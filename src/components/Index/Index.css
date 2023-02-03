@@ -51,6 +51,7 @@
 
 .index-item-section .indexlist-props .indexitem-button:hover {
   margin-top: -1.2em;
+  height: auto;
   /* mix-blend-mode: difference; */
 }
 
@@ -61,7 +62,7 @@
   /* font-family: "Vogue"; */
   transition-property: margin-top;
   -webkit-text-fill-color: attr(color);
-  -webkit-text-stroke-width: 1px;
+  /* -webkit-text-stroke-width: 1px; */
 }
 
 .index-section-main-wrap {

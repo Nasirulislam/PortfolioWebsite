@@ -10,7 +10,7 @@ function IndexItem(props) {
   const [showUpward, setUpward] = useState(false);
   const [showDownward, setDownward] = useState(false);
   const [image, setItemImage] = useState("");
-
+  const [showMobile, setShowImageLeft] = useState(false);
 
   const onMouseOver = (e, itemId, itemColor) => {
     e.preventDefault();
@@ -21,10 +21,16 @@ function IndexItem(props) {
 
 
     // calculate window height
-    const windowWidth = document.getElementsByTagName("body")[0].clientHeight;
+    const windowWidth = document.getElementsByTagName("body")[0];
     const item = e.target.getBoundingClientRect();
 
-    if (item.height + item.y > (windowWidth - 200)) {
+    console.log(windowWidth.clientWidth);
+    if(windowWidth.clientWidth <= 500){
+      setShowImageLeft(true);
+    } else {
+      setShowImageLeft(false);      
+    }
+    if (item.height + item.y > (windowWidth.clientHeight - 200)) {
       // show image upward
       setUpward(true);
       setDownward(false);
@@ -92,7 +98,7 @@ function IndexItem(props) {
           {props.text}
         </motion.h3>
       </div>
-      <motion.div
+      {/* <motion.div
         className="mobile-wrapper"
         style={{ display: display ? "inline" : "none", position: 'absolute', width: '100%', height: '25vh', objectFit: 'contain', top: '0' }}
         animate={{
@@ -117,14 +123,14 @@ function IndexItem(props) {
           src={`${base_url}` + "/projects/" + image}
         // style={{ zIndex: '-1' }}
         />
-      </motion.div>
+      </motion.div> */}
 
       <motion.div
         className="index-image"
         id="in-image"
         style={{ display: display ? "block" : "none", bottom: showUpward ? '0px' : '', top: showDownward ? '0px' : '' }}
         animate={{
-          x: isAnimating ? 500 : "200vh",
+          x: showMobile ? (isAnimating ? 100 : 20) :  (isAnimating ? 500 : "200vh") ,
           opacity: isAnimating ? 1 : 0,
           position: "absolute",
         }}
