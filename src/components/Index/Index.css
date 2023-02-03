@@ -20,7 +20,7 @@
   display: block;
   background: transparent;
   /* margin: 5px 0; */
-  overflow: hidden;
+  overflow: overlay;
   /* height: 6vh; */
   padding: 0px;
   color: white;
@@ -77,11 +77,11 @@
   cursor: pointer;
 }
 
-.index-item-section:hover {
-  border-color: white;
-  border-left: transparent;
-  border-right: transparent;
-}
+/* .index-item-section:hover { */
+  /* border-color: white; */
+  /* border-left: transparent;
+  border-right: transparent; */
+/* } */
 
 .index-item-section:hover .indexlist-props>.index-atend {
   display: flex;
