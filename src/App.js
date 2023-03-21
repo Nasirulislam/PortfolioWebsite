@@ -38,6 +38,7 @@ function App() {
   const [hideOptions, setOptions] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [fromAbout, setFromAbout] = useState(false);
+  const [homeIndexId, setHomeIndexId] = useState(null);
 
 
   function changeIndex(index) {
@@ -66,7 +67,7 @@ function App() {
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
         setHomeIndexCanvas(response.data.data.home[2]?.canvas || null);
-
+        setHomeIndexId(response.data.data.home[2]?._id || null);
       } else {
         console.log(response.message);
       }
@@ -283,7 +284,8 @@ function App() {
                 />}
                 />
                 <Route exact path="/admin" element={<NewLogin />} />
-                <Route exact path="/admin/home-index" element={<HomeIndex />} />
+                <Route exact path="/admin/home-index" element={<HomeIndex homeIndexCanvas={homeIndexCanvas}
+                  homeIndexId={homeIndexId} />} />
                 <Route
                   exact
                   path="/admin-login"
@@ -298,7 +300,7 @@ function App() {
               </Routes>
             </div>
           ) :
-            (              
+            (
               <></>
             )}
           <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout} />
