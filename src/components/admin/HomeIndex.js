@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,6 +6,7 @@ import base_url from "../../constants/url";
 import { toast } from 'react-toastify';
 import "./Admin.css";
 import API from '../../services/API';
+import { fabric } from 'fabric';
 
 export default function HomeIndex() {
     const [loading, setLoading] = useState(false);
@@ -16,7 +17,12 @@ export default function HomeIndex() {
     const [landscapeImagesPreview, setLandscapeImagesPreview] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [landscapeSelectedFiles, setLandscapeSelectedFiles] = useState([]);
+    const [deleteIcon, setDeleteIcon] = useState("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E");
     const MAX_LENGTH = 10;
+
+    const fabricRef = useRef(null);
+    const canvasRef = useRef(null);
+    const canvasContainer = useRef(null);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -196,6 +202,66 @@ export default function HomeIndex() {
         setLoading(false);
     }
 
+    // ****************** FABRIC-JS **************
+    function deleteObject(eventData, transform) {
+        console.log(transform);
+        var target = transform.target;
+        var canvas = target.canvas;
+        canvas.remove(target);
+        canvas.requestRenderAll();
+    }
+
+    function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+        var size = this.cornerSize;
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+        ctx.drawImage(document.getElementById("del-icon"), -size / 2, -size / 2, size, size);
+        ctx.restore();
+    }
+
+    const onObjectAdded = () => {
+        fabric.Object.prototype.transparentCorners = false;
+        fabric.Object.prototype.cornerColor = 'black';
+        fabric.Object.prototype.cornerStyle = 'circle';
+        fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+            x: 0.5,
+            y: -0.5,
+            offsetY: 5,
+            cursorStyle: 'pointer',
+            mouseUpHandler: deleteObject,
+            render: renderIcon,
+            cornerSize: 24
+        });
+    }
+
+    const initFabric = () => {
+        if (!canvasContainer.current) return;
+        fabricRef.current = new fabric.Canvas(canvasRef.current, {
+            height: canvasContainer.current.clientHeight,
+            width: canvasContainer.current.clientWidth,
+            backgroundColor: 'pink'
+        });
+
+
+        fabricRef.current.on('object:added', onObjectAdded);
+    }
+
+
+    useEffect(() => {
+        if (imagesPreview.length > 0 && fabricRef.current !== null) {
+            imagesPreview.forEach((image, key) => {
+                new fabric.Image.fromURL(image, function (image) {
+                    let scale = 300 / image.width;
+                    var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
+                    fabricRef.current.add(img);
+                })
+            })
+            setImagesPreview([]);
+        }
+
+    }, [imagesPreview])
+
     useEffect(() => {
         const loadHomeIndexImages = async () => {
             const response = await API.get(`project/home`);
@@ -208,136 +274,64 @@ export default function HomeIndex() {
                 console.log(response.message);
             }
         }
-
+        initFabric();
         loadHomeIndexImages();
-    }, [])
+
+        return () => {
+            fabricRef.current.dispose();
+            // canvasRef.current.dispose();
+            fabricRef.current = null;
+        }
+    }, [canvasContainer.current])
+
+    const submitCanvas = async () => {
+        const payload = {
+            images: [],
+            canvas: JSON.stringify(fabricRef.current.toJSON())
+        }
+        const response = await API.patch(`project/home/${landscapeHomeIndexId}`, payload);
+        if (response.status == 225) {
+            toast("Uploaded successfully");
+            setSelectedFiles([]);
+        } else {
+            toast(JSON.stringify(response));
+        }
+    }
+
+    const handleBgCanvasColor = (e) => {
+        if (fabricRef.current) {
+            fabricRef.current.backgroundColor = e.target.value;
+            fabricRef.current.requestRenderAll();
+        }
+    }
 
     return (
-        <div className="d-flex align-items-center justify-content-center h-100">
-            <Card className="p-3 my-5 form-card">
-                <Form>
-                    <section>
-                        <div className="images">
-                            <h1 style={{ fontSize: '2.5rem' }}><strong>Landscape Images</strong></h1>
-                            <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
-                                {(landscapeImagesPreview && landscapeImagesPreview.length > 0) &&
-                                    landscapeImagesPreview.map((image, index) => {
-                                        {
-                                            return (
-                                                <div key={index} className="image">
-                                                    {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
-                                                        <>
-                                                            <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                                                            <button type="button" onClick={() => removeLandscapePreviewImage(index)}>
-                                                                delete image
-                                                            </button>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <video autoPlay loop muted>
-                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
-                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
-                                                            </video>
-                                                            <button type="button" onClick={() => removeLandscapePreviewImage(index)}>
-                                                                delete video
-                                                            </button>
-                                                        </>
-                                                    }
-                                                    <p>{index}</p>
-                                                </div>)
-
-                                        }
-                                    })}
-                                <label className="img-label">
-                                    + Add Images
-                                    <br />
-                                    <span>up to 10 images</span>
-                                    <input
-                                        type="file"
-                                        name="images"
-                                        onChange={onLandscapeSelectFile}
-                                        multiple
-                                        accept="image/png , image/jpeg, image/webp"
-                                    />
-                                </label>
-                            </div>
-                            <Button
-                                variant="primary"
-                                type="submit01"
-                                className="d-flex align-items-center"
-                                onClick={(e) => submitLandscape(e)}
-                                disabled={loading ? true : false}
-                            >
-                                <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
-                                {loading ? "Uploading..." : "Submit"}
-                            </Button>
-                        </div>
-                        <hr />
-                        <div className="images">
-                            <h1 style={{ fontSize: '2.5rem' }}><strong>Portrait Images</strong></h1>
-                            <div className='col-md-12 d-flex justify-content-center flex-wrap py-4'>
-                                {(imagesPreview && imagesPreview.length > 0) &&
-                                    imagesPreview.map((image, index) => {
-                                        {
-                                            return (
-                                                <div key={index} className="image">
-                                                    {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
-                                                        <>
-                                                            <img src={image.split(":")[0] === "data" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                                                            <button type="button" onClick={() => removePreviewImage(index)}>
-                                                                delete image
-                                                            </button>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <video autoPlay loop muted>
-                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
-                                                                <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
-                                                            </video>
-                                                            <button type="button" onClick={() => removePreviewImage(index)}>
-                                                                delete video
-                                                            </button>
-                                                        </>
-                                                    }
-                                                    <p>{index}</p>
-                                                </div>)
-
-                                        }
-                                    })}
-                                {
-                                    (imagesPreview && imagesPreview.length < 10) && (
-                                        <label className="img-label">
-                                            + Add Images
-                                            <br />
-                                            <span>up to 10 images</span>
-                                            <input
-                                                type="file"
-                                                name="images"
-                                                onChange={onSelectFile}
-                                                multiple
-                                                accept="image/png , image/jpeg, image/webp"
-                                            />
-                                        </label>
-                                    )
-                                }
-                            </div>
-                        </div>
-                        <br />
-                    </section>
-                    <div className="d-flex justify-content-center">
-                        <Button
-                            variant="primary"
-                            type="submit01"
-                            className="d-flex align-items-center"
-                            onClick={(e) => submit(e)}
-                            disabled={loadingPortrait ? true : false}
-                        >
-                            <Spinner animation="border" variant="light" className={loadingPortrait ? "me-2" : "d-none"} />
-                            {loadingPortrait ? "Uploading..." : "Submit"}
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+        <div className="d-flex justify-content-center flex-column" style={{ width: '100%', height: '100vh' }} ref={canvasContainer}>
+            <img src={deleteIcon} className="d-none" id="del-icon" />
+            <div className='d-flex justify-content-between my-3' style={{ width: '40%' }}>
+                {/* <input type="file" onChange={onSelectFile} style={{ display: 'block' }} multiple accept='image/*'/> */}
+                <label className="img-label">
+                    + Add Images
+                    <br />
+                    {/* <span>up to 5 images</span> */}
+                    <input
+                        type="file"
+                        name="images"
+                        onChange={onSelectFile}
+                        multiple
+                        accept="image/*"
+                    />
+                </label>
+                <label className="img-label">
+                    + Pick Color
+                    <br />
+                <input type='color' onChange={handleBgCanvasColor} />
+                </label>
+            </div>
+            <div className='d-flex justify-content-center my-3'>
+            <button className='btn btn-warning' onClick={submitCanvas}>Save Changes</button>
+            </div>
+            <canvas className="sample-canvas" ref={canvasRef} />
         </div>
     )
 }

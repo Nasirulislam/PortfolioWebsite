@@ -9,13 +9,17 @@ import EditProject from "./EditProject";
 import NavBar from "./NavBar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import HomeIndex from "./HomeIndex";
 import IndexBackground from "./IndexBackground";
 import About from "./About";
 import EditProjectIndex from "./EditProjectIndex";
 import EditHomeIndex from "./EditHomeIndex";
 
 function Admin({ projectData }) {
+
+  const gotoHomeIndex = (e) => {
+    window.location.href = '/admin/home-index';
+  }
+
   return (
     <div className="admin-section bg-zinc-200 bgImg">
       <NavBar />
@@ -52,6 +56,7 @@ function Admin({ projectData }) {
                   <Nav.Link
                     eventKey="five"
                     style={{ color: "white", width: "160px" }}
+                    onClick={gotoHomeIndex}         
                   >
                     <i class="fa fa-home me-2" aria-hidden="true"></i>
                     Home Index
@@ -128,9 +133,9 @@ function Admin({ projectData }) {
               <Tab.Pane eventKey="fourth">
                 <ChPass />
               </Tab.Pane>
-              <Tab.Pane eventKey="five">
+              {/* <Tab.Pane eventKey="five">
                 <HomeIndex />
-              </Tab.Pane>
+              </Tab.Pane> */}
               <Tab.Pane eventKey="six">
                 <IndexBackground />
               </Tab.Pane>
@@ -146,7 +151,7 @@ function Admin({ projectData }) {
             </Tab.Content>
           </Col>
         </Row>
-      </Tab.Container>
+      </Tab.Container>      
     </div>
   );
 }

@@ -19,6 +19,7 @@ import {
   Link,
 } from "react-router-dom";
 import About from "./components/About";
+import HomeIndex from "./components/admin/HomeIndex";
 
 function App() {
   const [projectsData, setProjectsData] = useState([]);
@@ -30,6 +31,7 @@ function App() {
   const [Redhome, setHome] = useState(false);
   const [dataFetc, setDataFetch] = useState(false);
   const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [homeIndexCanvas, setHomeIndexCanvas] = useState(null);
   const [landscapeHomeIndexImages, setLandscapeHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
@@ -63,6 +65,7 @@ function App() {
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
+        setHomeIndexCanvas(response.data.data.home[2]?.canvas || null);
 
       } else {
         console.log(response.message);
@@ -245,6 +248,7 @@ function App() {
                         homeIndexImages={homeIndexImages}
                         landscapeHomeIndexImages={landscapeHomeIndexImages}
                         indexBackground={indexBackground}
+                        homeIndexCanvas={homeIndexCanvas}
                       />
                     ) : (
                       <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>
@@ -279,6 +283,7 @@ function App() {
                 />}
                 />
                 <Route exact path="/admin" element={<NewLogin />} />
+                <Route exact path="/admin/home-index" element={<HomeIndex />} />
                 <Route
                   exact
                   path="/admin-login"

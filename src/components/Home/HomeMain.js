@@ -18,7 +18,7 @@ function HomeMain(props) {
   const [displayProjects, setProjectToDisplay] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
   const [changeClass, setChangeClass] = useState(false);
-  
+
   const [slug, setSlug] = useState();
 
 
@@ -66,8 +66,8 @@ function HomeMain(props) {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
         setProjectsData(response.data.data.sortedProjects);
-        if(response.data.data.sortedProjects.length > 20) {
-          setProjectToDisplay(response.data.data.sortedProjects.slice(0,20));
+        if (response.data.data.sortedProjects.length > 20) {
+          setProjectToDisplay(response.data.data.sortedProjects.slice(0, 20));
         } else {
           setProjectToDisplay(response.data.data.sortedProjects);
         }
@@ -76,7 +76,7 @@ function HomeMain(props) {
     fetchProducts();
   }, []);
 
-  const [value, setValue] = useState("David Ellis");  
+  const [value, setValue] = useState("David Ellis");
 
   const handleSlug = () => {
     if (value === "View All Projects") {
@@ -127,7 +127,7 @@ function HomeMain(props) {
                 </ReactTextTransition></h1>
             </motion.div>)}
           <div
-            className="card-wrapper my-4"
+            className="card-wrapper mb-4"
             ref={(el) => (GrouRef.current[0] = el)}
             data-bgcolor="white"
             data-title="David Ellis"
@@ -136,6 +136,7 @@ function HomeMain(props) {
             style={{ height: "100%", position: 'relative' }}
           >
             <HomeIndex
+              homeIndexCanvas={props.homeIndexCanvas}
               randomIndex={randomIndex}
               projectsData={projectsData}
               value={value}
@@ -231,14 +232,14 @@ function HomeMain(props) {
         data-index={displayProjects.length}
       >
 
-       
-          <ViewAll
-            name="View All Projects"
-            slug="viewAll"
-            // indexBtn={ViewAllClick}
-            projectData={projectsData}
-            indexBackground={props.indexBackground}
-          />
+
+        <ViewAll
+          name="View All Projects"
+          slug="viewAll"
+          // indexBtn={ViewAllClick}
+          projectData={projectsData}
+          indexBackground={props.indexBackground}
+        />
       </div>
     </>
   );

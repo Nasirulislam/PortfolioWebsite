@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Home.css";
 import { motion } from "framer-motion";
 import axios from "axios";
 import base_url from "../../constants/url";
+import { fabric } from 'fabric';
 
 
 function HomeIndex(props) {
@@ -11,6 +12,9 @@ function HomeIndex(props) {
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
   const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const fabricRef = useRef(null);
+  const canvasRef = useRef(null);
+  const canvasParentRef = useRef(null);
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
@@ -29,14 +33,28 @@ function HomeIndex(props) {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [windowWidth, setWindow] = useState(130);
 
+  const initFabric = () => {
+    if (props.homeIndexCanvas !== null) {
+
+      fabricRef.current = new fabric.Canvas(canvasRef.current, {
+        height: canvasParentRef.current.clientHeight,
+        width: canvasParentRef.current.clientWidth,
+        // backgroundColor: 'pink'
+      });
+      
+
+      fabricRef.current.loadFromJSON(props.homeIndexCanvas);
+    }
+  }
   useEffect(() => {
+    initFabric();
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [props.homeIndexCanvas]);
 
   useEffect(() => {
     const zoomElement = document.querySelector('.zoom')
@@ -170,14 +188,15 @@ function HomeIndex(props) {
   }, []);
 
   return (
-    <div id="home-page" className="home-page">
+    <div id="home-page" className="home-page" style={{height: '100vh'}}>
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
-      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '120%', height: '100%', marginBottom: '10%' }}>
-        {homeIndexImages.map((banner, index) => {
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '120%', height: '100%', marginBottom: '10%' }} ref={canvasParentRef}>
+        <canvas className="sample-canvas" ref={canvasRef} />
+        {/* {homeIndexImages.map((banner, index) => {
           {
             return (
               <motion.div
@@ -241,7 +260,7 @@ function HomeIndex(props) {
               </motion.div>
             )
           }
-        })}
+        })} */}
       </div>
     </div>
   );
