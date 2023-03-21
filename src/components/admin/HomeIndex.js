@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import "./Admin.css";
 import API from '../../services/API';
 import { fabric } from 'fabric';
@@ -93,30 +93,11 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     useEffect(() => {
         if (imagesPreview.length > 0 && fabricRef.current !== null) {
             imagesPreview.forEach((image, key) => {
-                if (image.includes('data:image/gif;')) {
-                    let img = document.createElement('img');
-                    img.setAttribute('src', image);
-                    img.setAttribute('height', '0px');
-                    document.body.appendChild(img);
-                    image = img;
-                    var imgObj = new fabric.Image(image, {
-                        left: 105,
-                        top: 30,
-                        crossOrigin: 'anonymous',
-                        // height: 100,
-                    })
-                    fabricRef.current.add(imgObj);
-                } else {
-                    new fabric.Image.fromURL(image, function (image) {
-                        let scale = 300 / image.width;
-                        var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
-                        fabricRef.current.add(img);
-                        fabric.util.requestAnimFrame(function render() {
-                            fabricRef.current.renderAll();
-                            fabric.util.requestAnimFrame(render);
-                        });
-                    })
-                }
+                new fabric.Image.fromURL(image, function (image) {
+                    let scale = 300 / image.width;
+                    var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
+                    fabricRef.current.add(img);
+                })
             })
             setImagesPreview([]);
         }
@@ -140,13 +121,13 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             canvas: JSON.stringify(fabricRef.current.toJSON())
         }
         const response = await API.patch(`project/home/${homeIndexId}`, payload);
-        console.log(response)
+        console.log(response.status)
         if (response.status === 225) {
             toast("Uploaded successfully");
         } else {
             toast(JSON.stringify(response));
         }
-        setLoading(!loading)
+        setLoading(false)
     }
 
     const handleBgCanvasColor = (e) => {
@@ -189,6 +170,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
                 </button>
             </div>
             <canvas className="sample-canvas" ref={canvasRef} />
+            <ToastContainer />
         </div>
     )
 }
