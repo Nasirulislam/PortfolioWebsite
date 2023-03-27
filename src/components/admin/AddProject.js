@@ -37,7 +37,23 @@ function AddProject({ projects }) {
     });
   }
 
-  const onSelectFile = (e) => {
+  function uploadImage(file) {
+    return new Promise((resolve, reject) => {
+      axios.post(base_url + '/project/v2/s3/upload', file, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: progressEvent => {
+          let percentComplete = progressEvent.loaded / progressEvent.total
+          percentComplete = parseInt(percentComplete * 100);
+          console.log(progressEvent.loaded);
+          // updateProgress(percentComplete);
+        }
+      }).then(response => resolve());
+    })
+  }
+
+  const onSelectFile = async (e) => {
     let selectedFileLength = Array.from(e.target.files).length;
     let uploadedFileLength = Array.from(displayImage).length;
 
@@ -57,7 +73,19 @@ function AddProject({ projects }) {
     })
 
     let imagesFile = []
-    Array.from(e.target.files).forEach(file => imagesFile.push(file));
+    for (let i = 0; i < e.target.files.length; i++) {
+      const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
+      // const response = await uploadImage({ 'file': e.target.files[i] });
+      if (response.status === 200) {
+        delete response.status;
+        imagesFile.push(response);
+      }
+    }
+    // Array.from(e.target.files).forEach(file => {
+    //   const response = await API.formData('project/new', payload);
+    //   imagesFile.push(file)
+    // });
+    console.log(imagesFile)
     setSelectedImages(imagesFile);
   };
 
@@ -83,18 +111,18 @@ function AddProject({ projects }) {
 
     if (title === "") {
       setTitleError("Please enter a title");
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       return;
     }
 
     if (Slug === "") {
       setSlugError("Please enter a slug");
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       return;
     }
 
     if (Slug === "admin") {
-      alert("cannot add admin preserved name");
+      alert("cannot add admin preserved slug");
       return;
     }
     if (templateError !== "") return;
@@ -127,7 +155,8 @@ function AddProject({ projects }) {
       slug: Slug,
       color: color,
       titleColor: titleColor,
-      imagess: selectedMedia
+      imagess: [],
+      imagesAndThumb: selectedMedia
     }
 
     const response = await API.formData('project/new', payload);
@@ -255,7 +284,7 @@ function AddProject({ projects }) {
             />
           </Form.Group>
           <section>
-            <input type="file"  multiple />
+            <input type="file" multiple />
 
             <div className="images">
               {displayImage &&
