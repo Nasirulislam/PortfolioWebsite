@@ -51,7 +51,7 @@ function NextProject(props) {
             ? `/${projectData[index + 1].slug}`
             : "/"
         );
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
       }}
     >
       <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>

@@ -123,10 +123,10 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     const submitCanvas = async () => {
         setLoading(!loading);
 
-        fabricRef.current.getObjects().forEach((e,index) => {
-            e._element.src = uploadedFiles[index].fileUrl;
-            fabricRef.current.renderAll();
-        })
+        // fabricRef.current.getObjects().forEach((e,index) => {
+        //     e._element.src = uploadedFiles[index].fileUrl;
+        //     fabricRef.current.renderAll();
+        // })
         const payload = {
             images: [],
             canvas: JSON.stringify(fabricRef.current.toJSON())

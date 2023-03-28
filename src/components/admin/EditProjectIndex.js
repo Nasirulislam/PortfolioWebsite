@@ -126,16 +126,16 @@ function EditProjectIndex(props) {
                           : "1px solid black",
                       }}
                     >
-                      {project.images[0].split("/")[0] == "data:image" || !project.images[0].includes("mp4") ?
+                      {project.imagesAndThumb[0]?.fileUrl.split("/")[0] == "data:image" || !project.imagesAndThumb[0]?.fileUrl.includes("mp4") ?
                         <img
-                          src={`${base_url}` + "/projects/" + project.images[0]}
+                          src={project.imagesAndThumb[0]?.fileUrl}
                           width="150"
                           height="150"
                           alt="upload"
                         />
                         : <video autoPlay loop muted>
-                          <source src={project.images[0].split(":")[0] === "data" ? project.images[0] : base_url + "/projects/" + project.images[0]} type="video/mp4" />
-                          <source src={project.images[0].split(":")[0] === "data" ? project.images[0] : base_url + "/projects/" + project.images[0]} type="video/ogg" />
+                          <source src={project.imagesAndThumb[0]?.fileUrl.split(":")[0] === "data" ? project.imagesAndThumb[0]?.fileUrl : project.imagesAndThumb[0]?.fileUrl} type="video/mp4" />
+                          <source src={project.imagesAndThumb[0]?.fileUrl.split(":")[0] === "data" ? project.imagesAndThumb[0]?.fileUrl : project.imagesAndThumb[0]?.fileUrl} type="video/ogg" />
                         </video>
                       }
                       {/* <button onClick={() => deleteHandler(image)}>
