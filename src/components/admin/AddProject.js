@@ -79,14 +79,9 @@ function AddProject({ projects }) {
       if (response.status === 200) {
         delete response.status;
         imagesFile.push(response);
+        setSelectedImages(preState => [...preState, response]);
       }
     }
-    // Array.from(e.target.files).forEach(file => {
-    //   const response = await API.formData('project/new', payload);
-    //   imagesFile.push(file)
-    // });
-    console.log(imagesFile)
-    setSelectedImages(imagesFile);
   };
 
   function deleteHandler(imageIndex) {
@@ -146,7 +141,6 @@ function AddProject({ projects }) {
     }
 
     setLoading(true);
-    let selectedMedia = [...selectedImages];
     const payload = {
       name: title,
       description: detail,
@@ -156,10 +150,10 @@ function AddProject({ projects }) {
       color: color,
       titleColor: titleColor,
       imagess: [],
-      imagesAndThumb: selectedMedia
+      imagesAndThumb: selectedImages
     }
 
-    const response = await API.formData('project/new', payload);
+    const response = await API.post('project/new', payload);
     if (response.status === 200) {
       setDetail('');
       setTitle('');
@@ -170,7 +164,7 @@ function AddProject({ projects }) {
       setSelectedImages([]);
       setdisplayImage([]);
       toast("Portfolio added successfully");
-      window.location.reload();
+      // window.location.reload();
     } else {
       toast("please try again");
     }

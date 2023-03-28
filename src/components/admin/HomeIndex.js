@@ -99,7 +99,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     useEffect(() => {
         if (uploadedFiles.length > 0 && fabricRef.current !== null) {
             uploadedFiles.forEach((image, key) => {
-                new fabric.Image.fromURL(image.fileUrl, function (image) {
+                new fabric.Image.fromURL(image, function (image) {
                     let scale = 300 / image.width;
                     var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
                     image.set('dirty', true);
@@ -108,7 +108,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             })
         }
 
-    }, [uploadedFiles])
+    }, [imagesPreview])
 
     useEffect(() => {
         initFabric();
@@ -122,6 +122,11 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
 
     const submitCanvas = async () => {
         setLoading(!loading);
+
+        fabricRef.current.getObjects().forEach((e,index) => {
+            e._element.src = uploadedFiles[index].fileUrl;
+            fabricRef.current.renderAll();
+        })
         const payload = {
             images: [],
             canvas: JSON.stringify(fabricRef.current.toJSON())

@@ -20,8 +20,8 @@ function Auston(props) {
                   banner.includes("mp4") ?
                     <>
                       <video autoplay loop muted onClick={() => props.handleSlug()}>
-                        <source src={`${base_url}` + "/projects/" + banner} type="video/mp4" />
-                        <source src={`${base_url}` + "/projects/" + banner} type="video/ogg" />
+                        <source src={banner.fileUrl} type="video/mp4" />
+                        <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video>
                     </>
@@ -29,7 +29,7 @@ function Auston(props) {
                     <img
                       className="image-container"
                       style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
-                      src={`${base_url}` + "/projects/" + banner}
+                      src={banner.fileUrl}
                       key={key}
                       onClick={() => props.handleSlug()}
                     />

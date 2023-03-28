@@ -162,7 +162,7 @@ function HomeMain(props) {
                 >
                   <Auston
                     name={project.name}
-                    images={project.images}
+                    images={project.imagesAndThumb}
                     slug={"/".concat(project.slug)}
                     setCount={props.setCount}
                     nextProject={project[index + 1]}
@@ -182,7 +182,7 @@ function HomeMain(props) {
                   >
                     <Amoeba
                       name={project.name}
-                      images={project.images}
+                      images={project.imagesAndThumb}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}
@@ -202,7 +202,7 @@ function HomeMain(props) {
                   >
                     {<Brenna
                       name={project.name}
-                      images={project.images.slice(0, 3)}
+                      images={project.imagesAndThumb.slice(0, 3)}
                       slug={"/".concat(project.slug)}
                       setCount={props.setCount}
                       nextProject={project[index + 1]}

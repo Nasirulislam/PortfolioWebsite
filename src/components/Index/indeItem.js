@@ -58,7 +58,7 @@ function IndexItem(props) {
   useEffect(() => {
     if (props.image.length > 0) {
       let tempArr = props.image.filter((item, key) => {
-        if (!item.includes("mp4")) {
+        if (!item.fileUrl.includes("mp4")) {
           return item;
         }
       })
@@ -147,7 +147,7 @@ function IndexItem(props) {
       >
         <img
           className="img-fluid animated fadeOut"
-          src={`${base_url}` + "/projects/" + image}
+          src={image.fileUrl}
         // style={{height: '25vh'}}
         />
       </motion.div>
