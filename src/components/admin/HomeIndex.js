@@ -99,16 +99,17 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     useEffect(() => {
         if (uploadedFiles.length > 0 && fabricRef.current !== null) {
             uploadedFiles.forEach((image, key) => {
-                new fabric.Image.fromURL(image, function (image) {
+                new fabric.Image.fromURL(image.fileUrl, function (image) {
                     let scale = 300 / image.width;
                     var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
                     image.set('dirty', true);
                     fabricRef.current.add(img);
+                    setUploadedFiles([])
                 })
             })
         }
 
-    }, [imagesPreview])
+    }, [uploadedFiles])
 
     useEffect(() => {
         initFabric();
