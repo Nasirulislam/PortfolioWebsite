@@ -17,7 +17,7 @@ function Auston(props) {
               <motion.div className={"col-md-10 d-flex align-items-center justify-content-center"}
                 animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}>
                 {
-                  banner.includes("mp4") ?
+                  banner.fileUrl.includes("mp4") ?
                     <>
                       <video autoplay loop muted onClick={() => props.handleSlug()}>
                         <source src={banner.fileUrl} type="video/mp4" />

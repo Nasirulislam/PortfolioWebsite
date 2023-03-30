@@ -41,7 +41,7 @@ function HomeIndex(props) {
         width: canvasParentRef.current.clientWidth,
         // backgroundColor: 'pink'
       });
-      
+
 
       fabricRef.current.loadFromJSON(props.homeIndexCanvas);
     }
@@ -179,23 +179,23 @@ function HomeIndex(props) {
           });
           k = k + 1;
         }
-
       }
-      console.log("temp arr:- ", zigZagArr);
       setHomeIndexImages(zigZagArr);
     }
     mergeIndexImages();
   }, []);
 
   return (
-    <div id="home-page" className="home-page" style={{width: '100vw', height: '100vh', overflowX: 'hidden'}}>
+    <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
-      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }} ref={canvasParentRef}>
-        <canvas className="sample-canvas" ref={canvasRef} />
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
+        <div style={{ width: '100%', height: '100vh' }} ref={canvasParentRef}>
+          <canvas className="sample-canvas" ref={canvasRef} />
+        </div>
         {/* {homeIndexImages.map((banner, index) => {
           {
             return (

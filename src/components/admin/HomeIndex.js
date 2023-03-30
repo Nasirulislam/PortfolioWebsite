@@ -43,7 +43,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
             if (response.status === 200) {
                 delete response.status;
-                setUploadedFiles(oldArray => [response,...oldArray] );
+                setUploadedFiles(oldArray => [response, ...oldArray]);
             }
         }
     }
@@ -83,7 +83,10 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
 
     const initFabric = async () => {
         if (homeIndexCanvas) {
-            fabricRef.current = new fabric.Canvas(canvasRef.current)
+            fabricRef.current = new fabric.Canvas(canvasRef.current, {
+                height: canvasContainer.current.clientHeight,
+                width: canvasContainer.current.clientWidth
+            })
             fabricRef.current.loadFromJSON(homeIndexCanvas);
         } else {
             fabricRef.current = new fabric.Canvas(canvasRef.current, {
@@ -150,7 +153,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     }
 
     return (
-        <div className="d-flex justify-content-center flex-column" style={{ width: '100%', height: '100vh' }} ref={canvasContainer}>
+        <div className="d-flex justify-content-center flex-column" style={{ width: '100%', height: '100%' }}>
             <img src={deleteIcon} className="d-none" id="del-icon" />
             <div className='d-flex justify-content-center'>
                 <div className='d-flex justify-content-between my-3' style={{ width: '80%' }}>
@@ -181,7 +184,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
                     {loading ? "Updating..." : "Update"}
                 </button>
             </div>
-            <canvas className="sample-canvas" ref={canvasRef} />
+            <div style={{ width: '100%', height: '100vh' }} ref={canvasContainer}>
+                <canvas className="sample-canvas" ref={canvasRef} />
+            </div>
             <ToastContainer />
         </div>
     )

@@ -53,6 +53,20 @@ function AddProject({ projects }) {
     })
   }
 
+  const generateImgBlurHash = async (file) => {
+    const baseUrl = base_url.replace('api', '');
+    const res = await fetch(baseUrl + 'blur/blur/blurhash', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 'image_url': file })
+    });
+    const hash = await res.json();
+    return hash.blurhash;
+  }
+
   const onSelectFile = async (e) => {
     let selectedFileLength = Array.from(e.target.files).length;
     let uploadedFileLength = Array.from(displayImage).length;
@@ -75,11 +89,21 @@ function AddProject({ projects }) {
     let imagesFile = []
     for (let i = 0; i < e.target.files.length; i++) {
       const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
-      // const response = await uploadImage({ 'file': e.target.files[i] });
       if (response.status === 200) {
-        delete response.status;
-        imagesFile.push(response);
-        setSelectedImages(preState => [...preState, response]);
+
+        response.hash = await generateImgBlurHash(response.thumbnailUrl);
+
+        // get file dimensions
+        var imageObj = new Image();
+        imageObj.src = response.thumbnailUrl;
+        imageObj.onload = function () {
+          response.width = this.width;
+          response.height = this.height;
+          delete response.status;
+          imagesFile.push(response);
+          console.log(response);
+          setSelectedImages(preState => [...preState, response]);
+        };
       }
     }
   };

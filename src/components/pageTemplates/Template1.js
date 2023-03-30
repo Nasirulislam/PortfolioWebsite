@@ -6,7 +6,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ReactTextTransition, { presets } from "react-text-transition";
 import { motion } from "framer-motion";
-
+import { Blurhash, BlurhashCanvas } from "react-blurhash";
+import Helper from "../../constants/Helper";
 
 function Template1(props) {
   const { slug } = useParams();
@@ -129,13 +130,23 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <motion.img
-                        className={"img-fluid bottom-img"}
-                        src={banner.fileUrl}
-                        // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
-                        // animate={{ x: largeCircle.x, y: largeCircle.y }}
-                        key={index}
-                      /> : <></>
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                    // <BlurhashCanvas
+                    //   hash={banner.hash}
+                    //   width={parseInt(banner.width)}
+                    //   height={parseInt(banner.height)}
+                    //   resolutionX={32}
+                    //   resolutionY={32}
+                    //   punch={1}
+                    // />
+                    // <motion.img
+                    //   className={"img-fluid bottom-img"}
+                    //   src={banner.fileUrl}
+                    //   // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
+                    //   // animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    //   key={index}
+                    // />
+                    : <></>
                 })}
               </motion.div>
             </div>
@@ -151,13 +162,23 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <motion.img
-                        className={"img-fluid bottom-img"}
-                        src={banner.fileUrl}
-                        // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
-                        animate={{ x: largeCircle.x, y: largeCircle.y }}
-                        key={index}
-                      /> : <></>
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                    // <Blurhash
+                    //   hash={banner.hash}
+                    //   width={parseInt(banner.width)}
+                    //   height={parseInt(banner.height)}
+                    //   resolutionX={32}
+                    //   resolutionY={32}
+                    //   punch={1}
+                    // />
+                    // <motion.img
+                    //   className={"img-fluid bottom-img"}
+                    //   src={banner.fileUrl}
+                    //   // style={{ position: 'absolute', bottom: '0px', left: '0px' }}
+                    //   animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    //   key={index}
+                    // /> 
+                    : <></>
                 })}
               </motion.div>
             </div>
@@ -177,13 +198,22 @@ function Template1(props) {
                         Your browser does not support the video tag.
                       </video>
                       :
-                      < motion.img
-                        className={"img-fluid"}
-                        src={banner.fileUrl}
-                        animate={{ x: largeCircle.x, y: largeCircle.y }}
-                        key={index}
-                        loading="lazy"
-                      />
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                    // <Blurhash
+                    //   hash={banner.hash}
+                    //   width={parseInt(banner.width)}
+                    //   height={parseInt(banner.height)}
+                    //   resolutionX={32}
+                    //   resolutionY={32}
+                    //   punch={1}
+                    // />
+                    // < motion.img
+                    //   className={"img-fluid"}
+                    //   src={banner.fileUrl}
+                    //   animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    //   key={index}
+                    //   loading="lazy"
+                    // />
                     :
                     banner.fileUrl.includes("mp4") ?
                       <video autoPlay controls >
@@ -191,12 +221,21 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <motion.img
-                        className={"img-fluid"}
-                        src={banner.fileUrl}
-                        key={index}
-                        animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-                      />
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                    // <Blurhash
+                    //   hash={banner.hash}
+                    //   width={parseInt(banner.width)}
+                    //   height={parseInt(banner.height)}
+                    //   resolutionX={32}
+                    //   resolutionY={32}
+                    //   punch={1}
+                    // />
+                    // <motion.img
+                    //   className={"img-fluid"}
+                    //   src={banner.fileUrl}
+                    //   key={index}
+                    //   animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+                    // />
                   }
 
                 </motion.div>
