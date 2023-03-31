@@ -130,7 +130,7 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                      <Helper banner={banner} largeCircle={{x: 0, y:0}} index={index} imageFluid={true}/>
                     // <BlurhashCanvas
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -162,7 +162,7 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true}/>
                     // <Blurhash
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -198,7 +198,7 @@ function Template1(props) {
                         Your browser does not support the video tag.
                       </video>
                       :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true}/>
                     // <Blurhash
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -221,7 +221,7 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} />
+                      <Helper banner={banner} largeCircle={mediumCircle} index={index} imageFluid={true}/>
                     // <Blurhash
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -246,7 +246,7 @@ function Template1(props) {
         {
           index <= props.projectData.length - 1 && props.projectData[index + 1] ? (
             <Link to={"/" + projectData[index + 1]?.slug}>
-              <NextProject projectData={projectData} index={index} showDescription={bottom} />
+              <NextProject projectData={projectData} index={index} showDescription={bottom} setInitialBanners={setInitialBanners} setBanners={setBanners} />
             </Link>
           ) : (
             ""

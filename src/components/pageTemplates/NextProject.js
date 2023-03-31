@@ -46,12 +46,14 @@ function NextProject(props) {
         position: 'relative'
       }}
       onClick={() => {
+        props.setInitialBanners([])
+        props.setBanners([])
         navigate(
           index + 1 < projectData.length - 1
             ? `/${projectData[index + 1].slug}`
             : "/"
         );
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
       }}
     >
       <div className="col-md-12 d-flex justify-content-center align-items-center" style={{ position: 'relative', height: '100%' }}>

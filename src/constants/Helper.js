@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Blurhash } from "react-blurhash";
 import { useState } from "react";
 
-export default function Helper({ banner, largeCircle, index }) {
+export default function Helper({ banner, largeCircle, index, imageFluid }) {
 
     const [show, setShow] = useState(false);
     var image = new Image();
@@ -15,7 +15,7 @@ export default function Helper({ banner, largeCircle, index }) {
             {
                 show ?
                     <motion.img
-                        className={"img-fluid bottom-img"}
+                        className={"bottom-img "+(imageFluid ? "img-fluid" : "")}
                         src={image.src}
                         animate={{ x: largeCircle.x, y: largeCircle.y }}
                         key={index}
@@ -24,8 +24,8 @@ export default function Helper({ banner, largeCircle, index }) {
                         hash={banner.hash}
                         width={parseInt(banner.width)}
                         height={parseInt(banner.height)}
-                        resolutionX={132}
-                        resolutionY={132}
+                        resolutionX={32}
+                        resolutionY={32}
                         punch={1}
                     />
             }

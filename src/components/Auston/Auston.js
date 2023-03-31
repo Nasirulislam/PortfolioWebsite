@@ -1,13 +1,12 @@
 import React from "react";
 import "./Auston.css";
-import base_url from "../../constants/url";
 import {
   motion
 } from "framer-motion";
+import Helper from "../../constants/Helper";
 
 
 function Auston(props) {
-
   return (
     <div className={"col-md-12 col-12 d-flex align-items-center justify-content-center"} style={{ height: '100%' }}>
       {props.images.map((banner, key) => {
@@ -26,13 +25,22 @@ function Auston(props) {
                       </video>
                     </>
                     :
-                    <img
+                    <div
                       className="image-container"
                       style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
-                      src={banner.fileUrl}
-                      key={key}
                       onClick={() => props.handleSlug()}
-                    />
+                    >
+                      <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false}/>
+                    </div>
+
+
+                  // <img
+                  //   className="image-container"
+                  //   style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
+                  //   src={banner.fileUrl}
+                  //   key={key}
+                  //   onClick={() => props.handleSlug()}
+                  // />
                 }
               </motion.div>
             )

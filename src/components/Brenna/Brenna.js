@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import base_url from "../../constants/url";
+import Helper from "../../constants/Helper";
 
 function Brenna(props) {
 
@@ -10,7 +11,7 @@ function Brenna(props) {
     if (props.images.length > 1) {
       setThirdImage(props.images[props.images.length - 1]);
     }
-  },[props.images])
+  }, [props.images])
   return (
     <>
       <div className={"col-md-12 d-flex align-items-center brenna-master " + (props.images.length == 2 ? "justify-content-center" : "justify-content-around")}>
@@ -27,13 +28,22 @@ function Brenna(props) {
                   Your browser does not support the video tag.
                 </video>
                 :
-                <img
+                <div
                   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-                  src={banner.fileUrl}
-                  key={key}
                   style={{ cursor: 'pointer' }}
                   onClick={() => props.handleSlug()}
-                />
+                >
+                  <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
+                </div>
+
+
+              // <img
+              //   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
+              //   src={banner.fileUrl}
+              //   key={key}
+              //   style={{ cursor: 'pointer' }}
+              //   onClick={() => props.handleSlug()}
+              // />
             }
           </motion.div>
             : key == 1 ?
@@ -48,13 +58,20 @@ function Brenna(props) {
                       Your browser does not support the video tag.
                     </video>
                     :
-                    <img
+                    <div
                       className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-                      src={banner.fileUrl}
-                      key={key}
                       style={{ cursor: 'pointer' }}
                       onClick={() => props.handleSlug()}
-                    />
+                    >
+                      <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
+                    </div>
+                  // <img
+                  //   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
+                  //   src={banner.fileUrl}
+                  //   key={key}
+                  //   style={{ cursor: 'pointer' }}
+                  //   onClick={() => props.handleSlug()}
+                  // />
                 }
               </motion.div>
               : <></>
@@ -66,7 +83,7 @@ function Brenna(props) {
           <motion.div className={"col-md-12 d-flex align-items-center justify-content-center brenna-first"}
             animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}
             key={thirdImage.fileUrl}
-            style={{position: 'relative', marginTop: '-5%', zIndex: '1'}}>
+            style={{ position: 'relative', marginTop: '-5%', zIndex: '1' }}>
             {
               thirdImage.fileUrl.includes("mp4") ?
                 <video autoPlay loop muted onClick={() => props.handleSlug()}>
@@ -75,12 +92,18 @@ function Brenna(props) {
                   Your browser does not support the video tag.
                 </video>
                 :
-                <img
-                  src={thirdImage.fileUrl}
-                  key={thirdImage.fileUrl}
+                <div
                   style={{ cursor: 'pointer', maxHeight: 'auto', maxWidth: '100vh' }}
                   onClick={() => props.handleSlug()}
-                />
+                >
+                  <Helper banner={thirdImage} largeCircle={{ x: 0, y: 0 }} index={props.images.length} imageFluid={false} />
+                </div>
+              // <img
+              //   src={thirdImage.fileUrl}
+              //   key={thirdImage.fileUrl}
+              //   style={{ cursor: 'pointer', maxHeight: 'auto', maxWidth: '100vh' }}
+              //   onClick={() => props.handleSlug()}
+              // />
             }
           </motion.div>
         )
