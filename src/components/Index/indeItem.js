@@ -147,7 +147,7 @@ function IndexItem(props) {
       >
         <img
           className="img-fluid animated fadeOut"
-          src={image.fileUrl}
+          src={image?.fileUrl}
         // style={{height: '25vh'}}
         />
       </motion.div>

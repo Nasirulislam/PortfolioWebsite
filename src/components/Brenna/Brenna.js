@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import base_url from "../../constants/url";
 import Helper from "../../constants/Helper";
@@ -6,6 +6,7 @@ import Helper from "../../constants/Helper";
 function Brenna(props) {
 
   const [thirdImage, setThirdImage] = useState(null);
+  const containerRef = useRef();
 
   useEffect(() => {
     if (props.images.length > 1) {
@@ -19,7 +20,8 @@ function Brenna(props) {
           return key == 0 ? <motion.div className={"col-md-6 d-flex align-items-center justify-content-center brenna-first"}
             style={{ zIndex: 1 }}
             animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}
-            key={key}>
+            key={key}
+            >
             {
               banner.fileUrl.includes("mp4") ?
                 <video autoPlay loop muted onClick={() => props.handleSlug()}>

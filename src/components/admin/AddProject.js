@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -26,6 +26,7 @@ function AddProject({ projects }) {
   const [slugError, setSlugError] = useState("");
 
   const MAX_LENGTH = 15;
+  const submitBtn = useRef();
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -35,22 +36,6 @@ function AddProject({ projects }) {
         resolve(reader.result);
       }
     });
-  }
-
-  function uploadImage(file) {
-    return new Promise((resolve, reject) => {
-      axios.post(base_url + '/project/v2/s3/upload', file, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: progressEvent => {
-          let percentComplete = progressEvent.loaded / progressEvent.total
-          percentComplete = parseInt(percentComplete * 100);
-          console.log(progressEvent.loaded);
-          // updateProgress(percentComplete);
-        }
-      }).then(response => resolve());
-    })
   }
 
   const generateImgBlurHash = async (file) => {
@@ -86,7 +71,9 @@ function AddProject({ projects }) {
       setdisplayImage(current => [...current, ...result])
     })
 
-    let imagesFile = []
+    submitBtn.current.innerText = 'Uploading files...';
+    submitBtn.current.disabled = true;
+    let imagesFile = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
       if (response.status === 200) {
@@ -103,6 +90,8 @@ function AddProject({ projects }) {
           imagesFile.push(response);
           console.log(response);
           setSelectedImages(preState => [...preState, response]);
+          submitBtn.current.innerText = 'Submit';
+          submitBtn.current.disabled = false;
         };
       }
     }
@@ -347,6 +336,7 @@ function AddProject({ projects }) {
             </div>
           </section>
           <Button
+            ref={submitBtn}
             variant="primary"
             type="submit12"
             className="d-flex align-items-center"

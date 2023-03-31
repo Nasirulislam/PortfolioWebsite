@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useEffect } from "react";
+import Helper from "../../constants/Helper";
 // import { motion } from "framer-motion";
 
 function NextProject(props) {
@@ -65,13 +66,14 @@ function NextProject(props) {
                 <source src={projectData[index + 1].imagesAndThumb[0].fileUrl} type="video/ogg" />
                 Your browser does not support the video tag.
               </motion.video> :
-              <motion.img
-                className="next-proj-img1"
-                src={
-                  projectData[index + 1].imagesAndThumb[0].fileUrl
-                }
-                animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-              />
+              <Helper banner={projectData[index + 1].imagesAndThumb[0]} largeCircle={mediumCircle} index={0} imageFluid={false} />
+            // <motion.img
+            //   className="next-proj-img1"
+            //   src={
+            //     projectData[index + 1].imagesAndThumb[0].fileUrl
+            //   }
+            //   animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+            // />
           }
         </div>
         {projectData[index + 1].images.length > 1 && (
@@ -83,13 +85,14 @@ function NextProject(props) {
                   <source src={projectData[index + 1].imagesAndThumb[1].fileUrl} type="video/ogg" />
                   Your browser does not support the video tag.
                 </motion.video> :
-                <motion.img
-                  className="next-proj-img2"
-                  src={
-                    projectData[index + 1].imagesAndThumb[1].fileUrl
-                  }
-                  animate={{ x: largeCircle.x, y: largeCircle.y }}
-                />
+                <Helper banner={projectData[index + 1].imagesAndThumb[1]} largeCircle={largeCircle} index={0} imageFluid={false} />
+              // <motion.img
+              //   className="next-proj-img2"
+              //   src={
+              //     projectData[index + 1].imagesAndThumb[1].fileUrl
+              //   }
+              //   animate={{ x: largeCircle.x, y: largeCircle.y }}
+              // />
             }
           </div>
         )}
