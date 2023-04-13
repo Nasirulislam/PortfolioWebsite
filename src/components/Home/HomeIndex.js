@@ -44,6 +44,8 @@ function HomeIndex(props) {
 
 
       fabricRef.current.loadFromJSON(props.homeIndexCanvas);
+      console.log(JSON.stringify(props.homeIndexCanvas));
+
     }
   }
   useEffect(() => {
@@ -192,7 +194,7 @@ function HomeIndex(props) {
           {props.value}
         </h1>
       </div>
-      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap bannerCanvas" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         <div style={{ width: '100%', height: '100vh' }} ref={canvasParentRef}>
           <canvas className="sample-canvas" ref={canvasRef} />
         </div>

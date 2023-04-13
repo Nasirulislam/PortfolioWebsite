@@ -152,6 +152,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
         }
     }
 
+
     return (
         <div className="d-flex justify-content-center flex-column" style={{ width: '100%', height: '100%' }}>
             <img src={deleteIcon} className="d-none" id="del-icon" />
