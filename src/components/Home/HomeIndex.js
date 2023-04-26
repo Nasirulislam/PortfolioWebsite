@@ -33,17 +33,70 @@ function HomeIndex(props) {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [windowWidth, setWindow] = useState(130);
 
-  const initFabric = () => {
-    if (props.homeIndexCanvas !== null) {
+  function clipToBoundary(ctx) {
+    ctx.rect(0, 0, fabricRef.current.width, fabricRef.current.height);
+  }
 
+  const initFabric = () => {
+    if (props.homeIndexCanvas !== null && !fabricRef.current) {
+      // fabricRef.current = new fabric.Canvas(canvasRef.current, {
+      //   // height: canvasParentRef.current.clientHeight,
+      //   // width: canvasParentRef.current.clientWidth,
+      //   // backgroundColor: 'pink'
+      //   width: window.innerWidth,
+      //   height: window.innerHeight
+      // });
+
+
+      // fabricRef.current.loadFromJSON(props.homeIndexCanvas);
+
+      // Get the canvas object from its JSON representation
+      var canvasJSON = JSON.parse(props.homeIndexCanvas);
       fabricRef.current = new fabric.Canvas(canvasRef.current, {
-        height: canvasParentRef.current.clientHeight,
-        width: canvasParentRef.current.clientWidth,
-        // backgroundColor: 'pink'
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      var canvas = fabricRef.current.loadFromJSON(props.homeIndexCanvas, function () {
+        // Get the container element and its dimensions
+        var container = document.getElementsByClassName('canvas-container')[0];
+        var containerWidth = container.offsetWidth;
+        var containerHeight = container.offsetHeight;
+
+        // Calculate the aspect ratios
+        var containerAspectRatio = containerWidth / containerHeight;
+        var canvasAspectRatio = canvas.width / canvas.height;
+
+        // Determine the new dimensions of the canvas object
+        if (containerAspectRatio > canvasAspectRatio) {
+          // Container is wider than the canvas object
+          var newHeight = containerHeight;
+          var newWidth = containerHeight * canvasAspectRatio;
+        } else {
+          // Container is taller than the canvas object
+          var newWidth = containerWidth;
+          var newHeight = containerWidth / canvasAspectRatio;
+        }
+
+        // Update the dimensions of the canvas object
+        canvas.setDimensions({ width: newWidth, height: canvas.height });
+        // canvas.set('viewportTransform', [1, 0, 0, 1, -50, -50]);
+
+        // Iterate through the images and update their positions
+        canvas.getObjects('image').forEach(function (image) {
+          console.log(image)
+          // image.scale(image.scaleX/1.1, image.scaleY/1.1)
+          image.set({
+            scaleX: image.scaleX/1.3,
+            scaleY: image.scaleY/1.3,
+            clipTo: clipToBoundary,
+            bottom: 100
+          })
+        });
       });
 
-
-      fabricRef.current.loadFromJSON(props.homeIndexCanvas);
+      fabricRef.current = canvas;
+      // Render the updated canvas
+      canvas.renderAll();
     }
   }
   useEffect(() => {
@@ -193,9 +246,9 @@ function HomeIndex(props) {
         </h1>
       </div>
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
-        <div style={{ width: '100%', height: '100vh' }} ref={canvasParentRef}>
-          <canvas className="sample-canvas" ref={canvasRef} />
-        </div>
+        {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
+        <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+        {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
           {
             return (

@@ -68,7 +68,7 @@ function EditImages(props) {
         setIndex(project.index);
         setTemplate(project.template);
         setSlug(project.slug);
-        setSelectedImages(project.images);
+        setSelectedImages(project.imagesAndThumb);
         setBtnShow(true);
       }
     });
@@ -129,7 +129,7 @@ function EditImages(props) {
                 selectedImages.map((image, index) => {
                   return (
                     <div
-                      key={image}
+                      key={index}
                       className="edit-image"
                       onClick={() => {
                         setImgId(image);
@@ -140,16 +140,16 @@ function EditImages(props) {
                           : "1px solid black",
                       }}
                     >
-                      {image.split("/")[0] == "data:image" || !image.includes("mp4") ?
+                      {image.fileUrl.split("/")[0] == "data:image" || !image.fileUrl.includes("mp4") ?
                         <img
-                          src={`${base_url}` + "/projects/" + image}
+                          src={image.fileUrl}
                           width="150"
                           height="150"
                           alt="upload"
                         />
                         : <video autoPlay loop muted>
-                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/mp4" />
-                          <source src={image.split(":")[0] === "data" ? image : base_url + "/projects/" + image} type="video/ogg" />
+                          <source src={image.fileUrl} type="video/mp4" />
+                          <source src={image.fileUrl} type="video/ogg" />
                         </video>
                       }
                       {/* <button onClick={() => deleteHandler(image)}>

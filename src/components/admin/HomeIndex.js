@@ -14,6 +14,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     const fabricRef = useRef(null);
     const canvasRef = useRef(null);
     const canvasContainer = useRef(null);
+    const submitBtn = useRef(null);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -39,6 +40,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             setImagesPreview(current => [...current, ...result])
         })
 
+        submitBtn.current.innerText = 'Uploading files...';
+        submitBtn.current.disabled = true;
+
         for (let i = 0; i < e.target.files.length; i++) {
             const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
             if (response.status === 200) {
@@ -46,6 +50,8 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
                 setUploadedFiles(oldArray => [response, ...oldArray]);
             }
         }
+        submitBtn.current.innerText = 'Update';
+        submitBtn.current.disabled = false;
     }
 
     // ****************** FABRIC-JS **************
@@ -84,14 +90,14 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     const initFabric = async () => {
         if (homeIndexCanvas) {
             fabricRef.current = new fabric.Canvas(canvasRef.current, {
-                height: canvasContainer.current.clientHeight,
-                width: canvasContainer.current.clientWidth
+                width: window.innerWidth,
+                height: window.innerHeight
             })
             fabricRef.current.loadFromJSON(homeIndexCanvas);
         } else {
             fabricRef.current = new fabric.Canvas(canvasRef.current, {
-                height: canvasContainer.current.clientHeight,
-                width: canvasContainer.current.clientWidth,
+                width: window.innerWidth,
+                height: window.innerHeight,
                 backgroundColor: 'pink'
             });
         }
@@ -136,7 +142,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             canvas: JSON.stringify(fabricRef.current.toJSON())
         }
         const response = await API.patch(`project/home/${homeIndexId}`, payload);
-        console.log(response.status)
         if (response.status === 225) {
             toast("Uploaded successfully");
         } else {
@@ -179,14 +184,14 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
             </div>
             <div className='d-flex justify-content-center my-3'>
                 <button className='btn btn-warning d-flex align-items-center' onClick={submitCanvas}
-                    disabled={loading ? true : false}>
+                    disabled={loading ? true : false} ref={submitBtn}>
                     <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
                     {loading ? "Updating..." : "Update"}
                 </button>
             </div>
-            <div style={{ width: '100%', height: '100vh' }} ref={canvasContainer}>
-                <canvas className="sample-canvas" ref={canvasRef} />
-            </div>
+            {/* <div style={{ width: '100%' }} ref={canvasContainer}> */}
+                <canvas className="sample-canvas" ref={canvasRef} id="canvas"/>
+            {/* </div> */}
             <ToastContainer />
         </div>
     )
