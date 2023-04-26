@@ -514,3 +514,32 @@ s.cardTemp {
 .margin-left {
   margin-left: 10%;
 }
+
+.bannerCanvas {
+  position: relative;
+}
+.bannerCanvas  .canvas-container{
+  width: 100% !important;
+  height: 100vh !important;
+  background: #ededed;
+  overflow: hidden !important;
+}
+
+.bannerCanvas  .canvas-container > canvas.lower-canvas{
+  width: 100% !important;
+  height: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+
+}
+
+@media screen and (max-width: 767px) {
+  .bannerCanvas  .canvas-container > canvas.lower-canvas {
+    width: auto !important;
+    height: 500px !important;
+    left: 50% !important;
+    transform: translateY(-50%) translateX(-50%);
+  }
+}
+
+
