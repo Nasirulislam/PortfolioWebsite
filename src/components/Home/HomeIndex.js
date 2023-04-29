@@ -16,21 +16,21 @@ function HomeIndex(props) {
   const canvasRef = useRef(null);
   const canvasParentRef = useRef(null);
 
-  const mousemove = (e) => {
-    setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
-    setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
-    setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
-  };
+  // const mousemove = (e) => {
+  //   setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
+  //   setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
+  //   setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
+  // };
 
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
-  }
+  // function getWindowDimensions() {
+  //   const { innerWidth: width, innerHeight: height } = window;
+  //   return {
+  //     width,
+  //     height
+  //   };
+  // }
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  // const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [windowWidth, setWindow] = useState(130);
 
   function clipToBoundary(ctx) {
@@ -56,44 +56,135 @@ function HomeIndex(props) {
         width: window.innerWidth,
         height: window.innerHeight
       });
-      var canvas = fabricRef.current.loadFromJSON(props.homeIndexCanvas, function () {
-        // Get the container element and its dimensions
-        var container = document.getElementsByClassName('canvas-container')[0];
-        var containerWidth = container.offsetWidth;
-        var containerHeight = container.offsetHeight;
+      // var canvas = fabricRef.current.loadFromJSON(props.homeIndexCanvas, function () {
+      //   // Get the container element and its dimensions
+      //   var container = document.getElementsByClassName('canvas-container')[0];
+      //   var containerWidth = container.offsetWidth;
+      //   var containerHeight = container.offsetHeight;
 
-        // Calculate the aspect ratios
-        var containerAspectRatio = containerWidth / containerHeight;
-        var canvasAspectRatio = canvas.width / canvas.height;
+      //   // Calculate the aspect ratios
+      //   var containerAspectRatio = containerWidth / containerHeight;
+      //   var canvasAspectRatio = canvas.width / canvas.height;
 
-        // Determine the new dimensions of the canvas object
-        if (containerAspectRatio > canvasAspectRatio) {
-          // Container is wider than the canvas object
-          var newHeight = containerHeight;
-          var newWidth = containerHeight * canvasAspectRatio;
-        } else {
-          // Container is taller than the canvas object
-          var newWidth = containerWidth;
-          var newHeight = containerWidth / canvasAspectRatio;
+      //   // Determine the new dimensions of the canvas object
+      //   if (containerAspectRatio > canvasAspectRatio) {
+      //     // Container is wider than the canvas object
+      //     var newHeight = containerHeight;
+      //     var newWidth = containerHeight * canvasAspectRatio;
+      //   } else {
+      //     // Container is taller than the canvas object
+      //     var newWidth = containerWidth;
+      //     var newHeight = containerWidth / canvasAspectRatio;
+      //   }
+
+      //   // Update the dimensions of the canvas object
+      //   canvas.setDimensions({ width: newWidth, height: newHeight });
+      //   // canvas.set('viewportTransform', [1, 0, 0, 1, -50, -50]);
+
+      //   // Iterate through the images and update their positions
+      //   canvas.getObjects('image').forEach(function (image) {
+      //     console.log(image)
+      //     // image.scale(image.scaleX/1.1, image.scaleY/1.1)
+      //     image.set({
+      //       scaleX: image.scaleX/1.3,
+      //       scaleY: image.scaleY/1.3,
+      //       clipTo: clipToBoundary,
+      //       bottom: 100
+      //     })
+      //   });
+      // });
+      const originalX = 1680
+      const originalY=981
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      // let newScaleX, newScaleY;
+      
+      // newScaleX = (windowWidth / originalX)
+      // newScaleY = (windowHeight / originalY)
+
+      // newScaleX = (originalX/windowWidth )
+      // newScaleY = (originalY/windowHeight  )
+      // console.log(newScaleX)
+      // console.log(newScaleY)
+
+      let widthDifference = 0;
+      let heightDifference = 0;
+      let isWidthGreater = false;
+      let isHeightGreater = false;
+
+      if (windowWidth > originalX) {
+        widthDifference = (windowWidth - originalX) / originalX * 100;
+        isWidthGreater = true;
+      } else if (windowWidth < originalX) {
+        widthDifference = (originalX - windowWidth) / originalX * 100;
+      }
+
+      if (windowHeight > originalY) {
+        heightDifference = (windowHeight - originalY) / originalY * 100;
+        isHeightGreater = true;
+      } else if (windowHeight < originalY) {
+        heightDifference = (originalY - windowHeight) / originalY * 100;
+      }
+      
+      let fabricCanvas = JSON.parse(props.homeIndexCanvas);
+      console.log(fabricCanvas)
+      fabricCanvas.objects.forEach(obj => {
+        // if (windowWidth < originalX) {
+        //   obj.scaleX -= obj.scaleX * (20 / 100);
+        //   obj.left -= obj.left * (30 / 100);
+        // } 
+        // if (windowHeight < originalY) {
+        //   obj.top -= obj.top * (20 / 100);
+        //   obj.scaleY -= obj.scaleY * (20 / 100);
+        // } 
+        if (isWidthGreater==true){
+          obj.scaleX += obj.scaleX * (widthDifference / 100);
+          obj.left += obj.left * (widthDifference / 100);
+
+          obj.top += obj.top * (heightDifference / 100);
+          obj.scaleY += obj.scaleY * (widthDifference / 100);
         }
+        else{
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          console.log(isMobile)
+          if (isMobile){
+            obj.scaleX -= obj.scaleX * (widthDifference / 100);
+            obj.left -= obj.left * (widthDifference / 100);
 
-        // Update the dimensions of the canvas object
-        canvas.setDimensions({ width: newWidth, height: canvas.height });
-        // canvas.set('viewportTransform', [1, 0, 0, 1, -50, -50]);
+            obj.top -= obj.top * (heightDifference / 100);
+            obj.scaleY -= obj.scaleY * (heightDifference / 100);
+          }
+          else{
+            obj.scaleX -= obj.scaleX * (widthDifference / 100);
+            obj.left -= obj.left * (widthDifference / 100);
 
-        // Iterate through the images and update their positions
-        canvas.getObjects('image').forEach(function (image) {
-          console.log(image)
-          // image.scale(image.scaleX/1.1, image.scaleY/1.1)
-          image.set({
-            scaleX: image.scaleX/1.3,
-            scaleY: image.scaleY/1.3,
-            clipTo: clipToBoundary,
-            bottom: 100
-          })
-        });
+            obj.top -= obj.top * (heightDifference / 100);
+            obj.scaleY -= obj.scaleY * (widthDifference / 100);
+          }
+          
+        }
+        // if (isHeightGreater==true){
+        //   obj.top += obj.top * (heightDifference / 100);
+        //   obj.scaleY += obj.scaleY * (heightDifference / 100);
+
+        //   obj.scaleX += obj.scaleX * (heightDifference / 100);
+        //   obj.left += obj.left * (heightDifference / 100);
+        // }
+        // else{
+        //   obj.top -= obj.top * (heightDifference / 100);
+        //   obj.scaleY -= obj.scaleY * (heightDifference / 100);
+
+        //   obj.scaleX -= obj.scaleX * (heightDifference / 100);
+        //   obj.left -= obj.left * (heightDifference / 100);
+
+        // }
+
+
       });
+      console.log(fabricCanvas)
 
+      var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas))
+      
       fabricRef.current = canvas;
       // Render the updated canvas
       canvas.renderAll();
@@ -101,12 +192,12 @@ function HomeIndex(props) {
   }
   useEffect(() => {
     initFabric();
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
+    // function handleResize() {
+    //   setWindowDimensions(getWindowDimensions());
+    // }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    // window.addEventListener('resize', handleResize);
+    // return () => window.removeEventListener('resize', handleResize);
   }, [props.homeIndexCanvas]);
 
   useEffect(() => {
@@ -122,7 +213,7 @@ function HomeIndex(props) {
     const HEIGHT = zoomElement.clientHeight
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
-    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 65; // Lower is faster
+    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 65; // Lower is faster
     const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
@@ -188,13 +279,13 @@ function HomeIndex(props) {
     };
   }, [])
 
-  useEffect(() => {
-    window.addEventListener("mousemove", mousemove);
+  // useEffect(() => {
+  //   window.addEventListener("mousemove", mousemove);
 
-    return () => {
-      window.removeEventListener("mousemove", mousemove);
-    };
-  });
+  //   return () => {
+  //     window.removeEventListener("mousemove", mousemove);
+  //   };
+  // });
 
   useEffect(() => {
     const mergeIndexImages = () => {
