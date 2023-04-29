@@ -8,6 +8,16 @@
   height: 100% !important;
 }
 
+.placeholder-glow {
+  height: 100vh !important;
+  width: 100% !important;
+}
+.skeleton .card-body {
+  padding: 0!important;
+}
+.placeholder{
+  height: 100%;
+}
 s.cardTemp {
   background: black;
 }
