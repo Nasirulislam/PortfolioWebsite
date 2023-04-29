@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Home.css";
-import { motion } from "framer-motion";
-import axios from "axios";
-import base_url from "../../constants/url";
 import { fabric } from 'fabric';
+import Skeleton from "./Skeleton";
 
 
 function HomeIndex(props) {
@@ -15,6 +13,7 @@ function HomeIndex(props) {
   const fabricRef = useRef(null);
   const canvasRef = useRef(null);
   const canvasParentRef = useRef(null);
+  const [placeholder, setPlaceholder] = useState(true);
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
@@ -51,7 +50,6 @@ function HomeIndex(props) {
       // fabricRef.current.loadFromJSON(props.homeIndexCanvas);
 
       // Get the canvas object from its JSON representation
-      var canvasJSON = JSON.parse(props.homeIndexCanvas);
       fabricRef.current = new fabric.Canvas(canvasRef.current, {
         width: window.innerWidth,
         height: window.innerHeight
@@ -86,12 +84,14 @@ function HomeIndex(props) {
           console.log(image)
           // image.scale(image.scaleX/1.1, image.scaleY/1.1)
           image.set({
-            scaleX: image.scaleX/1.3,
-            scaleY: image.scaleY/1.3,
+            scaleX: image.scaleX / 1.3,
+            scaleY: image.scaleY / 1.3,
             clipTo: clipToBoundary,
             bottom: 100
           })
         });
+
+        setPlaceholder(false);
       });
 
       fabricRef.current = canvas;
@@ -245,6 +245,11 @@ function HomeIndex(props) {
           {props.value}
         </h1>
       </div>
+      {
+        placeholder && (
+          <Skeleton />
+        )
+      }
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
