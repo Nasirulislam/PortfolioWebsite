@@ -14,11 +14,19 @@ export default function Helper({ banner, largeCircle, index, imageFluid }) {
         <>
             {
                 show ?
-                    <motion.img
-                        className={"bottom-img "+(imageFluid ? "img-fluid" : "")}
-                        src={image.src}
-                        animate={{ x: largeCircle.x, y: largeCircle.y }}
-                        key={index}
+                    // <motion.img
+                    //     className={"bottom-img "+(imageFluid ? "img-fluid" : "")}
+                    //     src={image.src}
+                    //     animate={{ x: largeCircle.x, y: largeCircle.y }}
+                    //     key={index}
+                    // />
+                    <Blurhash
+                        hash={banner.hash}
+                        width={parseInt(banner.width)}
+                        height={parseInt(banner.height)}
+                        resolutionX={32}
+                        resolutionY={32}
+                        punch={1}
                     />
                     : <Blurhash
                         hash={banner.hash}
