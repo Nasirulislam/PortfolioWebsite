@@ -12,15 +12,16 @@ function HomeIndex(props) {
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
   const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [canvasBgColor, setcanvasBgColor] = useState('white');
   const fabricRef = useRef(null);
   const canvasRef = useRef(null);
   const canvasParentRef = useRef(null);
 
-  // const mousemove = (e) => {
-  //   setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
-  //   setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
-  //   setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
-  // };
+  const mousemove = (e) => {
+    setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
+    setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
+    setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
+  };
 
   // function getWindowDimensions() {
   //   const { innerWidth: width, innerHeight: height } = window;
@@ -183,9 +184,9 @@ function HomeIndex(props) {
       });
       console.log(fabricCanvas)
 
-      var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas))
-      
+      var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas));
       fabricRef.current = canvas;
+      setcanvasBgColor(fabricCanvas.background);      
       // Render the updated canvas
       canvas.renderAll();
     }
@@ -279,13 +280,13 @@ function HomeIndex(props) {
     };
   }, [])
 
-  // useEffect(() => {
-  //   window.addEventListener("mousemove", mousemove);
+  useEffect(() => {
+    window.addEventListener("mousemove", mousemove);
 
-  //   return () => {
-  //     window.removeEventListener("mousemove", mousemove);
-  //   };
-  // });
+    return () => {
+      window.removeEventListener("mousemove", mousemove);
+    };
+  });
 
   useEffect(() => {
     const mergeIndexImages = () => {
@@ -330,14 +331,19 @@ function HomeIndex(props) {
   }, []);
 
   return (
-    <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>
+    <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden', backgroundColor: canvasBgColor || 'white' }}>
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
+      {/* <motion.div
+        animate={{ x: mediumCircle.x, y: mediumCircle.y, opacity: 1 }}
+        transition={{ type: 'spring' }}
+      > */}
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
+        
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
         {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
@@ -406,6 +412,7 @@ function HomeIndex(props) {
           }
         })} */}
       </div>
+    {/* </motion.div> */}
     </div>
   );
 }
