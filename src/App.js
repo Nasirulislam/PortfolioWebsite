@@ -32,6 +32,8 @@ function App() {
   const [dataFetc, setDataFetch] = useState(false);
   const [homeIndexImages, setHomeIndexImages] = useState([]);
   const [homeIndexCanvas, setHomeIndexCanvas] = useState(null);
+  const [originalX, setOriginalX] = useState('');
+  const [originalY, setOriginalY] = useState('');
   const [landscapeHomeIndexImages, setLandscapeHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
@@ -63,10 +65,13 @@ function App() {
     const getHomeIndex = async () => {
       const response = await axios.get(base_url + "/project/home");
       if (response.status === 210) {
+        console.log('main page', response.data.data.home[2])
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
         setHomeIndexCanvas(response.data.data.home[2]?.canvas || null);
+        setOriginalX(response.data.data.home[2]?.originalX);
+        setOriginalY(response.data.data.home[2]?.originalY);
         setHomeIndexId(response.data.data.home[2]?._id || null);
       } else {
         console.log(response.message);
@@ -250,6 +255,8 @@ function App() {
                         landscapeHomeIndexImages={landscapeHomeIndexImages}
                         indexBackground={indexBackground}
                         homeIndexCanvas={homeIndexCanvas}
+                        originalX={originalX}
+                        originalY={originalY}
                       />
                     ) : (
                       <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>

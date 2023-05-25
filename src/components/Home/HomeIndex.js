@@ -94,12 +94,15 @@ function HomeIndex(props) {
       //     })
       //   });
       // });
-      const originalX = 1680
-      const originalY=981
+      const originalX = parseInt(props.originalX)
+      const originalY = parseInt(props.originalY)
+
+      // console.log('ORIGNAL X Y ', typeof (originalX), originalY)
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       // let newScaleX, newScaleY;
-      
+
+      console.log(originalX + " " + typeof (originalY) + " AND " + typeof (windowWidth) + " " + typeof (windowHeight))
       // newScaleX = (windowWidth / originalX)
       // newScaleY = (windowHeight / originalY)
 
@@ -126,7 +129,7 @@ function HomeIndex(props) {
       } else if (windowHeight < originalY) {
         heightDifference = (originalY - windowHeight) / originalY * 100;
       }
-      
+
       let fabricCanvas = JSON.parse(props.homeIndexCanvas);
       console.log(fabricCanvas)
       fabricCanvas.objects.forEach(obj => {
@@ -138,31 +141,31 @@ function HomeIndex(props) {
         //   obj.top -= obj.top * (20 / 100);
         //   obj.scaleY -= obj.scaleY * (20 / 100);
         // } 
-        if (isWidthGreater==true){
+        if (isWidthGreater == true) {
           obj.scaleX += obj.scaleX * (widthDifference / 100);
           obj.left += obj.left * (widthDifference / 100);
 
           obj.top += obj.top * (heightDifference / 100);
           obj.scaleY += obj.scaleY * (widthDifference / 100);
         }
-        else{
+        else {
           const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
           console.log(isMobile)
-          if (isMobile){
+          if (isMobile) {
             obj.scaleX -= obj.scaleX * (widthDifference / 100);
             obj.left -= obj.left * (widthDifference / 100);
 
             obj.top -= obj.top * (heightDifference / 100);
             obj.scaleY -= obj.scaleY * (heightDifference / 100);
           }
-          else{
+          else {
             obj.scaleX -= obj.scaleX * (widthDifference / 100);
             obj.left -= obj.left * (widthDifference / 100);
 
             obj.top -= obj.top * (heightDifference / 100);
             obj.scaleY -= obj.scaleY * (widthDifference / 100);
           }
-          
+
         }
         // if (isHeightGreater==true){
         //   obj.top += obj.top * (heightDifference / 100);
@@ -186,7 +189,7 @@ function HomeIndex(props) {
 
       var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas));
       fabricRef.current = canvas;
-      setcanvasBgColor(fabricCanvas.background);      
+      setcanvasBgColor(fabricCanvas.background);
       // Render the updated canvas
       canvas.renderAll();
     }
@@ -343,7 +346,7 @@ function HomeIndex(props) {
       > */}
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
-        
+
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
         {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
@@ -412,7 +415,7 @@ function HomeIndex(props) {
           }
         })} */}
       </div>
-    {/* </motion.div> */}
+      {/* </motion.div> */}
     </div>
   );
 }

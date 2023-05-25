@@ -108,12 +108,15 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
     useEffect(() => {
         if (uploadedFiles.length > 0 && fabricRef.current !== null) {
             uploadedFiles.forEach((image, key) => {
+                console.log('-------->', image)
                 new fabric.Image.fromURL(image.fileUrl, function (image) {
                     let scale = 300 / image.width;
                     var img = image.set({ left: 0, top: 0, scaleX: scale, scaleY: scale, padding: 0 });
                     image.set('dirty', true);
                     fabricRef.current.add(img);
                     setUploadedFiles([])
+                    // console.log(image)
+
                 })
             })
         }
@@ -139,7 +142,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
         // })
         const payload = {
             images: [],
-            canvas: JSON.stringify(fabricRef.current.toJSON())
+            canvas: JSON.stringify(fabricRef.current.toJSON()),
+            originalX: window.innerWidth,
+            originalY: window.innerHeight
         }
         const response = await API.patch(`project/home/${homeIndexId}`, payload);
         if (response.status === 225) {
@@ -191,7 +196,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId }) {
                 </button>
             </div>
             {/* <div style={{ width: '100%' }} ref={canvasContainer}> */}
-                <canvas className="sample-canvas" ref={canvasRef} id="canvas"/>
+            <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
             {/* </div> */}
             <ToastContainer />
         </div>
