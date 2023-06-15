@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import base_url from "../../constants/url";
 import { fabric } from 'fabric';
+import url from "../../constants/url";
 
 
 function HomeIndex(props) {
@@ -333,6 +334,25 @@ function HomeIndex(props) {
     mergeIndexImages();
   }, []);
 
+  //Video Placement
+  const [videos, setVideos] = useState([]);
+
+  const fetchVideos = async () => {
+    try {
+      const response = await axios.get(`${url}/project/video/get`); // Replace with your actual API endpoint
+      const data = response.data;
+      setVideos(data);
+      // console.log("VIDEO : ",data[0])
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchVideos();
+
+  }, []);
+
+
   return (
     <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden', backgroundColor: canvasBgColor || 'white' }}>
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
@@ -344,10 +364,35 @@ function HomeIndex(props) {
         animate={{ x: mediumCircle.x, y: mediumCircle.y, opacity: 1 }}
         transition={{ type: 'spring' }}
       > */}
-      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
+      <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%', position: 'relative' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
 
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+        {videos?.map((video) => (
+          <div key={video._id}>
+            {/* <h3>{video.title}</h3> */}
+            <video
+              src={`${url}/about/${video?.video}`}
+              // controls
+              loop
+              muted
+              autoPlay
+              playsInline
+              className="responsive-video" // Add a CSS class for responsive behavior
+              style={{
+                width: `${video.width}px`,
+                height: `${video.height}px`,
+                position: 'absolute',
+                top: `${video.y}px`,
+                left: `${video.x}px`,
+                objectFit: 'cover',
+                backgroundPosition: 'center',
+                zIndex: '0'
+              }}
+            />
+
+          </div>
+        ))}
         {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
           {

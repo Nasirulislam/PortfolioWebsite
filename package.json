@@ -20,6 +20,8 @@
     "react-blurhash": "^0.3.0",
     "react-bootstrap": "^2.6.0",
     "react-countup": "^6.3.2",
+    "react-dnd": "^14.0.0",
+    "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^18.2.0",
     "react-floaterjs": "^1.0.6",
     "react-icons": "^4.6.0",

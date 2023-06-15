@@ -20,6 +20,7 @@ import {
 } from "react-router-dom";
 import About from "./components/About";
 import HomeIndex from "./components/admin/HomeIndex";
+import VideoUpload from "./VideoUpload";
 
 function App() {
   const [projectsData, setProjectsData] = useState([]);
@@ -69,6 +70,7 @@ function App() {
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
+        console.log('here boss', response.data.data.home[2])
         setHomeIndexCanvas(response.data.data.home[2]?.canvas || null);
         setOriginalX(response.data.data.home[2]?.originalX);
         setOriginalY(response.data.data.home[2]?.originalY);
@@ -302,6 +304,13 @@ function App() {
                     ) : (
                       <NewLogin />
                     )
+                  }
+                />
+                <Route
+                  exact
+                  path="/video"
+                  element={
+                    <VideoUpload />
                   }
                 />
               </Routes>
