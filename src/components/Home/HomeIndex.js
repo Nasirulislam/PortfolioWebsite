@@ -39,11 +39,27 @@ function HomeIndex(props) {
   }
 
   const initFabric = () => {
+    if(fabricRef.current){
+      fabricRef.current.dispose();
+      fabricRef.current = null;
+    }
+
+    console.log("hom===========>>>", props.hom)
+    const hom_canvas = window.innerWidth >= 1440
+    ? props.hom.canvas
+    : window.innerWidth >= 1040
+    ? props.hom.canvasSmall
+    : window.innerWidth >= 720
+    ? props.hom.canvasTab
+    : window.innerWidth >= 420
+    ? props.hom.canvasMobile
+    : props.hom.canvasMobile
+
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
-      var canvasJSON = JSON.parse(props.homeIndexCanvas);
+      var canvasJSON = JSON.parse(hom_canvas);
       fabricRef.current = new fabric.Canvas(canvasRef.current, {
-        width: window.innerWidth,
+        width: window.innerWidth ,
         height: window.innerHeight
       });
     
@@ -76,39 +92,39 @@ function HomeIndex(props) {
         heightDifference = (originalY - windowHeight) / originalY * 100;
       }
 
-      let fabricCanvas = JSON.parse(props.homeIndexCanvas);
-      console.log(fabricCanvas)
-      fabricCanvas.objects.forEach(obj => {
+      let fabricCanvas = JSON.parse(hom_canvas);
+      // console.log(fabricCanvas)
+      // fabricCanvas.objects.forEach(obj => {
 
-        if (isWidthGreater == true) {
-          obj.scaleX += obj.scaleX * (widthDifference / 100);
-          obj.left += obj.left * (widthDifference / 100);
+      //   if (isWidthGreater == true) {
+      //     obj.scaleX += obj.scaleX * (widthDifference / 100);
+      //     obj.left += obj.left * (widthDifference / 100);
 
-          obj.top += obj.top * (heightDifference / 100);
-          obj.scaleY += obj.scaleY * (widthDifference / 100);
-        }
-        else {
-          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-          console.log(isMobile)
-          if (isMobile) {
-            obj.scaleX -= obj.scaleX * (widthDifference / 100);
-            obj.left -= obj.left * (widthDifference / 100);
+      //     obj.top += obj.top * (heightDifference / 100);
+      //     obj.scaleY += obj.scaleY * (widthDifference / 100);
+      //   }
+      //   else {
+      //     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      //     console.log(isMobile)
+      //     if (isMobile) {
+      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
+      //       obj.left -= obj.left * (widthDifference / 100);
 
-            obj.top -= obj.top * (heightDifference / 100);
-            obj.scaleY -= obj.scaleY * (heightDifference / 100);
-          }
-          else {
-            obj.scaleX -= obj.scaleX * (widthDifference / 100);
-            obj.left -= obj.left * (widthDifference / 100);
+      //       obj.top -= obj.top * (heightDifference / 100);
+      //       obj.scaleY -= obj.scaleY * (heightDifference / 100);
+      //     }
+      //     else {
+      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
+      //       obj.left -= obj.left * (widthDifference / 100);
 
-            obj.top -= obj.top * (heightDifference / 100);
-            obj.scaleY -= obj.scaleY * (widthDifference / 100);
-          }
+      //       obj.top -= obj.top * (heightDifference / 100);
+      //       obj.scaleY -= obj.scaleY * (widthDifference / 100);
+      //     }
 
-        }
+      //   }
 
-      });
-      console.log(fabricCanvas)
+      // });
+      // console.log(fabricCanvas)
 
       // var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas));
       // fabricRef.current = canvas;
@@ -317,7 +333,26 @@ function HomeIndex(props) {
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
 
+
+        <div
+        className="relative"
+        style={{
+          // width: window.innerWidth >= 1440
+          // ? window.innerWidth
+          // : window.innerWidth >= 1040
+          // ? 1040
+          // : window.innerWidth >= 720
+          // ? 720
+          // : window.innerWidth >= 420
+          // ? 420
+          // : 320,
+          width: window.innerWidth,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+        </div>
         {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
           {

@@ -145,6 +145,7 @@ function HomeMain(props) {
               landscapeHomeIndexImages={props.landscapeHomeIndexImages}
               originalX={props.originalX}
               originalY={props.originalY}
+              hom={props.hom}
             />
           </div>
         </div>

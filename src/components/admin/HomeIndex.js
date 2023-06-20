@@ -13,7 +13,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const [imagesPreview, setImagesPreview] = useState([]);
   const [screen, setScreen] = useState("large-laptop");
   const [selectedCanvas, setSelectedCanvas] = useState(hom?.canvas);
-  //   console.log("Home=================>>>>>>>>>>", hom)
   const [deleteIcon, setDeleteIcon] = useState(
     "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E"
   );
@@ -65,7 +64,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   // ****************** FABRIC-JS **************
   function deleteObject(eventData, transform) {
-    // console.log(transform);
     var target = transform.target;
     var canvas = target.canvas;
     canvas.remove(target);
@@ -115,16 +113,17 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
-  let canvasScale = 1;
+  const initFabric = async (canvas,width = window.innerWidth) => {
+    if(fabricRef.current){
+      fabricRef.current.dispose();
+      fabricRef.current = null;
+    }
 
-  const initFabric = async (canvas) => {
     fabricRef.current = new fabric.Canvas(canvasRef.current, {
-      width: screen==='large-laptop' ? "1440" : (screen==='small-laptop' ? "1040" : (screen==='tab' ? "720" : (screen==='mobile' ? "420" : ""))),
+      width: width,
       height: window.innerHeight,
       backgroundColor: homeIndexCanvas ? null : "pink",
     });
-    fabricRef.current.setWidth(screen==='large-laptop' ? "1440" : (screen==='small-laptop' ? "1040" : (screen==='tab' ? "720" : (screen==='mobile' ? "420" : ""))),);
-    fabricRef.current.setHeight(window.innerHeight);
 
     if (homeIndexCanvas) {
       loadCanvasFromJSON(canvas || hom.canvas);
@@ -144,22 +143,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
-
-  const ran = useRef(0);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (ran.current <= 0) {
-        const canvas = document.getElementsByClassName("upper-canvas")[0];
-        if (canvas) {
-          canvas.style.width = window.innerWidth / canvasScale + "px";
-          canvas.style.height = window.innerHeight + "px";
-          ran.current++;
-        }
-      }
-    }, 1000);
-  }, [screen]);
-
   const handleScreenChange = (e) => {
     setScreen(e.target.value);
   };
@@ -167,26 +150,32 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   useEffect(() => {
     if (hom) {
       if (screen === "large-laptop") {
-        initFabric(hom?.canvas);
+        initFabric(hom?.canvas, 1440);
       } else if (screen === "small-laptop") {
-        initFabric(hom?.canvasSmall);
+        initFabric(hom?.canvasSmall, 1040);
       } else if (screen === "tab") {
-        initFabric(hom?.canvasTab);
+        initFabric(hom?.canvasTab, 720);
       } else if (screen === "mobile") {
-        initFabric(hom?.canvasMobile);
+        initFabric(hom?.canvasMobile, 420);
       }
     }
   }, [screen]);
 
-//     useEffect(() => {
-//     setTimeout(() => {
-//       const canvas = document.getElementsByClassName("upper-canvas")[0];
-//       if (canvas) {
-//         canvas.style.width = screen==='large-laptop' ? "100%" : (screen==='small-laptop' ? "1040px" : (screen==='tab' ? "720px" : (screen==='mobile' ? "420px" : ""))) + "px";
-//         // canvas.style.height = window.innerHeight + "px";
-//       }
-//     }, 500);
-//   }, [screen]);
+  // const ran = useRef(0);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (ran.current <= 0) {
+  //       const canvas = document.getElementsByClassName("upper-canvas")[0];
+  //       if (canvas) {
+  //         canvas.style.width = window.innerWidth / canvasScale + "px";
+  //         canvas.style.width = screen==='large-laptop' ? "100%" : (screen==='small-laptop' ? "1040px" : (screen==='tab' ? "720px" : (screen==='mobile' ? "420px" : ""))) + "px";
+  //         canvas.style.height = window.innerHeight + "px";
+  //         ran.current++;
+  //       }
+  //     }
+  //   }, 1000);
+  // }, [screen]);
 
   function getVideoElement(url, width, height) {
     const videoE = document.createElement("video");
@@ -203,7 +192,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     source.src = url;
     source.type = "video/mp4";
     videoE.appendChild(source);
-    // console.log(videoE.videoWidth)
     return videoE;
   }
 
@@ -242,7 +230,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     fab_video.set("video_src", videoUrl);
     fab_video.set("src", videoUrl);
     fabricRef.current.add(fab_video);
-    console.log("================>>>>", fabricRef.current._objects);
+    // console.log("================>>>>", fabricRef.current._objects);
     videoE.load();
     fab_video.getElement().play();
     fabric.util.requestAnimFrame(function render() {
@@ -256,7 +244,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
       uploadedFiles.forEach((file, key) => {
         if (file.fileUrl.includes("mp4")) {
           handleVideos(file);
-          // console.log('fabvideo:', fab_video);
           setUploadedFiles([]);
         } else {
           new fabric.Image.fromURL(file.fileUrl, function (img) {
@@ -269,7 +256,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
               padding: 0,
             });
             img.set("dirty", true);
-            // console.log('IMAGEEEEEE', img)
             fabricRef.current.add(img);
             setUploadedFiles([]);
           });
@@ -283,7 +269,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
     return () => {
       fabricRef.current.dispose();
-      // canvasRef.current.dispose();
       fabricRef.current = null;
     };
   }, [canvasContainer.current, homeIndexCanvas]);
@@ -291,36 +276,30 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const submitCanvas = async () => {
     let payload;
     setLoading(!loading);
-    fabricRef.current.getObjects().forEach((e, index) => {
-      // console.log("new", e)
-      // e._element.src = uploadedFiles[index].fileUrl;
-      // fabricRef.current.renderAll();
-    });
     if (screen === "large-laptop") {
-        payload = {
-            images: [],
-            canvas: JSON.stringify(fabricRef.current.toJSON()),
-            originalX: window.innerWidth,
-            originalY: window.innerHeight,
-          };
-      } else if (screen === "small-laptop") {
-        payload = {
-            images: [],
-            canvasSmall: JSON.stringify(fabricRef.current.toJSON()),
-          };
-      } else if (screen === "tab") {
-        payload = {
-            images: [],
-            canvasTab: JSON.stringify(fabricRef.current.toJSON()),
-          };
-      } else if (screen === "mobile") {
-        payload = {
-            images: [],
-            canvasMobile: JSON.stringify(fabricRef.current.toJSON()),
-          };
-      }
-    
-    // console.log("Payload", payload)
+      payload = {
+        images: [],
+        canvas: JSON.stringify(fabricRef.current.toJSON()),
+        originalX: window.innerWidth,
+        originalY: window.innerHeight,
+      };
+    } else if (screen === "small-laptop") {
+      payload = {
+        images: [],
+        canvasSmall: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "tab") {
+      payload = {
+        images: [],
+        canvasTab: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "mobile") {
+      payload = {
+        images: [],
+        canvasMobile: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    }
+
     const response = await API.patch(`project/home/${homeIndexId}`, payload);
     if (response.status === 225) {
       toast("Uploaded successfully");
@@ -394,7 +373,15 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
       <div
         className="relative"
         style={{
-          width: screen==='large-laptop' ? "100%" : (screen==='small-laptop' ? "1040px" : (screen==='tab' ? "720px" : (screen==='mobile' ? "420px" : ""))),
+          width: screen === "large-laptop"
+                ? "100%"
+                : screen === "small-laptop"
+                ? "1040px"
+                : screen === "tab"
+                ? "720px"
+                : screen === "mobile"
+                ? "420px"
+                : "",
           marginLeft: "auto",
           marginRight: "auto",
         }}
