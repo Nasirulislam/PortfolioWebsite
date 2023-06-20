@@ -44,7 +44,7 @@ function HomeIndex(props) {
       fabricRef.current = null;
     }
 
-    console.log("hom===========>>>", props.hom)
+    // console.log("hom===========>>>", props.hom)
     const hom_canvas = window.innerWidth >= 1440
     ? props.hom.canvas
     : window.innerWidth >= 1040
@@ -71,7 +71,7 @@ function HomeIndex(props) {
       const windowHeight = window.innerHeight;
       // let newScaleX, newScaleY;
 
-      console.log(originalX + " " + typeof (originalY) + " AND " + typeof (windowWidth) + " " + typeof (windowHeight))
+      // console.log(originalX + " " + typeof (originalY) + " AND " + typeof (windowWidth) + " " + typeof (windowHeight))
 
       let widthDifference = 0;
       let heightDifference = 0;
@@ -172,7 +172,7 @@ function HomeIndex(props) {
 
       fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
         const data = fabricCanvas;
-        console.log('data', data);
+        // console.log('data', data);
         fabricRef.current.renderAll();
         data.objects.forEach((obj) => {
             if (obj.src.includes(".mp4")) {
