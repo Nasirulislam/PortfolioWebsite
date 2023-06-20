@@ -15,6 +15,7 @@ export default function About(props) {
     const [repName, setRepName] = useState("");
     const [repEmail, setRepEmail] = useState("");
     const [loading, setLoading] = useState(false);
+    const [aboutImages, setAboutImages] = useState([]);
 
     const navigate = useNavigate();
 
@@ -34,7 +35,21 @@ export default function About(props) {
         }
         getAboutPayload();
     }, [])
+    useEffect(() => {
+        fetchAboutImages();
+    }, []);
 
+    const fetchAboutImages = () => {
+        axios
+            .get(`${url}/project/about-image/get`)
+            .then((response) => {
+                setAboutImages(response.data.images);
+                console.log(response.data.images)
+            })
+            .catch((error) => {
+                console.error('Error retrieving about images:', error);
+            });
+    };
     return (
         <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black' }}>
             <div className="about-section">
@@ -44,13 +59,13 @@ export default function About(props) {
                             props.fromAbout && (
                                 <>
                                     <h1>{title}</h1>
-                                    <h1 style={{whiteSpace: 'pre-line'}}>{detail}</h1>
+                                    <h1 style={{ whiteSpace: 'pre-line' }}>{detail}</h1>
                                     <br /><br />
                                 </>
                             )
                         }
                         <>
-                        <br /><br />
+                            <br /><br />
                             <h1>{locTxt}</h1>
                             <br /><br />
                             <h1>{email}</h1>
@@ -62,8 +77,22 @@ export default function About(props) {
                     </div>
                 )}
 
-                <img src={AboutImage} className="w-100" />
+                {/* <img src={AboutImage} className="w-100" /> */}
+                <div className='p-20  py-20 px-44'>
+                    <div className="grid grid-cols-5 gap-6 mt-2">
+                        {aboutImages &&
+                            aboutImages.map((data, index) => (
+                                <div key={index} className="flex flex-col items-center">
 
+                                    <img
+                                        src={`${url}/about/${data?.image}`}
+                                        alt={`About Image ${index + 1}`}
+                                        className="h-[150px] w-[150px] object-cover"
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                </div>
                 {/* {props.portfolios.length > 0 && (
                     <ul id="about-portfolio">
                         {

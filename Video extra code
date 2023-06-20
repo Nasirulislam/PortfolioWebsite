@@ -1,0 +1,57 @@
+
+
+
+
+
+
+
+// JSXXXXXX
+
+{/* {file && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: `${position.y}px`,
+                        left: `${position.x}px`,
+                    }}
+                    onMouseDown={handleMouseDown}
+                >
+                    <div
+                        style={{
+                            width: `${size.width}px`,
+                            height: `${size.height}px`,
+                            border: '1px solid black',
+                            outline: 'none',
+                            boxShadow: 'none',
+                        }}
+                    >
+                        <div
+                            className="resize-dot top-left"
+                            onMouseDown={(e) => handleResize(e, 'top-left')}
+                        />
+                        <div
+                            className="resize-dot top-right"
+                            onMouseDown={(e) => handleResize(e, 'top-right')}
+                        />
+                        <div
+                            className="resize-dot bottom-left"
+                            onMouseDown={(e) => handleResize(e, 'bottom-left')}
+                        />
+                        <div
+                            className="resize-dot bottom-right"
+                            onMouseDown={(e) => handleResize(e, 'bottom-right')}
+                        />
+
+                        <video
+                            src={URL.createObjectURL(file)}
+                            style={{
+                                width: '100%',
+                                height: '100%', objectFit: 'cover', backgroundPosition: 'center'
+                            }}
+                            autoPlay
+                            // controls
+                            loop
+                        />
+                    </div>
+                </div>
+            )} */}
