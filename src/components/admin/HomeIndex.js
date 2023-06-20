@@ -152,7 +152,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
       if (screen === "large-laptop") {
         initFabric(hom?.canvas, window.innerWidth);
       } else if (screen === "small-laptop") {
-        initFabric(hom?.canvasSmall, 1040);
+        initFabric(hom?.canvasSmall, 1080);
       } else if (screen === "tab") {
         initFabric(hom?.canvasTab, 720);
       } else if (screen === "mobile") {
@@ -376,7 +376,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
           width: screen === "large-laptop"
                 ? "100%"
                 : screen === "small-laptop"
-                ? "1040px"
+                ? "1080px"
                 : screen === "tab"
                 ? "720px"
                 : screen === "mobile"

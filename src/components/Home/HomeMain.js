@@ -122,7 +122,7 @@ function HomeMain(props) {
           id="homeIndex"
         >
           {value.toLowerCase() !== "david ellis" && (
-            <motion.div
+            <div
               className="home-title change-title"
               initial={"hidden"}
               animate={"visible"}
@@ -137,7 +137,7 @@ function HomeMain(props) {
                   {value}
                 </ReactTextTransition>
               </h1>
-            </motion.div>
+            </div>
           )}
           <div
             className="card-wrapper mb-4"
