@@ -20,6 +20,7 @@ import {
 } from "react-router-dom";
 import About from "./components/About";
 import HomeIndex from "./components/admin/HomeIndex";
+import VideoUpload from "./VideoUpload";
 
 function App() {
   const [projectsData, setProjectsData] = useState([]);
@@ -32,6 +33,9 @@ function App() {
   const [dataFetc, setDataFetch] = useState(false);
   const [homeIndexImages, setHomeIndexImages] = useState([]);
   const [homeIndexCanvas, setHomeIndexCanvas] = useState(null);
+  const [hom, setHom] = useState(null);
+  const [originalX, setOriginalX] = useState('');
+  const [originalY, setOriginalY] = useState('');
   const [landscapeHomeIndexImages, setLandscapeHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
@@ -63,11 +67,15 @@ function App() {
     const getHomeIndex = async () => {
       const response = await axios.get(base_url + "/project/home");
       if (response.status === 210) {
+        console.log('main page', response.data.data.home[2])
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
         setHomeIndexCanvas(response.data.data.home[2]?.canvas || null);
+        setOriginalX(response.data.data.home[2]?.originalX);
+        setOriginalY(response.data.data.home[2]?.originalY);
         setHomeIndexId(response.data.data.home[2]?._id || null);
+        setHom(response.data.data.home[2] || null);
       } else {
         console.log(response.message);
       }
@@ -250,6 +258,9 @@ function App() {
                         landscapeHomeIndexImages={landscapeHomeIndexImages}
                         indexBackground={indexBackground}
                         homeIndexCanvas={homeIndexCanvas}
+                        hom={hom}
+                        originalX={originalX}
+                        originalY={originalY}
                       />
                     ) : (
                       <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>
@@ -284,7 +295,7 @@ function App() {
                 />}
                 />
                 <Route exact path="/admin" element={<NewLogin />} />
-                <Route exact path="/admin/home-index" element={<HomeIndex homeIndexCanvas={homeIndexCanvas}
+                <Route exact path="/admin/home-index" element={<HomeIndex homeIndexCanvas={homeIndexCanvas} hom={hom}
                   homeIndexId={homeIndexId} />} />
                 <Route
                   exact
@@ -295,6 +306,13 @@ function App() {
                     ) : (
                       <NewLogin />
                     )
+                  }
+                />
+                <Route
+                  exact
+                  path="/video"
+                  element={
+                    <VideoUpload />
                   }
                 />
               </Routes>

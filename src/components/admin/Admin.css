@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
@@ -8,7 +8,7 @@
   width: 50%;
 }
 .admin-section {
-  background-image: url('../../Assets/images/bg.png'); 
+  background-image: url("../../Assets/images/bg.png");
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -38,14 +38,14 @@ section {
 .admin-brand {
   height: 80px;
   color: white;
-  font-weight:700 ;
+  font-weight: 700;
   font-size: 35px;
   padding: 20px;
 }
 .admin-brand .typed {
   color: white !important;
 }
-.admin-brand:hover{
+.admin-brand:hover {
   color: white !important;
 }
 
@@ -75,8 +75,7 @@ input[type="file"] {
 .edit-image-section {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll !important; 
-
+  overflow-x: scroll !important;
 }
 
 ::-webkit-scrollbar-track {
@@ -92,7 +91,6 @@ input[type="file"] {
 /* .edit-image-section::-webkit-scrollbar {
   width: 10px !important;
 } */
-
 
 .images {
   display: flex;
@@ -159,23 +157,23 @@ label:hover,
   color: red;
 }
 
-.login-section{
+.login-section {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
-.login-card{
- width: 30% ;
+.login-card {
+  width: 30%;
 }
-.edit-images-section{
+.edit-images-section {
   height: 100vh;
 }
-.ChPass-section{
+.ChPass-section {
   height: 100vh;
 }
 .nav-pills {
-  width: 200px !important;  
+  width: 200px !important;
 }
 .nav-item a {
   width: 100% !important;
@@ -184,4 +182,22 @@ label:hover,
   background-color: inherit !important;
 } */
 
+.custom-file-input {
+  display: none;
+}
 
+.upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.upload-button span {
+  font-size: 16px;
+  font-weight: bold;
+}

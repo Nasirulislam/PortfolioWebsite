@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Home.css";
+import { motion } from "framer-motion";
+import axios from "axios";
+import base_url from "../../constants/url";
 import { fabric } from 'fabric';
-import Skeleton from "./Skeleton";
 
 
 function HomeIndex(props) {
@@ -10,10 +12,10 @@ function HomeIndex(props) {
   const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
   const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
   const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [canvasBgColor, setcanvasBgColor] = useState('white');
   const fabricRef = useRef(null);
   const canvasRef = useRef(null);
   const canvasParentRef = useRef(null);
-  const [placeholder, setPlaceholder] = useState(true);
 
   const mousemove = (e) => {
     setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
@@ -21,15 +23,15 @@ function HomeIndex(props) {
     setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
   };
 
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
-  }
+  // function getWindowDimensions() {
+  //   const { innerWidth: width, innerHeight: height } = window;
+  //   return {
+  //     width,
+  //     height
+  //   };
+  // }
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  // const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [windowWidth, setWindow] = useState(130);
 
   function clipToBoundary(ctx) {
@@ -37,77 +39,156 @@ function HomeIndex(props) {
   }
 
   const initFabric = () => {
+    if(fabricRef.current){
+      fabricRef.current.dispose();
+      fabricRef.current = null;
+    }
+
+    console.log("hom===========>>>", props.hom)
+    const hom_canvas = window.innerWidth >= 1440
+    ? props.hom.canvas
+    : window.innerWidth >= 1040
+    ? props.hom.canvasSmall
+    : window.innerWidth >= 720
+    ? props.hom.canvasTab
+    : window.innerWidth >= 420
+    ? props.hom.canvasMobile
+    : props.hom.canvasMobile
+
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
-      // fabricRef.current = new fabric.Canvas(canvasRef.current, {
-      //   // height: canvasParentRef.current.clientHeight,
-      //   // width: canvasParentRef.current.clientWidth,
-      //   // backgroundColor: 'pink'
-      //   width: window.innerWidth,
-      //   height: window.innerHeight
-      // });
-
-
-      // fabricRef.current.loadFromJSON(props.homeIndexCanvas);
-
       // Get the canvas object from its JSON representation
+      var canvasJSON = JSON.parse(hom_canvas);
       fabricRef.current = new fabric.Canvas(canvasRef.current, {
-        width: window.innerWidth,
+        width: window.innerWidth ,
         height: window.innerHeight
       });
-      var canvas = fabricRef.current.loadFromJSON(props.homeIndexCanvas, function () {
-        // Get the container element and its dimensions
-        var container = document.getElementsByClassName('canvas-container')[0];
-        var containerWidth = container.offsetWidth;
-        var containerHeight = container.offsetHeight;
+    
+      const originalX = parseInt(props.originalX)
+      const originalY = parseInt(props.originalY)
 
-        // Calculate the aspect ratios
-        var containerAspectRatio = containerWidth / containerHeight;
-        var canvasAspectRatio = canvas.width / canvas.height;
+      // console.log('ORIGNAL X Y ', typeof (originalX), originalY)
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      // let newScaleX, newScaleY;
 
-        // Determine the new dimensions of the canvas object
-        if (containerAspectRatio > canvasAspectRatio) {
-          // Container is wider than the canvas object
-          var newHeight = containerHeight;
-          var newWidth = containerHeight * canvasAspectRatio;
-        } else {
-          // Container is taller than the canvas object
-          var newWidth = containerWidth;
-          var newHeight = containerWidth / canvasAspectRatio;
-        }
+      console.log(originalX + " " + typeof (originalY) + " AND " + typeof (windowWidth) + " " + typeof (windowHeight))
 
-        // Update the dimensions of the canvas object
-        canvas.setDimensions({ width: newWidth, height: canvas.height });
-        // canvas.set('viewportTransform', [1, 0, 0, 1, -50, -50]);
+      let widthDifference = 0;
+      let heightDifference = 0;
+      let isWidthGreater = false;
+      let isHeightGreater = false;
 
-        // Iterate through the images and update their positions
-        canvas.getObjects('image').forEach(function (image) {
-          console.log(image)
-          // image.scale(image.scaleX/1.1, image.scaleY/1.1)
-          image.set({
-            scaleX: image.scaleX / 1.3,
-            scaleY: image.scaleY / 1.3,
-            clipTo: clipToBoundary,
-            bottom: 100
-          })
+      if (windowWidth > originalX) {
+        widthDifference = (windowWidth - originalX) / originalX * 100;
+        isWidthGreater = true;
+      } else if (windowWidth < originalX) {
+        widthDifference = (originalX - windowWidth) / originalX * 100;
+      }
+
+      if (windowHeight > originalY) {
+        heightDifference = (windowHeight - originalY) / originalY * 100;
+        isHeightGreater = true;
+      } else if (windowHeight < originalY) {
+        heightDifference = (originalY - windowHeight) / originalY * 100;
+      }
+
+      let fabricCanvas = JSON.parse(hom_canvas);
+      // console.log(fabricCanvas)
+      // fabricCanvas.objects.forEach(obj => {
+
+      //   if (isWidthGreater == true) {
+      //     obj.scaleX += obj.scaleX * (widthDifference / 100);
+      //     obj.left += obj.left * (widthDifference / 100);
+
+      //     obj.top += obj.top * (heightDifference / 100);
+      //     obj.scaleY += obj.scaleY * (widthDifference / 100);
+      //   }
+      //   else {
+      //     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      //     console.log(isMobile)
+      //     if (isMobile) {
+      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
+      //       obj.left -= obj.left * (widthDifference / 100);
+
+      //       obj.top -= obj.top * (heightDifference / 100);
+      //       obj.scaleY -= obj.scaleY * (heightDifference / 100);
+      //     }
+      //     else {
+      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
+      //       obj.left -= obj.left * (widthDifference / 100);
+
+      //       obj.top -= obj.top * (heightDifference / 100);
+      //       obj.scaleY -= obj.scaleY * (widthDifference / 100);
+      //     }
+
+      //   }
+
+      // });
+      // console.log(fabricCanvas)
+
+      // var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas));
+      // fabricRef.current = canvas;
+      // setcanvasBgColor(fabricCanvas.background);
+      // canvas.renderAll();
+
+      function getVideoElement(url, width, height) {
+        const videoE = document.createElement('video');
+        videoE.width = width;
+        videoE.height = height;
+        videoE.muted = true;
+        videoE.loop = true;
+        videoE.autoplay = true;
+        videoE.playsInline = true;
+        videoE.controls = true;
+        videoE.crossOrigin = 'anonymous';
+        videoE.src = url;
+        const source = document.createElement('source');
+        source.src = url;
+        source.type = 'video/mp4';
+        videoE.appendChild(source);
+        // console.log(videoE.videoWidth)
+        return videoE;
+    }
+
+
+    const handleVideosFromData = (file) => {
+        const videoUrl = file.src; // Use the file URL obtained from the backend
+        const originalWidth = 1080;
+        const originalHeight = 1000;
+        const videoE = getVideoElement(videoUrl, originalWidth, originalHeight);
+        const fab_video = new fabric.Image(videoE, {
+            ...file
         });
+        fab_video.set('video_src', videoUrl);
+        fab_video.set('src', videoUrl);
+        fabricRef.current.add(fab_video);
+        videoE.load();
+        fab_video.getElement().play();
+        fabric.util.requestAnimFrame(function render() {
+            fabricRef.current.renderAll();
+            fabric.util.requestAnimFrame(render);
+        });
+    }
 
-        setPlaceholder(false);
-      });
+      fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
+        const data = fabricCanvas;
+        console.log('data', data);
+        fabricRef.current.renderAll();
+        data.objects.forEach((obj) => {
+            if (obj.src.includes(".mp4")) {
+                handleVideosFromData(obj)
+            }
+        })
+    });
 
-      fabricRef.current = canvas;
-      // Render the updated canvas
-      canvas.renderAll();
     }
   }
+
+
   useEffect(() => {
     initFabric();
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, [props.homeIndexCanvas]);
+
 
   useEffect(() => {
     const zoomElement = document.querySelector('.zoom')
@@ -122,7 +203,7 @@ function HomeIndex(props) {
     const HEIGHT = zoomElement.clientHeight
     const IMAGE_WIDTH = imgElement.clientWidth
     const IMAGE_HEIGHT = imgElement.clientHeight
-    const ZOOM_SPEED = windowDimensions.width <= 500 ? 80 : 65; // Lower is faster
+    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 65; // Lower is faster
     const ZOOM_BREAKPOINT = (WIDTH / IMAGE_WIDTH + 10) // When it should stop zooming in
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED // Absolute position, when the Element reached maximum size
@@ -239,20 +320,39 @@ function HomeIndex(props) {
   }, []);
 
   return (
-    <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>
+    <div id="home-page" className="home-page" style={{ width: '100%', height: '100%', overflowX: 'hidden', backgroundColor: canvasBgColor || 'white' }}>
       <div className="home-title change-title zoom" style={{ background: 'transparent' }}>
         <h1 style={{ cursor: 'pointer' }}>
           {props.value}
         </h1>
       </div>
-      {
-        placeholder && (
-          <Skeleton />
-        )
-      }
+      {/* <motion.div
+        animate={{ x: mediumCircle.x, y: mediumCircle.y, opacity: 1 }}
+        transition={{ type: 'spring' }}
+      > */}
       <div className="px-0 d-flex justify-content-between tech-slideshow flex-wrap" style={{ width: '100%', height: '100%', marginBottom: '10%' }}>
         {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
+
+
+        <div
+        className="relative"
+        style={{
+          // width: window.innerWidth >= 1440
+          // ? window.innerWidth
+          // : window.innerWidth >= 1040
+          // ? 1040
+          // : window.innerWidth >= 720
+          // ? 720
+          // : window.innerWidth >= 420
+          // ? 420
+          // : 320,
+          width: window.innerWidth,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+        </div>
         {/* </div> */}
         {/* {homeIndexImages.map((banner, index) => {
           {
@@ -320,6 +420,7 @@ function HomeIndex(props) {
           }
         })} */}
       </div>
+      {/* </motion.div> */}
     </div>
   );
 }

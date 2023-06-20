@@ -66,6 +66,7 @@ function HomeMain(props) {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
         setProjectsData(response.data.data.sortedProjects);
+
         if (response.data.data.sortedProjects.length > 20) {
           setProjectToDisplay(response.data.data.sortedProjects.slice(0, 20));
         } else {
@@ -142,6 +143,9 @@ function HomeMain(props) {
               value={value}
               homeIndexImages={props.homeIndexImages}
               landscapeHomeIndexImages={props.landscapeHomeIndexImages}
+              originalX={props.originalX}
+              originalY={props.originalY}
+              hom={props.hom}
             />
           </div>
         </div>

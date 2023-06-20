@@ -28,7 +28,7 @@ function Amoeba(props) {
                     style={{ cursor: 'pointer', maxHeight: '100%' }}
                     onClick={() => props.handleSlug()}
                   >
-                    <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false}/>
+                    <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
                   </div>
 
                 // <img

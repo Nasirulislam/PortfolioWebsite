@@ -78,7 +78,7 @@ function AddProject({ projects }) {
       const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
       if (response.status === 200) {
 
-        response.hash = await generateImgBlurHash(response.thumbnailUrl);
+        // response.hash = await generateImgBlurHash(response.thumbnailUrl);
 
         // get file dimensions
         var imageObj = new Image();
