@@ -103,7 +103,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const loadCanvasFromJSON = (canvasData) => {
     fabricRef.current.loadFromJSON(canvasData, function () {
       const data = JSON.parse(canvasData);
-      console.log("data", data);
+      // console.log("data", data);
       fabricRef.current.renderAll();
       data.objects.forEach((obj) => {
         if (obj.src.includes(".mp4")) {
@@ -113,7 +113,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
-  const initFabric = async (canvas,width = window.innerWidth) => {
+  const initFabric = async (canvas, width = window.innerWidth) => {
     if(fabricRef.current){
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -150,9 +150,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   useEffect(() => {
     if (hom) {
       if (screen === "large-laptop") {
-        initFabric(hom?.canvas, 1440);
+        initFabric(hom?.canvas, window.innerWidth);
       } else if (screen === "small-laptop") {
-        initFabric(hom?.canvasSmall, 1040);
+        initFabric(hom?.canvasSmall, 1080);
       } else if (screen === "tab") {
         initFabric(hom?.canvasTab, 720);
       } else if (screen === "mobile") {
@@ -376,7 +376,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
           width: screen === "large-laptop"
                 ? "100%"
                 : screen === "small-laptop"
-                ? "1040px"
+                ? "1080px"
                 : screen === "tab"
                 ? "720px"
                 : screen === "mobile"

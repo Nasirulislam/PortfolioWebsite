@@ -251,7 +251,7 @@ s.cardTemp {
   border: none;
 }
 
-.zoom {
+.zoom2 {
   height: 100% !important;
   width: 100% !important;
   display: grid;
@@ -259,6 +259,16 @@ s.cardTemp {
   position: fixed !important;
   top: 0;
   left: 0;
+  background: transparent;
+}
+
+.zoom {
+  display: grid;
+  place-items: center;
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: transparent;
 }
 

@@ -67,7 +67,7 @@ function App() {
     const getHomeIndex = async () => {
       const response = await axios.get(base_url + "/project/home");
       if (response.status === 210) {
-        console.log('main page', response.data.data.home[2])
+        // console.log('main page', response.data.data.home[2])
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
