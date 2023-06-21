@@ -375,7 +375,7 @@ function HomeIndex(props) {
     >
       <div
         className="home-title change-title zoom"
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", top: "50%", left: "50%" }}
       >
         <h1 style={{ cursor: "pointer" }}>{props.value}</h1>
       </div>
