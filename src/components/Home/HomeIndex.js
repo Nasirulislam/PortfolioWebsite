@@ -16,19 +16,19 @@ function HomeIndex(props) {
   const canvasParentRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [bgColor, setBgColor] = useState(false);
+
 
   const style = {
     // position: "absolute",
     // top: "50%",
     // left: "50%",
     cursor: "pointer !important",
-    transform: `${
-      isHovered
-        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${
-            (-1 * (position.y - window.innerHeight / 2)) / 17
-          }px)`
-        : ""
-    }`,
+    transform: `${isHovered
+      ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
+      }px)`
+      : ""
+      }`,
     transition: "transform 0.5s ease-out",
   };
 
@@ -76,23 +76,23 @@ function HomeIndex(props) {
       window.innerWidth >= 1440
         ? props.hom.canvas
         : window.innerWidth >= 1080
-        ? props.hom.canvasSmall
-        : window.innerWidth >= 720
-        ? props.hom.canvasTab
-        : window.innerWidth >= 420
-        ? props.hom.canvasMobile
-        : props.hom.canvasMobile;
+          ? props.hom.canvasSmall
+          : window.innerWidth >= 720
+            ? props.hom.canvasTab
+            : window.innerWidth >= 420
+              ? props.hom.canvasMobile
+              : props.hom.canvasMobile;
 
     const wid =
       window.innerWidth >= 1440
         ? 1440
         : window.innerWidth >= 1080
-        ? 1080
-        : window.innerWidth >= 720
-        ? 720
-        : window.innerWidth >= 420
-        ? 420
-        : 420;
+          ? 1080
+          : window.innerWidth >= 720
+            ? 720
+            : window.innerWidth >= 420
+              ? 420
+              : 420;
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
@@ -132,6 +132,9 @@ function HomeIndex(props) {
       }
 
       let fabricCanvas = JSON.parse(hom_canvas);
+
+
+
       // console.log(fabricCanvas)
       // fabricCanvas.objects.forEach(obj => {
 
@@ -207,6 +210,9 @@ function HomeIndex(props) {
           fabric.util.requestAnimFrame(render);
         });
       };
+
+      setBgColor(fabricCanvas?.background)
+      console.log('---->', bgColor)
 
       fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
         const data = fabricCanvas;
@@ -367,7 +373,7 @@ function HomeIndex(props) {
         width: "100%",
         height: "100%",
         overflowX: "hidden",
-        backgroundColor: canvasBgColor || "white",
+        backgroundColor: bgColor,
       }}
       onMouseMove={handleMouseMove}
       onMouseOver={handleMouseOver}

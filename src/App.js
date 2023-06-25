@@ -44,7 +44,6 @@ function App() {
   const [fromAbout, setFromAbout] = useState(false);
   const [homeIndexId, setHomeIndexId] = useState(null);
 
-
   function changeIndex(index) {
     if (index < 0) {
       index = "00";
@@ -191,9 +190,9 @@ function App() {
                           <span>INDEX</span>
                         </Link>
                         :
-                        <a id="" onClick={handleClose}>
+                        <Link to="/" id="" onClick={handleClose} style={{ textDecoration: 'none' }}>
                           <span>CLOSE</span>
-                        </a>
+                        </Link>
                       : <></>
                   }
                 </h3>
@@ -207,9 +206,9 @@ function App() {
                       setFromAbout(true)
                       AboutToogle()
                     }} className="about-button">
-                      <a id="style-2" data-replace={aboutText}>
+                      <Link to="/" id="style-2" data-replace={aboutText}>
                         <span>{aboutText}</span>
-                      </a>
+                      </Link>
                     </h3>
                   </div>
                 )}
@@ -232,9 +231,9 @@ function App() {
                       setFromAbout(false)
                       AboutToogle()
                     }}>
-                      <a id="style-2" >
+                      <Link to="/" id="style-2" >
                         <span>{Text00}</span>
-                      </a>
+                      </Link>
                     </h3>
                   </div>
                 )}

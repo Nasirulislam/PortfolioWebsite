@@ -114,7 +114,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   };
 
   const initFabric = async (canvas, width = window.innerWidth) => {
-    if(fabricRef.current){
+    if (fabricRef.current) {
       fabricRef.current.dispose();
       fabricRef.current = null;
     }
@@ -127,6 +127,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
     if (homeIndexCanvas) {
       loadCanvasFromJSON(canvas || hom.canvas);
+      // console.log('canvas :::', canvas)
     }
 
     fabricRef.current.on("object:added", onObjectAdded);
@@ -266,7 +267,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   useEffect(() => {
     initFabric();
-
+    console.log('-------------------', fabricRef.current['backgroundColor'])
     return () => {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -313,7 +314,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     if (fabricRef.current) {
       fabricRef.current.backgroundColor = e.target.value;
       fabricRef.current.requestRenderAll();
+      // console.log('-------------------', fabricRef.current.backgroundColor)
     }
+
   };
 
   return (
@@ -337,7 +340,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
               name="images"
               onChange={onSelectFile}
               multiple
-              // accept="image/*"
+            // accept="image/*"
             />
           </label>
 
@@ -374,14 +377,14 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
         className="relative"
         style={{
           width: screen === "large-laptop"
-                ? "100%"
-                : screen === "small-laptop"
-                ? "1080px"
-                : screen === "tab"
+            ? "100%"
+            : screen === "small-laptop"
+              ? "1080px"
+              : screen === "tab"
                 ? "720px"
                 : screen === "mobile"
-                ? "420px"
-                : "",
+                  ? "420px"
+                  : "",
           marginLeft: "auto",
           marginRight: "auto",
         }}
