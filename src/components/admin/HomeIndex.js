@@ -276,11 +276,11 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     console.log('here ', file)
     const gif = await afterGif(
       gifUrl,
-      height,
-      width,
+      // height,
+      // width,
     );
     // gif.set({ top: 300, left: 50 });
-    // gif.set({ ...file });
+    gif.set({ ...file });
     // gif.set("src", gifUrl);
     // gif.set("gif_src", gifUrl);
     fabricReference.add(gif);
