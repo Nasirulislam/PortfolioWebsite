@@ -8,7 +8,7 @@ import { parseGIF, decompressFrames } from "gifuct-js";
  * @param {number} maxDuration Optional, in milliseconds reduce the gif frames to a maximum duration, ex: 2000 for 2 seconds
  * @returns {*} {error} object if any or a sprite sheet of the converted gif as dataURL
  */
-export const gifToSprite = async (gif, maxWidth, maxHeight, maxDuration) => {
+export const afterSprite = async (gif, maxWidth, maxHeight, maxDuration) => {
     let arrayBuffer;
     let error;
     let frames;
@@ -29,7 +29,6 @@ export const gifToSprite = async (gif, maxWidth, maxHeight, maxDuration) => {
     // else the gif is a URL or a dataUrl, fetch the arrayBuffer
     else {
         try {
-            console.log(gif)
             arrayBuffer = await fetch(gif).then((resp) => resp.arrayBuffer());
         } catch (err) {
             error = err;

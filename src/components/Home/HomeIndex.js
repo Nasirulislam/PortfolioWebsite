@@ -74,14 +74,14 @@ function HomeIndex(props) {
     // console.log("hom===========>>>", props.hom)
     const hom_canvas =
       window.innerWidth >= 1440
-        ? props.hom.canvas
+        ? props.hom?.canvas
         : window.innerWidth >= 1080
-          ? props.hom.canvasSmall
+          ? props.hom?.canvasSmall
           : window.innerWidth >= 720
-            ? props.hom.canvasTab
+            ? props.hom?.canvasTab
             : window.innerWidth >= 420
-              ? props.hom.canvasMobile
-              : props.hom.canvasMobile;
+              ? props.hom?.canvasMobile
+              : props.hom?.canvasMobile;
 
     const wid =
       window.innerWidth >= 1440

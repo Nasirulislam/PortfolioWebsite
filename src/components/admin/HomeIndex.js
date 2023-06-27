@@ -8,6 +8,7 @@ import url from "../../constants/url";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
 import { fabricGif } from "../../Gifs/fabricGif";
+import { afterGif } from "../../Gifs/afterGif";
 
 export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const [loading, setLoading] = useState(false);
@@ -221,6 +222,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   };
 
   const handleGifsFromData = (file) => {
+    console.log("handlegifsfromdata", file)
     // const gifUrl = file.src
     handleSavedGifs(file, 200, 200, fabricRef.current)
   }
@@ -261,24 +263,28 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
       width,
     );
     gif.set({ top: 300, left: 50 });
-    gif.set("src", url);
-    gif.set("gif_src", url);
+    // gif.set("src", url);
+    // gif.set("gif_src", url);
     fabricReference.add(gif);
   }
 
 
   //from backend db
   const handleSavedGifs = async (file, width, height, fabricReference) => {
-    const gifUrl = file.url;
+    const gifUrl = file.src;
     console.log('here URL', gifUrl)
     console.log('here ', file)
-    const gif = await fabricGif(
+    const gif = await afterGif(
       gifUrl,
       height,
       width,
     );
-    gif.set({ ...file });
+    // gif.set({ top: 300, left: 50 });
+    // gif.set({ ...file });
+    // gif.set("src", gifUrl);
+    // gif.set("gif_src", gifUrl);
     fabricReference.add(gif);
+
   }
 
 
