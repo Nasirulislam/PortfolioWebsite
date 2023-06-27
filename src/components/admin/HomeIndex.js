@@ -192,6 +192,8 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     const source = document.createElement("source");
     source.src = url;
     source.type = "video/mp4";
+
+
     videoE.appendChild(source);
     return videoE;
   }
