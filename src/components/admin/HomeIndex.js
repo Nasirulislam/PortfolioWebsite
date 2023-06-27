@@ -7,13 +7,6 @@ import { Spinner } from "react-bootstrap";
 import url from "../../constants/url";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
-import gifffer from "gifffer";
-import GIF from 'gif.js';
-// import canvas2video from 'canvas2video';
-import { Canvas2Video } from 'canvas2video';
-import { createCanvas } from 'canvas';
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-
 
 export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const [loading, setLoading] = useState(false);
@@ -57,20 +50,10 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     submitBtn.current.disabled = true;
 
     for (let i = 0; i < e.target.files.length; i++) {
-      let file = e.target.files[i];
-
-      // if(file.type === "image/gif"){
-      //   console.log("going to convert to video")
-      //   const vid = await convertGifToVideo(file)
-      //   console.log("result: ", vid);
-      //   file = vid
-      // }
-
       const response = await API.formData("project/v2/s3/upload", {
-        file: file,
+        file: e.target.files[i],
       });
       if (response.status === 200) {
-        console.log(response)
         delete response.status;
         setUploadedFiles((oldArray) => [response, ...oldArray]);
       }
@@ -126,9 +109,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
         if (obj.src.includes(".mp4")) {
           handleVideosFromData(obj);
         }
-        // if (obj.src.includes(".gif")) {
-        //   handleGifsFromData(obj);
-        // }
       });
     });
   };
@@ -147,6 +127,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
     if (homeIndexCanvas) {
       loadCanvasFromJSON(canvas || hom.canvas);
+      // console.log('canvas :::', canvas)
     }
 
     fabricRef.current.on("object:added", onObjectAdded);
@@ -181,189 +162,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     }
   }, [screen]);
 
- 
-
-  async function convertGifToVideo(gifFile) {
-    const ffmpeg = createFFmpeg({ log: true });
-    await ffmpeg.load();
-  
-    const reader = new FileReader();
-  
-    return new Promise(async (resolve, reject) => {
-      reader.onload = async () => {
-        const arrayBuffer = reader.result;
-        const gifBuffer = new Uint8Array(arrayBuffer);
-  
-        const inputFilename = 'input.gif';
-        const outputFilename = 'output.mp4';
-  
-        ffmpeg.FS('writeFile', inputFilename, gifBuffer);
-        await ffmpeg.run('-i', inputFilename, '-vf', 'fps=30', outputFilename);
-  
-        const videoData = ffmpeg.FS('readFile', outputFilename);
-        const videoObject = new File([videoData.buffer], outputFilename, { type: 'video/mp4' });
-        resolve(videoObject);
-      };
-  
-      reader.onerror = () => {
-        reject(new Error('Failed to read the GIF file.'));
-      };
-  
-      reader.readAsArrayBuffer(gifFile);
-    });
-  }
-
-
-
-
-  async function convertGifToVideo4(gifFile) {
-    const ffmpeg = createFFmpeg({ log: true });
-    await ffmpeg.load();
-  
-    const reader = new FileReader();
-  
-    return new Promise((resolve, reject) => {
-      reader.onload = async () => {
-        const arrayBuffer = reader.result;
-        const gifBuffer = new Uint8Array(arrayBuffer);
-  
-        // const gif = new GIF({
-        //   workerScript: URL.createObjectURL(new Blob([`(${GIF.worker.toString()})()`])),
-        //   workers: 2
-        // });
-
-        const gif = new GIF({
-          workerScript: URL.createObjectURL(new Blob([`(${GIF.worker.toString().replace('SharedArrayBuffer', 'ArrayBuffer')})()`])),
-          workers: 2,
-          transferTypedArray: true
-        });
-  
-        gif.on('finished', async (blob) => {
-          const videoData = ffmpeg.createWriteStream({ options: ['-pix_fmt', 'yuv420p', '-c:v', 'libx264'] });
-  
-          const inputFilename = 'input.gif';
-          const outputFilename = 'output.mp4';
-  
-          ffmpeg.FS('writeFile', inputFilename, await fetchFile(blob));
-          await ffmpeg.run('-i', inputFilename, '-vf', 'fps=30', outputFilename, { output: [outputFilename] });
-  
-          const videoBlob = ffmpeg.FS('readFile', outputFilename);
-          const videoObject = new File([videoBlob.buffer], outputFilename, { type: 'video/mp4' });
-          resolve(videoObject);
-        });
-  
-        gif.on('error', (error) => {
-          reject(error);
-        });
-  
-        gif.addFrame(gifBuffer, { delay: 200 });
-        gif.transferFromGifBuffer();
-        gif.render();
-      };
-  
-      reader.onerror = () => {
-        reject(new Error('Failed to read the GIF file.'));
-      };
-  
-      reader.readAsArrayBuffer(gifFile);
-    });
-  }
-
-
-
-
-async function convertGifToVideo2(gifFile) {
-  console.log(gifFile)
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = async () => {
-      const dataUrl = reader.result;
-
-      // Create an image element
-      const img = document.createElement('img');
-
-      // Set the image source to the GIF data URL
-      img.src = dataUrl;
-
-      // Wait for the image to load
-      img.onload = () => {
-        // Create a canvas element
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-
-        // Set the canvas dimensions based on the GIF size
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        // Draw the GIF frame on the canvas
-        context.drawImage(img, 0, 0);
-
-        // Create a MediaRecorder instance to record the canvas as video
-        const stream = canvas.captureStream();
-        const chunks = [];
-        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-
-        recorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            chunks.push(event.data);
-          }
-        };
-
-        recorder.onstop = () => {
-          const videoBlob = new Blob(chunks, { type: 'video/webm' });
-          // resolve(URL.createObjectURL(videoBlob));
-          // resolve(videoBlob);
-          const videoObject = new File([videoBlob], 'converted-video.webm', { type: 'video/webm' });
-          resolve(videoObject);
-        };
-
-        recorder.start();
-        gifffer(img, { loop: true, createVideo: true });
-        setTimeout(() => {
-          recorder.stop();
-        }, gifffer(img).duration * 1000);
-      };
-    };
-
-    reader.onerror = () => {
-      reject(new Error('Failed to read the GIF file.'));
-    };
-
-    reader.readAsDataURL(gifFile);
-  });
-}
-
-
-
-async function convertGifToVideo3(gifFile) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const arrayBuffer = reader.result;
-      const gifBuffer = new Uint8Array(arrayBuffer);
-      const gif = new GIF();
-      gif.on('finished', async (blob) => {
-        const videoBlob = await Canvas2Video(blob, 'mp4');
-        const videoObject = new File([videoBlob], 'converted-video.mp4', { type: 'video/mp4' });
-        resolve(videoObject);
-      });
-      gif.on('error', (error) => {
-        reject(error);
-      });
-      gif.addFrame(gifBuffer, { delay: 200 }); // Add the GIF buffer frame to the GIF.js instance
-      gif.render();
-    };
-
-    reader.onerror = () => {
-      reject(new Error('Failed to read the GIF file.'));
-    };
-
-    reader.readAsArrayBuffer(gifFile);
-  });
-}
-
 
 
   function getVideoElement(url, width, height) {
@@ -383,8 +181,6 @@ async function convertGifToVideo3(gifFile) {
     videoE.appendChild(source);
     return videoE;
   }
-
- 
 
   const handleVideosFromData = (file) => {
     const videoUrl = file.src; // Use the file URL obtained from the backend
@@ -421,6 +217,7 @@ async function convertGifToVideo3(gifFile) {
     fab_video.set("video_src", videoUrl);
     fab_video.set("src", videoUrl);
     fabricRef.current.add(fab_video);
+    // console.log("================>>>>", fabricRef.current._objects);
     videoE.load();
     fab_video.getElement().play();
     fabric.util.requestAnimFrame(function render() {
@@ -429,59 +226,13 @@ async function convertGifToVideo3(gifFile) {
     });
   };
 
-  // const handleGifs = (file) => {
-  //   const img = document.createElement("img");
-  //   img.src = file.fileUrl;
-  //   img.setAttribute('data-gifffer', file.fileUrl);
-  //   const fab_img = new fabric.Image(img, {
-  //     left: 0,
-  //     top: 0,
-  //   });
-
-  //   fab_img.set("src",file.fileUrl);
-  //   fab_img.set("data-gifffer",file.fileUrl);
-  //   console.log(fab_img);
-  //   fabricRef.current.add(fab_img);
-  //   fabricRef.current.renderAll();
-  //   var gifs = gifffer();
-  //     console.log(gifs)
-  // };
-
-
-  // const handleGifsFromData = (file) => {
-  //   const img = document.createElement("img");
-  //   img.src = file.src;
-  //   img.setAttribute('data-gifffer', file.src);
-  //   const fab_img = new fabric.Image(img, {
-  //     ...file
-  //   });
-
-  //   fab_img.set("src",file.src);
-  //   fab_img.set("data-gifffer",file.src);
-  //   console.log(fab_img);
-  //   fabricRef.current.add(fab_img);
-  //   var gifs = gifffer();
-  //   console.log(gifs)
-  // };
-
-
-
   useEffect(() => {
     if (uploadedFiles.length > 0 && fabricRef.current !== null) {
-      uploadedFiles.forEach(async (file, key) => {
+      uploadedFiles.forEach((file, key) => {
         if (file.fileUrl.includes("mp4")) {
           handleVideos(file);
           setUploadedFiles([]);
-        } 
-        // else if (file.fileUrl.includes("gif")) {
-        //   console.log("inside gif condition");
-        //   // const video = await convertGifToVideo(file.fileUrl)
-        //   // console.log(video)
-        //   // handleVideos(video);
-        //   // setUploadedFiles([]);
-        //   // handleGifs(file);
-        // } 
-        else {
+        } else {
           new fabric.Image.fromURL(file.fileUrl, function (img) {
             let scale = 300 / img.width;
             img.set({
@@ -502,6 +253,7 @@ async function convertGifToVideo3(gifFile) {
 
   useEffect(() => {
     initFabric();
+    console.log('-------------------', fabricRef.current['backgroundColor'])
     return () => {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -548,7 +300,9 @@ async function convertGifToVideo3(gifFile) {
     if (fabricRef.current) {
       fabricRef.current.backgroundColor = e.target.value;
       fabricRef.current.requestRenderAll();
+      // console.log('-------------------', fabricRef.current.backgroundColor)
     }
+
   };
 
   return (
@@ -572,7 +326,7 @@ async function convertGifToVideo3(gifFile) {
               name="images"
               onChange={onSelectFile}
               multiple
-              // accept="image/*"
+            // accept="image/*"
             />
           </label>
 
@@ -608,16 +362,15 @@ async function convertGifToVideo3(gifFile) {
       <div
         className="relative"
         style={{
-          width:
-            screen === "large-laptop"
-              ? "100%"
-              : screen === "small-laptop"
+          width: screen === "large-laptop"
+            ? "100%"
+            : screen === "small-laptop"
               ? "1080px"
               : screen === "tab"
-              ? "720px"
-              : screen === "mobile"
-              ? "420px"
-              : "",
+                ? "720px"
+                : screen === "mobile"
+                  ? "420px"
+                  : "",
           marginLeft: "auto",
           marginRight: "auto",
         }}

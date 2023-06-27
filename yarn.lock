@@ -1506,21 +1506,6 @@
     "minimatch" "^3.1.2"
     "strip-json-comments" "^3.1.1"
 
-"@ffmpeg/core@^0.11.0":
-  "integrity" "sha512-9Tt/+2PMpkGPXUK8n6He9G8Y+qR6qmCPSCw9iEKZxHHOvJ9BE/r0Fccj+YgDZTlyu6rXxc9x6EqCaFBIt7qzjA=="
-  "resolved" "https://registry.npmjs.org/@ffmpeg/core/-/core-0.11.0.tgz"
-  "version" "0.11.0"
-
-"@ffmpeg/ffmpeg@^0.11.6":
-  "integrity" "sha512-uN8J8KDjADEavPhNva6tYO9Fj0lWs9z82swF3YXnTxWMBoFLGq3LZ6FLlIldRKEzhOBKnkVfA8UnFJuvGvNxcA=="
-  "resolved" "https://registry.npmjs.org/@ffmpeg/ffmpeg/-/ffmpeg-0.11.6.tgz"
-  "version" "0.11.6"
-  dependencies:
-    "is-url" "^1.2.4"
-    "node-fetch" "^2.6.1"
-    "regenerator-runtime" "^0.13.7"
-    "resolve-url" "^0.2.1"
-
 "@hapi/hoek@^9.0.0":
   "integrity" "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="
   "resolved" "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -4256,11 +4241,6 @@
     "nan" "^2.17.0"
     "simple-get" "^3.0.3"
 
-"canvas2video@^1.1.4":
-  "integrity" "sha512-kTg/O9m1nVjhDPzX9iQO9mrJUstfazLxudhyB0sfehxHu8Bpk0+J7zpDZVjCtZ3J6iNXsUtNYF0+cdmLW48aiA=="
-  "resolved" "https://registry.npmjs.org/canvas2video/-/canvas2video-1.1.4.tgz"
-  "version" "1.1.4"
-
 "case-sensitive-paths-webpack-plugin@^2.4.0":
   "integrity" "sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw=="
   "resolved" "https://registry.npmjs.org/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.4.0.tgz"
@@ -6511,16 +6491,6 @@
   "resolved" "https://registry.npmjs.org/get-value/-/get-value-2.0.6.tgz"
   "version" "2.0.6"
 
-"gif.js@^0.2.0":
-  "integrity" "sha512-bYxCoT8OZKmbxY8RN4qDiYuj4nrQDTzgLRcFVovyona1PTWNePzI4nzOmotnlOFIzTk/ZxAHtv+TfVLiBWj/hw=="
-  "resolved" "https://registry.npmjs.org/gif.js/-/gif.js-0.2.0.tgz"
-  "version" "0.2.0"
-
-"gifffer@^1.5.4":
-  "integrity" "sha512-JWpr4eKta98gtH3xeCuIEQY9XZkMgpx5dJz+wb1qZV0bv2+mG07fffdnV/sb+JGR6ISUP19e43yjG8vrpBoitw=="
-  "resolved" "https://registry.npmjs.org/gifffer/-/gifffer-1.5.4.tgz"
-  "version" "1.5.4"
-
 "glob-parent@^5.1.2":
   "integrity" "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow=="
   "resolved" "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz"
@@ -7349,11 +7319,6 @@
   "integrity" "sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw=="
   "resolved" "https://registry.npmjs.org/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz"
   "version" "0.1.0"
-
-"is-url@^1.2.4":
-  "integrity" "sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww=="
-  "resolved" "https://registry.npmjs.org/is-url/-/is-url-1.2.4.tgz"
-  "version" "1.2.4"
 
 "is-weakmap@^2.0.1":
   "integrity" "sha512-NSBR4kH5oVj1Uwvv970ruUkCV7O1mzgVFO4/rev2cLRda9Tm9HrL70ZPut4rOHgY0FNrUu9BCbXA2sdQ+x0chA=="
@@ -9117,7 +9082,7 @@
   dependencies:
     "minimatch" "^3.0.2"
 
-"node-fetch@^2.2.0", "node-fetch@^2.6.0", "node-fetch@^2.6.1", "node-fetch@^2.6.7":
+"node-fetch@^2.2.0", "node-fetch@^2.6.0", "node-fetch@^2.6.7":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   "version" "2.6.7"
@@ -10992,7 +10957,7 @@
   "resolved" "https://registry.npmjs.org/regenerate/-/regenerate-1.4.2.tgz"
   "version" "1.4.2"
 
-"regenerator-runtime@^0.13.10", "regenerator-runtime@^0.13.2", "regenerator-runtime@^0.13.7", "regenerator-runtime@^0.13.9":
+"regenerator-runtime@^0.13.10", "regenerator-runtime@^0.13.2", "regenerator-runtime@^0.13.9":
   "integrity" "sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw=="
   "resolved" "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz"
   "version" "0.13.10"
