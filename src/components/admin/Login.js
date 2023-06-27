@@ -23,7 +23,7 @@ function Login() {
     };
 
     await axios.post(`${base_url}/project/login`, body).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.data.status === "ok") {
         localStorage.setItem("Status", JSON.stringify("ok"));
         navigate("/admin-login");
@@ -73,7 +73,7 @@ function Login() {
             }}
             disabled={(userName === "" || password === "") || status ? true : false}
           >
-            <Spinner animation="border" variant="light" className={status ? "me-2" : "d-none"}/>
+            <Spinner animation="border" variant="light" className={status ? "me-2" : "d-none"} />
             Login
           </Button>
         </Form>

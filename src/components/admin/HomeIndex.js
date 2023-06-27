@@ -7,6 +7,7 @@ import { Spinner } from "react-bootstrap";
 import url from "../../constants/url";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
+import { fabricGif } from "../../Gifs/fabricGif";
 
 export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const [loading, setLoading] = useState(false);
@@ -109,6 +110,9 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
         if (obj.src.includes(".mp4")) {
           handleVideosFromData(obj);
         }
+        if (obj.src.includes(".gif")) {
+          handleGifsFromData(obj);
+        }
       });
     });
   };
@@ -128,6 +132,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     if (homeIndexCanvas) {
       loadCanvasFromJSON(canvas || hom.canvas);
       // console.log('canvas :::', canvas)
+      // handleSavedGifs()
     }
 
     fabricRef.current.on("object:added", onObjectAdded);
@@ -215,6 +220,11 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
+  const handleGifsFromData = (file) => {
+    // const gifUrl = file.src
+    handleSavedGifs(file, 200, 200, fabricRef.current)
+  }
+
   const handleVideos = (file) => {
     const videoUrl = file.fileUrl; // Use the file URL obtained from the backend
     const originalWidth = 1080;
@@ -240,13 +250,50 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
+
+  // First select GIF file and show on the Canvas
+
+  //after uploading first 
+  const gifUpload = async (url, width, height, fabricReference) => {
+    const gif = await fabricGif(
+      url,
+      height,
+      width,
+    );
+    gif.set({ top: 300, left: 50 });
+    gif.set("src", url);
+    gif.set("gif_src", url);
+    fabricReference.add(gif);
+  }
+
+
+  //from backend db
+  const handleSavedGifs = async (file, width, height, fabricReference) => {
+    const gifUrl = file.url;
+    console.log('here URL', gifUrl)
+    console.log('here ', file)
+    const gif = await fabricGif(
+      gifUrl,
+      height,
+      width,
+    );
+    gif.set({ ...file });
+    fabricReference.add(gif);
+  }
+
+
   useEffect(() => {
     if (uploadedFiles.length > 0 && fabricRef.current !== null) {
       uploadedFiles.forEach((file, key) => {
         if (file.fileUrl.includes("mp4")) {
           handleVideos(file);
           setUploadedFiles([]);
-        } else {
+        } else if (file.fileUrl.includes("gif")) {
+          //gif upload logic here
+          gifUpload(file.fileUrl, 200, 200, fabricRef.current)
+          setUploadedFiles([]);
+        }
+        else {
           new fabric.Image.fromURL(file.fileUrl, function (img) {
             let scale = 300 / img.width;
             img.set({
@@ -267,7 +314,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   useEffect(() => {
     initFabric();
-    console.log('-------------------', fabricRef.current['backgroundColor'])
+    // console.log('-------------------', fabricRef.current['backgroundColor'])
     return () => {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -330,6 +377,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
           className="d-flex justify-content-between my-3"
           style={{ width: "80%" }}
         >
+          {/* <iframe src="https://giphy.com/embed/QnMEbyF6DjOk6NOqef" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe> */}
           {/* <input type="file" onChange={onSelectFile} style={{ display: 'block' }} multiple accept='image/*'/> */}
           <label className="img-label">
             + Add Images

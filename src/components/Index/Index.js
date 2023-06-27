@@ -45,9 +45,9 @@ export default function Index({ projectData, indexBackground, setOptions }) {
       const response = await axios.get(base_url + "/project/home");
       if (response.status === 210) {
         setIndexImages(response.data.data.home[1]?.images || []);
-        console.log(response.data.data.home[1]?.images)
+        // console.log(response.data.data.home[1]?.images)
       } else {
-        console.log(response.message);
+        // console.log(response.message);
       }
     }
     if (typeof indexBackground === "undefined" || indexBackground.length === 0) {
@@ -65,7 +65,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
   }, []);
 
   return (
-    <div className="w-100 h-100" style={{position: 'relative', maxHeight: '100vh', overflowY: 'hidden'}}>
+    <div className="w-100 h-100" style={{ position: 'relative', maxHeight: '100vh', overflowY: 'hidden' }}>
       {
         images.length > 0 ?
           <div className="index-section-main-wrap" style={{

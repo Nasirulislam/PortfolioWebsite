@@ -76,7 +76,7 @@ function App() {
         setHomeIndexId(response.data.data.home[2]?._id || null);
         setHom(response.data.data.home[2] || null);
       } else {
-        console.log(response.message);
+        // console.log(response.message);
       }
     }
     getHomeIndex();

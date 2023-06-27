@@ -212,7 +212,7 @@ function HomeIndex(props) {
       };
 
       setBgColor(fabricCanvas?.background)
-      console.log('---->', bgColor)
+      // console.log('---->', bgColor)
 
       fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
         const data = fabricCanvas;

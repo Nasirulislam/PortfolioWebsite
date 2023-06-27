@@ -44,7 +44,7 @@ export default function About(props) {
             .get(`${url}/project/about-image/get`)
             .then((response) => {
                 setAboutImages(response.data.images);
-                console.log(response.data.images)
+                // console.log(response.data.images)
             })
             .catch((error) => {
                 console.error('Error retrieving about images:', error);

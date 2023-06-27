@@ -77,7 +77,7 @@ function EditImages(props) {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
+        // console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
       });
     };
@@ -161,7 +161,7 @@ function EditImages(props) {
                 })}
             </div>
             <button
-            type="button12"
+              type="button12"
               className={btnshow ? "edit-image-btn" : "invisible"}
               onClick={moveForward}
             >

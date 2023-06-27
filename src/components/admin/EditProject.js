@@ -54,12 +54,14 @@ function EditProject(props) {
         setColor(project.color);
         setTitleColor(project.titleColor);
         setPId(project._id);
+        // console.log("Project Images", project.images)
         setdisplayImage(project.images);
         setDeleteIcon(true);
       }
     });
     setUploadImg(true);
   };
+  // console.log(projectsData);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -134,7 +136,7 @@ function EditProject(props) {
   const submitData = async (e) => {
     e.preventDefault();
     if (templateError !== "") {
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
       return;
     }
     setLoading(true);
@@ -185,6 +187,8 @@ function EditProject(props) {
     }
     setTemplate(e.target.value)
   }
+
+  // console.log('edit project ,', displayImage)
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">

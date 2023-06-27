@@ -24,11 +24,11 @@ function IndexItem(props) {
     const windowWidth = document.getElementsByTagName("body")[0];
     const item = e.target.getBoundingClientRect();
 
-    console.log(windowWidth.clientWidth);
-    if(windowWidth.clientWidth <= 500){
+    // console.log(windowWidth.clientWidth);
+    if (windowWidth.clientWidth <= 500) {
       setShowImageLeft(true);
     } else {
-      setShowImageLeft(false);      
+      setShowImageLeft(false);
     }
     if (item.height + item.y > (windowWidth.clientHeight - 200)) {
       // show image upward
@@ -130,7 +130,7 @@ function IndexItem(props) {
         id="in-image"
         style={{ display: display ? "block" : "none", bottom: showUpward ? '0px' : '', top: showDownward ? '0px' : '' }}
         animate={{
-          x: showMobile ? (isAnimating ? 100 : 20) :  (isAnimating ? 500 : "200vh") ,
+          x: showMobile ? (isAnimating ? 100 : 20) : (isAnimating ? 500 : "200vh"),
           opacity: isAnimating ? 1 : 0,
           position: "absolute",
         }}

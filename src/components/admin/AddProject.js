@@ -88,7 +88,7 @@ function AddProject({ projects }) {
           response.height = this.height;
           delete response.status;
           imagesFile.push(response);
-          console.log(response);
+          // console.log(response);
           setSelectedImages(preState => [...preState, response]);
           submitBtn.current.innerText = 'Submit';
           submitBtn.current.disabled = false;

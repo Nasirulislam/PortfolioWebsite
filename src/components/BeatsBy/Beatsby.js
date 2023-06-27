@@ -9,8 +9,8 @@ function BeatsBy(props) {
   // const ref2 = useRef(null);
   const isInViewport = useIsInViewport(ref1);
   if (isInViewport) {
-    console.log(props.name);
-    handleChange({name: props.name, slug: props.slug});
+    // console.log(props.name);
+    handleChange({ name: props.name, slug: props.slug });
   }
 
   function handleChange(name) {
@@ -54,7 +54,7 @@ function BeatsBy(props) {
             images: props.images,
           },
         });
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       }}
     >
       <div className="beats-image1">

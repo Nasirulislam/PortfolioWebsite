@@ -104,7 +104,7 @@ export default function IndexBackground() {
                 toast("Uploaded successfully");
                 setSelectedFiles([]);
             } else {
-                toast(JSON.stringify(response));                
+                toast(JSON.stringify(response));
             }
             setLoading(false);
         }
@@ -117,7 +117,7 @@ export default function IndexBackground() {
                 setImagesPreview(response.data.data.home[1]?.images || []);
                 setHomeIndexId(response.data.data.home[1]?._id || 0);
             } else {
-                console.log(response.message);
+                // console.log(response.message);
             }
         }
 
@@ -146,7 +146,7 @@ export default function IndexBackground() {
                                     }
                                 })}
                             {
-                                (imagesPreview && imagesPreview.length == 0 ) && (
+                                (imagesPreview && imagesPreview.length == 0) && (
                                     <label className="img-label">
                                         + Add Images
                                         <br />
@@ -165,7 +165,7 @@ export default function IndexBackground() {
                         <br />
                     </section>
                     <Button
-                        variant="primary"                        
+                        variant="primary"
                         type="submit01"
                         className="d-flex align-items-center"
                         onClick={(e) => submit(e)}
