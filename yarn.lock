@@ -1381,6 +1381,11 @@
     "minimatch" "^3.1.2"
     "strip-json-comments" "^3.1.1"
 
+"@ffmpeg/core@^0.11.0":
+  "integrity" "sha512-9Tt/+2PMpkGPXUK8n6He9G8Y+qR6qmCPSCw9iEKZxHHOvJ9BE/r0Fccj+YgDZTlyu6rXxc9x6EqCaFBIt7qzjA=="
+  "resolved" "https://registry.npmjs.org/@ffmpeg/core/-/core-0.11.0.tgz"
+  "version" "0.11.0"
+
 "@ffmpeg/ffmpeg@^0.11.6":
   "integrity" "sha512-uN8J8KDjADEavPhNva6tYO9Fj0lWs9z82swF3YXnTxWMBoFLGq3LZ6FLlIldRKEzhOBKnkVfA8UnFJuvGvNxcA=="
   "resolved" "https://registry.npmjs.org/@ffmpeg/ffmpeg/-/ffmpeg-0.11.6.tgz"
