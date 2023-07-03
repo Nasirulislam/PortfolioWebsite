@@ -8,6 +8,10 @@ function Brenna(props) {
   const [thirdImage, setThirdImage] = useState(null);
   const containerRef = useRef();
 
+  const handleClick = () => {
+    console.log("this is ptops name",props.name); props.handleSlug(props.name)
+  }
+
   useEffect(() => {
     if (props.images.length > 1) {
       setThirdImage(props.images[props.images.length - 1]);
@@ -33,7 +37,7 @@ function Brenna(props) {
                 <div
                   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
                   style={{ cursor: 'pointer', maxWidth: '50%' }}
-                  onClick={() => props.handleSlug()}
+                  onClick={handleClick}
                 >
                   <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
                 </div>

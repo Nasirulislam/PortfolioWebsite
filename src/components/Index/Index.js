@@ -6,7 +6,7 @@ import IndexItem from "./indeItem";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 
-export default function Index({ projectData, indexBackground, setOptions }) {
+export default function Index({ projectData, indexBackground, setOptions,  setprojChanged, setselProj }) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [id, setId] = useState(-1);
   const [redHome, setRedHome] = useState(false);
@@ -65,7 +65,7 @@ export default function Index({ projectData, indexBackground, setOptions }) {
   }, []);
 
   return (
-    <div className="w-100 h-100" style={{position: 'relative', maxHeight: '100vh', overflowY: 'hidden'}}>
+    <div className="w-100 h-100" style={{position: 'fixed', maxHeight: '100vh', overflowY: 'hidden', top:"0", zIndex:"1000" }}>
       {
         images.length > 0 ?
           <div className="index-section-main-wrap" style={{
@@ -88,6 +88,9 @@ export default function Index({ projectData, indexBackground, setOptions }) {
                       handleOnIndexLeave={handleOnIndexLeave}
                       key={index}
                       index={index}
+                      
+                      setprojChanged={ setprojChanged}
+              setselProj={setselProj}
                     />
                   );
                 })}

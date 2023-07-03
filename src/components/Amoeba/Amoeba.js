@@ -6,6 +6,12 @@ import Helper from "../../constants/Helper";
 
 function Amoeba(props) {
   // const amoebaImages = props.imagesAndThumb.slice(0, 2);
+
+  const handleClick = () => {
+    console.log("this is ptops name",props.name); props.handleSlug(props.name)
+  }
+
+
   return (
     <div className={"col-md-12 d-flex justify-content-center"}>
       {props.images.map((banner, key) => {
@@ -26,7 +32,7 @@ function Amoeba(props) {
                   <div
                     className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
                     style={{ cursor: 'pointer', maxHeight: '100%' }}
-                    onClick={() => props.handleSlug()}
+                    onClick={handleClick}
                   >
                     <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
                   </div>

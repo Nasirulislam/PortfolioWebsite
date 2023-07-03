@@ -42,14 +42,27 @@ function App() {
   const [homeIndexId, setHomeIndexId] = useState(null);
   const navigate = useNavigate();
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [loc, setLoc] = useState();
+  const [selProj, setselProj] = useState();
+  const [projChanged, setprojChanged] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/") {
+    setLoc(location.pathname);
+    if (location.pathname === "/" && projChanged === true) {
+      setprojChanged(false);
       setTimeout(() => {
-        window.scrollTo(0, scrollPosition);
-        console.log(location, scrollPosition);
-      }, 2000);
+        const element = document.getElementById(selProj);
+        console.log(element);
+        if (element) {
+          console.log("inside");
+          element.scrollIntoView();
+        }
+      }, 1000);
+    } else if (location.pathname === "/") {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(scrollPosition));
+      }, 100);
     }
   }, [location]);
 
@@ -100,20 +113,20 @@ function App() {
     fetchProducts();
   }, []);
 
-
   const makeNull = () => {
     setIndexText("");
     setAboutText("");
     setMEText("");
     set00Text("");
   };
-  
+
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
     setMEText("START");
     set00Text("CONTACT");
   };
+
   const buttonToogle = () => {
     if (clicked) {
       setIndexText("CLOSE");
@@ -128,6 +141,7 @@ function App() {
       window.location.href = "/";
     }
   };
+
   const AboutToogle = () => {
     if (!showAbout) {
       setAboutText("CLOSE");
@@ -140,6 +154,7 @@ function App() {
     setIsShow(!isShow);
     setClicked(true);
   };
+
   const METoogle = () => {
     if (clicked) {
       // navigate("/");
@@ -147,6 +162,7 @@ function App() {
       setValues();
     }
   };
+
   const NullToogle = () => {
     if (clicked) {
       set00Text("CLOSE");
@@ -158,6 +174,7 @@ function App() {
     }
     setClicked(!clicked);
   };
+
   const path = window.location.pathname;
   const returnIndex = (index) => {
     if (index > projectsData.length - 1) {
@@ -196,7 +213,7 @@ function App() {
   return (
     <div>
       {/* <ScrollToTop /> */}
-      <div className="App">
+      <div className="App"  style={{position:"relative"}}>
         {path !== "/admin" && path !== "/admin-login" ? (
           <>
             <div className="main-button">
@@ -273,11 +290,44 @@ function App() {
           </>
         ) : null}
 
+        {dataFetc ? (
+          <div style={{ display: (loc === "/" || loc === "/index") ? "block" : "none" }}>
+            <HomeMain
+              projectsData={projectsData}
+              onChange={changeIndex}
+              indexBtn={buttonToogle}
+              homeIndexImages={homeIndexImages}
+              landscapeHomeIndexImages={landscapeHomeIndexImages}
+              indexBackground={indexBackground}
+              homeIndexCanvas={homeIndexCanvas}
+              hom={hom}
+              originalX={originalX}
+              originalY={originalY}
+              setprojChanged={setprojChanged}
+                    setselProj={setselProj}
+            />
+           </div> 
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center flex-column"
+            style={{ height: "100vh" }}
+          >
+            <Spinner
+              style={{
+                width: "100px",
+                height: "100px",
+              }}
+              animation="border"
+            />
+            <h1>Loading</h1>
+          </div>
+        )}
+
         {clicked ? (
-          <div className={showAbout ? "d-none" : ""}>
+          <div className={showAbout ? "d-none" : ""} >
             {/* <Template1/> */}
             <Routes>
-              <Route
+              {/* <Route
                 exact
                 path="/"
                 element={
@@ -310,7 +360,7 @@ function App() {
                     </div>
                   )
                 }
-              />
+              /> */}
               {projectsData.map((project, pindex) => {
                 return (
                   <Route
@@ -335,6 +385,8 @@ function App() {
                     projectData={projectsData}
                     indexBackground={indexBackground}
                     setOptions={setOptions}
+                    setprojChanged={setprojChanged}
+                    setselProj={setselProj}
                   />
                 }
               />

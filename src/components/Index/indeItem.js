@@ -72,7 +72,9 @@ function IndexItem(props) {
 
   return (
     <div className="index-item-section" style={{ position: 'relative' }} key={props.currentProject._id} onClick={() => {
-      props.handleOnIndexLeave()
+      props.setselProj(props.currentProject.name)
+      props.setprojChanged(true)
+      props.handleOnIndexLeave();
       navigate("/" + props.currentProject.slug, {
         state: {
           name: props.currentProject.name,

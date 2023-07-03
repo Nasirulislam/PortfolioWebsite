@@ -19,6 +19,7 @@ function HomeMain(props) {
   const [changeClass, setChangeClass] = useState(false);
 
   const [slug, setSlug] = useState();
+  const [name, setName] = useState();
 
   const GrouRef = useRef([]);
   const navigate = useNavigate();
@@ -37,17 +38,22 @@ function HomeMain(props) {
       })
       .find((group) => group.rect.bottom >= window.innerHeight * 0.5);
 
-    document.body.style.backgroundColor = `${styles.group.dataset.bgcolor}`;
+    document.body.style.backgroundColor = `${styles.group?.dataset?.bgcolor}`;
 
     if (`${styles.group.dataset.title}` !== "View All Projects") {
       setValue(`${styles.group.dataset.title}`);
       setSlug(`${styles.group.dataset.slug}`);
+      setName(`${styles.group.dataset.title}`);
       props.onChange(`${styles.group.dataset.index}`);
     } else {
       setValue("");
       setSlug("");
     }
   };
+
+  useEffect(() => {
+
+  },[props.selProject])
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
@@ -86,6 +92,9 @@ function HomeMain(props) {
     if (value === "View All Projects") {
       props.indexBtn();
     } else {
+      // console.log("recieved name", name)
+      props.setselProj(name)
+      props.setprojChanged(true)
       navigate("/" + slug);
     }
   };
@@ -129,7 +138,7 @@ function HomeMain(props) {
               variants={animateTxt}
               transition={{ y: 200, duration: 4 }}
             >
-              <h1 style={{ cursor: "pointer" }} onClick={handleSlug}>
+              <h1 style={{ cursor: "pointer" }} onClick={() => handleSlug()}>
                 <ReactTextTransition
                   springConfig={presets.gentle}
                   className="indexitem-button"
@@ -164,7 +173,7 @@ function HomeMain(props) {
         {displayProjects.map((project, index) => {
           var e = parseInt(project.template);
           return (
-            <div key={index}>
+            <div id={project.name} key={index}>
               {e === 1 ? (
                 <div
                   className="mobile-view mt-5"
