@@ -18,18 +18,19 @@ function HomeIndex(props) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [bgColor, setBgColor] = useState(false);
 
-
   const style = {
     // position: "absolute",
     // top: "50%",
     // left: "50%",
     cursor: "pointer !important",
-    transform: `${isHovered
-      ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
-      }px)`
-      : ""
-      }`,
-    transition: "transform 0.5s ease-out",
+    transform: `${
+      isHovered
+        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${
+            (-1 * (position.y - window.innerHeight / 2)) / 17
+          }px)`
+        : ""
+    }`,
+    transition: "transform 0.3s ease-out",
   };
 
   const handleMouseMove = (event) => {
@@ -76,23 +77,23 @@ function HomeIndex(props) {
       window.innerWidth >= 1440
         ? props.hom.canvas
         : window.innerWidth >= 1080
-          ? props.hom.canvasSmall
-          : window.innerWidth >= 720
-            ? props.hom.canvasTab
-            : window.innerWidth >= 420
-              ? props.hom.canvasMobile
-              : props.hom.canvasMobile;
+        ? props.hom.canvasSmall
+        : window.innerWidth >= 720
+        ? props.hom.canvasTab
+        : window.innerWidth >= 420
+        ? props.hom.canvasMobile
+        : props.hom.canvasMobile;
 
     const wid =
       window.innerWidth >= 1440
         ? 1440
         : window.innerWidth >= 1080
-          ? 1080
-          : window.innerWidth >= 720
-            ? 720
-            : window.innerWidth >= 420
-              ? 420
-              : 420;
+        ? 1080
+        : window.innerWidth >= 720
+        ? 720
+        : window.innerWidth >= 420
+        ? 420
+        : 420;
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
@@ -132,8 +133,6 @@ function HomeIndex(props) {
       }
 
       let fabricCanvas = JSON.parse(hom_canvas);
-
-
 
       // console.log(fabricCanvas)
       // fabricCanvas.objects.forEach(obj => {
@@ -192,11 +191,62 @@ function HomeIndex(props) {
         return videoE;
       }
 
+      // const handleVideosFromData = (file) => {
+      //   const videoUrl = file.src;
+      //   // const videoUrl = "https://media.istockphoto.com/id/1436859766/video/meeting-the-designer-and-client-in-office-and-discussing-choice-of-color.mp4?s=mp4-640x640-is&k=20&c=yEmaqxLFyxiCuNM-63UTc7_YYchGi7OOPaTiZyh-IF0="; // Use the file URL obtained from the backend
+      //   const originalWidth = 1080;
+      //   const originalHeight = 1000;
+      //   const videoE = getVideoElement(videoUrl, originalWidth, originalHeight);
+      //   const fab_video = new fabric.Image(videoE, {
+      //     ...file,
+      //   });
+      //   fab_video.set("video_src", videoUrl);
+      //   fab_video.set("src", videoUrl);
+      //   fabricRef.current.add(fab_video);
+      //   videoE.load();
+      //   fab_video.getElement().play();
+      //   fabric.util.requestAnimFrame(function render() {
+      //     fabricRef.current.renderAll();
+      //     fabric.util.requestAnimFrame(render);
+      //   });
+      // };
+
       const handleVideosFromData = (file) => {
-        const videoUrl = file.src; // Use the file URL obtained from the backend
+        const videoUrl = file.src;
         const originalWidth = 1080;
         const originalHeight = 1000;
         const videoE = getVideoElement(videoUrl, originalWidth, originalHeight);
+
+
+
+
+        // iOS specific settings
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+          videoE.setAttribute("webkit-playsinline", ""); // Enable inline video playback
+          videoE.setAttribute("playsinline", ""); // For newer iOS versions
+          videoE.setAttribute("x5-video-player-type", "h5"); // For WeChat browser
+          videoE.setAttribute("x5-video-player-fullscreen", "true"); // For WeChat browser fullscreen playback
+          videoE.setAttribute("x-webkit-airplay", "allow"); // Enable AirPlay
+          videoE.setAttribute("preload", "auto"); // Preload the video
+          videoE.setAttribute("controls", ""); // Show video controls
+          videoE.setAttribute("style", "object-fit: fill;"); // Adjust video aspect ratio
+          videoE.style.width = `${originalWidth}px`; // Set the video width
+          videoE.style.height = `${originalHeight}px`; // Set the video height
+          videoE.controls = true; // Show video controls
+          // Autoplay the video (requires user interaction)
+          document.addEventListener("click", function handleAutoplay() {
+            videoE.play();
+            document.removeEventListener("click", handleAutoplay);
+          });
+        }
+        // Android specific settings
+        if (navigator.userAgent.match(/Android/i)) {
+          videoE.setAttribute("android:hardwareAccelerated", "true");
+        }
+
+
+
+        
         const fab_video = new fabric.Image(videoE, {
           ...file,
         });
@@ -211,8 +261,8 @@ function HomeIndex(props) {
         });
       };
 
-      setBgColor(fabricCanvas?.background)
-      console.log('---->', bgColor)
+      setBgColor(fabricCanvas?.background);
+      console.log("---->", bgColor);
 
       fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
         const data = fabricCanvas;
