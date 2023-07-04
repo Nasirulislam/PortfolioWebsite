@@ -291,7 +291,8 @@ function App() {
         ) : null}
 
         {dataFetc ? (
-          <div style={{ display: (loc === "/" || loc === "/index") ? "block" : "none" }}>
+          // <div style={{ display: (loc === "/" || loc === "/index") ? "block" : "none" }}>
+          <div style={{ display: (loc === "/") ? "block" : "none" }}>
             <HomeMain
               projectsData={projectsData}
               onChange={changeIndex}
