@@ -162,21 +162,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     }
   }, [screen]);
 
-  // const ran = useRef(0);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (ran.current <= 0) {
-  //       const canvas = document.getElementsByClassName("upper-canvas")[0];
-  //       if (canvas) {
-  //         canvas.style.width = window.innerWidth / canvasScale + "px";
-  //         canvas.style.width = screen==='large-laptop' ? "100%" : (screen==='small-laptop' ? "1040px" : (screen==='tab' ? "720px" : (screen==='mobile' ? "420px" : ""))) + "px";
-  //         canvas.style.height = window.innerHeight + "px";
-  //         ran.current++;
-  //       }
-  //     }
-  //   }, 1000);
-  // }, [screen]);
 
   function getVideoElement(url, width, height) {
     const videoE = document.createElement("video");

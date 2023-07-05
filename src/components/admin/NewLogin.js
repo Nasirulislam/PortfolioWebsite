@@ -35,7 +35,7 @@ export default function NewLogin() {
   return (
     <>
       <main>
-        <section className="absolute w-full h-full font-poppins">
+        <section className=" w-full font-poppins h-[100vh]">
           <div
             className="absolute top-0 w-full h-full bg-zinc-200 bgImg"
             style={{
