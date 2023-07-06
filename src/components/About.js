@@ -51,7 +51,7 @@ export default function About(props) {
             });
     };
     return (
-        <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black' }}>
+        <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black', zIndex: '10000' }}>
             <div className="about-section">
                 {title !== "" && (
                     <div className="index-innersection h-100">

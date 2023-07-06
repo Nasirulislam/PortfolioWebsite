@@ -183,7 +183,7 @@ function App() {
     return index;
   };
 
-  useEffect(() => {}, [hideOptions]);
+  useEffect(() => { }, [hideOptions]);
 
   const handleEvent = () => {
     let uri = window.location.pathname;
@@ -213,7 +213,7 @@ function App() {
   return (
     <div>
       {/* <ScrollToTop /> */}
-      <div className="App"  style={{position:"relative"}}>
+      <div className="App" style={{ position: "relative" }}>
         {path !== "/admin" && path !== "/admin-login" ? (
           <>
             <div className="main-button">
@@ -292,7 +292,7 @@ function App() {
 
         {dataFetc ? (
           // <div style={{ display: (loc === "/" || loc === "/index") ? "block" : "none" }}>
-          <div style={{ display: (loc === "/") ? "block" : "none" }}>
+          <div style={{ display: (loc === "/" && !showAbout) ? "block" : "none" }}>
             <HomeMain
               projectsData={projectsData}
               onChange={changeIndex}
@@ -305,9 +305,9 @@ function App() {
               originalX={originalX}
               originalY={originalY}
               setprojChanged={setprojChanged}
-                    setselProj={setselProj}
+              setselProj={setselProj}
             />
-           </div> 
+          </div>
         ) : (
           <div
             className="d-flex justify-content-center align-items-center flex-column"
@@ -326,7 +326,7 @@ function App() {
 
         {clicked ? (
           <div className={showAbout ? "d-none" : ""} >
-            {/* <Template1/> */}
+            {/* <Template1 /> */}
             <Routes>
               {/* <Route
                 exact

@@ -175,6 +175,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     videoE.controls = true;
     videoE.crossOrigin = "anonymous";
     videoE.src = url;
+    videoE.setAttribute('playsinline', '');
     const source = document.createElement("source");
     source.src = url;
     source.type = "video/mp4";
