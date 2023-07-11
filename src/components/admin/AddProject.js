@@ -88,14 +88,28 @@ function AddProject({ projects }) {
           response.height = this.height;
           delete response.status;
           imagesFile.push(response);
-          console.log(response);
           setSelectedImages(preState => [...preState, response]);
-          submitBtn.current.innerText = 'Submit';
+          if(i===(e.target.files.length-1)){
+            submitBtn.current.innerText = 'Submit';
           submitBtn.current.disabled = false;
+          }
         };
+        if(response.fileUrl.includes("mp4")){
+          delete response.status;
+          imagesFile.push(response);
+          setSelectedImages(preState => [...preState, response]);
+          if(i===(e.target.files.length-1)){
+            submitBtn.current.innerText = 'Submit';
+          submitBtn.current.disabled = false;
+          }
+        }
       }
     }
   };
+
+  useEffect(() => {
+console.log(selectedImages)
+  },[selectedImages])
 
   function deleteHandler(imageIndex) {
 
@@ -163,7 +177,8 @@ function AddProject({ projects }) {
       color: color,
       titleColor: titleColor,
       imagess: [],
-      imagesAndThumb: selectedImages
+      imagesAndThumb: selectedImages,
+      images: selectedImages
     }
 
     const response = await API.post('project/new', payload);

@@ -11,16 +11,13 @@ import Template1 from "./components/pageTemplates/Template1";
 import Admin from "./components/admin/Admin";
 import NewLogin from "./components/admin/NewLogin";
 import ScrollToTop from "./components/ScrollToTop";
+import { useNavigate } from "react-router-dom";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import About from "./components/About";
 import HomeIndex from "./components/admin/HomeIndex";
 import VideoUpload from "./VideoUpload";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const [projectsData, setProjectsData] = useState([]);
@@ -34,8 +31,8 @@ function App() {
   const [homeIndexImages, setHomeIndexImages] = useState([]);
   const [homeIndexCanvas, setHomeIndexCanvas] = useState(null);
   const [hom, setHom] = useState(null);
-  const [originalX, setOriginalX] = useState('');
-  const [originalY, setOriginalY] = useState('');
+  const [originalX, setOriginalX] = useState("");
+  const [originalY, setOriginalY] = useState("");
   const [landscapeHomeIndexImages, setLandscapeHomeIndexImages] = useState([]);
   const [indexBackground, setIndexImages] = useState([]);
   const [showAbout, setShowAbout] = useState(false);
@@ -43,7 +40,36 @@ function App() {
   const [isShow, setIsShow] = useState(false);
   const [fromAbout, setFromAbout] = useState(false);
   const [homeIndexId, setHomeIndexId] = useState(null);
+  const navigate = useNavigate();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [loc, setLoc] = useState();
+  const [selProj, setselProj] = useState();
+  const [projChanged, setprojChanged] = useState(false);
+  const location = useLocation();
 
+  useEffect(() => {
+    setLoc(location.pathname);
+    if (location.pathname === "/" && projChanged === true) {
+      setprojChanged(false);
+      setTimeout(() => {
+        const element = document.getElementById(selProj);
+        console.log(element);
+        if (element) {
+          console.log("inside");
+          element.scrollIntoView();
+        }
+      }, 1000);
+    } else if (location.pathname === "/") {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(scrollPosition));
+      }, 100);
+    }
+  }, [location]);
+
+  const handleClick = () => {
+    setScrollPosition(window.scrollY);
+    navigate("/index");
+  };
 
   function changeIndex(index) {
     if (index < 0) {
@@ -54,9 +80,11 @@ function App() {
     }
     // set00Text(index);
   }
+
   const setRedHome = () => {
     setHome(true);
   };
+
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
@@ -64,10 +92,11 @@ function App() {
         setDataFetch(true);
       });
     };
+
     const getHomeIndex = async () => {
       const response = await axios.get(base_url + "/project/home");
       if (response.status === 210) {
-        console.log('main page', response.data.data.home[2])
+        // console.log('main page', response.data.data.home[2])
         setHomeIndexImages(response.data.data.home[0]?.images || []);
         setIndexImages(response.data.data.home[1]?.images || []);
         setLandscapeHomeIndexImages(response.data.data.home[2]?.images || []);
@@ -79,22 +108,25 @@ function App() {
       } else {
         console.log(response.message);
       }
-    }
+    };
     getHomeIndex();
     fetchProducts();
   }, []);
+
   const makeNull = () => {
     setIndexText("");
     setAboutText("");
     setMEText("");
     set00Text("");
   };
+
   const setValues = () => {
     setIndexText("INDEX");
     setAboutText("ABOUT");
     setMEText("START");
     set00Text("CONTACT");
   };
+
   const buttonToogle = () => {
     if (clicked) {
       setIndexText("CLOSE");
@@ -109,6 +141,7 @@ function App() {
       window.location.href = "/";
     }
   };
+
   const AboutToogle = () => {
     if (!showAbout) {
       setAboutText("CLOSE");
@@ -121,6 +154,7 @@ function App() {
     setIsShow(!isShow);
     setClicked(true);
   };
+
   const METoogle = () => {
     if (clicked) {
       // navigate("/");
@@ -128,6 +162,7 @@ function App() {
       setValues();
     }
   };
+
   const NullToogle = () => {
     if (clicked) {
       set00Text("CLOSE");
@@ -139,6 +174,7 @@ function App() {
     }
     setClicked(!clicked);
   };
+
   const path = window.location.pathname;
   const returnIndex = (index) => {
     if (index > projectsData.length - 1) {
@@ -147,8 +183,7 @@ function App() {
     return index;
   };
 
-  useEffect(() => {
-  }, [hideOptions])
+  useEffect(() => { }, [hideOptions]);
 
   const handleEvent = () => {
     let uri = window.location.pathname;
@@ -158,12 +193,13 @@ function App() {
   useEffect(() => {
     window.addEventListener("popstate", handleEvent);
     return () => window.removeEventListener("popstate", handleEvent);
-  }, [])
+  }, []);
 
   const handleClose = () => {
     setOptions(false);
-    window.history.go(-1)
-  }
+    // window.history.scrollRestoration = "manual";
+    window.history.go(-1);
+  };
 
   const handleME = (e) => {
     e.preventDefault();
@@ -172,158 +208,225 @@ function App() {
     } else {
       window.history.go(-1);
     }
-  }
+  };
 
   return (
     <div>
-      <Router>
-        <ScrollToTop />
-        <div className="App">
-          {path !== "/admin" && path !== "/admin-login" ? (
-            <>
-              <div className="main-button">
-                <h3 className="index-button">
-                  {
-                    !isShow ?
+      {/* <ScrollToTop /> */}
+      <div className="App" style={{ position: "relative" }}>
+        {path !== "/admin" && path !== "/admin-login" ? (
+          <>
+            <div className="main-button">
+              <h3 className="index-button">
+                {!isShow ? (
+                  !hideOptions ? (
+                    // <Link id="style-2" to="/index">
+                    <a id="style-2" onClick={handleClick}>
+                      <span>INDEX</span>
+                    </a>
+                  ) : (
+                    //  </Link>
 
-                      !hideOptions ?
-                        <Link id="style-2" to="/index">
-                          <span>INDEX</span>
-                        </Link>
-                        :
-                        <a id="" onClick={handleClose}>
-                          <span>CLOSE</span>
-                        </a>
-                      : <></>
-                  }
+                    <a
+                      id=""
+                      onClick={handleClose}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span>CLOSE</span>
+                    </a>
+                  )
+                ) : (
+                  <></>
+                )}
+              </h3>
+            </div>
+
+            {!hideOptions && (
+              <div className="main-button">
+                <h3
+                  onClick={() => {
+                    setShowAbout(!showAbout);
+                    setFromAbout(true);
+                    AboutToogle();
+                  }}
+                  className="about-button"
+                >
+                  <Link to="/" id="style-2" data-replace={aboutText}>
+                    <span>{aboutText}</span>
+                  </Link>
                 </h3>
               </div>
-
-              {
-                !hideOptions && (
-                  <div className="main-button">
-                    <h3 onClick={() => {
-                      setShowAbout(!showAbout)
-                      setFromAbout(true)
-                      AboutToogle()
-                    }} className="about-button">
-                      <a id="style-2" data-replace={aboutText}>
-                        <span>{aboutText}</span>
-                      </a>
-                    </h3>
-                  </div>
-                )}
-              {
-                !hideOptions && (
-                  <div className="main-button">
-                    <h3 onClick={METoogle} className="ME-button">
-                      <Link onClick={handleME} to="/" id="style-2" data-replace={METext}>
-                        <span>{METext}</span>
-                      </Link>
-                    </h3>
-                  </div>
-                )
-              }
-              {
-                !hideOptions && (
-                  <div className="main-button">
-                    <h3 className="null-button" onClick={() => {
-                      setShowAbout(!showAbout)
-                      setFromAbout(false)
-                      AboutToogle()
-                    }}>
-                      <a id="style-2" >
-                        <span>{Text00}</span>
-                      </a>
-                    </h3>
-                  </div>
-                )}
-            </>
-          ) : null}
-
-          {clicked ? (
-            <div className={showAbout ? "d-none" : ""}>
-              {/* <Template1/> */}
-              <Routes>
-                <Route
-                  exact
-                  path="/"
-                  element={
-                    dataFetc ? (
-                      <HomeMain
-                        projectsData={projectsData}
-                        onChange={changeIndex}
-                        indexBtn={buttonToogle}
-                        homeIndexImages={homeIndexImages}
-                        landscapeHomeIndexImages={landscapeHomeIndexImages}
-                        indexBackground={indexBackground}
-                        homeIndexCanvas={homeIndexCanvas}
-                        hom={hom}
-                        originalX={originalX}
-                        originalY={originalY}
-                      />
-                    ) : (
-                      <div className="d-flex justify-content-center align-items-center flex-column" style={{ height: '100vh' }}>
-                        <Spinner
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                          }}
-                          animation="border"
-                        />
-                        <h1>Loading</h1>
-                      </div>
-                    )
-                  }
-                />
-                {projectsData.map((project, pindex) => {
-                  return (
-                    <Route
-                      key={pindex}
-                      exact
-                      path={"/".concat(project.slug)}
-                      element={
-                        <Template1 projectData={projectsData} index={pindex} setMEText={setMEText} />
-                      }
-                    />
-                  );
-                })}
-                <Route exact path="/index" element={<Index
-                  projectData={projectsData}
-                  indexBackground={indexBackground}
-                  setOptions={setOptions}
-                />}
-                />
-                <Route exact path="/admin" element={<NewLogin />} />
-                <Route exact path="/admin/home-index" element={<HomeIndex homeIndexCanvas={homeIndexCanvas} hom={hom}
-                  homeIndexId={homeIndexId} />} />
-                <Route
-                  exact
-                  path="/admin-login"
-                  element={
-                    JSON.parse(localStorage.getItem("Status")) === "ok" ? (
-                      <Admin projectData={projectsData} />
-                    ) : (
-                      <NewLogin />
-                    )
-                  }
-                />
-                <Route
-                  exact
-                  path="/video"
-                  element={
-                    <VideoUpload />
-                  }
-                />
-              </Routes>
-            </div>
-          ) :
-            (
-              <></>
             )}
-          <About showAbout={showAbout} changeAboutStatus={AboutToogle} setShowAbout={setShowAbout} fromAbout={fromAbout} />
-        </div>
-      </Router>
+            {!hideOptions && (
+              <div className="main-button">
+                <h3 onClick={METoogle} className="ME-button">
+                  <Link
+                    onClick={handleME}
+                    to="/"
+                    id="style-2"
+                    data-replace={METext}
+                  >
+                    <span>{METext}</span>
+                  </Link>
+                </h3>
+              </div>
+            )}
+            {!hideOptions && (
+              <div className="main-button">
+                <h3
+                  className="null-button"
+                  onClick={() => {
+                    setShowAbout(!showAbout);
+                    setFromAbout(false);
+                    AboutToogle();
+                  }}
+                >
+                  <Link to="/" id="style-2">
+                    <span>{Text00}</span>
+                  </Link>
+                </h3>
+              </div>
+            )}
+          </>
+        ) : null}
+
+        {dataFetc ? (
+          // <div style={{ display: (loc === "/" || loc === "/index") ? "block" : "none" }}>
+          <div style={{ display: (loc === "/" && !showAbout) ? "block" : "none" }}>
+            <HomeMain
+              projectsData={projectsData}
+              onChange={changeIndex}
+              indexBtn={buttonToogle}
+              homeIndexImages={homeIndexImages}
+              landscapeHomeIndexImages={landscapeHomeIndexImages}
+              indexBackground={indexBackground}
+              homeIndexCanvas={homeIndexCanvas}
+              hom={hom}
+              originalX={originalX}
+              originalY={originalY}
+              setprojChanged={setprojChanged}
+              setselProj={setselProj}
+            />
+          </div>
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center flex-column"
+            style={{ height: "100vh" }}
+          >
+            <Spinner
+              style={{
+                width: "100px",
+                height: "100px",
+              }}
+              animation="border"
+            />
+            <h1>Loading</h1>
+          </div>
+        )}
+
+        {clicked ? (
+          <div className={showAbout ? "d-none" : ""} >
+            {/* <Template1 /> */}
+            <Routes>
+              {/* <Route
+                exact
+                path="/"
+                element={
+                  dataFetc ? (
+                    <HomeMain
+                      projectsData={projectsData}
+                      onChange={changeIndex}
+                      indexBtn={buttonToogle}
+                      homeIndexImages={homeIndexImages}
+                      landscapeHomeIndexImages={landscapeHomeIndexImages}
+                      indexBackground={indexBackground}
+                      homeIndexCanvas={homeIndexCanvas}
+                      hom={hom}
+                      originalX={originalX}
+                      originalY={originalY}
+                    />
+                  ) : (
+                    <div
+                      className="d-flex justify-content-center align-items-center flex-column"
+                      style={{ height: "100vh" }}
+                    >
+                      <Spinner
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                        }}
+                        animation="border"
+                      />
+                      <h1>Loading</h1>
+                    </div>
+                  )
+                }
+              /> */}
+              {projectsData.map((project, pindex) => {
+                return (
+                  <Route
+                    key={pindex}
+                    exact
+                    path={"/".concat(project.slug)}
+                    element={
+                      <Template1
+                        projectData={projectsData}
+                        index={pindex}
+                        setMEText={setMEText}
+                      />
+                    }
+                  />
+                );
+              })}
+              <Route
+                exact
+                path="/index"
+                element={
+                  <Index
+                    projectData={projectsData}
+                    indexBackground={indexBackground}
+                    setOptions={setOptions}
+                    setprojChanged={setprojChanged}
+                    setselProj={setselProj}
+                  />
+                }
+              />
+              <Route exact path="/admin" element={<NewLogin />} />
+              <Route
+                exact
+                path="/admin/home-index"
+                element={
+                  <HomeIndex
+                    homeIndexCanvas={homeIndexCanvas}
+                    hom={hom}
+                    homeIndexId={homeIndexId}
+                  />
+                }
+              />
+              <Route
+                exact
+                path="/admin-login"
+                element={
+                  JSON.parse(localStorage.getItem("Status")) === "ok" ? (
+                    <Admin projectData={projectsData} />
+                  ) : (
+                    <NewLogin />
+                  )
+                }
+              />
+              <Route exact path="/video" element={<VideoUpload />} />
+            </Routes>
+          </div>
+        ) : (
+          <></>
+        )}
+        <About
+          showAbout={showAbout}
+          changeAboutStatus={AboutToogle}
+          setShowAbout={setShowAbout}
+          fromAbout={fromAbout}
+        />
+      </div>
     </div>
   );
 }

@@ -8,6 +8,10 @@ import Helper from "../../constants/Helper";
 
 function Auston(props) {
 
+  const handleClick = () => {
+    console.log("this is ptops name",props.name); props.handleSlug(props.name)
+  }
+
   return (
     <div className={"col-md-12 col-12 d-flex align-items-center justify-content-center"} style={{ height: '100%' }}>
       {props.images.map((banner, key) => {
@@ -29,7 +33,7 @@ function Auston(props) {
                     <div
                       className="image-container"
                       style={{ marginLeft: props.images.length == 2 && (props.images.length - 1) == key ? '-100px' : '', height: 'auto', cursor: 'pointer', maxHeight: '100%' }}
-                      onClick={() => props.handleSlug()}
+                      onClick={handleClick}
                     >
                       <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
                     </div>

@@ -28,7 +28,7 @@ function EditImages(props) {
   const moveForward = (e) => {
     e.preventDefault();
     for (var i = 0; i < selectedImages.length; i++) {
-      if (selectedImages[i] === imgId && (selectedImages.length - 1) !== i) {
+      if (selectedImages[i] === imgId && selectedImages.length - 1 !== i) {
         temp.push(selectedImages[i + 1]);
         selectedImages[i + 1] = selectedImages[i];
         selectedImages[i] = temp[0];
@@ -85,15 +85,17 @@ function EditImages(props) {
   }, []);
 
   const patchReq = async () => {
-
     setLoading(true);
-    const body = {
-      images: selectedImages,
-    };
 
+    const body = {
+      // images: selectedImages,
+      imagesAndThumb: selectedImages,
+    };
+    // console.log(body.imagesAndThumb)
     await axios
       .patch(`${base_url}/project/${projectId}`, body)
       .then((response) => {
+        // console.log(response.data.data.updated.imagesAndThumb)
         if (response.status === 225) {
           toast("Updated successfully");
         } else {
@@ -102,7 +104,6 @@ function EditImages(props) {
         setLoading(false);
       });
   };
-
 
   return (
     <div className="d-flex align-items-center justify-content-center edit-images-section">
@@ -121,7 +122,11 @@ function EditImages(props) {
           </Form.Select>
 
           <section className="edit-section">
-            <button type="button12" className={btnshow ? "edit-image-btn" : "invisible"} onClick={moveBackward}>
+            <button
+              type="button12"
+              className={btnshow ? "edit-image-btn" : "invisible"}
+              onClick={moveBackward}
+            >
               Prev
             </button>
             <div className="edit-image-section">
@@ -135,23 +140,26 @@ function EditImages(props) {
                         setImgId(image);
                       }}
                       style={{
-                        outline: imgId == image
-                          ? "5px solid green"
-                          : "1px solid black",
+                        outline:
+                          imgId == image
+                            ? "5px solid green"
+                            : "1px solid black",
                       }}
                     >
-                      {image.fileUrl.split("/")[0] == "data:image" || !image.fileUrl.includes("mp4") ?
+                      {image.fileUrl.split("/")[0] == "data:image" ||
+                      !image.fileUrl.includes("mp4") ? (
                         <img
                           src={image.fileUrl}
                           width="150"
                           height="150"
                           alt="upload"
                         />
-                        : <video autoPlay loop muted>
+                      ) : (
+                        <video autoPlay loop muted>
                           <source src={image.fileUrl} type="video/mp4" />
                           <source src={image.fileUrl} type="video/ogg" />
                         </video>
-                      }
+                      )}
                       {/* <button onClick={() => deleteHandler(image)}>
                         delete image
                       </button> */}
@@ -161,7 +169,7 @@ function EditImages(props) {
                 })}
             </div>
             <button
-            type="button12"
+              type="button12"
               className={btnshow ? "edit-image-btn" : "invisible"}
               onClick={moveForward}
             >
@@ -178,7 +186,11 @@ function EditImages(props) {
             }}
             disabled={loading ? true : false}
           >
-            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
+            <Spinner
+              animation="border"
+              variant="light"
+              className={loading ? "me-2" : "d-none"}
+            />
             {loading ? "Updating..." : "Update index"}
           </Button>
         </Form>
