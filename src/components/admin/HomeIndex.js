@@ -11,7 +11,7 @@ import { AiFillDelete } from "react-icons/ai";
 export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const [loading, setLoading] = useState(false);
   const [imagesPreview, setImagesPreview] = useState([]);
-  const [screen, setScreen] = useState("large-laptop");
+  const [screen, setScreen] = useState("small-laptop");
   const [selectedCanvas, setSelectedCanvas] = useState(hom?.canvas);
   const [deleteIcon, setDeleteIcon] = useState(
     "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E"
@@ -113,7 +113,8 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
   };
 
-  const initFabric = async (canvas, width = window.innerWidth) => {
+  const initFabric = async (canvas, width = 1440) => {
+    console.log(width);
     if (fabricRef.current) {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -126,8 +127,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     });
 
     if (homeIndexCanvas) {
-      loadCanvasFromJSON(canvas || hom.canvas);
-      // console.log('canvas :::', canvas)
+      loadCanvasFromJSON(canvas || hom.canvasSLaptop);
     }
 
     fabricRef.current.on("object:added", onObjectAdded);
@@ -150,19 +150,28 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   useEffect(() => {
     if (hom) {
-      if (screen === "large-laptop") {
-        initFabric(hom?.canvas, window.innerWidth);
+      // if (screen === "large-laptop") {
+      //   initFabric(hom?.canvas, window.innerWidth);
+      // } else
+      if (screen === "extra-large") {
+        initFabric(hom?.canvasELarge, 6020);
+      } else if (screen === "large-laptop") {
+        initFabric(hom?.canvasLLaptop, 3560);
+      } else if (screen === "medium-laptop") {
+        initFabric(hom?.canvasMLaptop, 2560);
       } else if (screen === "small-laptop") {
-        initFabric(hom?.canvasSmall, 1080);
-      } else if (screen === "tab") {
-        initFabric(hom?.canvasTab, 720);
+        initFabric(hom?.canvasSLaptop, 1440);
+      } else if (screen === "extra-large-tab") {
+        initFabric(hom?.canvasXLTab, 1180);
+      } else if (screen === "large-tab") {
+        initFabric(hom?.canvasLTab, 1024);
+      } else if (screen === "small-tab") {
+        initFabric(hom?.canvasSTab, 768);
       } else if (screen === "mobile") {
-        initFabric(hom?.canvasMobile, 420);
+        initFabric(hom?.canvasMobile, 430);
       }
     }
   }, [screen]);
-
-
 
   function getVideoElement(url, width, height) {
     const videoE = document.createElement("video");
@@ -175,7 +184,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
     videoE.controls = true;
     videoE.crossOrigin = "anonymous";
     videoE.src = url;
-    videoE.setAttribute('playsinline', '');
+    videoE.setAttribute("playsinline", "");
     const source = document.createElement("source");
     source.src = url;
     source.type = "video/mp4";
@@ -254,7 +263,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   useEffect(() => {
     initFabric();
-    console.log('-------------------', fabricRef.current['backgroundColor'])
+    console.log("-------------------", fabricRef.current["backgroundColor"]);
     return () => {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -264,26 +273,49 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   const submitCanvas = async () => {
     let payload;
     setLoading(!loading);
-    if (screen === "large-laptop") {
+    // if (screen === "large-laptop") {
+    //   payload = {
+    //     canvas: JSON.stringify(fabricRef.current.toJSON())
+    //   };
+    // } else if (screen === "small-laptop") {
+    //   payload = {
+    //     canvasSmall: JSON.stringify(fabricRef.current.toJSON()),
+    //   };
+    // } else if (screen === "tab") {
+    //   payload = {
+    //     canvasTab: JSON.stringify(fabricRef.current.toJSON()),
+    //   };
+    // } else
+    if (screen === "extra-large") {
       payload = {
-        images: [],
-        canvas: JSON.stringify(fabricRef.current.toJSON()),
-        originalX: window.innerWidth,
-        originalY: window.innerHeight,
+        canvasELarge: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "large-laptop") {
+      payload = {
+        canvasLLaptop: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "medium-laptop") {
+      payload = {
+        canvasMLaptop: JSON.stringify(fabricRef.current.toJSON()),
       };
     } else if (screen === "small-laptop") {
       payload = {
-        images: [],
-        canvasSmall: JSON.stringify(fabricRef.current.toJSON()),
+        canvasSLaptop: JSON.stringify(fabricRef.current.toJSON()),
       };
-    } else if (screen === "tab") {
+    } else if (screen === "extra-large-tab") {
       payload = {
-        images: [],
-        canvasTab: JSON.stringify(fabricRef.current.toJSON()),
+        canvasXLTab: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "large-tab") {
+      payload = {
+        canvasLTab: JSON.stringify(fabricRef.current.toJSON()),
+      };
+    } else if (screen === "small-tab") {
+      payload = {
+        canvasSTab: JSON.stringify(fabricRef.current.toJSON()),
       };
     } else if (screen === "mobile") {
       payload = {
-        images: [],
         canvasMobile: JSON.stringify(fabricRef.current.toJSON()),
       };
     }
@@ -303,7 +335,6 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
       fabricRef.current.requestRenderAll();
       // console.log('-------------------', fabricRef.current.backgroundColor)
     }
-
   };
 
   return (
@@ -327,7 +358,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
               name="images"
               onChange={onSelectFile}
               multiple
-            // accept="image/*"
+              // accept="image/*"
             />
           </label>
 
@@ -353,31 +384,48 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
           {loading ? "Updating..." : "Update"}
         </button>
         <select onChange={handleScreenChange} className="py-1 px-3">
-          <option value="large-laptop">Large Laptop</option>
+          {/* <option value="large-laptop">Large Laptop</option>
           <option value="small-laptop">Small Laptop</option>
-          <option value="tab">Tab</option>
-          <option value="mobile">Mobile</option>
+          <option value="tab">Tab</option> */}
+          <option value="small-laptop">Small Laptop (1440 px)</option>
+          <option value="extra-large">Extra Large (6016 px)</option>
+          <option value="large-laptop">Large Laptop (3560 px)</option>
+          <option value="medium-laptop">Medium Laptop (2560 px)</option>
+          <option value="extra-large-tab">Extra Large Tab (1180 px)</option>
+          <option value="large-tab">Large Tab (1024 px)</option>
+          <option value="small-tab">Small Tap (768 px)</option>
+          <option value="mobile">Mobile (430 px)</option>
         </select>
       </div>
 
-      <div
-        className="relative"
-        style={{
-          width: screen === "large-laptop"
-            ? "100%"
-            : screen === "small-laptop"
-              ? "1080px"
-              : screen === "tab"
-                ? "720px"
+        <div
+          className="relative"
+          style={{
+            width:
+              screen === "extra-large"
+                ? "6020px"
+                : screen === "large-laptop"
+                ? "3560px"
+                : screen === "medium-laptop"
+                ? "2560px"
+                : screen === "small-laptop"
+                ? "1440px"
+                : screen === "extra-large-tab"
+                ? "1180px"
+                : screen === "large-tab"
+                ? "1024px"
+                : screen === "small-tab"
+                ? "768px"
                 : screen === "mobile"
-                  ? "420px"
-                  : "",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
-      </div>
+                ? "430px"
+                : "",
+            marginLeft: "auto",
+            marginRight: "auto",
+            // overflowX: "scroll", whiteSpace: "nowrap"
+          }}
+        >
+          <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+        </div>
       <ToastContainer />
     </div>
   );

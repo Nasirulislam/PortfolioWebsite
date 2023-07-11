@@ -72,34 +72,52 @@ function HomeIndex(props) {
       fabricRef.current = null;
     }
 
-    // console.log("hom===========>>>", props.hom)
-    const hom_canvas =
-      window.innerWidth >= 1440
-        ? props.hom.canvas
-        : window.innerWidth >= 1080
-        ? props.hom.canvasSmall
-        : window.innerWidth >= 720
-        ? props.hom.canvasTab
-        : window.innerWidth >= 420
-        ? props.hom.canvasMobile
-        : props.hom.canvasMobile;
+    console.log("hom===========>>>", props.hom)
+    
+    const hom_canvas = window.innerWidth >= 6000
+                        ? props.hom.canvasELarge
+                        : window.innerWidth >= 3560
+                        ? props.hom.canvasLLaptop
+                        : window.innerWidth >= 2560
+                        ? props.hom.canvasMLaptop
+                        : window.innerWidth >= 1440
+                        ? props.hom.canvasSLaptop
+                        : window.innerWidth >= 1180
+                        ? props.hom.canvasXLTab
+                        : window.innerWidth >= 1024
+                        ? props.hom.canvasLTab
+                        : window.innerWidth >= 768
+                        ? props.hom.canvasSTab
+                        : window.innerWidth >= 430
+                        ? props.hom.canvasMobile
+                        : props.hom.canvasMobile;
 
-    const wid =
-      window.innerWidth >= 1440
-        ? 1440
-        : window.innerWidth >= 1080
-        ? 1080
-        : window.innerWidth >= 720
-        ? 720
-        : window.innerWidth >= 420
-        ? 420
-        : 420;
+    const wid = window.innerWidth >= 6000
+                ? 6000
+                : window.innerWidth >= 3560
+                ? 3560
+                : window.innerWidth >= 2560
+                ? 2560
+                : window.innerWidth >= 1440
+                ? 1440
+                : window.innerWidth >= 1180
+                ? 1180
+                : window.innerWidth >= 1024
+                ? 1024
+                : window.innerWidth >= 768
+                ? 768
+                : window.innerWidth >= 430
+                ? 430
+                : window.innerWidth;
+
+
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
       var canvasJSON = JSON.parse(hom_canvas);
       fabricRef.current = new fabric.StaticCanvas(canvasRef.current, {
         width: wid,
+        // width: window.innerWidth,
         height: window.innerHeight,
       });
 
