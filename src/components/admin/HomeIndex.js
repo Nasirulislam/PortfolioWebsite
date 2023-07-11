@@ -383,17 +383,17 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
           />
           {loading ? "Updating..." : "Update"}
         </button>
-        <select onChange={handleScreenChange} className="py-1 px-3">
+        <select defaultValue="small-laptop" onChange={handleScreenChange} value={screen} className="py-1 px-3">
           {/* <option value="large-laptop">Large Laptop</option>
           <option value="small-laptop">Small Laptop</option>
           <option value="tab">Tab</option> */}
-          <option value="small-laptop">Small Laptop (1440 px)</option>
           <option value="extra-large">Extra Large (6016 px)</option>
           <option value="large-laptop">Large Laptop (3560 px)</option>
           <option value="medium-laptop">Medium Laptop (2560 px)</option>
+          <option value="small-laptop">Small Laptop (1440 px)</option>
           <option value="extra-large-tab">Extra Large Tab (1180 px)</option>
           <option value="large-tab">Large Tab (1024 px)</option>
-          <option value="small-tab">Small Tap (768 px)</option>
+          <option value="small-tab">Small Tab (768 px)</option>
           <option value="mobile">Mobile (430 px)</option>
         </select>
       </div>
