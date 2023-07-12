@@ -23,6 +23,43 @@ export default function About() {
     const fileInputRef = useRef(null);
     const [aboutImages, setAboutImages] = useState([]);
 
+
+    //Details summary section
+    const [details, setDetails] = useState([{ summary: '' }]);
+    const handleChange = (index, event) => {
+        const updatedDetails = [...details];
+        updatedDetails[index].summary = event.target.value;
+        setDetails(updatedDetails);
+    };
+
+    const handleAdd = () => {
+        setDetails([...details, { summary: '' }]);
+    };
+
+    const handleRemove = (index) => {
+        const updatedDetails = [...details];
+        updatedDetails.splice(index, 1);
+        setDetails(updatedDetails);
+    };
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const response = await axios.get(`${url}/project/getDetail`);
+
+                if (response.data) {
+                    console.log(response.data.details)
+                    setDetails(response?.data?.details);
+                }
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+            }
+        };
+
+        fetchDetails();
+    }, []);
+
     useEffect(() => {
         fetchAboutImages();
     }, []);
@@ -78,14 +115,14 @@ export default function About() {
         e.preventDefault();
         setLoading(true);
         const payload = {
-            title: title,
-            detail: detail,
-            locTxt: locTxt,
-            email: email,
-            instaUrl: instUrl,
-            repTxt: repTxt,
-            repName: repName,
-            repEmail: repEmail
+            title: title || " ",
+            detail: detail || " ",
+            locTxt: locTxt || " ",
+            email: email || "",
+            instaUrl: instUrl || "",
+            repTxt: repTxt || "",
+            repName: repName || "",
+            repEmail: repEmail || "",
         }
         const response = await axios.post(`${url}/project/updateAbout`, payload);
         if (response.status === 210) {
@@ -93,6 +130,22 @@ export default function About() {
         } else {
             toast(JSON.stringify(response));
         }
+
+        const payload2 = {
+            details: details
+        }
+        console.log('here 123123123');
+
+        setLoading(false);
+        const response2 = await axios.post(`${url}/project/updateDetail`, payload2);
+        console.log('here 123123123123123123');
+        console.log(response2);
+        // if (response2.status === 210) {
+        //     toast("Updated successfully");
+        // } else {
+        //     toast(JSON.stringify(response2));
+        // }
+
         setLoading(false);
     }
     const handleImageDelete = async (id) => {
@@ -136,7 +189,7 @@ export default function About() {
             <Card className="p-3 my-5 form-card">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Title</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >Title:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Title"
@@ -149,7 +202,7 @@ export default function About() {
 
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Detail</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >Detail:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Description"
@@ -159,19 +212,32 @@ export default function About() {
                             }}
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Based In</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter Location"
-                            value={locTxt}
-                            onChange={(e) => {
-                                setLocTxt(e.target.value);
-                            }}
-                        />
+                    <Form.Group className="mb-3" controlId="formBasicDetails">
+                        <Form.Label style={{ fontWeight: '700' }} >Summary:</Form.Label>
+                        {details?.map((detail, index) => (
+                            <>
+                                <p>{index + 1}.</p>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Enter Summary"
+                                    value={detail.summary}
+                                    onChange={(event) => handleChange(index, event)}
+                                    style={{ margin: "5px 0px" }}
+                                />
+                                {index > 0 && (
+                                    <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", }}>
+                                        Remove-
+                                    </Button>
+                                )}
+                            </>
+                        ))}
+                        <Button type="button" onClick={handleAdd} >
+                            Add+
+                        </Button>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >Email:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Email"
@@ -181,8 +247,19 @@ export default function About() {
                             }}
                         />
                     </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label style={{ fontWeight: '700' }} >Phone:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Phone"
+                            value={locTxt}
+                            onChange={(e) => {
+                                setLocTxt(e.target.value);
+                            }}
+                        />
+                    </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Instagram Url</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >Instagram Url:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Instagram URL"
@@ -193,10 +270,10 @@ export default function About() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Represented By</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >LinkedIn Url:</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter Represented Name"
+                            placeholder="Enter LinkedIn Url"
                             value={repName}
                             onChange={(e) => {
                                 setRepName(e.target.value);
@@ -204,7 +281,7 @@ export default function About() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Represented Email</Form.Label>
+                        <Form.Label style={{ fontWeight: '700' }} >Represented Email:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Represented Email"
@@ -252,7 +329,7 @@ export default function About() {
                     </div>
                     <Button
                         variant="primary"
-                        type="submit01"
+                        type="button"
                         className="d-flex align-items-center"
                         onClick={(e) => submitImage(e)}
                         disabled={loading ? true : false}

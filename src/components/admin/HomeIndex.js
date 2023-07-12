@@ -358,7 +358,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
               name="images"
               onChange={onSelectFile}
               multiple
-              // accept="image/*"
+            // accept="image/*"
             />
           </label>
 
@@ -398,34 +398,34 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
         </select>
       </div>
 
-        <div
-          className="relative"
-          style={{
-            width:
-              screen === "extra-large"
-                ? "6020px"
-                : screen === "large-laptop"
+      <div
+        className="relative"
+        style={{
+          width:
+            screen === "extra-large"
+              ? "6020px"
+              : screen === "large-laptop"
                 ? "3560px"
                 : screen === "medium-laptop"
-                ? "2560px"
-                : screen === "small-laptop"
-                ? "1440px"
-                : screen === "extra-large-tab"
-                ? "1180px"
-                : screen === "large-tab"
-                ? "1024px"
-                : screen === "small-tab"
-                ? "768px"
-                : screen === "mobile"
-                ? "430px"
-                : "",
-            marginLeft: "auto",
-            marginRight: "auto",
-            // overflowX: "scroll", whiteSpace: "nowrap"
-          }}
-        >
-          <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
-        </div>
+                  ? "2560px"
+                  : screen === "small-laptop"
+                    ? "1440px"
+                    : screen === "extra-large-tab"
+                      ? "1180px"
+                      : screen === "large-tab"
+                        ? "1024px"
+                        : screen === "small-tab"
+                          ? "768px"
+                          : screen === "mobile"
+                            ? "430px"
+                            : "",
+          marginLeft: "auto",
+          marginRight: "auto",
+          // overflowX: "scroll", whiteSpace: "nowrap"
+        }}
+      >
+        <canvas className="sample-canvas" ref={canvasRef} id="canvas" />
+      </div>
       <ToastContainer />
     </div>
   );
