@@ -203,21 +203,24 @@ export default function About(props) {
                 )}
 
                 {/* <img src={AboutImage} className="w-100" /> */}
-                <div className='p-20  py-20 px-44'>
-                    <div className="grid grid-cols-5 gap-6 mt-2">
+                <div className='p-4 mb-10 sm:p-6 md:p-8 lg:p-20'>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-2">
                         {aboutImages &&
                             aboutImages.map((data, index) => (
                                 <div key={index} className="flex flex-col items-center">
+                                    <div className='w-full my-auto'>
 
-                                    <img
-                                        src={`${url}/about/${data?.image}`}
-                                        alt={`About Image ${index + 1}`}
-                                        className="h-[150px] w-[150px] object-cover"
-                                    />
+                                        <img
+                                            src={`${url}/about/${data?.image}`}
+                                            alt={`About Image ${index + 1}`}
+                                            className="h-full w-full my-auto object-cover"
+                                        />
+                                    </div>
                                 </div>
                             ))}
                     </div>
                 </div>
+
                 {/* {props.portfolios.length > 0 && (
                     <ul id="about-portfolio">
                         {
