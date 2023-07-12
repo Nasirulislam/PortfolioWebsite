@@ -48,7 +48,7 @@ function EditProject(props) {
       return;
     }
     projectsData.map((project, index) => {
-     
+
       if (project.slug === name) {
         console.log(project)
         setTitle(project.name);
@@ -139,22 +139,22 @@ function EditProject(props) {
           imagesFile.push(response);
           newpics.push(response)
           setSelectedImages(preState => [...preState, response]);
-          if(i===(e.target.files.length-1)){
+          if (i === (e.target.files.length - 1)) {
             console.log("the last file is here files-=======>>>>>>")
             setdisplayImage((old => [...old, ...newVids, response]));
             setUploadImg(false);
-          }else{
-            setdisplayImage((old => [...old,  response]));
+          } else {
+            setdisplayImage((old => [...old, response]));
             // newpics = [];
             // console.log("new pic =====>>>>", newpics)
           }
         };
-        if(response.fileUrl.includes("mp4")){
+        if (response.fileUrl.includes("mp4")) {
           delete response.status;
           newVids.push(response)
           imagesFile.push(response);
           setSelectedImages(preState => [...preState, response]);
-          if(i===(e.target.files.length-1)){
+          if (i === (e.target.files.length - 1)) {
             console.log("the last file is here files-=======>>>>>>")
             setdisplayImage((old => [...old, ...newVids]));
             setUploadImg(false);
@@ -163,9 +163,9 @@ function EditProject(props) {
       }
     }
 
-   
 
-    
+
+
     // Array.from(e.target.files).forEach(file => imagesFile.push(file));
     // setSelectedImages(imagesFile);
   };
@@ -173,7 +173,7 @@ function EditProject(props) {
 
   useEffect(() => {
     console.log("======>>>> selected Images", selectedImages)
-  },[selectedImages])
+  }, [selectedImages])
 
   const deleteProduct = async (e) => {
     e.preventDefault();
@@ -205,7 +205,7 @@ function EditProject(props) {
   const submitData = async (e) => {
     e.preventDefault();
     if (templateError !== "") {
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
       return;
     }
     setLoading(true);
@@ -236,7 +236,7 @@ function EditProject(props) {
       imagesAndThumb: JSON.stringify([...displayImage])
 
     }
-    console.log("payload======>>>>>",payload)
+    console.log("payload======>>>>>", payload)
 
     const config = {
       headers: {
@@ -245,7 +245,7 @@ function EditProject(props) {
     };
 
     const response = await API.put(`project/${P_id}`, payload, config).then((response) => {
-    // const response = await API.put(`project/${P_id}`, payload).then((response) => {
+      // const response = await API.put(`project/${P_id}`, payload).then((response) => {
       if (response.status == 225) {
         toast("Uploaded successfully");
         setSelectedImages([]);
@@ -290,6 +290,7 @@ function EditProject(props) {
               className={"d-flex align-items-center " + delteIcon ? "delete-icon m-2" : "d-none"}
               onClick={deleteProduct}
               disabled={loadingDel || uploadImg ? true : false}
+              style={{ background: 'blue' }}
             >
               {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"} /> : <BsFillTrashFill />}
 
@@ -438,9 +439,10 @@ function EditProject(props) {
             className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
             disabled={loading || uploadImg ? true : false}
+            style={{ background: 'blue' }}
           >
             <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
-            {loading ? "Updating..." : uploadImg ? "Uploading" :"Update"}
+            {loading ? "Updating..." : uploadImg ? "Uploading" : "Update"}
           </Button>
         </Form>
       </Card>

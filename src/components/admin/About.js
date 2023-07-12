@@ -226,13 +226,13 @@ export default function About() {
                                     style={{ margin: "5px 0px" }}
                                 />
                                 {index > 0 && (
-                                    <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", }}>
+                                    <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", backgroundColor: 'red', color: 'white' }}>
                                         Remove-
                                     </Button>
                                 )}
                             </>
                         ))}
-                        <Button type="button" onClick={handleAdd} >
+                        <Button type="button" onClick={handleAdd} style={{ backgroundColor: 'green', color: 'white' }}>
                             Add+
                         </Button>
                     </Form.Group>
