@@ -333,6 +333,7 @@ export default function About() {
                         className="d-flex align-items-center"
                         onClick={(e) => submitImage(e)}
                         disabled={loading ? true : false}
+                        style={{ background: 'blue' }}
                     >
                         <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
                         {loading ? "Uploading..." : "Upload "}
