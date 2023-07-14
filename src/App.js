@@ -56,9 +56,9 @@ function App() {
         console.log(element);
         if (element) {
           console.log("inside");
-          element.scrollIntoView();
+          element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 1000);
+      }, 0);
     } else if (location.pathname === "/") {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));
@@ -205,8 +205,13 @@ function App() {
     e.preventDefault();
     if (METext === "START") {
       window.scrollTo(0, 0);
-    } else {
-      window.history.go(-1);
+    }
+    else {
+      console.log('=........................ location', location.pathname)
+      // window.history.go(-1);
+      navigate("/");
+      setMEText("START");
+
     }
   };
 
