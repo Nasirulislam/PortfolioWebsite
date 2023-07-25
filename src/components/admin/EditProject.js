@@ -127,6 +127,7 @@ function EditProject(props) {
 
     for (let i = 0; i < e.target.files.length; i++) {
       const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
+      console.log(response)
       if (response.status === 200) {
         console.log(response)
         // get file dimensions
@@ -139,6 +140,7 @@ function EditProject(props) {
           imagesFile.push(response);
           newpics.push(response)
           setSelectedImages(preState => [...preState, response]);
+          console.log(i, e.target.files.length)
           if(i===(e.target.files.length-1)){
             console.log("the last file is here files-=======>>>>>>")
             setdisplayImage((old => [...old, ...newVids, response]));
@@ -150,6 +152,7 @@ function EditProject(props) {
           }
         };
         if(response.fileUrl.includes("mp4")){
+          console.log("video file uploaded-=======>>>>>>");
           delete response.status;
           newVids.push(response)
           imagesFile.push(response);
