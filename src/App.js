@@ -60,10 +60,12 @@ function App() {
         console.log(selectedProj)
         console.log(element);
         if (element) {
-          console.log("inside");
           element.scrollIntoView({ behavior: 'smooth' });
+        }else{
+          window.scrollTo(0, 0);
+          setLoading(false)
         }
-        setTimeout(() => {setLoading(false)},600)
+        setTimeout(() => {setLoading(false)},500)
       }, 400);
     } else if (location.pathname === "/") {
       setTimeout(() => {
