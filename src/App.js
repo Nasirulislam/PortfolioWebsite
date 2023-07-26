@@ -46,11 +46,14 @@ function App() {
   const [loc, setLoc] = useState();
   const location = useLocation();
   const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
+    
     setLoc(location.pathname);
     if (location.pathname === "/" && projChanged === true) {
+      setLoading(true)
       setProjChanged(false);
       setTimeout(() => {
         const element = document.getElementById(selectedProj);
@@ -60,7 +63,8 @@ function App() {
           console.log("inside");
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 1000);
+        setTimeout(() => {setLoading(false)},1000)
+      }, 500);
     } else if (location.pathname === "/") {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));
@@ -312,6 +316,7 @@ function App() {
               hom={hom}
               originalX={originalX}
               originalY={originalY}
+              loading={loading}
             />
           </div>
         ) : (

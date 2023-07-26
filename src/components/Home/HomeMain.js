@@ -19,7 +19,6 @@ function HomeMain(props) {
   const [randomIndex, setRandomIndex] = useState([]);
   const [changeClass, setChangeClass] = useState(false);
   const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
-
   const [slug, setSlug] = useState();
   const [name, setName] = useState();
 
@@ -123,6 +122,12 @@ function HomeMain(props) {
 
   return (
     <>
+      {props.loading && 
+        <div class='load'>
+          <div class="loader"></div>
+        </div> 
+      }
+
       <div className="" style={{ height: "100%" }}>
         <div
           style={{ position: "relative", width: "100%", height: "100%" }}
