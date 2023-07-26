@@ -34,6 +34,7 @@ function EditProject(props) {
   const [loadingDel, setDelLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [templateError, setTemplateError] = useState("");
+  const [percentage, setPercentage] = useState(0);
   const MAX_LENGTH = 25;
 
   const handleSelectedProject = (name) => {
@@ -48,9 +49,8 @@ function EditProject(props) {
       return;
     }
     projectsData.map((project, index) => {
-
       if (project.slug === name) {
-        console.log(project)
+        console.log(project);
         setTitle(project.name);
         setDescription(project.description);
         setIndex(project.index);
@@ -60,10 +60,10 @@ function EditProject(props) {
         setTitleColor(project.titleColor);
         setPId(project._id);
         //  const pics = extractUrls(project.imagesAndThumb)
-        setselOldImages(project.imagesAndThumb)
-        setdisplayImage(project.imagesAndThumb)
-        setfimages(project.images)
-        settimages(project.imagesAndThumb)
+        setselOldImages(project.imagesAndThumb);
+        setdisplayImage(project.imagesAndThumb);
+        setfimages(project.images);
+        settimages(project.imagesAndThumb);
         setDeleteIcon(true);
       }
     });
@@ -71,7 +71,7 @@ function EditProject(props) {
   };
 
   function extractUrls(images) {
-    return images.map(image => image.fileUrl);
+    return images.map((image) => image.fileUrl);
   }
 
   useEffect(() => {
@@ -89,10 +89,9 @@ function EditProject(props) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         resolve(reader.result);
-      }
+      };
     });
-  }
-
+  };
 
   const onSelectFile = async (e) => {
     let selectedFileLength = Array.from(e.target.files).length;
@@ -104,32 +103,34 @@ function EditProject(props) {
       return;
     }
 
-    let imagesFile = []
-    const newpics = []
-    const newVids = []
+    let imagesFile = [];
+    const newpics = [];
+    const newVids = [];
 
     let promises = [];
     setUploadImg(true);
 
-    [...e.target.files].forEach(file => {
-      console.log(file)
+    [...e.target.files].forEach((file) => {
+      console.log(file);
       promises.push(convertToBase64(file));
       // if(!file.type.includes("video")){
       //   newpics.push({ fileUrl: URL.createObjectURL(file) });
       // }
     });
 
-    Promise.all(promises).then(result => {
+    Promise.all(promises).then((result) => {
       // setdisplayImage((old => [...old, ...result]));
       // console.log("=====>>>>>new pics ", newpics)
       // setdisplayImage((old => [...old, ...newpics]));
-    })
+    });
 
     for (let i = 0; i < e.target.files.length; i++) {
-      const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
-      console.log(response)
+      const response = await API.formData("project/v2/s3/upload", {
+        file: e.target.files[i],
+      });
+      console.log(response);
       if (response.status === 200) {
-        console.log(response)
+        console.log(response);
         // get file dimensions
         var imageObj = new Image();
         imageObj.src = response.thumbnailUrl;
@@ -138,43 +139,52 @@ function EditProject(props) {
           response.height = this.height;
           delete response.status;
           imagesFile.push(response);
-          newpics.push(response)
-          setSelectedImages(preState => [...preState, response]);
-          if (i === (e.target.files.length - 1)) {
-            console.log("the last file is here files-=======>>>>>>")
-            setdisplayImage((old => [...old, ...newVids, response]));
+          newpics.push(response);
+          setSelectedImages((preState) => [...preState, response]);
+          updateUploadProgress(selectedFileLength, imagesFile.length);
+          if (i === e.target.files.length - 1) {
+            console.log("the last file is here files-=======>>>>>>");
+            setdisplayImage((old) => [...old, ...newVids, response]);
             setUploadImg(false);
           } else {
-            setdisplayImage((old => [...old, response]));
+            setdisplayImage((old) => [...old, response]);
             // newpics = [];
             // console.log("new pic =====>>>>", newpics)
           }
         };
         if (response.fileUrl.includes("mp4")) {
           delete response.status;
-          newVids.push(response)
+          newVids.push(response);
           imagesFile.push(response);
-          setSelectedImages(preState => [...preState, response]);
-          if (i === (e.target.files.length - 1)) {
-            console.log("the last file is here files-=======>>>>>>")
-            setdisplayImage((old => [...old, ...newVids]));
+          setSelectedImages((preState) => [...preState, response]);
+          if (i === e.target.files.length - 1) {
+            console.log("the last file is here files- =======>>>>>>");
+            setdisplayImage((old) => [...old, ...newVids]);
             setUploadImg(false);
           }
         }
       }
     }
 
-
-
-
     // Array.from(e.target.files).forEach(file => imagesFile.push(file));
     // setSelectedImages(imagesFile);
   };
 
 
+
+
+  const updateUploadProgress = (totalFiles, uploadedFiles) => {
+    const percentage = (uploadedFiles / totalFiles) * 100;
+    setPercentage(percentage)
+    console.log(`Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`);
+    // Update the UI with the upload progress percentage
+  };
+
+
+
   useEffect(() => {
-    console.log("======>>>> selected Images", selectedImages)
-  }, [selectedImages])
+    console.log("======>>>> selected Images", selectedImages);
+  }, [selectedImages]);
 
   const deleteProduct = async (e) => {
     e.preventDefault();
@@ -196,7 +206,6 @@ function EditProject(props) {
       }
     });
 
-
     if (typeof filteredImages[0] == "undefined") {
       filteredImages = [];
     }
@@ -206,7 +215,7 @@ function EditProject(props) {
   const submitData = async (e) => {
     e.preventDefault();
     if (templateError !== "") {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
       return;
     }
     setLoading(true);
@@ -218,8 +227,8 @@ function EditProject(props) {
       }
     }
     if (imagesArr.length < 2) {
-      imagesArr.push('')
-      imagesArr.reverse()
+      imagesArr.push("");
+      imagesArr.reverse();
     }
     const payload = {
       name: title,
@@ -234,42 +243,42 @@ function EditProject(props) {
       // images: JSON.stringify([...fimages, ...selectedImagesArr]),
       // imagesAndThumb: JSON.stringify([...timages, ...selectedImagesArr])
       images: JSON.stringify([...displayImage]),
-      imagesAndThumb: JSON.stringify([...displayImage])
-
-    }
-    console.log("payload======>>>>>", payload)
+      imagesAndThumb: JSON.stringify([...displayImage]),
+    };
+    console.log("payload======>>>>>", payload);
 
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     };
 
-    const response = await API.put(`project/${P_id}`, payload, config).then((response) => {
-      // const response = await API.put(`project/${P_id}`, payload).then((response) => {
-      if (response.status == 225) {
-        toast("Uploaded successfully");
-        setSelectedImages([]);
-        window.location.reload();
-      } else {
-        toast(JSON.stringify(response));
-      }
-
-    }).catch(err => {
-      toast(JSON.stringify(err));
-    })
+    const response = await API.put(`project/${P_id}`, payload, config)
+      .then((response) => {
+        // const response = await API.put(`project/${P_id}`, payload).then((response) => {
+        if (response.status == 225) {
+          toast("Uploaded successfully");
+          setSelectedImages([]);
+          window.location.reload();
+        } else {
+          toast(JSON.stringify(response));
+        }
+      })
+      .catch((err) => {
+        toast(JSON.stringify(err));
+      });
     setLoading(false);
   };
 
   const handleTemplate = (e) => {
     e.preventDefault();
     if (e.target.value > 3 || e.target.value <= 0) {
-      setTemplateError("template should between 1-3")
+      setTemplateError("template should between 1-3");
     } else {
-      setTemplateError("")
+      setTemplateError("");
     }
-    setTemplate(e.target.value)
-  }
+    setTemplate(e.target.value);
+  };
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
@@ -283,18 +292,33 @@ function EditProject(props) {
             >
               <option>Projects</option>
               {projectsData.map((project, index) => {
-                return <option key={index} value={project.slug}>{project.name}</option>;
+                return (
+                  <option key={index} value={project.slug}>
+                    {project.name}
+                  </option>
+                );
               })}
             </Form.Select>
             <Button
               type="submit"
-              className={"d-flex align-items-center " + delteIcon ? "delete-icon m-2" : "d-none"}
+              className={
+                "d-flex align-items-center " + delteIcon
+                  ? "delete-icon m-2"
+                  : "d-none"
+              }
               onClick={deleteProduct}
               disabled={loadingDel || uploadImg ? true : false}
-              style={{ background: 'blue' }}
+              style={{ background: "blue" }}
             >
-              {loadingDel ? <Spinner animation="border" variant="light" className={loadingDel ? "" : "d-none"} /> : <BsFillTrashFill />}
-
+              {loadingDel ? (
+                <Spinner
+                  animation="border"
+                  variant="light"
+                  className={loadingDel ? "" : "d-none"}
+                />
+              ) : (
+                <BsFillTrashFill />
+              )}
             </Button>
           </div>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -308,7 +332,6 @@ function EditProject(props) {
               }}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicDescription">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -320,7 +343,6 @@ function EditProject(props) {
               }}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Index</Form.Label>
             <Form.Control
@@ -391,16 +413,20 @@ function EditProject(props) {
               {displayImage &&
                 displayImage.map((image, index) => {
                   {
-                    return image?.fileUrl?.split("/")[0] === "data:image" || !image?.fileUrl?.includes("mp4") ?
+                    return image?.fileUrl?.split("/")[0] === "data:image" ||
+                      !image?.fileUrl?.includes("mp4") ? (
                       <div key={image} className="waheed mx-1">
                         {/* <img src={image?.fileUrl?.split("/")[0] === "data:image" ? image : (base_url + "/projects/" + image)} width="150" alt="upload" /> */}
                         <img src={image.fileUrl} width="150" alt="upload" />
-                        <button type="button" onClick={() => deleteHandler(index)}>
+                        <button
+                          type="button"
+                          onClick={() => deleteHandler(index)}
+                        >
                           delete image
                         </button>
                         <p>{index + 1}</p>
                       </div>
-                      :
+                    ) : (
                       <div key={image} className="image">
                         <video autoPlay loop muted>
                           {/* <source src={image?.fileUrl?.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/mp4" />
@@ -408,31 +434,32 @@ function EditProject(props) {
                           <source src={image.fileUrl} type="video/mp4" />
                           <source src={image.fileUrl} type="video/ogg" />
                         </video>
-                        <button type="button" onClick={() => deleteHandler(index)}>
+                        <button
+                          type="button"
+                          onClick={() => deleteHandler(index)}
+                        >
                           delete video
                         </button>
                         <p>{index + 1}</p>
                       </div>
+                    );
                   }
                 })}
-              {
-                displayImage.length < MAX_LENGTH && (
-                  <label className="img-label">
-                    + Add Images
-                    <br />
-                    <span>up to 10 images</span>
-                    <input
-                      type="file"
-                      name="images"
-                      onChange={onSelectFile}
-                      multiple
-                      accept="image/png , image/jpeg, image/webp"
-                    />
-                  </label>
-                )
-              }
+              {displayImage.length < MAX_LENGTH && (
+                <label className="img-label">
+                  + Add Images
+                  <br />
+                  <span>up to 10 images</span>
+                  <input
+                    type="file"
+                    name="images"
+                    onChange={onSelectFile}
+                    multiple
+                    accept="image/png , image/jpeg, image/webp"
+                  />
+                </label>
+              )}
             </div>
-
           </section>
           <Button
             variant="primary"
@@ -440,21 +467,27 @@ function EditProject(props) {
             className="d-flex align-items-center"
             onClick={(e) => submitData(e)}
             disabled={loading || uploadImg ? true : false}
-            style={{ background: 'blue' }}
+            style={{ background: "blue" }}
           >
-            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
-            {loading ? "Updating..." : uploadImg ? "Uploading" : "Update"}
+            <Spinner
+              animation="border"
+              variant="light"
+              className={loading ? "me-2" : "d-none"}
+            />
+            {loading ? `Updating...` : uploadImg ? `Uploading (${percentage}% done)` : "Update"}
           </Button>
         </Form>
       </Card>
-      {
-        showConfirmModal ? <ConfirmDelete
-          itemName={title} productId={P_id}
+      {showConfirmModal ? (
+        <ConfirmDelete
+          itemName={title}
+          productId={P_id}
           show={showConfirmModal}
           onHide={() => setShowConfirmModal(false)}
-        /> : <></>
-      }
-
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

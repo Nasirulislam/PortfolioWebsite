@@ -21,6 +21,8 @@ function AddProject({ projects }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [displayImage, setdisplayImage] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [percentage, setPercentage] = useState(0);
+
 
   const [titleError, setTitleError] = useState("");
   const [slugError, setSlugError] = useState("");
@@ -71,7 +73,7 @@ function AddProject({ projects }) {
       setdisplayImage(current => [...current, ...result])
     })
 
-    submitBtn.current.innerText = 'Uploading files...';
+    submitBtn.current.innerText = `Uploading (${percentage}% done)`;
     submitBtn.current.disabled = true;
     let imagesFile = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -89,6 +91,7 @@ function AddProject({ projects }) {
           delete response.status;
           imagesFile.push(response);
           setSelectedImages(preState => [...preState, response]);
+          updateUploadProgress(selectedFileLength, imagesFile.length);
           if(i===(e.target.files.length-1)){
             submitBtn.current.innerText = 'Submit';
           submitBtn.current.disabled = false;
@@ -106,6 +109,23 @@ function AddProject({ projects }) {
       }
     }
   };
+
+  useEffect(() => {
+    if(percentage!==0){
+      submitBtn.current.innerText = `Uploading (${percentage.toFixed()}% done)`;
+    }
+    if(percentage===100){
+      submitBtn.current.innerText = `Submit`;
+    }
+},[percentage])
+
+  const updateUploadProgress = (totalFiles, uploadedFiles) => {
+    const percentage = (uploadedFiles / totalFiles) * 100;
+    setPercentage(percentage)
+    console.log(`Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`);
+    // Update the UI with the upload progress percentage
+  };
+
 
   useEffect(() => {
 console.log(selectedImages)

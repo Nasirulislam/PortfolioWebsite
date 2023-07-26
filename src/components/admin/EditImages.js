@@ -53,6 +53,7 @@ function EditImages(props) {
     setting == true ? setSetting(false) : setSetting(true);
   };
   const handleSelectedProject = (name) => {
+    setSelectedImages([]);
     if (name === "Projects") {
       setTitle("");
       setIndex("");
@@ -62,7 +63,7 @@ function EditImages(props) {
       return;
     }
     projectsData.map((project, index) => {
-      if (project.name === name) {
+      if (project.name.trim().toLowerCase() == name.trim().toLowerCase()) {
         setProjectId(project._id);
         setTitle(project.name);
         setIndex(project.index);
