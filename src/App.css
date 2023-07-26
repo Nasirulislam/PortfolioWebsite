@@ -192,3 +192,13 @@ img.hoverImages:hover {
   z-index: 10;
 }
 /* home page start*/
+
+@media (max-width: 767px) {
+  .amoeba img,
+  .auston img,
+  .brenna img,
+  .mobile-view img {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

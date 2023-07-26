@@ -91,8 +91,8 @@ export default function Index({ projectData, indexBackground, setOptions }) {
                       key={index}
                       index={index}
                       
-                      setprojChanged={ setSelectedProj}
-              setselProj={setProjChanged}
+                      setprojChanged={ setProjChanged}
+              setselProj={ setSelectedProj}
                     />
                   );
                 })}
