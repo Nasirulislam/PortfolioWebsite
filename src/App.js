@@ -63,8 +63,8 @@ function App() {
           console.log("inside");
           element.scrollIntoView({ behavior: 'smooth' });
         }
-        setTimeout(() => {setLoading(false)},1000)
-      }, 500);
+        setTimeout(() => {setLoading(false)},600)
+      }, 400);
     } else if (location.pathname === "/") {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));
