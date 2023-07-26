@@ -1,6 +1,6 @@
 import "./App.css";
 import Index from "./components/Index/Index";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeMain from "./components/Home/HomeMain";
 import Spinner from "react-bootstrap/Spinner";
@@ -13,6 +13,7 @@ import NewLogin from "./components/admin/NewLogin";
 import ScrollToTop from "./components/ScrollToTop";
 import { useNavigate } from "react-router-dom";
 
+import { ProjectContext } from "./services/ProjectContext";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import About from "./components/About";
 import HomeIndex from "./components/admin/HomeIndex";
@@ -43,22 +44,23 @@ function App() {
   const navigate = useNavigate();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [loc, setLoc] = useState();
-  const [selProj, setselProj] = useState();
-  const [projChanged, setprojChanged] = useState(false);
   const location = useLocation();
+  const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
+
 
   useEffect(() => {
     setLoc(location.pathname);
     if (location.pathname === "/" && projChanged === true) {
-      setprojChanged(false);
+      setProjChanged(false);
       setTimeout(() => {
-        const element = document.getElementById(selProj);
+        const element = document.getElementById(selectedProj);
+        console.log(selectedProj)
         console.log(element);
         if (element) {
           console.log("inside");
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 0);
+      }, 1000);
     } else if (location.pathname === "/") {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));
@@ -216,6 +218,7 @@ function App() {
   };
 
   return (
+   
     <div>
       {/* <ScrollToTop /> */}
       <div className="App" style={{ position: "relative" }}>
@@ -309,8 +312,6 @@ function App() {
               hom={hom}
               originalX={originalX}
               originalY={originalY}
-              setprojChanged={setprojChanged}
-              setselProj={setselProj}
             />
           </div>
         ) : (
@@ -391,8 +392,6 @@ function App() {
                     projectData={projectsData}
                     indexBackground={indexBackground}
                     setOptions={setOptions}
-                    setprojChanged={setprojChanged}
-                    setselProj={setselProj}
                   />
                 }
               />

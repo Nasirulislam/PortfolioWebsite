@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Index.css";
 import axios from "axios";
 import base_url from "../../constants/url";
 import IndexItem from "./indeItem";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import { ProjectContext } from "../../services/ProjectContext";
 
-export default function Index({ projectData, indexBackground, setOptions,  setprojChanged, setselProj }) {
+export default function Index({ projectData, indexBackground, setOptions }) {
   const [isAnimating, setIsAnitmating] = useState(false);
   const [id, setId] = useState(-1);
   const [redHome, setRedHome] = useState(false);
   const [images, setIndexImages] = useState([]);
   const [projects, setProjects] = useState([]);
+  const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
 
   const navigate = useNavigate();
   const { path } = useLocation();
@@ -89,8 +91,8 @@ export default function Index({ projectData, indexBackground, setOptions,  setpr
                       key={index}
                       index={index}
                       
-                      setprojChanged={ setprojChanged}
-              setselProj={setselProj}
+                      setprojChanged={ setSelectedProj}
+              setselProj={setProjChanged}
                     />
                   );
                 })}

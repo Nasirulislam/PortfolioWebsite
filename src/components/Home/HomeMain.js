@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import HomeIndex from "./HomeIndex";
 import "./Home.css";
 import "./index.css";
@@ -11,12 +11,14 @@ import Auston from "../Auston/Auston";
 import Amoeba from "../Amoeba/Amoeba";
 import Brenna from "../Brenna/Brenna";
 import { motion } from "framer-motion";
+import { ProjectContext } from "../../services/ProjectContext";
 
 function HomeMain(props) {
   const [projectsData, setProjectsData] = useState([]);
   const [displayProjects, setProjectToDisplay] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
   const [changeClass, setChangeClass] = useState(false);
+  const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
 
   const [slug, setSlug] = useState();
   const [name, setName] = useState();
@@ -52,10 +54,6 @@ function HomeMain(props) {
   };
 
   useEffect(() => {
-
-  },[props.selProject])
-
-  useEffect(() => {
     window.addEventListener("scroll", onScroll);
 
     return () => {
@@ -88,13 +86,13 @@ function HomeMain(props) {
 
   const [value, setValue] = useState("David Ellis");
 
-  const handleSlug = () => {
+  const handleSlug = (recName) => {
     if (value === "View All Projects") {
       props.indexBtn();
     } else {
       // console.log("recieved name", name)
-      props.setselProj(name)
-      props.setprojChanged(true)
+      setSelectedProj(name)
+      setProjChanged(true)
       navigate("/" + slug);
     }
   };

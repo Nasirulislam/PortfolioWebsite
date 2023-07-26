@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useContext} from "react";
 import base_url from "../../constants/url";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useEffect } from "react";
 import Helper from "../../constants/Helper";
+import { ProjectContext } from "../../services/ProjectContext";
 // import { motion } from "framer-motion";
 
 function NextProject(props) {
@@ -12,6 +13,7 @@ function NextProject(props) {
   const index = props.index;
   const navigate = useNavigate();
   const [bottom, setBottom] = useState(false);
+  const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
 
   const nextProject = {
     hidden: {
@@ -49,6 +51,9 @@ function NextProject(props) {
       onClick={() => {
         props.setInitialBanners([])
         props.setBanners([])
+        console.log("the seected project is: ",projectData[index + 1].name)
+        setSelectedProj(projectData[index + 1].name)
+        setProjChanged(true)
         navigate(
           index + 1 < projectData.length - 1
             ? `/${projectData[index + 1].slug}`

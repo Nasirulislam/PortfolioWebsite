@@ -77,7 +77,9 @@ function Template1(props) {
     setBanners([])
     // split images array into 2 chunks
     makeTemplateBannerChunks(projectData[index]?.imagesAndThumb);
-
+    const to = setTimeout(() => {
+      window.scrollTo(0, 5);
+    },[100])
     const onScroll = function () {
       if (window.innerHeight + window.scrollY > document.body.offsetHeight - 500) {
         setValue(projectData[index + 1].name);
@@ -96,6 +98,7 @@ function Template1(props) {
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", mousemove);
+      clearTimeout(to)
     }
   }, [index]);
 
