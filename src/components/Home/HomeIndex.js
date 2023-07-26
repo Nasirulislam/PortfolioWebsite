@@ -23,13 +23,11 @@ function HomeIndex(props) {
     // top: "50%",
     // left: "50%",
     cursor: "pointer !important",
-    transform: `${
-      isHovered
-        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${
-            (-1 * (position.y - window.innerHeight / 2)) / 17
-          }px)`
+    transform: `${isHovered
+        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
+        }px)`
         : ""
-    }`,
+      }`,
     transition: "transform 0.3s ease-out",
   };
 
@@ -73,42 +71,42 @@ function HomeIndex(props) {
     }
 
     console.log("hom===========>>>", props.hom)
-    
+
     const hom_canvas = window.innerWidth >= 6000
-                        ? props.hom.canvasELarge
-                        : window.innerWidth >= 3560
-                        ? props.hom.canvasLLaptop
-                        : window.innerWidth >= 2560
-                        ? props.hom.canvasMLaptop
-                        : window.innerWidth >= 1440
-                        ? props.hom.canvasSLaptop
-                        : window.innerWidth >= 1180
-                        ? props.hom.canvasXLTab
-                        : window.innerWidth >= 1024
-                        ? props.hom.canvasLTab
-                        : window.innerWidth >= 768
-                        ? props.hom.canvasSTab
-                        : window.innerWidth >= 430
-                        ? props.hom.canvasMobile
-                        : props.hom.canvasMobile;
+      ? props.hom?.canvasELarge
+      : window.innerWidth >= 3560
+        ? props.hom?.canvasLLaptop
+        : window.innerWidth >= 2560
+          ? props.hom?.canvasMLaptop
+          : window.innerWidth >= 1440
+            ? props.hom?.canvasSLaptop
+            : window.innerWidth >= 1180
+              ? props.hom?.canvasXLTab
+              : window.innerWidth >= 1024
+                ? props.hom?.canvasLTab
+                : window.innerWidth >= 768
+                  ? props.hom?.canvasSTab
+                  : window.innerWidth >= 430
+                    ? props.hom?.canvasMobile
+                    : props.hom?.canvasMobile;
 
     const wid = window.innerWidth >= 6000
-                ? 6000
-                : window.innerWidth >= 3560
-                ? 3560
-                : window.innerWidth >= 2560
-                ? 2560
-                : window.innerWidth >= 1440
-                ? 1440
-                : window.innerWidth >= 1180
-                ? 1180
-                : window.innerWidth >= 1024
+      ? 6000
+      : window.innerWidth >= 3560
+        ? 3560
+        : window.innerWidth >= 2560
+          ? 2560
+          : window.innerWidth >= 1440
+            ? 1440
+            : window.innerWidth >= 1180
+              ? 1180
+              : window.innerWidth >= 1024
                 ? 1024
                 : window.innerWidth >= 768
-                ? 768
-                : window.innerWidth >= 430
-                ? 430
-                : window.innerWidth;
+                  ? 768
+                  : window.innerWidth >= 430
+                    ? 430
+                    : window.innerWidth;
 
 
 
@@ -264,7 +262,7 @@ function HomeIndex(props) {
 
 
 
-        
+
         const fab_video = new fabric.Image(videoE, {
           ...file,
         });

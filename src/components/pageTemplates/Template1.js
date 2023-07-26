@@ -130,7 +130,7 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={{x: 0, y:0}} index={index} imageFluid={true}/>
+                      <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={index} imageFluid={true} />
                     // <BlurhashCanvas
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -162,7 +162,7 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true}/>
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true} />
                     // <Blurhash
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -198,7 +198,7 @@ function Template1(props) {
                         Your browser does not support the video tag.
                       </video>
                       :
-                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true}/>
+                      <Helper banner={banner} largeCircle={largeCircle} index={index} imageFluid={true} />
                     // <Blurhash
                     //   hash={banner.hash}
                     //   width={parseInt(banner.width)}
@@ -221,21 +221,21 @@ function Template1(props) {
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
                       </video> :
-                      <Helper banner={banner} largeCircle={mediumCircle} index={index} imageFluid={true}/>
-                      // <Blurhash
-                      //   hash={banner.hash}
-                      //   width={parseInt(banner.width)}
-                      //   height={parseInt(banner.height)}
-                      //   resolutionX={32}
-                      //   resolutionY={32}
-                      //   punch={1}
-                      // />
-                      // <motion.img
-                      //   className={"img-fluid"}
-                      //   src={banner.fileUrl}
-                      //   key={index}
-                      //   animate={{ x: mediumCircle.x, y: mediumCircle.y }}
-                      // />
+                      <Helper banner={banner} largeCircle={mediumCircle} index={index} imageFluid={true} />
+                    // <Blurhash
+                    //   hash={banner.hash}
+                    //   width={parseInt(banner.width)}
+                    //   height={parseInt(banner.height)}
+                    //   resolutionX={32}
+                    //   resolutionY={32}
+                    //   punch={1}
+                    // />
+                    // <motion.img
+                    //   className={"img-fluid"}
+                    //   src={banner.fileUrl}
+                    //   key={index}
+                    //   animate={{ x: mediumCircle.x, y: mediumCircle.y }}
+                    // />
                   }
 
                 </motion.div>
