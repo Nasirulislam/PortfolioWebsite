@@ -60,13 +60,14 @@ function App() {
         console.log(selectedProj)
         console.log(element);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          // element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: 'instant' });
         }else{
           window.scrollTo(0, 0);
           setLoading(false)
         }
         setTimeout(() => {setLoading(false)},500)
-      }, 400);
+      }, 200);
     } else if (location.pathname === "/") {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));

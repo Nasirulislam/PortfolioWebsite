@@ -91,7 +91,7 @@ function HomeIndex(props) {
                     : props.hom?.canvasMobile;
 
     const wid = window.innerWidth >= 6000
-      ? 6000
+      ? 6020
       : window.innerWidth >= 3560
         ? 3560
         : window.innerWidth >= 2560
