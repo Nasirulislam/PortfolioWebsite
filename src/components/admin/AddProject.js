@@ -7,7 +7,7 @@ import "./Admin.css";
 import base_url from "../../constants/url";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import API from '../../services/API';
+import API from "../../services/API";
 
 function AddProject({ projects }) {
   const [title, setTitle] = useState("");
@@ -23,7 +23,6 @@ function AddProject({ projects }) {
   const [loading, setLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
 
-
   const [titleError, setTitleError] = useState("");
   const [slugError, setSlugError] = useState("");
 
@@ -36,50 +35,54 @@ function AddProject({ projects }) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         resolve(reader.result);
-      }
+      };
     });
-  }
+  };
 
   const generateImgBlurHash = async (file) => {
-    const baseUrl = base_url.replace('api', '');
-    const res = await fetch(baseUrl + 'blur/blur/blurhash', {
-      method: 'POST',
+    const baseUrl = base_url.replace("api", "");
+    const res = await fetch(baseUrl + "blur/blur/blurhash", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 'image_url': file })
+      body: JSON.stringify({ image_url: file }),
     });
     const hash = await res.json();
     return hash.blurhash;
-  }
+  };
 
   const onSelectFile = async (e) => {
     let selectedFileLength = Array.from(e.target.files).length;
     let uploadedFileLength = Array.from(displayImage).length;
 
-    if (selectedFileLength > MAX_LENGTH || (uploadedFileLength + selectedFileLength) > MAX_LENGTH) {
+    if (
+      selectedFileLength > MAX_LENGTH ||
+      uploadedFileLength + selectedFileLength > MAX_LENGTH
+    ) {
       e.preventDefault();
       alert(`Cannot upload files more than ${MAX_LENGTH - 1}`);
       return;
     }
 
     let promises = [];
-    [...e.target.files].forEach(file => {
+    [...e.target.files].forEach((file) => {
       promises.push(convertToBase64(file));
     });
 
-    Promise.all(promises).then(result => {
-      setdisplayImage(current => [...current, ...result])
-    })
+    Promise.all(promises).then((result) => {
+      setdisplayImage((current) => [...current, ...result]);
+    });
 
     submitBtn.current.innerText = `Uploading (${percentage}% done)`;
     submitBtn.current.disabled = true;
     let imagesFile = [];
     for (let i = 0; i < e.target.files.length; i++) {
-      const response = await API.formData('project/v2/s3/upload', { 'file': e.target.files[i] });
+      const response = await API.formData("project/v2/s3/upload", {
+        file: e.target.files[i],
+      });
       if (response.status === 200) {
-
         // response.hash = await generateImgBlurHash(response.thumbnailUrl);
 
         // get file dimensions
@@ -90,20 +93,20 @@ function AddProject({ projects }) {
           response.height = this.height;
           delete response.status;
           imagesFile.push(response);
-          setSelectedImages(preState => [...preState, response]);
+          setSelectedImages((preState) => [...preState, response]);
           updateUploadProgress(selectedFileLength, imagesFile.length);
-          if(i===(e.target.files.length-1)){
-            submitBtn.current.innerText = 'Submit';
-          submitBtn.current.disabled = false;
+          if (i === e.target.files.length - 1) {
+            submitBtn.current.innerText = "Submit";
+            submitBtn.current.disabled = false;
           }
         };
-        if(response.fileUrl.includes("mp4")){
+        if (response.fileUrl.includes("mp4")) {
           delete response.status;
           imagesFile.push(response);
-          setSelectedImages(preState => [...preState, response]);
-          if(i===(e.target.files.length-1)){
-            submitBtn.current.innerText = 'Submit';
-          submitBtn.current.disabled = false;
+          setSelectedImages((preState) => [...preState, response]);
+          if (i === e.target.files.length - 1) {
+            submitBtn.current.innerText = "Submit";
+            submitBtn.current.disabled = false;
           }
         }
       }
@@ -111,28 +114,28 @@ function AddProject({ projects }) {
   };
 
   useEffect(() => {
-    if(percentage!==0){
+    if (percentage !== 0) {
       submitBtn.current.innerText = `Uploading (${percentage.toFixed()}% done)`;
     }
-    if(percentage===100){
+    if (percentage === 100) {
       submitBtn.current.innerText = `Submit`;
     }
-},[percentage])
+  }, [percentage]);
 
   const updateUploadProgress = (totalFiles, uploadedFiles) => {
     const percentage = (uploadedFiles / totalFiles) * 100;
-    setPercentage(percentage)
-    console.log(`Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`);
+    setPercentage(percentage);
+    console.log(
+      `Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`
+    );
     // Update the UI with the upload progress percentage
   };
 
-
   useEffect(() => {
-console.log(selectedImages)
-  },[selectedImages])
+    console.log(selectedImages);
+  }, [selectedImages]);
 
   function deleteHandler(imageIndex) {
-
     let filtered = selectedImages.filter((e, key) => {
       if (key !== imageIndex) {
         return e;
@@ -169,7 +172,7 @@ console.log(selectedImages)
     }
     if (templateError !== "") return;
 
-    let project = projects.filter(item => item.slug == Slug);
+    let project = projects.filter((item) => item.slug == Slug);
     if (project[0]?.slug === Slug) {
       alert("slug already exit");
       return;
@@ -178,7 +181,7 @@ console.log(selectedImages)
     let count = 0;
     displayImage.filter((item, key) => {
       if (item.split("/")[0] === "data:image") {
-        count += 1
+        count += 1;
       }
     });
 
@@ -198,17 +201,17 @@ console.log(selectedImages)
       titleColor: titleColor,
       imagess: [],
       imagesAndThumb: selectedImages,
-      images: selectedImages
-    }
+      images: selectedImages,
+    };
 
-    const response = await API.post('project/new', payload);
+    const response = await API.post("project/new", payload);
     if (response.status === 200) {
-      setDetail('');
-      setTitle('');
-      setColor('');
-      setSlug('');
-      setIndex('');
-      setTemplate('');
+      setDetail("");
+      setTitle("");
+      setColor("");
+      setSlug("");
+      setIndex("");
+      setTemplate("");
       setSelectedImages([]);
       setdisplayImage([]);
       toast("Portfolio added successfully");
@@ -222,24 +225,24 @@ console.log(selectedImages)
   const handleTemplate = (e) => {
     e.preventDefault();
     if (e.target.value > 3 || e.target.value <= 0) {
-      setTemplateError("template should between 1-3")
+      setTemplateError("template should between 1-3");
     } else {
-      setTemplateError("")
+      setTemplateError("");
     }
-    setTemplate(e.target.value)
-  }
+    setTemplate(e.target.value);
+  };
 
   const handleTitle = (e) => {
     e.preventDefault();
     setTitle(e.target.value);
     setTitleError("");
-  }
+  };
 
   const handleSlug = (e) => {
     e.preventDefault();
     setSlug(e.target.value);
     setSlugError("");
-  }
+  };
 
   return (
     <div className="d-flex align-items-center justify-content-center h-100">
@@ -267,7 +270,6 @@ console.log(selectedImages)
               }}
             />
           </Form.Group>
-
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Index/Possition</Form.Label>
@@ -333,25 +335,52 @@ console.log(selectedImages)
                 displayImage.map((image, index) => {
                   return (
                     <div key={image} className="image">
-                      {image.split("/")[0] === "data:video" ?
+                      {image.split("/")[0] === "data:video" ? (
                         <>
                           <video autoPlay loop muted>
-                            <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/mp4" />
-                            <source src={image.split("/")[0] === "data:video" ? image : base_url + "/home/" + image} type="video/ogg" />
+                            <source
+                              src={
+                                image.split("/")[0] === "data:video"
+                                  ? image
+                                  : base_url + "/home/" + image
+                              }
+                              type="video/mp4"
+                            />
+                            <source
+                              src={
+                                image.split("/")[0] === "data:video"
+                                  ? image
+                                  : base_url + "/home/" + image
+                              }
+                              type="video/ogg"
+                            />
                           </video>
-                          <button type="button" onClick={() => deleteHandler(index)}>
+                          <button
+                            type="button"
+                            onClick={() => deleteHandler(index)}
+                          >
                             delete video
                           </button>
                         </>
-
-                        :
+                      ) : (
                         <>
-                          <img src={image.split("/")[0] === "data:image" ? image : (base_url + "/home/" + image)} width="150" alt="upload" />
-                          <button type="button" onClick={() => deleteHandler(index)}>
+                          <img
+                            src={
+                              image.split("/")[0] === "data:image"
+                                ? image
+                                : base_url + "/home/" + image
+                            }
+                            width="150"
+                            alt="upload"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => deleteHandler(index)}
+                          >
                             delete image
                           </button>
                         </>
-                      }
+                      )}
                       <p>{index + 1}</p>
                     </div>
                   );
@@ -378,7 +407,11 @@ console.log(selectedImages)
             onClick={(e) => submitData(e)}
             disabled={loading || displayImage.length === 0 ? true : false}
           >
-            <Spinner animation="border" variant="light" className={loading ? "me-2" : "d-none"} />
+            <Spinner
+              animation="border"
+              variant="light"
+              className={loading ? "me-2" : "d-none"}
+            />
             {loading ? "Uploading..." : "Submit"}
           </Button>
         </Form>

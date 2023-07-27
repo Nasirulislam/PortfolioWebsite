@@ -130,7 +130,7 @@ function IndexItem(props) {
       <motion.div
         className="index-image"
         id="in-image"
-        style={{ display: display ? "block" : "none", bottom: showUpward ? '0px' : '', top: showDownward ? '0px' : '' }}
+        style={{ display: display ? "block" : "none", bottom: showUpward ? '0px' : '', top: showDownward ? (props.index===0 || props.index===1 ? '20px !important' : '0px') : '0px' }}
         animate={{
           x: showMobile ? (isAnimating ? 100 : 20) :  (isAnimating ? 500 : "200vh") ,
           opacity: isAnimating ? 1 : 0,
