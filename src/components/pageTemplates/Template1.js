@@ -219,7 +219,7 @@ function Template1(props) {
                     // />
                     :
                     banner.fileUrl.includes("mp4") ?
-                      <video autoPlay controls >
+                      <video autoPlay controls muted >
                         <source src={banner.fileUrl} type="video/mp4" />
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
