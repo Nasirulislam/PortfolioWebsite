@@ -23,13 +23,11 @@ function HomeIndex(props) {
     // top: "50%",
     // left: "50%",
     cursor: "pointer !important",
-    transform: `${
-      isHovered
-        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${
-            (-1 * (position.y - window.innerHeight / 2)) / 17
-          }px)`
-        : ""
-    }`,
+    transform: `${isHovered
+      ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
+      }px)`
+      : ""
+      }`,
     transition: "transform 0.3s ease-out",
   };
 

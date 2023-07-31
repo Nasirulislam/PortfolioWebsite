@@ -79,7 +79,7 @@ function Template1(props) {
     makeTemplateBannerChunks(projectData[index]?.imagesAndThumb);
     const to = setTimeout(() => {
       window.scrollTo(0, 5);
-    },[100])
+    }, [100])
     const onScroll = function () {
       if (window.innerHeight + window.scrollY > document.body.offsetHeight - 500) {
         setValue(projectData[index + 1].name);
@@ -128,7 +128,7 @@ function Template1(props) {
                 {initialBanners.map((banner, index) => {
                   return index == 0 ?
                     banner.fileUrl.includes("mp4") ?
-                      <video autoPlay controls style={{ zIndex: "1" }}>
+                      <video autoPlay controls muted style={{ zIndex: "1" }}>
                         <source src={banner.fileUrl} type="video/mp4" />
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
@@ -195,7 +195,7 @@ function Template1(props) {
 
                   {index % 2 === 0 && index !== 0 ?
                     banner.fileUrl.includes("mp4") ?
-                      <video autoPlay controls>
+                      <video autoPlay controls muted>
                         <source src={banner.fileUrl} type="video/mp4" />
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.
