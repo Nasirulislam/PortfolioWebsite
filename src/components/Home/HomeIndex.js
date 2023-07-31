@@ -23,11 +23,13 @@ function HomeIndex(props) {
     // top: "50%",
     // left: "50%",
     cursor: "pointer !important",
-    transform: `${isHovered
-        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
-        }px)`
+    transform: `${
+      isHovered
+        ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${
+            (-1 * (position.y - window.innerHeight / 2)) / 17
+          }px)`
         : ""
-      }`,
+    }`,
     transition: "transform 0.3s ease-out",
   };
 
@@ -70,45 +72,45 @@ function HomeIndex(props) {
       fabricRef.current = null;
     }
 
-    console.log("hom===========>>>", props.hom)
+    console.log("hom===========>>>", props.hom);
 
-    const hom_canvas = window.innerWidth >= 6000
-      ? props.hom?.canvasELarge
-      : window.innerWidth >= 3560
+    const hom_canvas =
+      window.innerWidth >= 6000
+        ? props.hom?.canvasELarge
+        : window.innerWidth >= 3560
         ? props.hom?.canvasLLaptop
         : window.innerWidth >= 2560
-          ? props.hom?.canvasMLaptop
-          : window.innerWidth >= 1440
-            ? props.hom?.canvasSLaptop
-            : window.innerWidth >= 1180
-              ? props.hom?.canvasXLTab
-              : window.innerWidth >= 1024
-                ? props.hom?.canvasLTab
-                : window.innerWidth >= 768
-                  ? props.hom?.canvasSTab
-                  : window.innerWidth >= 430
-                    ? props.hom?.canvasMobile
-                    : props.hom?.canvasMobile;
+        ? props.hom?.canvasMLaptop
+        : window.innerWidth >= 1440
+        ? props.hom?.canvasSLaptop
+        : window.innerWidth >= 1180
+        ? props.hom?.canvasXLTab
+        : window.innerWidth >= 1024
+        ? props.hom?.canvasLTab
+        : window.innerWidth >= 768
+        ? props.hom?.canvasSTab
+        : window.innerWidth >= 430
+        ? props.hom?.canvasMobile
+        : props.hom?.canvasMobile;
 
-    const wid = window.innerWidth >= 6000
-      ? 6020
-      : window.innerWidth >= 3560
+    const wid =
+      window.innerWidth >= 6000
+        ? 6020
+        : window.innerWidth >= 3560
         ? 3560
         : window.innerWidth >= 2560
-          ? 2560
-          : window.innerWidth >= 1440
-            ? 1440
-            : window.innerWidth >= 1180
-              ? 1180
-              : window.innerWidth >= 1024
-                ? 1024
-                : window.innerWidth >= 768
-                  ? 768
-                  : window.innerWidth >= 430
-                    ? 430
-                    : window.innerWidth;
-
-
+        ? 2560
+        : window.innerWidth >= 1440
+        ? 1440
+        : window.innerWidth >= 1180
+        ? 1180
+        : window.innerWidth >= 1024
+        ? 1024
+        : window.innerWidth >= 768
+        ? 768
+        : window.innerWidth >= 430
+        ? 430
+        : window.innerWidth;
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
@@ -233,9 +235,6 @@ function HomeIndex(props) {
         const originalHeight = 1000;
         const videoE = getVideoElement(videoUrl, originalWidth, originalHeight);
 
-
-
-
         // iOS specific settings
         if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
           videoE.setAttribute("webkit-playsinline", ""); // Enable inline video playback
@@ -259,9 +258,6 @@ function HomeIndex(props) {
         if (navigator.userAgent.match(/Android/i)) {
           videoE.setAttribute("android:hardwareAccelerated", "true");
         }
-
-
-
 
         const fab_video = new fabric.Image(videoE, {
           ...file,
@@ -316,7 +312,7 @@ function HomeIndex(props) {
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
 
     // Fade --------------------------------------------------------------------------------------
-    const FADE_SPEED = 400; // Lower is faster
+    const FADE_SPEED = 200; // Lower is faster
     let fade = 1;
     let prev = 0;
     // -------------------------------------------------------------------------------------- Fade
@@ -445,22 +441,13 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div
-        className="home-title change-title zoom"
-        style={{ background: "transparent", top: "50%", left: "50%" }}
-      >
+      <div className="home-title change-title zoom" style={{ background: "transparent", top: "50%", left: "50%" }} >
         <h1 style={{ cursor: "pointer" }}>{props.value}</h1>
       </div>
-      {/* <motion.div
-        animate={{ x: mediumCircle.x, y: mediumCircle.y, opacity: 1 }}
-        transition={{ type: 'spring' }}
-      > */}
       <div
         className="px-0 d-flex justify-content-between tech-slideshow flex-wrap"
         style={{ width: "100%", height: "100%", marginBottom: "10%" }}
       >
-        {/* <div style={{ height: '100vh' }} ref={canvasParentRef}> */}
-
         <motion.div
           className="relative"
           style={{
