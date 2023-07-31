@@ -122,10 +122,10 @@ function HomeMain(props) {
 
   return (
     <>
-      {props.loading && 
+      {props.loading &&
         <div class='load'>
           <div class="loader"></div>
-        </div> 
+        </div>
       }
 
       <div className="" style={{ height: "100%" }}>
@@ -140,6 +140,7 @@ function HomeMain(props) {
               animate={"visible"}
               variants={animateTxt}
               transition={{ y: 200, duration: 4 }}
+              style={{ width: '900px' }}
             >
               <h1 style={{ cursor: "pointer" }} onClick={() => handleSlug()}>
                 <ReactTextTransition
