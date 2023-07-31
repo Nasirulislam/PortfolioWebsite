@@ -9,7 +9,7 @@ function Brenna(props) {
   const containerRef = useRef();
 
   const handleClick = () => {
-    console.log("this is ptops name",props.name); props.handleSlug(props.name)
+    console.log("this is ptops name", props.name); props.handleSlug(props.name)
   }
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function Brenna(props) {
             style={{ zIndex: 1 }}
             animate={{ x: props.coords.x, y: props.coords.y, opacity: 1, animationDelay: 200 }}
             key={key}
-            >
+          >
             {
               banner.fileUrl.includes("mp4") ?
                 <video autoPlay loop muted onClick={() => props.handleSlug()}>
@@ -36,7 +36,7 @@ function Brenna(props) {
                 :
                 <div
                   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-                  style={{ cursor: 'pointer', maxWidth: '50%' }}
+                  style={{ cursor: 'pointer', maxWidth: '90%' }}
                   onClick={handleClick}
                 >
                   <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />
