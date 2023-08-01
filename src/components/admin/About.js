@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import { toast } from 'react-toastify';
 import url from '../../constants/url';
+import ColorPicker, { useColorPicker }  from 'react-best-gradient-color-picker'
+
 
 
 export default function About() {
@@ -22,13 +24,23 @@ export default function About() {
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const [aboutImages, setAboutImages] = useState([]);
+    const [showColor, setShowColor] = useState({show : false, index : 0});
 
 
     //Details summary section
-    const [details, setDetails] = useState([{ summary: '' }]);
+    const [details, setDetails] = useState([{ summary: '', color: '' }]);
+
     const handleChange = (index, event) => {
         const updatedDetails = [...details];
         updatedDetails[index].summary = event.target.value;
+        setDetails(updatedDetails);
+    };
+
+
+    const handleChangeColor = (index, color) => {
+        // console.log("Color Changed", index, color)
+        const updatedDetails = [...details];
+        updatedDetails[index].color = color;
         setDetails(updatedDetails);
     };
 
@@ -41,6 +53,8 @@ export default function About() {
         updatedDetails.splice(index, 1);
         setDetails(updatedDetails);
     };
+
+    
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -78,6 +92,11 @@ export default function About() {
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
+
+
+    useEffect(() =>{
+        const h1Elements = document.getElementsById('summary');
+    },[details])
 
     // aboutImages.forEach((data) => {
     //     console.log("aobut -> ", data.image)
@@ -134,7 +153,7 @@ export default function About() {
         const payload2 = {
             details: details
         }
-        console.log('here 123123123');
+        console.log('here 123123123',payload2);
 
         setLoading(false);
         const response2 = await axios.post(`${url}/project/updateDetail`, payload2);
@@ -215,7 +234,7 @@ export default function About() {
                     <Form.Group className="mb-3" controlId="formBasicDetails">
                         <Form.Label style={{ fontWeight: '700' }} >Summary:</Form.Label>
                         {details?.map((detail, index) => (
-                            <>
+                            <div style={{position:"relative"}} id={`summaryNo${index}`} class="summary">
                                 <p>{index + 1}.</p>
                                 <Form.Control
                                     as="textarea"
@@ -230,7 +249,18 @@ export default function About() {
                                         Remove-
                                     </Button>
                                 )}
-                            </>
+                                <Button type="button" onClick={() => setShowColor({show:true, index: index})} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                        Color Picker
+                                    </Button>
+                                {showColor.show && showColor.index===index &&
+                                    <div style={{position:"absolute",right:"5px",top:0, backgroundColor:"white", border:"2px solid gray", borderRadius:"5px", textAlign:"center", fontWeight:"bold",boxShadow: "5px 10px 10px", zIndex:"100"}}>
+                                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                                             <div></div><div>Color Picker for summary no {index+1}</div><div style={{cursor:"pointer", marginRight:"2px",color:"gray",fontWeight:"light"}} onClick={() => setShowColor({show:false, index: index})}>x</div>
+                                        </div>
+                                    <ColorPicker hideInputs hidePresets value={details[index].color}  onChange={(color) => handleChangeColor(index, color)} />
+                                    </div>
+                                }
+                            </div>
                         ))}
                         <Button type="button" onClick={handleAdd} style={{ backgroundColor: 'green', color: 'white' }}>
                             Add+

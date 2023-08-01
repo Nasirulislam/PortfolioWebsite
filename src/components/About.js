@@ -106,25 +106,14 @@ export default function About(props) {
 
                                     {details?.map((data, index) =>
                                         <h1 style={{
-                                            background: index < 4
-                                                ? (index === 0
-                                                    ? '-webkit-linear-gradient( #0033ff, #717171)'
-                                                    : index === 1
-                                                        ? '-webkit-linear-gradient(#0033ff, #FED800)'
-                                                        : index === 2
-                                                            ? '-webkit-linear-gradient(#FED800, #FED800)'
-                                                            : index === 3
-                                                                ? '-webkit-linear-gradient(#FED800, #0033ff)'
-                                                                : '')
-                                                : index > 3
-                                                    ? (index % 2 === 0
-                                                        ? '-webkit-linear-gradient(#FF1366, #0033ff)'
-                                                        : '-webkit-linear-gradient(#80FE00, #0033ff)')
-                                                    : '-webkit-linear-gradient(#FF1366, #0033ff)',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            backgroundClip: 'text',
-                                            textFillColor: 'transparent',
+                                            // background: '-webkit-linear-gradient( #0033ff, #717171)',
+                                            // background: `-webkit-${data.color}`,
+                                            // WebkitBackgroundClip: 'text',
+                                            // WebkitTextFillColor: 'transparent',
+                                            // backgroundClip: 'text',
+                                            // textFillColor: 'transparent',
+                                            color: `${data.color}`,
+                                            textFillColor:`-webkit-${data.color}`,
                                             fontWeight: '1000',
                                             backgroundPosition: 'center'
                                             ,
