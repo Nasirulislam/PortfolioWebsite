@@ -112,7 +112,7 @@ export default function About(props) {
                             props.fromAbout && (
                                 <>
                                     <h1 style={{
-                                        background: `-webkit-linear-gradient(${extractRGBAs(textColors?.titleColor)})`,
+                                        background: `-webkit-${textColors?.titleColor}`,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
@@ -122,7 +122,7 @@ export default function About(props) {
                                     }}
                                     >{title}</h1>
                                     <h1 style={{
-                                        background: `-webkit-linear-gradient(${extractRGBAs(textColors?.detailColor)})`,
+                                        background: `-webkit-${textColors?.detailColor}`,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
@@ -135,9 +135,8 @@ export default function About(props) {
 
                                     {details?.map((data, index) =>
                                         <h1 style={{
-                                            // background: '-webkit-linear-gradient( #0033ff, #717171)',
-                                            background: `-webkit-linear-gradient(${extractRGBAs(data?.color)
-                                                })`,
+                                            // background: '-webkit- #0033ff, #717171)',
+                                            background: `-webkit-${data?.color}`,
 
                                             // background: `- webkit - ${data.color}`,
                                             WebkitBackgroundClip: 'text',
@@ -161,7 +160,7 @@ export default function About(props) {
                             <br /><br />
                             <h1
                                 style={{
-                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.emailColor)})`,
+                                    background: `-webkit-${textColors?.emailColor}`,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
@@ -169,22 +168,25 @@ export default function About(props) {
                                     fontWeight: '1000',
                                     backgroundPosition: 'center'
                                 }}
+                                className='my-gradients-colors'
                             >{email}</h1>
                             <h1 style={{
-                                background: `-webkit-linear-gradient(${extractRGBAs(textColors?.phoneColor)})`,
+                                background: `-webkit-${textColors?.phoneColor}`,
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',
                                 textFillColor: 'transparent',
                                 fontWeight: '1000',
                                 backgroundPosition: 'center'
-                            }}>{locTxt}</h1>
+                            }}
+                                className='my-gradients-colors'
+                            >{locTxt}</h1>
                             <br /><br />
 
                             <br /><br />
                             <h1
                                 style={{
-                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.instaColor)})`,
+                                    background: `-webkit-${textColors?.instaColor}`,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
@@ -192,6 +194,7 @@ export default function About(props) {
                                     fontWeight: '1000',
                                     backgroundPosition: 'center'
                                 }}
+                                className='my-gradients-colors'
                             >
 
                                 <a href={instUrl} target="_blank"
@@ -202,26 +205,29 @@ export default function About(props) {
                                 >INSTAGRAM</a>
                             </h1>
                             <br />
-                            <h1
-                                style={{
-                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.linkedColor)})`,
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    textFillColor: 'transparent',
-                                    fontWeight: '1000',
-                                    backgroundPosition: 'center'
-                                }}
+                            <a href={repName} target="_blank" style={{ textDecoration: 'none', fontWeight: '1000' }}
+
                             >
+                                <h1
+                                    style={{
+                                        background: `-webkit-${textColors?.linkedColor}`,
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        backgroundClip: 'text',
+                                        textFillColor: 'transparent',
+                                        fontWeight: '1000',
+                                        backgroundPosition: 'center'
+                                    }}
+                                    className='my-gradients-colors'
+                                >
 
-                                <a href={repName} target="_blank" style={{ textDecoration: 'none', fontWeight: '1000' }}
-
-                                >LINKEDIN</a>
-                            </h1>
+                                    LINKEDIN
+                                </h1>
+                            </a>
                             {/* <br /><br /> */}
                             {/* <h1
                                 style={{
-                                    background: '-webkit-linear-gradient(#FF1366, #0033ff)',
+                                    background: '-webkit-#FF1366, #0033ff)',
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',

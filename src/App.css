@@ -188,12 +188,14 @@ img.hoverImages:hover {
   color: white !important;
 }
 
-.video-wrapper video{
+.video-wrapper video {
   z-index: 10;
 }
+
 /* home page start*/
 
 @media (max-width: 767px) {
+
   .amoeba img,
   .auston img,
   .brenna img,
@@ -203,9 +205,9 @@ img.hoverImages:hover {
   }
 }
 
-.load{
-  width:100vw;
-  height:100vh;
+.load {
+  width: 100vw;
+  height: 100vh;
   background-color: white;
   /* background: url("https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80") no-repeat center center fixed;
   background-size: cover; */
@@ -225,6 +227,16 @@ img.hoverImages:hover {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.my-gradients-colors {
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
