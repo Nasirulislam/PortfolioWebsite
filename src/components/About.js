@@ -182,7 +182,7 @@ export default function About(props) {
                             <br /><br />
 
                             <br /><br />
-                            <a href={instUrl} target="_blank"
+                            <h1
                                 style={{
                                     background: `-webkit-linear-gradient(${extractRGBAs(textColors?.instaColor)})`,
                                     WebkitBackgroundClip: 'text',
@@ -192,9 +192,17 @@ export default function About(props) {
                                     fontWeight: '1000',
                                     backgroundPosition: 'center'
                                 }}
-                            >INSTAGRAM</a>
+                            >
+
+                                <a href={instUrl} target="_blank"
+                                    style={{
+                                        textDecoration: 'none',
+                                        fontWeight: '1000',
+                                    }}
+                                >INSTAGRAM</a>
+                            </h1>
                             <br />
-                            <a href={repName} target="_blank"
+                            <h1
                                 style={{
                                     background: `-webkit-linear-gradient(${extractRGBAs(textColors?.linkedColor)})`,
                                     WebkitBackgroundClip: 'text',
@@ -204,7 +212,12 @@ export default function About(props) {
                                     fontWeight: '1000',
                                     backgroundPosition: 'center'
                                 }}
-                            >LINKEDIN</a>
+                            >
+
+                                <a href={repName} target="_blank" style={{ textDecoration: 'none', fontWeight: '1000' }}
+
+                                >LINKEDIN</a>
+                            </h1>
                             {/* <br /><br /> */}
                             {/* <h1
                                 style={{
