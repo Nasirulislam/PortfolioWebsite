@@ -16,6 +16,7 @@ export default function About(props) {
     const [repEmail, setRepEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [aboutImages, setAboutImages] = useState([]);
+    const [textColors, setTextColors] = useState();
 
     const navigate = useNavigate();
 
@@ -28,8 +29,9 @@ export default function About(props) {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    console.log(response.data.details)
+                    console.log('yes', response.data.details)
                     setDetails(response?.data?.details);
+                    setTextColors(response?.data)
                 }
                 setLoading(false);
             } catch (error) {
@@ -83,6 +85,24 @@ export default function About(props) {
                 console.error('Error retrieving about images:', error);
             });
     };
+
+    function extractRGBAs(gradientString) {
+        const rgbaRegex = /rgba?\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/gi;
+        const rgbaValues = [];
+
+        let match;
+        while ((match = rgbaRegex.exec(gradientString)) !== null) {
+            const r = parseInt(match[1], 10);
+            const g = parseInt(match[2], 10);
+            const b = parseInt(match[3], 10);
+            const a = parseFloat(match[4]);
+
+            rgbaValues.push(`RGBA(${r},${g},${b},${a})`);
+        }
+
+        console.log('-------', rgbaValues)
+        return rgbaValues;
+    }
     return (
         <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black', zIndex: '10000' }}>
             <div className="about-section">
@@ -91,9 +111,18 @@ export default function About(props) {
                         {
                             props.fromAbout && (
                                 <>
-                                    <h1>{title}</h1>
                                     <h1 style={{
-                                        background: '-webkit-linear-gradient(#FF1366, #0033ff)',
+                                        background: `-webkit-linear-gradient(${extractRGBAs(textColors?.titleColor)})`,
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        backgroundClip: 'text',
+                                        textFillColor: 'transparent',
+                                        fontWeight: '1000',
+                                        backgroundPosition: 'center'
+                                    }}
+                                    >{title}</h1>
+                                    <h1 style={{
+                                        background: `-webkit-linear-gradient(${extractRGBAs(textColors?.detailColor)})`,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
@@ -107,13 +136,14 @@ export default function About(props) {
                                     {details?.map((data, index) =>
                                         <h1 style={{
                                             // background: '-webkit-linear-gradient( #0033ff, #717171)',
-                                            // background: `-webkit-${data.color}`,
-                                            // WebkitBackgroundClip: 'text',
-                                            // WebkitTextFillColor: 'transparent',
-                                            // backgroundClip: 'text',
-                                            // textFillColor: 'transparent',
-                                            color: `${data.color}`,
-                                            textFillColor:`-webkit-${data.color}`,
+                                            background: `-webkit-linear-gradient(${extractRGBAs(data?.color)
+                                                })`,
+
+                                            // background: `- webkit - ${data.color}`,
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            backgroundClip: 'text',
+                                            textFillColor: 'transparent',
                                             fontWeight: '1000',
                                             backgroundPosition: 'center'
                                             ,
@@ -131,7 +161,7 @@ export default function About(props) {
                             <br /><br />
                             <h1
                                 style={{
-                                    background: '-webkit-linear-gradient(#FF1366, #0033ff)',
+                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.emailColor)})`,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
@@ -141,7 +171,7 @@ export default function About(props) {
                                 }}
                             >{email}</h1>
                             <h1 style={{
-                                background: '-webkit-linear-gradient(#FF1366, #00FF98)',
+                                background: `-webkit-linear-gradient(${extractRGBAs(textColors?.phoneColor)})`,
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',
@@ -154,7 +184,7 @@ export default function About(props) {
                             <br /><br />
                             <a href={instUrl} target="_blank"
                                 style={{
-                                    background: '-webkit-linear-gradient(#00FE89, #898989)',
+                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.instaColor)})`,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
@@ -166,7 +196,7 @@ export default function About(props) {
                             <br />
                             <a href={repName} target="_blank"
                                 style={{
-                                    background: '-webkit-linear-gradient(#CDCDCD, #FF4E00)',
+                                    background: `-webkit-linear-gradient(${extractRGBAs(textColors?.linkedColor)})`,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
@@ -223,6 +253,6 @@ export default function About(props) {
                 )} */}
 
             </div>
-        </div>
+        </div >
     )
 }

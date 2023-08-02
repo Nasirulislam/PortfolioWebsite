@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import "./Admin.css";
 import { toast } from 'react-toastify';
 import url from '../../constants/url';
-import ColorPicker, { useColorPicker }  from 'react-best-gradient-color-picker'
+import ColorPicker, { useColorPicker } from 'react-best-gradient-color-picker'
 
 
 
@@ -24,8 +24,37 @@ export default function About() {
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const [aboutImages, setAboutImages] = useState([]);
-    const [showColor, setShowColor] = useState({show : false, index : 0});
+    const [showColor, setShowColor] = useState({ show: false, index: 0 });
 
+    // color states 
+    const [showTitleColor, setShowTitleColor] = useState(false);
+    const [showDetailColor, setShowDetailColor] = useState(false);
+    const [showEmailColor, setShowEmailColor] = useState(false);
+    const [showPhoneColor, setShowPhoneColor] = useState(false);
+    const [showInstaColor, setShowInstaColor] = useState(false);
+    const [showLinkedinColor, setShowLinkedinColor] = useState(false);
+    const [showRepresentedColor, setShowRepresentedColor] = useState(false);
+
+
+    // single colors 
+    const [titleColor, setTitleColor] = useState('');
+    const [detailColor, setDetailColor] = useState('');
+    const [emailColor, setEmailColor] = useState('');
+    const [phoneColor, setPhoneColor] = useState('');
+    const [instaColor, setInstaColor] = useState('');
+    const [linkedColor, setLinkedColor] = useState('');
+    const [resEmailColor, setresEmailColor] = useState('');
+
+
+    const handleCloseAllColorPickers = () => {
+        setShowTitleColor(false);
+        setShowDetailColor(false)
+        setShowEmailColor(false);
+        setShowPhoneColor(false);
+        setShowInstaColor(false);
+        setShowLinkedinColor(false);
+        setShowRepresentedColor(false);
+    };
 
     //Details summary section
     const [details, setDetails] = useState([{ summary: '', color: '' }]);
@@ -38,7 +67,7 @@ export default function About() {
 
 
     const handleChangeColor = (index, color) => {
-        // console.log("Color Changed", index, color)
+        console.log("Color Changed", index, color)
         const updatedDetails = [...details];
         updatedDetails[index].color = color;
         setDetails(updatedDetails);
@@ -54,7 +83,7 @@ export default function About() {
         setDetails(updatedDetails);
     };
 
-    
+
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -62,8 +91,15 @@ export default function About() {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    console.log(response.data.details)
+                    console.log(response.data.details);
                     setDetails(response?.data?.details);
+                    setTitleColor(response?.data?.titleColor);
+                    setDetailColor(response?.data?.detailColor);
+                    setEmailColor(response?.data?.emailColor);
+                    setPhoneColor(response?.data?.phoneColor);
+                    setInstaColor(response?.data?.instaColor);
+                    setLinkedColor(response?.data?.linkedColor);
+
                 }
                 setLoading(false);
             } catch (error) {
@@ -94,9 +130,9 @@ export default function About() {
     };
 
 
-    useEffect(() =>{
-        const h1Elements = document.getElementsById('summary');
-    },[details])
+    // useEffect(() =>{
+    //     const h1Elements = document.getElementsById('summary');
+    // },[details])
 
     // aboutImages.forEach((data) => {
     //     console.log("aobut -> ", data.image)
@@ -151,9 +187,17 @@ export default function About() {
         }
 
         const payload2 = {
-            details: details
+            titleColor: titleColor,
+            detailColor: detailColor,
+            details: details,
+            emailColor: emailColor,
+            phoneColor: phoneColor,
+            instaColor: instaColor,
+            linkedColor: linkedColor,
+            resEmailColor: resEmailColor,
+
         }
-        console.log('here 123123123',payload2);
+        console.log('here 123123123', payload2);
 
         setLoading(false);
         const response2 = await axios.post(`${url}/project/updateDetail`, payload2);
@@ -200,14 +244,19 @@ export default function About() {
     const handleUploadClick = () => {
         fileInputRef.current.click();
     };
+
+
+
+
     let uploadStyle =
         { display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black', width: '110px', height: '100px', borderRadius: "10px", cursor: 'pointer', marginBottom: '10px' }
+
 
     return (
         <div className="d-flex align-items-center justify-content-center h-100 flex-col">
             <Card className="p-3 my-5 form-card">
                 <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Title:</Form.Label>
                         <Form.Control
                             type="text"
@@ -217,10 +266,21 @@ export default function About() {
                                 setTitle(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowTitleColor(!showTitleColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showTitleColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Title 1.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={titleColor} onChange={(color) => setTitleColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
 
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
                         <Form.Label style={{ fontWeight: '700' }} >Detail:</Form.Label>
                         <Form.Control
                             type="text"
@@ -230,11 +290,22 @@ export default function About() {
                                 setDetail(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowDetailColor(!showDetailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showDetailColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Details 2.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={detailColor} onChange={(color) => setDetailColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicDetails">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicDetails">
                         <Form.Label style={{ fontWeight: '700' }} >Summary:</Form.Label>
                         {details?.map((detail, index) => (
-                            <div style={{position:"relative"}} id={`summaryNo${index}`} class="summary">
+                            <div style={{ position: "relative" }} id={`summaryNo${index}`} class="summary">
                                 <p>{index + 1}.</p>
                                 <Form.Control
                                     as="textarea"
@@ -249,15 +320,15 @@ export default function About() {
                                         Remove-
                                     </Button>
                                 )}
-                                <Button type="button" onClick={() => setShowColor({show:true, index: index})} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                                        Color Picker
-                                    </Button>
-                                {showColor.show && showColor.index===index &&
-                                    <div style={{position:"absolute",right:"5px",top:0, backgroundColor:"white", border:"2px solid gray", borderRadius:"5px", textAlign:"center", fontWeight:"bold",boxShadow: "5px 10px 10px", zIndex:"100"}}>
-                                        <div style={{display:"flex", justifyContent:"space-between"}}>
-                                             <div></div><div>Color Picker for summary no {index+1}</div><div style={{cursor:"pointer", marginRight:"2px",color:"gray",fontWeight:"light"}} onClick={() => setShowColor({show:false, index: index})}>x</div>
+                                <Button type="button" onClick={() => setShowColor({ show: true, index: index })} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                    Color Picker
+                                </Button>
+                                {showColor.show && showColor.index === index &&
+                                    <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                            <div></div><div>Color Picker for summary no {index + 1}</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={() => setShowColor({ show: false, index: index })}>Close X</div>
                                         </div>
-                                    <ColorPicker hideInputs hidePresets value={details[index].color}  onChange={(color) => handleChangeColor(index, color)} />
+                                        <ColorPicker hideInputs hidePresets value={details[index].color} onChange={(color) => handleChangeColor(index, color)} />
                                     </div>
                                 }
                             </div>
@@ -266,7 +337,7 @@ export default function About() {
                             Add+
                         </Button>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword" >
                         <Form.Label style={{ fontWeight: '700' }} >Email:</Form.Label>
                         <Form.Control
                             type="text"
@@ -276,8 +347,19 @@ export default function About() {
                                 setEmail(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowEmailColor(!showEmailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showEmailColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Email 3.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={emailColor} onChange={(color) => setEmailColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
                         <Form.Label style={{ fontWeight: '700' }} >Phone:</Form.Label>
                         <Form.Control
                             type="text"
@@ -287,8 +369,19 @@ export default function About() {
                                 setLocTxt(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowPhoneColor(!showPhoneColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showPhoneColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Phone.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={phoneColor} onChange={(color) => setPhoneColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Instagram Url:</Form.Label>
                         <Form.Control
                             type="text"
@@ -298,8 +391,19 @@ export default function About() {
                                 setInstaUrl(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowInstaColor(!showInstaColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showInstaColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Instagram.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={instaColor} onChange={(color) => setInstaColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >LinkedIn Url:</Form.Label>
                         <Form.Control
                             type="text"
@@ -309,8 +413,19 @@ export default function About() {
                                 setRepName(e.target.value);
                             }}
                         />
+                        <Button type="button" onClick={() => setShowLinkedinColor(!showLinkedinColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showLinkedinColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for LinkedIn.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={linkedColor} onChange={(color) => setLinkedColor(color)} />
+                            </div>
+                        }
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    {/* <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Represented Email:</Form.Label>
                         <Form.Control
                             type="text"
@@ -320,7 +435,18 @@ export default function About() {
                                 setRepEmail(e.target.value);
                             }}
                         />
-                    </Form.Group>
+                        <Button type="button" onClick={() => setShowRepresentedColor(!showRepresentedColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                            Color Picker
+                        </Button>
+                        {showRepresentedColor &&
+                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div></div><div>Color Picker for Rep Email</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                </div>
+                                <ColorPicker hideInputs hidePresets value={resEmailColor} onChange={(color) => setresEmailColor(color)} />
+                            </div>
+                        }
+                    </Form.Group> */}
                     <Button
                         variant="primary"
                         type="submit01"
