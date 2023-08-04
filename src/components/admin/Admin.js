@@ -56,7 +56,7 @@ function Admin({ projectData }) {
                   <Nav.Link
                     eventKey="five"
                     style={{ color: "white", width: "160px" }}
-                    onClick={gotoHomeIndex}         
+                    onClick={gotoHomeIndex}
                   >
                     <i class="fa fa-home me-2" aria-hidden="true"></i>
                     Home Index
@@ -80,7 +80,7 @@ function Admin({ projectData }) {
                     Edit Project Index
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link
                     eventKey="nine"
                     style={{ color: "white", width: "160px" }}
@@ -88,7 +88,7 @@ function Admin({ projectData }) {
                     <i class="fa fa-pencil-square me-2" aria-hidden="true"></i>
                     Edit Home Index
                   </Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
                 <Nav.Item>
                   <Nav.Link
                     eventKey="six"
@@ -151,7 +151,7 @@ function Admin({ projectData }) {
             </Tab.Content>
           </Col>
         </Row>
-      </Tab.Container>      
+      </Tab.Container>
     </div>
   );
 }
