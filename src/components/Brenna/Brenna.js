@@ -9,7 +9,7 @@ function Brenna(props) {
   const containerRef = useRef();
 
   const handleClick = () => {
-    console.log("this is ptops name", props.name); props.handleSlug(props.name)
+    // console.log("this is ptops name", props.name); props.handleSlug(props.name)
   }
 
   useEffect(() => {

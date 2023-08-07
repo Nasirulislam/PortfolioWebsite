@@ -7,7 +7,7 @@ export const ProjectProvider = ({ children }) => {
   const [selectedProj, setSelectedProj] = useState('');
   const [projChanged, setProjChanged] = useState(false);
 
-  useEffect(() => {console.log("selected project changed in th context api: ",selectedProj)},[selectedProj])
+  useEffect(() => { }, [selectedProj])
 
   return (
     <ProjectContext.Provider value={{ selectedProj, setSelectedProj, projChanged, setProjChanged }}>

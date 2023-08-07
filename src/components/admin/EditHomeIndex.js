@@ -99,7 +99,7 @@ function EditHomeIndex(props) {
         setLandscapeImagesPreview(response.data.home[2]?.images || []);
         setLandscapeHomeIndexId(response.data.home[2]?._id || 0);
       } else {
-        console.log(response.message);
+        // console.log(response.message);
       }
     }
 

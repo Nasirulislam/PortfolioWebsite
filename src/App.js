@@ -50,23 +50,23 @@ function App() {
 
 
   useEffect(() => {
-    
+
     setLoc(location.pathname);
     if (location.pathname === "/" && projChanged === true) {
       setLoading(true)
       setProjChanged(false);
       setTimeout(() => {
         const element = document.getElementById(selectedProj);
-        console.log(selectedProj)
-        console.log(element);
+        // console.log(selectedProj)
+        // console.log(element);
         if (element) {
           // element.scrollIntoView({ behavior: 'smooth' });
           element.scrollIntoView({ behavior: 'instant' });
-        }else{
+        } else {
           window.scrollTo(0, 0);
           setLoading(false)
         }
-        setTimeout(() => {setLoading(false)},500)
+        setTimeout(() => { setLoading(false) }, 500)
       }, 200);
     } else if (location.pathname === "/") {
       setTimeout(() => {
@@ -115,7 +115,7 @@ function App() {
         setHomeIndexId(response.data.data.home[2]?._id || null);
         setHom(response.data.data.home[2] || null);
       } else {
-        console.log(response.message);
+        // console.log(response.message);
       }
     };
     getHomeIndex();
@@ -216,7 +216,7 @@ function App() {
       window.scrollTo(0, 0);
     }
     else {
-      console.log('=........................ location', location.pathname)
+      // console.log('=........................ location', location.pathname)
       // window.history.go(-1);
       navigate("/");
       setMEText("START");
@@ -225,7 +225,7 @@ function App() {
   };
 
   return (
-   
+
     <div>
       {/* <ScrollToTop /> */}
       <div className="App" style={{ position: "relative" }}>

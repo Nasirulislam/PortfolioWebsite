@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import base_url from "../../constants/url";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -51,7 +51,7 @@ function NextProject(props) {
       onClick={() => {
         props.setInitialBanners([])
         props.setBanners([])
-        console.log("the seected project is: ",projectData[index + 1].name)
+        // console.log("the seected project is: ",projectData[index + 1].name)
         setSelectedProj(projectData[index + 1].name)
         setProjChanged(true)
         navigate(

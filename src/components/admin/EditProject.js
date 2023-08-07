@@ -50,7 +50,7 @@ function EditProject(props) {
     }
     projectsData.map((project, index) => {
       if (project.slug === name) {
-        console.log(project);
+        // console.log(project);
         setTitle(project.name);
         setDescription(project.description);
         setIndex(project.index);
@@ -111,7 +111,7 @@ function EditProject(props) {
     setUploadImg(true);
 
     [...e.target.files].forEach((file) => {
-      console.log(file);
+      // console.log(file);
       promises.push(convertToBase64(file));
       // if(!file.type.includes("video")){
       //   newpics.push({ fileUrl: URL.createObjectURL(file) });
@@ -128,9 +128,9 @@ function EditProject(props) {
       const response = await API.formData("project/v2/s3/upload", {
         file: e.target.files[i],
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
-        console.log(response);
+        // console.log(response);
         // get file dimensions
         var imageObj = new Image();
         imageObj.src = response.thumbnailUrl;
@@ -143,7 +143,7 @@ function EditProject(props) {
           setSelectedImages((preState) => [...preState, response]);
           updateUploadProgress(selectedFileLength, imagesFile.length);
           if (i === e.target.files.length - 1) {
-            console.log("the last file is here files-=======>>>>>>");
+            // console.log("the last file is here files-=======>>>>>>");
             setdisplayImage((old) => [...old, ...newVids, response]);
             setUploadImg(false);
           } else {
@@ -158,7 +158,7 @@ function EditProject(props) {
           imagesFile.push(response);
           setSelectedImages((preState) => [...preState, response]);
           if (i === e.target.files.length - 1) {
-            console.log("the last file is here files- =======>>>>>>");
+            // console.log("the last file is here files- =======>>>>>>");
             setdisplayImage((old) => [...old, ...newVids]);
             setUploadImg(false);
           }
@@ -176,14 +176,14 @@ function EditProject(props) {
   const updateUploadProgress = (totalFiles, uploadedFiles) => {
     const percentage = (uploadedFiles / totalFiles) * 100;
     setPercentage(percentage)
-    console.log(`Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`);
+    // console.log(`Uploaded: ${uploadedFiles}/${totalFiles} (${percentage.toFixed(2)}%)`);
     // Update the UI with the upload progress percentage
   };
 
 
 
   useEffect(() => {
-    console.log("======>>>> selected Images", selectedImages);
+    // console.log("======>>>> selected Images", selectedImages);
   }, [selectedImages]);
 
   const deleteProduct = async (e) => {
@@ -245,7 +245,7 @@ function EditProject(props) {
       images: JSON.stringify([...displayImage]),
       imagesAndThumb: JSON.stringify([...displayImage]),
     };
-    console.log("payload======>>>>>", payload);
+    // console.log("payload======>>>>>", payload);
 
     const config = {
       headers: {

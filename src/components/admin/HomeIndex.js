@@ -114,7 +114,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
   };
 
   const initFabric = async (canvas, width = 1440) => {
-    console.log(width);
+    // console.log(width);
     if (fabricRef.current) {
       fabricRef.current.dispose();
       fabricRef.current = null;
@@ -263,7 +263,7 @@ export default function HomeIndex({ homeIndexCanvas, homeIndexId, hom }) {
 
   useEffect(() => {
     initFabric();
-    console.log("-------------------", fabricRef.current["backgroundColor"]);
+    // console.log("-------------------", fabricRef.current["backgroundColor"]);
     return () => {
       fabricRef.current.dispose();
       fabricRef.current = null;

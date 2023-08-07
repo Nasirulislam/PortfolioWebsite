@@ -29,7 +29,7 @@ export default function About(props) {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    console.log('yes', response.data.details)
+                    // console.log('yes', response.data.details)
                     setDetails(response?.data?.details);
                     setTextColors(response?.data)
                 }
@@ -68,7 +68,7 @@ export default function About(props) {
             .get(`${url}/project/about-image/get`)
             .then((response) => {
                 setAboutImages(response.data.images);
-                console.log(response.data.images)
+                // console.log(response.data.images)
             })
             .catch((error) => {
                 console.error('Error retrieving about images:', error);
@@ -79,7 +79,7 @@ export default function About(props) {
             .patch(`${url}/project/updateDetail`)
             .then((response) => {
                 setAboutImages(response.data.images);
-                console.log(response.data.images)
+                // console.log(response.data.images)
             })
             .catch((error) => {
                 console.error('Error retrieving about images:', error);
@@ -100,7 +100,7 @@ export default function About(props) {
             rgbaValues.push(`RGBA(${r},${g},${b},${a})`);
         }
 
-        console.log('-------', rgbaValues)
+        // console.log('-------', rgbaValues)
         return rgbaValues;
     }
     return (

@@ -78,7 +78,7 @@ function EditImages(props) {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios.get(`${base_url}/project/`).then((response) => {
-        console.log(response.data.data.sortedProjects);
+        // console.log(response.data.data.sortedProjects);
         setProjectsData(response.data.data.sortedProjects);
       });
     };
@@ -148,7 +148,7 @@ function EditImages(props) {
                       }}
                     >
                       {image.fileUrl.split("/")[0] == "data:image" ||
-                      !image.fileUrl.includes("mp4") ? (
+                        !image.fileUrl.includes("mp4") ? (
                         <img
                           src={image.fileUrl}
                           width="150"

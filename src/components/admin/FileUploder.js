@@ -53,7 +53,7 @@ const FileUploader = () => {
           <button
             className="upload-btn"
             onClick={() => {
-              console.log(selectedImages);
+              // console.log(selectedImages);
             }}
           >
             UPLOAD {selectedImages.length} IMAGE

@@ -67,7 +67,7 @@ export default function About() {
 
 
     const handleChangeColor = (index, color) => {
-        console.log("Color Changed", index, color)
+        // console.log("Color Changed", index, color)
         const updatedDetails = [...details];
         updatedDetails[index].color = color;
         setDetails(updatedDetails);
@@ -91,7 +91,7 @@ export default function About() {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    console.log(response.data.details);
+                    // console.log(response.data.details);
                     setDetails(response?.data?.details);
                     setTitleColor(response?.data?.titleColor);
                     setDetailColor(response?.data?.detailColor);
@@ -119,7 +119,7 @@ export default function About() {
             .get(`${url}/project/about-image/get`)
             .then((response) => {
                 setAboutImages(response.data.images);
-                console.log(response.data.images)
+                // console.log(response.data.images)
             })
             .catch((error) => {
                 console.error('Error retrieving about images:', error);
@@ -148,7 +148,7 @@ export default function About() {
             axios
                 .post(`${url}/project/upload/about`, formData)
                 .then((response) => {
-                    console.log('Image uploaded successfully!');
+                    // console.log('Image uploaded successfully!');
                     // Handle the response as needed
                     fetchAboutImages();
                     setSelectedFile(null)
@@ -197,12 +197,12 @@ export default function About() {
             resEmailColor: resEmailColor,
 
         }
-        console.log('here 123123123', payload2);
+        // console.log('here 123123123', payload2);
 
         setLoading(false);
         const response2 = await axios.post(`${url}/project/updateDetail`, payload2);
-        console.log('here 123123123123123123');
-        console.log(response2);
+        // console.log('here 123123123123123123');
+        // console.log(response2);
         // if (response2.status === 210) {
         //     toast("Updated successfully");
         // } else {
@@ -212,11 +212,11 @@ export default function About() {
         setLoading(false);
     }
     const handleImageDelete = async (id) => {
-        console.log("ID : ", id)
+        // console.log("ID : ", id)
         axios
             .delete(`${url}/project/about-image/delete/${id}`)
             .then((response) => {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 fetchAboutImages();
             })
             .catch((error) => {

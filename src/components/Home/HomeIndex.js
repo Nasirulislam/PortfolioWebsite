@@ -70,45 +70,45 @@ function HomeIndex(props) {
       fabricRef.current = null;
     }
 
-    console.log("hom===========>>>", props.hom);
+    // console.log("hom===========>>>", props.hom);
 
     const hom_canvas =
       window.innerWidth >= 6000
         ? props.hom?.canvasELarge
         : window.innerWidth >= 3560
-        ? props.hom?.canvasLLaptop
-        : window.innerWidth >= 2560
-        ? props.hom?.canvasMLaptop
-        : window.innerWidth >= 1440
-        ? props.hom?.canvasSLaptop
-        : window.innerWidth >= 1180
-        ? props.hom?.canvasXLTab
-        : window.innerWidth >= 1024
-        ? props.hom?.canvasLTab
-        : window.innerWidth >= 768
-        ? props.hom?.canvasSTab
-        : window.innerWidth >= 430
-        ? props.hom?.canvasMobile
-        : props.hom?.canvasMobile;
+          ? props.hom?.canvasLLaptop
+          : window.innerWidth >= 2560
+            ? props.hom?.canvasMLaptop
+            : window.innerWidth >= 1440
+              ? props.hom?.canvasSLaptop
+              : window.innerWidth >= 1180
+                ? props.hom?.canvasXLTab
+                : window.innerWidth >= 1024
+                  ? props.hom?.canvasLTab
+                  : window.innerWidth >= 768
+                    ? props.hom?.canvasSTab
+                    : window.innerWidth >= 430
+                      ? props.hom?.canvasMobile
+                      : props.hom?.canvasMobile;
 
     const wid =
       window.innerWidth >= 6000
         ? 6020
         : window.innerWidth >= 3560
-        ? 3560
-        : window.innerWidth >= 2560
-        ? 2560
-        : window.innerWidth >= 1440
-        ? 1440
-        : window.innerWidth >= 1180
-        ? 1180
-        : window.innerWidth >= 1024
-        ? 1024
-        : window.innerWidth >= 768
-        ? 768
-        : window.innerWidth >= 430
-        ? 430
-        : window.innerWidth;
+          ? 3560
+          : window.innerWidth >= 2560
+            ? 2560
+            : window.innerWidth >= 1440
+              ? 1440
+              : window.innerWidth >= 1180
+                ? 1180
+                : window.innerWidth >= 1024
+                  ? 1024
+                  : window.innerWidth >= 768
+                    ? 768
+                    : window.innerWidth >= 430
+                      ? 430
+                      : window.innerWidth;
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
@@ -272,7 +272,7 @@ function HomeIndex(props) {
       };
 
       setBgColor(fabricCanvas?.background);
-      console.log("---->", bgColor);
+      // console.log("---->", bgColor);
 
       fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas), function () {
         const data = fabricCanvas;
@@ -306,6 +306,7 @@ function HomeIndex(props) {
     const IMAGE_HEIGHT = imgElement.clientHeight;
     const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 65; // Lower is faster
     const ZOOM_BREAKPOINT = WIDTH / IMAGE_WIDTH + 10; // When it should stop zooming in
+    console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
 
@@ -325,7 +326,7 @@ function HomeIndex(props) {
         // Only scale the Image, so the Zoom element does not mess with the document width
         imgElement.style.transform = `scale(${zoom})`;
         // Sets the Elements position to fixed, so it can resize without scrolling away
-        zoomElement.style.top = "50%";
+        zoomElement.style.top = "39%";
         zoomElement.style.position = "fixed";
       } else {
         // Makes sure the Element always reaches Max Size
@@ -439,7 +440,7 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom" style={{ background: "transparent", top: "50%", left: "50%" }} >
+      <div className="home-title change-title zoom" style={{ background: "transparent", top: "39%", left: "50%" }} >
         <h1 style={{ cursor: "pointer" }}>{props.value}</h1>
       </div>
       <div

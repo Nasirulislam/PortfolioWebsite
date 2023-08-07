@@ -29,7 +29,7 @@ class API {
     if (options.method !== "GET") {
       if (contentType.toLowerCase() == "multipart/form-data") {
         options.data = convertToFormData(payload, options.method, isNew);
-        console.log(options.data);
+        // console.log(options.data);
       } else if (payload && typeof payload === "object") {
         options.data = JSON.stringify(payload);
       }
@@ -45,7 +45,7 @@ class API {
         ...(await response.data)
       };
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       return error.response;
     }
   }
