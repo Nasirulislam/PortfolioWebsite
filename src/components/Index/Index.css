@@ -79,8 +79,8 @@
 }
 
 /* .index-item-section:hover { */
-  /* border-color: white; */
-  /* border-left: transparent;
+/* border-color: white; */
+/* border-left: transparent;
   border-right: transparent; */
 /* } */
 
@@ -101,23 +101,24 @@
   height: 90vh;
   overflow: hidden;
   overflow-y: scroll;
-  scrollbar-color: rgba(255,255,255, 0.3) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   scrollbar-width: thin;
 }
+
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
-  background: rgba(255,255,255, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255, 0.3);
+  background: rgba(255, 255, 255, 0.3);
   -webkit-border-radius: 1ex;
   -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
 }
 
 ::-webkit-scrollbar-corner {
-  background: rgba(255,255,255, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .index-list-item>h3 {
@@ -228,7 +229,7 @@
 }
 
 .about-section h1 {
-  font-size: 3vw;
+  /* font-size: 3vw; */
   font-weight: 100;
   color: white;
   font-family: 'lato';

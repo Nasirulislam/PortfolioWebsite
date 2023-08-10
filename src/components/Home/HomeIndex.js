@@ -1,27 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Home.css";
 import { motion } from "framer-motion";
-import axios from "axios";
-import base_url from "../../constants/url";
 import { fabric } from "fabric";
 
 function HomeIndex(props) {
-  const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
-  const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
-  const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
-  const [homeIndexImages, setHomeIndexImages] = useState([]);
-  const [canvasBgColor, setcanvasBgColor] = useState("white");
+
+  // const [homeIndexImages, setHomeIndexImages] = useState([]);
   const fabricRef = useRef(null);
   const canvasRef = useRef(null);
-  const canvasParentRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [bgColor, setBgColor] = useState(false);
 
   const style = {
-    // position: "absolute",
-    // top: "50%",
-    // left: "50%",
     cursor: "pointer !important",
     transform: `${isHovered
       ? `translate(${(-1 * (position.x - window.innerWidth / 2)) / 17}px, ${(-1 * (position.y - window.innerHeight / 2)) / 17
@@ -43,26 +34,7 @@ function HomeIndex(props) {
     setIsHovered(false);
   };
 
-  const mousemove = (e) => {
-    setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
-    setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
-    setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
-  };
 
-  // function getWindowDimensions() {
-  //   const { innerWidth: width, innerHeight: height } = window;
-  //   return {
-  //     width,
-  //     height
-  //   };
-  // }
-
-  // const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-  const [windowWidth, setWindow] = useState(130);
-
-  function clipToBoundary(ctx) {
-    ctx.rect(0, 0, fabricRef.current.width, fabricRef.current.height);
-  }
 
   const initFabric = () => {
     if (fabricRef.current) {
@@ -112,81 +84,13 @@ function HomeIndex(props) {
 
     if (props.homeIndexCanvas !== null && !fabricRef.current) {
       // Get the canvas object from its JSON representation
-      var canvasJSON = JSON.parse(hom_canvas);
+
       fabricRef.current = new fabric.StaticCanvas(canvasRef.current, {
         width: wid,
-        // width: window.innerWidth,
         height: window.innerHeight,
       });
 
-      const originalX = parseInt(props.originalX);
-      const originalY = parseInt(props.originalY);
-
-      // console.log('ORIGNAL X Y ', typeof (originalX), originalY)
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      // let newScaleX, newScaleY;
-
-      // console.log(originalX + " " + typeof (originalY) + " AND " + typeof (windowWidth) + " " + typeof (windowHeight))
-
-      let widthDifference = 0;
-      let heightDifference = 0;
-      let isWidthGreater = false;
-      let isHeightGreater = false;
-
-      if (windowWidth > originalX) {
-        widthDifference = ((windowWidth - originalX) / originalX) * 100;
-        isWidthGreater = true;
-      } else if (windowWidth < originalX) {
-        widthDifference = ((originalX - windowWidth) / originalX) * 100;
-      }
-
-      if (windowHeight > originalY) {
-        heightDifference = ((windowHeight - originalY) / originalY) * 100;
-        isHeightGreater = true;
-      } else if (windowHeight < originalY) {
-        heightDifference = ((originalY - windowHeight) / originalY) * 100;
-      }
-
       let fabricCanvas = JSON.parse(hom_canvas);
-
-      // console.log(fabricCanvas)
-      // fabricCanvas.objects.forEach(obj => {
-
-      //   if (isWidthGreater == true) {
-      //     obj.scaleX += obj.scaleX * (widthDifference / 100);
-      //     obj.left += obj.left * (widthDifference / 100);
-
-      //     obj.top += obj.top * (heightDifference / 100);
-      //     obj.scaleY += obj.scaleY * (widthDifference / 100);
-      //   }
-      //   else {
-      //     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      //     console.log(isMobile)
-      //     if (isMobile) {
-      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
-      //       obj.left -= obj.left * (widthDifference / 100);
-
-      //       obj.top -= obj.top * (heightDifference / 100);
-      //       obj.scaleY -= obj.scaleY * (heightDifference / 100);
-      //     }
-      //     else {
-      //       obj.scaleX -= obj.scaleX * (widthDifference / 100);
-      //       obj.left -= obj.left * (widthDifference / 100);
-
-      //       obj.top -= obj.top * (heightDifference / 100);
-      //       obj.scaleY -= obj.scaleY * (widthDifference / 100);
-      //     }
-
-      //   }
-
-      // });
-      // console.log(fabricCanvas)
-
-      // var canvas = fabricRef.current.loadFromJSON(JSON.stringify(fabricCanvas));
-      // fabricRef.current = canvas;
-      // setcanvasBgColor(fabricCanvas.background);
-      // canvas.renderAll();
 
       function getVideoElement(url, width, height) {
         const videoE = document.createElement("video");
@@ -300,14 +204,14 @@ function HomeIndex(props) {
     const fadeElement = document.querySelector("#home-page");
     // const afterZoomElement = document.querySelector('.afterzoom')
     const imgElement = document.querySelector("h1");
-    const WIDTH = document.body.clientWidth;
-    const HEIGHT = zoomElement.clientHeight;
-    const IMAGE_WIDTH = imgElement.clientWidth;
-    const IMAGE_HEIGHT = imgElement.clientHeight;
-    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 65; // Lower is faster
-    const ZOOM_BREAKPOINT = WIDTH / IMAGE_WIDTH + 10; // When it should stop zooming in
-    console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
-    const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
+    // const WIDTH = document.body.clientWidth;
+    // const HEIGHT = zoomElement.clientHeight;
+    // const IMAGE_WIDTH = imgElement.clientWidth;
+    // const IMAGE_HEIGHT = imgElement.clientHeight;
+    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 75; // Lower is faster
+    const ZOOM_BREAKPOINT = 10; // When it should stop zooming in
+    // console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
+    // const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
 
     // Fade --------------------------------------------------------------------------------------
@@ -320,6 +224,13 @@ function HomeIndex(props) {
       let scroll = window.scrollY;
       let temp = scroll / ZOOM_SPEED;
       let zoom = temp > 1 ? temp : 1;
+
+      // console.log('----')
+      // console.log("SCROLL", scroll);
+      // console.log("TEMP", temp);
+      // console.log("ZOOM", zoom);
+      // console.log('ZOOM BREAKPOINT', ZOOM_BREAKPOINT);
+      // console.log('----')
 
       // Only update the Elements scale, when we are below the breakpoint
       if (zoom < ZOOM_BREAKPOINT) {
@@ -373,13 +284,13 @@ function HomeIndex(props) {
     };
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("mousemove", mousemove);
+  // useEffect(() => {
+  //   window.addEventListener("mousemove", mousemove);
 
-    return () => {
-      window.removeEventListener("mousemove", mousemove);
-    };
-  });
+  //   return () => {
+  //     window.removeEventListener("mousemove", mousemove);
+  //   };
+  // });
 
   useEffect(() => {
     const mergeIndexImages = () => {
@@ -421,7 +332,7 @@ function HomeIndex(props) {
           k = k + 1;
         }
       }
-      setHomeIndexImages(zigZagArr);
+      // setHomeIndexImages(zigZagArr);
     };
     mergeIndexImages();
   }, []);

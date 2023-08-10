@@ -6,18 +6,17 @@ import base_url from "../../constants/url";
 import axios from "axios";
 import ViewAll from "./ViewAll";
 import ReactTextTransition, { presets } from "react-text-transition";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Auston from "../Auston/Auston";
 import Amoeba from "../Amoeba/Amoeba";
 import Brenna from "../Brenna/Brenna";
-import { motion } from "framer-motion";
 import { ProjectContext } from "../../services/ProjectContext";
 
 function HomeMain(props) {
   const [projectsData, setProjectsData] = useState([]);
   const [displayProjects, setProjectToDisplay] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
-  const [changeClass, setChangeClass] = useState(false);
+  // const [changeClass, setChangeClass] = useState(false);
   const { selectedProj, setSelectedProj, projChanged, setProjChanged } = useContext(ProjectContext);
   const [slug, setSlug] = useState();
   const [name, setName] = useState();

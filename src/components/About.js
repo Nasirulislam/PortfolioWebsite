@@ -103,8 +103,11 @@ export default function About(props) {
         // console.log('-------', rgbaValues)
         return rgbaValues;
     }
+
+    const backgroundStyleTitle = textColors?.titleColor?.includes("linear-gradient") ? `-webkit-${textColors?.titleColor}` : textColors?.titleColor;
+
     return (
-        <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black', zIndex: '10000' }}>
+        <div className="about-wrapper text-white" style={{ height: '100% !important', display: props.showAbout ? 'block' : 'none', backgroundColor: 'black', zIndex: '10000', }}>
             <div className="about-section">
                 {title !== "" && (
                     <div className="index-innersection h-100">
@@ -112,111 +115,159 @@ export default function About(props) {
                             props.fromAbout && (
                                 <>
                                     <h1 style={{
-                                        background: `-webkit-${textColors?.titleColor}`,
+                                        background: textColors?.titleColor?.includes("linear-gradient") ? `-webkit-${textColors?.titleColor}` : textColors?.titleColor,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
-                                        backgroundPosition: 'center'
+                                        backgroundPosition: 'center',
+                                        fontSize: `${textColors?.fontSize}vw`,
                                     }}
                                     >{title}</h1>
                                     <h1 style={{
-                                        background: `-webkit-${textColors?.detailColor}`,
+                                        background:
+                                            textColors?.detailColor?.includes("linear-gradient") ? `-webkit-${textColors?.detailColor}` : textColors?.detailColor,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
-                                        backgroundPosition: 'center'
+                                        backgroundPosition: 'center',
+                                        fontSize: `${textColors?.fontSize}vw`,
+                                        marginTop: `${textColors?.lineHeight}px`
                                     }}>
                                         {detail}
                                     </h1>
 
-                                    {details?.map((data, index) =>
-                                        <h1 style={{
-                                            // background: '-webkit- #0033ff, #717171)',
-                                            background: `-webkit-${data?.color}`,
+                                    {details?.map((data, index) => {
+                                        const isLink = data?.summary?.startsWith("WWW.") || data?.summary?.startsWith("http") || data?.summary?.startsWith("https") || data?.summary?.startsWith("www.")
 
-                                            // background: `- webkit - ${data.color}`,
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            backgroundClip: 'text',
-                                            textFillColor: 'transparent',
-                                            fontWeight: '1000',
-                                            backgroundPosition: 'center'
-                                            ,
-                                            width: "80%",
-                                            marginTop: "50px"
-                                        }}>
-                                            {data?.summary}
-                                        </h1>
-                                    )}
-                                    <br /><br />
+                                        const link = isLink ? (data?.summary?.startsWith("http") ? data?.summary : `http://${data?.summary}`) : '';
+                                        const backgroundStyle = data?.color?.includes("linear-gradient") ? `-webkit-${data?.color}` : data?.color;
+
+                                        return isLink ? (
+                                            <a
+                                                href={link}
+                                                style={{
+                                                    display: 'block',
+                                                    background: backgroundStyle,
+                                                    WebkitBackgroundClip: 'text',
+                                                    WebkitTextFillColor: 'transparent',
+                                                    backgroundClip: 'text',
+                                                    textFillColor: 'transparent',
+                                                    fontWeight: '1000',
+                                                    backgroundPosition: 'center',
+                                                    fontSize: `${textColors?.fontSize}vw`,
+                                                    width: "100%",
+                                                    marginTop: `${textColors?.lineHeight}px`
+                                                }}
+                                                target='_blank'
+                                            >
+                                                {data?.summary}
+                                            </a>
+                                        ) : (
+                                            <h1
+                                                style={{
+                                                    background: backgroundStyle,
+                                                    WebkitBackgroundClip: 'text',
+                                                    WebkitTextFillColor: 'transparent',
+                                                    backgroundClip: 'text',
+                                                    textFillColor: 'transparent',
+                                                    fontWeight: '1000',
+                                                    backgroundPosition: 'center',
+                                                    fontSize: `${textColors?.fontSize}vw`,
+                                                    width: "100%",
+                                                    marginTop: `${textColors?.lineHeight}px`
+                                                }}
+                                            >
+                                                {data?.summary}
+                                            </h1>
+                                        );
+                                    })}
+
+
+
                                 </>
                             )
                         }
                         <>
-                            <br /><br />
+
                             <h1
                                 style={{
-                                    background: `-webkit-${textColors?.emailColor}`,
+                                    background:
+                                        textColors?.emailColor?.includes("linear-gradient") ? `-webkit-${textColors?.emailColor}` : textColors?.emailColor,
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
                                     backgroundClip: 'text',
                                     textFillColor: 'transparent',
                                     fontWeight: '1000',
-                                    backgroundPosition: 'center'
+                                    backgroundPosition: 'center',
+                                    fontSize: `${textColors?.fontSize}vw`,
+                                    marginTop: `${textColors?.lineHeight}px`
                                 }}
                                 className='my-gradients-colors'
                             >{email}</h1>
                             <h1 style={{
-                                background: `-webkit-${textColors?.phoneColor}`,
+                                background:
+                                    textColors?.phoneColor?.includes("linear-gradient") ? `-webkit-${textColors?.phoneColor}` : textColors?.phoneColor,
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',
                                 textFillColor: 'transparent',
                                 fontWeight: '1000',
-                                backgroundPosition: 'center'
+                                backgroundPosition: 'center',
+                                fontSize: `${textColors?.fontSize}vw`,
+                                marginTop: `${textColors?.lineHeight}px`
                             }}
                                 className='my-gradients-colors'
                             >{locTxt}</h1>
-                            <br /><br />
 
-                            <br /><br />
-                            <h1
+
+
+                            <a href={instUrl} target="_blank"
                                 style={{
-                                    background: `-webkit-${textColors?.instaColor}`,
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    textFillColor: 'transparent',
+                                    textDecoration: 'none',
                                     fontWeight: '1000',
-                                    backgroundPosition: 'center'
                                 }}
-                                className='my-gradients-colors'
                             >
 
-                                <a href={instUrl} target="_blank"
-                                    style={{
-                                        textDecoration: 'none',
-                                        fontWeight: '1000',
-                                    }}
-                                >INSTAGRAM</a>
-                            </h1>
-                            <br />
-                            <a href={repName} target="_blank" style={{ textDecoration: 'none', fontWeight: '1000' }}
 
-                            >
                                 <h1
                                     style={{
-                                        background: `-webkit-${textColors?.linkedColor}`,
+                                        background:
+                                            textColors?.instaColor?.includes("linear-gradient") ? `-webkit-${textColors?.instaColor}` : textColors?.instaColor,
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text',
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
-                                        backgroundPosition: 'center'
+                                        backgroundPosition: 'center',
+                                        fontSize: `${textColors?.fontSize}vw`,
+                                        marginTop: `${textColors?.lineHeight}px`
+                                    }}
+                                    className='my-gradients-colors'
+                                >
+
+                                    INSTAGRAM
+                                </h1>
+                            </a>
+
+                            <a href={repName} target="_blank" style={{ textDecoration: 'none', fontWeight: '1000' }}
+
+                            >
+                                <h1
+                                    style={{
+                                        background:
+                                            textColors?.linkedColor?.includes("linear-gradient") ? `-webkit-${textColors?.linkedColor}` : textColors?.linkedColor,
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent',
+                                        backgroundClip: 'text',
+                                        textFillColor: 'transparent',
+                                        fontWeight: '1000',
+                                        backgroundPosition: 'center',
+                                        fontSize: `${textColors?.fontSize}vw`,
+                                        marginTop: `${textColors?.lineHeight}px`
                                     }}
                                     className='my-gradients-colors'
                                 >
@@ -224,7 +275,7 @@ export default function About(props) {
                                     LINKEDIN
                                 </h1>
                             </a>
-                            {/* <br /><br /> */}
+                            {/*  */}
                             {/* <h1
                                 style={{
                                     background: '-webkit-#FF1366, #0033ff)',
@@ -233,7 +284,9 @@ export default function About(props) {
                                     backgroundClip: 'text',
                                     textFillColor: 'transparent',
                                     fontWeight: '1000',
-                                    backgroundPosition: 'center'
+                                    backgroundPosition: 'center',
+                                    fontSize: `${textColors?.fontSize}vw`,
+                                    marginTop: `${textColors?.lineHeight}px`
                                 }}
                             >{repName}</h1> */}
                         </>

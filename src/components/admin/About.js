@@ -45,6 +45,9 @@ export default function About() {
     const [linkedColor, setLinkedColor] = useState('');
     const [resEmailColor, setresEmailColor] = useState('');
 
+    // Choose Line height and font size 
+    const [fontSize, setFontSize] = useState('');
+    const [lineHeight, setLineHeight] = useState('');
 
     const handleCloseAllColorPickers = () => {
         setShowTitleColor(false);
@@ -91,7 +94,9 @@ export default function About() {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    // console.log(response.data.details);
+                    console.log(response.data);
+                    setFontSize(response?.data?.fontSize)
+                    setLineHeight(response?.data?.lineHeight)
                     setDetails(response?.data?.details);
                     setTitleColor(response?.data?.titleColor);
                     setDetailColor(response?.data?.detailColor);
@@ -179,7 +184,9 @@ export default function About() {
             repName: repName || "",
             repEmail: repEmail || "",
         }
+
         const response = await axios.post(`${url}/project/updateAbout`, payload);
+
         if (response.status === 210) {
             toast("Updated successfully");
         } else {
@@ -187,6 +194,8 @@ export default function About() {
         }
 
         const payload2 = {
+            fontSize: fontSize,
+            lineHeight: lineHeight,
             titleColor: titleColor,
             detailColor: detailColor,
             details: details,
@@ -200,17 +209,11 @@ export default function About() {
         // console.log('here 123123123', payload2);
 
         setLoading(false);
-        const response2 = await axios.post(`${url}/project/updateDetail`, payload2);
-        // console.log('here 123123123123123123');
-        // console.log(response2);
-        // if (response2.status === 210) {
-        //     toast("Updated successfully");
-        // } else {
-        //     toast(JSON.stringify(response2));
-        // }
+        await axios.post(`${url}/project/updateDetail`, payload2).then(() => console.log('Success!')).catch(err => console.log);
 
         setLoading(false);
     }
+
     const handleImageDelete = async (id) => {
         // console.log("ID : ", id)
         axios
@@ -223,7 +226,6 @@ export default function About() {
                 console.error('Error deleting about image:', error);
             });
     }
-
 
     useEffect(() => {
         const getAboutPayload = async () => {
@@ -245,17 +247,41 @@ export default function About() {
         fileInputRef.current.click();
     };
 
-
-
-
     let uploadStyle =
         { display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black', width: '110px', height: '100px', borderRadius: "10px", cursor: 'pointer', marginBottom: '10px' }
-
 
     return (
         <div className="d-flex align-items-center justify-content-center h-100 flex-col">
             <Card className="p-3 my-5 form-card">
                 <Form>
+                    {/* Choose Font Size */}
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
+                        <Form.Label style={{ fontWeight: '700' }} >Font Size in View Width (1 - 10):</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter Font Size"
+                            value={fontSize}
+                            onChange={(e) => {
+                                setFontSize(e.target.value);
+                            }}
+                        />
+
+                    </Form.Group>
+                    {/* Choose Line Height  */}
+                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
+                        <Form.Label style={{ fontWeight: '700' }} >Line Height in Pixles (0 - 100+)</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter Line Height"
+                            value={lineHeight}
+                            onChange={(e) => {
+                                setLineHeight(e.target.value);
+                            }}
+                        />
+
+                    </Form.Group>
+
+
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Title:</Form.Label>
                         <Form.Control
