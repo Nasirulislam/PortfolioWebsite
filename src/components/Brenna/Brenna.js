@@ -89,7 +89,7 @@ function Brenna(props) {
           <motion.div className={"col-md-12 d-flex align-items-center justify-content-center brenna-first"}
             animate={{ x: props.slowCoords.x, y: props.slowCoords.y, opacity: 1, animationDelay: 200 }}
             key={thirdImage.fileUrl}
-            style={{ position: 'relative', marginTop: '-5%', zIndex: '1' }}>
+            style={{ position: 'relative', marginTop: '-8.5%', zIndex: '1' }}>
             {
               thirdImage.fileUrl.includes("mp4") ?
                 <video autoPlay loop muted onClick={() => props.handleSlug()}>
