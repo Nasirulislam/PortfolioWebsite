@@ -35,6 +35,12 @@ function HomeIndex(props) {
   };
 
 
+  const mousemove = (e) => {
+    setLargeCircle({ x: (e.clientX / 50) * -1, y: (e.clientY / 50) * -1 });
+    setMediumCircle({ x: (e.clientX / 10) * -1, y: (e.clientY / 10) * -1 });
+    setFastCircle({ x: (e.clientX / 2) * -1, y: (e.clientY / 2) * -1 });
+  };
+
 
   const initFabric = () => {
     if (fabricRef.current) {
@@ -204,15 +210,14 @@ function HomeIndex(props) {
     const fadeElement = document.querySelector("#home-page");
     // const afterZoomElement = document.querySelector('.afterzoom')
     const imgElement = document.querySelector("h1");
-    // const WIDTH = document.body.clientWidth;
-    // const HEIGHT = zoomElement.clientHeight;
-    // const IMAGE_WIDTH = imgElement.clientWidth;
-    // const IMAGE_HEIGHT = imgElement.clientHeight;
-    const ZOOM_SPEED = window.innerWidth <= 500 ? 90 : 75; // Lower is faster
-    const ZOOM_BREAKPOINT = window.innerWidth <= 500 ? 10 : 9.5; // When it should stop zooming in
-    // console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
-    // const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
-    const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
+    const WIDTH = document.body.clientWidth;
+    const HEIGHT = zoomElement.clientHeight;
+    const IMAGE_WIDTH = imgElement.clientWidth;
+    const IMAGE_HEIGHT = imgElement.clientHeight;
+    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 65; // Lower is faster
+    const ZOOM_BREAKPOINT = WIDTH / IMAGE_WIDTH + 10; // When it should stop zooming in
+    console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
+    const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
 
     // Fade --------------------------------------------------------------------------------------
     const FADE_SPEED = 200; // Lower is faster
@@ -284,13 +289,13 @@ function HomeIndex(props) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   window.addEventListener("mousemove", mousemove);
+  useEffect(() => {
+    window.addEventListener("mousemove", mousemove);
 
-  //   return () => {
-  //     window.removeEventListener("mousemove", mousemove);
-  //   };
-  // });
+    return () => {
+      window.removeEventListener("mousemove", mousemove);
+    };
+  });
 
   useEffect(() => {
     const mergeIndexImages = () => {
