@@ -4,11 +4,16 @@ import { motion } from "framer-motion";
 import { fabric } from "fabric";
 
 function HomeIndex(props) {
-
+  const [largeCircle, setLargeCircle] = useState({ x: 0, y: 0 });
+  const [mediumCircle, setMediumCircle] = useState({ x: 0, y: 0 });
+  const [fastCircle, setFastCircle] = useState({ x: 0, y: 0 });
+  const [homeIndexImages, setHomeIndexImages] = useState([]);
+  const [canvasBgColor, setcanvasBgColor] = useState("white");
   // const [homeIndexImages, setHomeIndexImages] = useState([]);
   const fabricRef = useRef(null);
   const canvasRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const canvasParentRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [bgColor, setBgColor] = useState(false);
 
