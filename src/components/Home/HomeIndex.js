@@ -208,8 +208,8 @@ function HomeIndex(props) {
     // const HEIGHT = zoomElement.clientHeight;
     // const IMAGE_WIDTH = imgElement.clientWidth;
     // const IMAGE_HEIGHT = imgElement.clientHeight;
-    const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 75; // Lower is faster
-    const ZOOM_BREAKPOINT = window.innerWidth <= 500 ? 6.5 : 9.5; // When it should stop zooming in
+    const ZOOM_SPEED = window.innerWidth <= 500 ? 90 : 75; // Lower is faster
+    const ZOOM_BREAKPOINT = window.innerWidth <= 500 ? 10 : 9.5; // When it should stop zooming in
     // console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
     // const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
