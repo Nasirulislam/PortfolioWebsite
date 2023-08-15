@@ -223,7 +223,7 @@ function HomeIndex(props) {
     const ZOOM_BREAKPOINT = WIDTH / IMAGE_WIDTH + 10; // When it should stop zooming in
     console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
     const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
-
+    const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED;
     // Fade --------------------------------------------------------------------------------------
     const FADE_SPEED = 200; // Lower is faster
     let fade = 1;
