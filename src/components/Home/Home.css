@@ -157,8 +157,8 @@ s.cardTemp {
   z-index: 100;
   font-weight: 700;
   text-transform: uppercase;
-  -webkit-background-clip: text;
-  /* -webkit-text-fill-color: transparent; */
+  /* -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
   /* background: rgba(255, 255, 255, 0.2); */
 }
 
@@ -168,7 +168,7 @@ s.cardTemp {
   font-weight: 700;
   -webkit-text-stroke: 1px black;
   background: transparent;
-  mix-blend-mode: difference;
+  /* mix-blend-mode: difference; */
   color: white;
   text-align: center;
 }
@@ -495,7 +495,7 @@ s.cardTemp {
   }
 
   .brenna-first img {
-    width: 60%;
+    width: 70%;
   }
 
   .brenna-start {
@@ -503,11 +503,12 @@ s.cardTemp {
   }
 
   .brenna-start img {
-    width: 70%;
+    width: 85%;
   }
 
   .brenna-master {
-    flex-direction: column;
+    /* flex-direction: column; */
+
   }
 
   .amoeba img {

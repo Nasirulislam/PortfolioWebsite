@@ -102,7 +102,7 @@ function Template1(props) {
     }
   }, [index]);
 
-
+// 
   return (
     <div style={{ display: showComponent ? '' : 'none' }}>
       <motion.div style={{ height: '100%', position: 'relative' }}
