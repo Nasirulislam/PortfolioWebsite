@@ -197,7 +197,9 @@ function EditImages(props) {
               Next
             </button>
           </section>
-          <div><h1>Select Thumbnail Image For Index: </h1></div>
+          {btnshow &&
+            <div><h1 style={{ fontSize: '30px' }}>Select Thumbnail Image For Index: </h1></div>
+          }
           <section className="edit-section">
             <div className="edit-image-section">
               {selectedImages &&
