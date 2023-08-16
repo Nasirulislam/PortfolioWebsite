@@ -363,7 +363,8 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom" style={{ background: "transparent", top: "39%", left: "50%" }} >
+      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%" }} >
+
         <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
       </div>
       <div

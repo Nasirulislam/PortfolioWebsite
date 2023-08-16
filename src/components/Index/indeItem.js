@@ -62,9 +62,11 @@ function IndexItem(props) {
           return item;
         }
       })
-      setItemImage(tempArr[0]);
+
+      console.log(tempArr)
+      setItemImage(tempArr[props.currentProject.thumbnailIndex ? props.currentProject.thumbnailIndex - 1 : 0]);
     } else {
-      setItemImage(props.image[0]);
+      setItemImage(props.image[props.currentProject.thumbnailIndex ? props.currentProject.thumbnailIndex - 1 : 0]);
     }
   }, []);
 

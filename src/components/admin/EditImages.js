@@ -24,6 +24,7 @@ function EditImages(props) {
   const [setting, setSetting] = useState(false);
   const [btnshow, setBtnShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [thumbnailIndex, setThumbnailIndex] = useState(0);
 
   const moveForward = (e) => {
     e.preventDefault();
@@ -70,6 +71,8 @@ function EditImages(props) {
         setTemplate(project.template);
         setSlug(project.slug);
         setSelectedImages(project.imagesAndThumb);
+        setThumbnailIndex(project.thumbnailIndex);
+        console.log('...', project)
         setBtnShow(true);
       }
     });
@@ -91,8 +94,9 @@ function EditImages(props) {
     const body = {
       // images: selectedImages,
       imagesAndThumb: selectedImages,
+      thumbnailIndex
     };
-    // console.log(body.imagesAndThumb)
+    console.log(body)
     await axios
       .patch(`${base_url}/project/${projectId}`, body)
       .then((response) => {
@@ -106,8 +110,24 @@ function EditImages(props) {
       });
   };
 
+  const divStyle = {
+    marginBottom: '10px',
+    fontFamily: 'Arial, sans-serif',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+  };
+
+  const inputStyle = {
+    marginLeft: '10px',
+    padding: '5px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '14px',
+    width: '50px',
+  };
   return (
-    <div className="d-flex align-items-center justify-content-center edit-images-section">
+    <div className="d-flex align-items-center justify-content-center edit-images-section" >
       <Card className="p-3 my-5 edit-form-card">
         <Form>
           <Form.Label className="mb-0">Select any Project</Form.Label>
@@ -177,7 +197,45 @@ function EditImages(props) {
               Next
             </button>
           </section>
+          <div><h1>Select Thumbnail Image For Index: </h1></div>
+          <section className="edit-section">
+            <div className="edit-image-section">
+              {selectedImages &&
+                selectedImages
+                  .filter(image => !image.fileUrl.includes(".mp4")) // filter out mp4 files
+                  .map((image, index) => (
+                    <div
+                      key={index}
+                      className="edit-image"
+                      onClick={() => {
+                        setImgId(image);
+                      }}
+                      style={{
+                        outline:
+                          imgId === image
+                            ? "5px solid green"
+                            : "1px solid black",
+                      }}
+                    >
+                      <img
+                        src={image.fileUrl}
+                        width="150"
+                        height="150"
+                        alt="upload"
+                      />
+                      <p>{index + 1}</p>
+                    </div>
+                  ))
+              }
+            </div>
+          </section>
 
+          {btnshow &&
+            <div style={divStyle}>
+              <label>Select Thumbnail Image number: </label>
+              <input type="number" style={inputStyle} value={thumbnailIndex} onChange={(e) => setThumbnailIndex(e.target.value)} />
+            </div>
+          }
           <Button
             variant="primary"
             type="submit01"
@@ -196,7 +254,7 @@ function EditImages(props) {
           </Button>
         </Form>
       </Card>
-    </div>
+    </div >
   );
 }
 
