@@ -225,12 +225,16 @@ function HomeIndex(props) {
       let temp = scroll / ZOOM_SPEED;
       let zoom = temp > 1 ? temp : 1;
 
-      // console.log('----')
-      // console.log("SCROLL", scroll);
-      // console.log("TEMP", temp);
-      // console.log("ZOOM", zoom);
-      // console.log('ZOOM BREAKPOINT', ZOOM_BREAKPOINT);
-      // console.log('----')
+      console.log('----')
+      console.log("SCROLL : ", scroll);
+      console.log("TEMP : ", temp);
+      console.log("ZOOM : ", zoom);
+      console.log('ZOOM BREAKPOINT : ', ZOOM_BREAKPOINT);
+      console.log('Absolute : ', ABSOLUTE);
+      console.log('FADE : ', fade);
+      // console.log('Absolute : ', fade);
+      console.log('prev : ', prev);
+      console.log('----')
 
       // Only update the Elements scale, when we are below the breakpoint
       if (zoom < ZOOM_BREAKPOINT) {
@@ -258,11 +262,18 @@ function HomeIndex(props) {
         fade += dif / FADE_SPEED;
       }
 
+      if (fade >= 0.95 || fade < 0.95) {
+        const el = document.querySelector('.my--title');
+        el.style.color = 'white'
+        el.style.background = 'transparent'
+
+        console.log(el.style)
+
+      }
       fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
     }
-
     // Resets scroll position on every reload
     // if ('scrollRestoration' in history) {
     //   history.scrollRestoration = 'manual'
@@ -353,7 +364,7 @@ function HomeIndex(props) {
       onMouseLeave={handleMouseLeave}
     >
       <div className="home-title change-title zoom" style={{ background: "transparent", top: "39%", left: "50%" }} >
-        <h1 style={{ cursor: "pointer" }}>{props.value}</h1>
+        <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
       </div>
       <div
         className="px-0 d-flex justify-content-between tech-slideshow flex-wrap"
