@@ -154,7 +154,7 @@ function HomeMain(props) {
           <div
             className="card-wrapper mb-4"
             ref={(el) => (GrouRef.current[0] = el)}
-            data-bgcolor="white"
+            // data-bgcolor="white"
             data-title="David Ellis"
             data-slug="/"
             data-index="00"

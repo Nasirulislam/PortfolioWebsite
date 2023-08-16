@@ -272,7 +272,7 @@ function HomeIndex(props) {
 
     // Fade --------------------------------------------------------------------------------------
     zoomElement.style.opacity = 1;
-    zoomElement.style.color = 'white';
+    // zoomElement.style.color = 'white';
     // -------------------------------------------------------------------------------------- Fade
 
     // Positions the afterZoom element right below the zoomed image
