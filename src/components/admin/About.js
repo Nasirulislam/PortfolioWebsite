@@ -52,65 +52,38 @@ export default function About() {
     //Details summary section
     const [details, setDetails] = useState([{ summary: '', color: '',textSize:0, spacing:0 }]);
     // spacing 
-    // const [sizes,setSizes] = useState({
-    //     title1: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     title2: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
+    const [sizes,setSizes] = useState({
+        title1: {
+            textSize: 0,
+            spacing: 0
+        },
+        title2: {
+            textSize: 0,
+            spacing: 0
+        },
         
-    //     Summary1: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary2: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary3: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary4: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary5: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary6: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary7: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Summary8: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Email: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     Phone: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     InstagramUrl: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     },
-    //     LinkedInUrl: {
-    //         textSize: 0,
-    //         spacing: 0
-    //     }
-    // })
+        Summary1: {
+            textSize: 0,
+            spacing: 0
+        },
+      
+        Email: {
+            textSize: 0,
+            spacing: 0
+        },
+        Phone: {
+            textSize: 0,
+            spacing: 0
+        },
+        InstagramUrl: {
+            textSize: 0,
+            spacing: 0
+        },
+        LinkedInUrl: {
+            textSize: 0,
+            spacing: 0
+        }
+    })
 
     const handleCloseAllColorPickers = () => {
         setShowTitleColor(false);
@@ -127,18 +100,14 @@ export default function About() {
         updatedDetails[index].summary = event.target.value;
         setDetails(updatedDetails);
     };
-    // textSize
-    const handleChangeTextSize = (index, event) => {
-        const updatedDetails = [...details];
-        updatedDetails[index].textSize = event.target.value;
-        setDetails(updatedDetails);
-    };
-    // spacing
-    const handleChangeSpacing = (index, event) => {
-        const updatedDetails = [...details];
-        updatedDetails[index].spacing = event.target.value;
-        setDetails(updatedDetails);
-    };
+    const handleSizeChange = (field, property, value) => {
+        // Create a copy of the sizes state object to avoid mutating it directly
+        const updatedSizes = { ...sizes };
+        // Update the specified property for the given field
+        updatedSizes[field][property] = value;
+        // Update the state with the new sizes object
+        setSizes(updatedSizes);
+      };
 
     const handleChangeColor = (index, color) => {
         // console.log("Color Changed", index, color)
@@ -379,15 +348,21 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.title1.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('title1', 'textSize', e.target.value)
+                            }
+                           
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.title1.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('title1', 'spacing', e.target.value)
+                            }
+                          
                             />
                         </div>
                         </div>
@@ -421,15 +396,21 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.title2.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('title2', 'textSize', e.target.value)
+                            }
+                          
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.title2.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('title2', 'spacing', e.target.value)
+                            }
+                        
                             />
                         </div>
                         </div>
@@ -469,15 +450,19 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.Summary1.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('Phone', 'textSize', e.target.value)
+                            }
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.Summary1.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('Summary1', 'spacing', e.target.value)
+              }
                             />
                         </div>
                         </div>
@@ -514,15 +499,19 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.Email.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('Email', 'textSize', e.target.value)
+                            }
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.Email.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('Email', 'spacing', e.target.value)
+                            } 
                             />
                         </div>
                         </div>
@@ -554,15 +543,19 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.Phone.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('Phone', 'textSize', e.target.value)
+                            }
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.Phone.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('Phone', 'spacing', e.target.value)
+                            }
                             />
                         </div>
                         </div>
@@ -594,15 +587,19 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.InstagramUrl.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('InstagramUrl', 'textSize', e.target.value)
+                            }
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.InstagramUrl.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('InstagramUrl', 'spacing', e.target.value)
+                            }
                             />
                         </div>
                         </div>
@@ -634,15 +631,19 @@ export default function About() {
                         <Form.Control
                             type="number"
                             placeholder="Enter text size"
-                            value={detail.textSize}
-                            onChange={(event) => handleChangeTextSize(index, event)}
+                            value={sizes.LinkedInUrl.textSize}
+                            onChange={(e) =>
+                            handleSizeChange('LinkedInUrl', 'textSize', e.target.value)
+                            }
                             />
                             <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
                             <Form.Control
                             type="number"
                             placeholder="Enter spacing"
-                            value={detail.spacing}
-                            onChange={(event) => handleChangeSpacing(index, event)}
+                            value={sizes.LinkedInUrl.spacing}
+                            onChange={(e) =>
+                            handleSizeChange('LinkedInUrl', 'spacing', e.target.value)
+                            }
                             />
                         </div>
                         </div>
