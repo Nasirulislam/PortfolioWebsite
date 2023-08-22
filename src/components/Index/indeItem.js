@@ -73,6 +73,8 @@ function IndexItem(props) {
   const navigate = useNavigate();
 
   return (
+    <>
+    
     <div className="index-item-section" style={{ position: 'relative' }} key={props.currentProject._id} onClick={() => {
       props.setselProj(props.currentProject.name)
       props.setprojChanged(true)
@@ -158,7 +160,10 @@ function IndexItem(props) {
         // style={{height: '25vh'}}
         />
       </motion.div>
+
     </div>
+    
+    </>
   );
 }
 

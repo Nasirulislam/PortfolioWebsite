@@ -36,7 +36,7 @@ function Brenna(props) {
                 :
                 <div
                   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-                  style={{ cursor: 'pointer', width: window.innerWidth > 500 ? '60%' : '200px' }}
+                  style={{ cursor: 'pointer', width: window.innerWidth > 500 ? '85%' : '200px' }}
                   onClick={handleClick}
                 >
                   <Helper banner={banner} largeCircle={{ x: 0, y: 0 }} index={key} imageFluid={false} />

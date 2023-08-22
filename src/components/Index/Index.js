@@ -75,7 +75,8 @@ export default function Index({ projectData, indexBackground, setOptions }) {
             backgroundSize: 'cover', backgroundPosition: 'center'
           }}>
             <div className="index-section">
-              <div className="index-innersection" style={{ overflowY: 'scroll' }}>
+              <div className="index-innersection" style={{ overflowY: 'scroll'}}>
+              <div style={{'paddingBottom':'20rem'}}>
                 {projects.map((item, index) => {
                   return (
                     <IndexItem
@@ -90,12 +91,12 @@ export default function Index({ projectData, indexBackground, setOptions }) {
                       handleOnIndexLeave={handleOnIndexLeave}
                       key={index}
                       index={index}
-                      
                       setprojChanged={ setProjChanged}
               setselProj={ setSelectedProj}
                     />
                   );
                 })}
+                </div>
               </div>
             </div>
           </div>
