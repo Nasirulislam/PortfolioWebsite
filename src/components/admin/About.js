@@ -49,6 +49,69 @@ export default function About() {
     const [fontSize, setFontSize] = useState('');
     const [lineHeight, setLineHeight] = useState('');
 
+    //Details summary section
+    const [details, setDetails] = useState([{ summary: '', color: '',textSize:0, spacing:0 }]);
+    // spacing 
+    // const [sizes,setSizes] = useState({
+    //     title1: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     title2: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+        
+    //     Summary1: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary2: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary3: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary4: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary5: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary6: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary7: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Summary8: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Email: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     Phone: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     InstagramUrl: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     },
+    //     LinkedInUrl: {
+    //         textSize: 0,
+    //         spacing: 0
+    //     }
+    // })
+
     const handleCloseAllColorPickers = () => {
         setShowTitleColor(false);
         setShowDetailColor(false)
@@ -59,15 +122,23 @@ export default function About() {
         setShowRepresentedColor(false);
     };
 
-    //Details summary section
-    const [details, setDetails] = useState([{ summary: '', color: '' }]);
-
     const handleChange = (index, event) => {
         const updatedDetails = [...details];
         updatedDetails[index].summary = event.target.value;
         setDetails(updatedDetails);
     };
-
+    // textSize
+    const handleChangeTextSize = (index, event) => {
+        const updatedDetails = [...details];
+        updatedDetails[index].textSize = event.target.value;
+        setDetails(updatedDetails);
+    };
+    // spacing
+    const handleChangeSpacing = (index, event) => {
+        const updatedDetails = [...details];
+        updatedDetails[index].spacing = event.target.value;
+        setDetails(updatedDetails);
+    };
 
     const handleChangeColor = (index, color) => {
         // console.log("Color Changed", index, color)
@@ -85,8 +156,6 @@ export default function About() {
         updatedDetails.splice(index, 1);
         setDetails(updatedDetails);
     };
-
-
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -250,6 +319,7 @@ export default function About() {
     let uploadStyle =
         { display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black', width: '110px', height: '100px', borderRadius: "10px", cursor: 'pointer', marginBottom: '10px' }
 
+      
     return (
         <div className="d-flex align-items-center justify-content-center h-100 flex-col">
             <Card className="p-3 my-5 form-card">
@@ -292,6 +362,7 @@ export default function About() {
                                 setTitle(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowTitleColor(!showTitleColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -303,11 +374,28 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={titleColor} onChange={(color) => setTitleColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
 
 
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
-                        <Form.Label style={{ fontWeight: '700' }} >Detail:</Form.Label>
+                    <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Title:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Description"
@@ -316,6 +404,7 @@ export default function About() {
                                 setDetail(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowDetailColor(!showDetailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -327,6 +416,23 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={detailColor} onChange={(color) => setDetailColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicDetails">
                         <Form.Label style={{ fontWeight: '700' }} >Summary:</Form.Label>
@@ -341,6 +447,7 @@ export default function About() {
                                     onChange={(event) => handleChange(index, event)}
                                     style={{ margin: "5px 0px" }}
                                 />
+                                <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingBlock":'1rem'}}>
                                 {index > 0 && (
                                     <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", backgroundColor: 'red', color: 'white' }}>
                                         Remove-
@@ -357,6 +464,23 @@ export default function About() {
                                         <ColorPicker hideInputs hidePresets value={details[index].color} onChange={(color) => handleChangeColor(index, color)} />
                                     </div>
                                 }
+                                <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                                <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                             </div>
                         ))}
                         <Button type="button" onClick={handleAdd} style={{ backgroundColor: 'green', color: 'white' }}>
@@ -373,6 +497,7 @@ export default function About() {
                                 setEmail(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowEmailColor(!showEmailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -384,6 +509,23 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={emailColor} onChange={(color) => setEmailColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
                         <Form.Label style={{ fontWeight: '700' }} >Phone:</Form.Label>
@@ -395,6 +537,7 @@ export default function About() {
                                 setLocTxt(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowPhoneColor(!showPhoneColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -406,6 +549,23 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={phoneColor} onChange={(color) => setPhoneColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Instagram Url:</Form.Label>
@@ -417,6 +577,7 @@ export default function About() {
                                 setInstaUrl(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowInstaColor(!showInstaColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -428,6 +589,23 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={instaColor} onChange={(color) => setInstaColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >LinkedIn Url:</Form.Label>
@@ -439,6 +617,7 @@ export default function About() {
                                 setRepName(e.target.value);
                             }}
                         />
+                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
                         <Button type="button" onClick={() => setShowLinkedinColor(!showLinkedinColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
                             Color Picker
                         </Button>
@@ -450,6 +629,23 @@ export default function About() {
                                 <ColorPicker hideInputs hidePresets value={linkedColor} onChange={(color) => setLinkedColor(color)} />
                             </div>
                         }
+                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
+                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter text size"
+                            value={detail.textSize}
+                            onChange={(event) => handleChangeTextSize(index, event)}
+                            />
+                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
+                            <Form.Control
+                            type="number"
+                            placeholder="Enter spacing"
+                            value={detail.spacing}
+                            onChange={(event) => handleChangeSpacing(index, event)}
+                            />
+                        </div>
+                        </div>
                     </Form.Group>
                     {/* <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Represented Email:</Form.Label>

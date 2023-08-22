@@ -224,7 +224,6 @@ function HomeIndex(props) {
       let scroll = window.scrollY;
       let temp = scroll / ZOOM_SPEED;
       let zoom = temp > 1 ? temp : 1;
-
       console.log('----')
       console.log("SCROLL : ", scroll);
       console.log("TEMP : ", temp);
