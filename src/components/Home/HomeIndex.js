@@ -224,16 +224,16 @@ function HomeIndex(props) {
       let scroll = window.scrollY;
       let temp = scroll / ZOOM_SPEED;
       let zoom = temp > 1 ? temp : 1;
-      console.log('----')
-      console.log("SCROLL : ", scroll);
-      console.log("TEMP : ", temp);
-      console.log("ZOOM : ", zoom);
-      console.log('ZOOM BREAKPOINT : ', ZOOM_BREAKPOINT);
-      console.log('Absolute : ', ABSOLUTE);
-      console.log('FADE : ', fade);
-      // console.log('Absolute : ', fade);
-      console.log('prev : ', prev);
-      console.log('----')
+      // console.log('----')
+      // console.log("SCROLL : ", scroll);
+      // console.log("TEMP : ", temp);
+      // console.log("ZOOM : ", zoom);
+      // console.log('ZOOM BREAKPOINT : ', ZOOM_BREAKPOINT);
+      // console.log('Absolute : ', ABSOLUTE);
+      // console.log('FADE : ', fade);
+      // // console.log('Absolute : ', fade);
+      // console.log('prev : ', prev);
+      // console.log('----')
 
       // Only update the Elements scale, when we are below the breakpoint
       if (zoom < ZOOM_BREAKPOINT) {
@@ -266,7 +266,7 @@ function HomeIndex(props) {
         el.style.color = 'white'
         el.style.background = 'transparent'
 
-        console.log(el.style)
+        // console.log(el.style)
 
       }
       fadeElement.style.opacity = fade;

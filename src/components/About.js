@@ -22,14 +22,15 @@ export default function About(props) {
 
     //Update Details Section
     const [details, setDetails] = useState([{ summary: '' }]);
-
+    const [sizes, setSizes] = useState()
     useEffect(() => {
         const fetchDetails = async () => {
             try {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    // console.log('yes', response.data.details)
+                    console.log('yes', response.data.details[0].textSize)
+                    setSizes(response?.data?.sizes)
                     setDetails(response?.data?.details);
                     setTextColors(response?.data)
                 }
@@ -103,7 +104,7 @@ export default function About(props) {
         // console.log('-------', rgbaValues)
         return rgbaValues;
     }
-
+    // console.log('2222222222220', sizes?.Email.textSize)
     const backgroundStyleTitle = textColors?.titleColor?.includes("linear-gradient") ? `-webkit-${textColors?.titleColor}` : textColors?.titleColor;
 
     return (
@@ -122,7 +123,8 @@ export default function About(props) {
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
-                                        fontSize: `${textColors?.fontSize}vw`,
+                                        fontSize: `${sizes?.title1.textSize}vw`,
+                                        marginBottom: `${sizes?.title1.spacing}px`
                                     }}
                                     >{title}</h1>
                                     <h1 style={{
@@ -134,8 +136,8 @@ export default function About(props) {
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
-                                        fontSize: `${textColors?.fontSize}vw`,
-                                        marginTop: `${textColors?.lineHeight}px`
+                                        fontSize: `${sizes?.title2.textSize}vw`,
+                                        marginBottom: `${sizes?.title2.spacing}px`
                                     }}>
                                         {detail}
                                     </h1>
@@ -158,9 +160,10 @@ export default function About(props) {
                                                     textFillColor: 'transparent',
                                                     fontWeight: '1000',
                                                     backgroundPosition: 'center',
-                                                    fontSize: `${textColors?.fontSize}vw`,
+                                                    fontSize: `${Number(data?.textSize)}vw`,
+                                                    // fontSize: data?.fontSize + "vw",
                                                     width: "100%",
-                                                    marginTop: `${textColors?.lineHeight}px`
+                                                    marginTop: `${Number(data?.spacing)}px`
                                                 }}
                                                 target='_blank'
                                             >
@@ -176,9 +179,9 @@ export default function About(props) {
                                                     textFillColor: 'transparent',
                                                     fontWeight: '1000',
                                                     backgroundPosition: 'center',
-                                                    fontSize: `${textColors?.fontSize}vw`,
+                                                    fontSize: `${Number(data?.textSize)}vw`,
                                                     width: "100%",
-                                                    marginTop: `${textColors?.lineHeight}px`
+                                                    marginTop: `${Number(data?.spacing)}px`
                                                 }}
                                             >
                                                 {data?.summary}
@@ -203,8 +206,8 @@ export default function About(props) {
                                     textFillColor: 'transparent',
                                     fontWeight: '1000',
                                     backgroundPosition: 'center',
-                                    fontSize: `${textColors?.fontSize}vw`,
-                                    marginTop: `${textColors?.lineHeight}px`
+                                    fontSize: `${sizes?.Email.textSize}vw`,
+                                    marginBottom: `${sizes?.Email.spacing}px`
                                 }}
                                 className='my-gradients-colors'
                             >{email}</h1>
@@ -217,8 +220,8 @@ export default function About(props) {
                                 textFillColor: 'transparent',
                                 fontWeight: '1000',
                                 backgroundPosition: 'center',
-                                fontSize: `${textColors?.fontSize}vw`,
-                                marginTop: `${textColors?.lineHeight}px`
+                                fontSize: `${sizes?.Phone.textSize}vw`,
+                                marginBottom: `${sizes?.Phone.spacing}px`
                             }}
                                 className='my-gradients-colors'
                             >{locTxt}</h1>
@@ -231,8 +234,6 @@ export default function About(props) {
                                     fontWeight: '1000',
                                 }}
                             >
-
-
                                 <h1
                                     style={{
                                         background:
@@ -243,8 +244,8 @@ export default function About(props) {
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
-                                        fontSize: `${textColors?.fontSize}vw`,
-                                        marginTop: `${textColors?.lineHeight}px`
+                                        fontSize: `${sizes?.InstagramUrl.textSize}vw`,
+                                        marginBottom: `${sizes?.InstagramUrl.spacing}px`
                                     }}
                                     className='my-gradients-colors'
                                 >
@@ -266,8 +267,8 @@ export default function About(props) {
                                         textFillColor: 'transparent',
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
-                                        fontSize: `${textColors?.fontSize}vw`,
-                                        marginTop: `${textColors?.lineHeight}px`
+                                        fontSize: `${sizes?.LinkedInUrl.textSize}vw`,
+                                        marginBottom: `${sizes?.LinkedInUrl.spacing}px`
                                     }}
                                     className='my-gradients-colors'
                                 >

@@ -50,9 +50,9 @@ export default function About() {
     const [lineHeight, setLineHeight] = useState('');
 
     //Details summary section
-    const [details, setDetails] = useState([{ summary: '', color: '',textSize:0, spacing:0 }]);
+    const [details, setDetails] = useState([{ summary: '', color: '', textSize: 0, spacing: 0 }]);
     // spacing 
-    const [sizes,setSizes] = useState({
+    const [sizes, setSizes] = useState({
         title1: {
             textSize: 0,
             spacing: 0
@@ -61,12 +61,6 @@ export default function About() {
             textSize: 0,
             spacing: 0
         },
-        
-        Summary1: {
-            textSize: 0,
-            spacing: 0
-        },
-      
         Email: {
             textSize: 0,
             spacing: 0
@@ -107,7 +101,7 @@ export default function About() {
         updatedSizes[field][property] = value;
         // Update the state with the new sizes object
         setSizes(updatedSizes);
-      };
+    };
 
     const handleChangeColor = (index, color) => {
         // console.log("Color Changed", index, color)
@@ -136,6 +130,8 @@ export default function About() {
                     setFontSize(response?.data?.fontSize)
                     setLineHeight(response?.data?.lineHeight)
                     setDetails(response?.data?.details);
+                    // console.log("etet", response?.data?.sizes)
+                    setSizes(response?.data?.sizes);
                     setTitleColor(response?.data?.titleColor);
                     setDetailColor(response?.data?.detailColor);
                     setEmailColor(response?.data?.emailColor);
@@ -237,6 +233,7 @@ export default function About() {
             titleColor: titleColor,
             detailColor: detailColor,
             details: details,
+            sizes: sizes,
             emailColor: emailColor,
             phoneColor: phoneColor,
             instaColor: instaColor,
@@ -244,7 +241,7 @@ export default function About() {
             resEmailColor: resEmailColor,
 
         }
-        // console.log('here 123123123', payload2);
+        console.log('here 123123123', sizes);
 
         setLoading(false);
         await axios.post(`${url}/project/updateDetail`, payload2).then(() => console.log('Success!')).catch(err => console.log);
@@ -287,14 +284,24 @@ export default function About() {
 
     let uploadStyle =
         { display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid black', width: '110px', height: '100px', borderRadius: "10px", cursor: 'pointer', marginBottom: '10px' }
+    const handleTextSizeChange = (index, value) => {
+        const updatedDetails = [...details];
+        updatedDetails[index].textSize = value;
+        setDetails(updatedDetails);
+    };
 
-      
+    const handleSpacingChange = (index, value) => {
+        const updatedDetails = [...details];
+        updatedDetails[index].spacing = value;
+        setDetails(updatedDetails);
+    };
+
     return (
         <div className="d-flex align-items-center justify-content-center h-100 flex-col">
             <Card className="p-3 my-5 form-card">
                 <Form>
                     {/* Choose Font Size */}
-                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
+                    {/* <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Font Size in View Width (1 - 10):</Form.Label>
                         <Form.Control
                             type="number"
@@ -305,9 +312,9 @@ export default function About() {
                             }}
                         />
 
-                    </Form.Group>
+                    </Form.Group> */}
                     {/* Choose Line Height  */}
-                    <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
+                    {/* <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
                         <Form.Label style={{ fontWeight: '700' }} >Line Height in Pixles (0 - 100+)</Form.Label>
                         <Form.Control
                             type="number"
@@ -318,7 +325,7 @@ export default function About() {
                             }}
                         />
 
-                    </Form.Group>
+                    </Form.Group> */}
 
 
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
@@ -331,46 +338,46 @@ export default function About() {
                                 setTitle(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowTitleColor(!showTitleColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showTitleColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for Title 1.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowTitleColor(!showTitleColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showTitleColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for Title 1.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={titleColor} onChange={(color) => setTitleColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={titleColor} onChange={(color) => setTitleColor(color)} />
+                            }
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.title1.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('title1', 'textSize', e.target.value)
+                                    }
+
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.title1.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('title1', 'spacing', e.target.value)
+                                    }
+
+                                />
                             </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.title1.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('title1', 'textSize', e.target.value)
-                            }
-                           
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.title1.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('title1', 'spacing', e.target.value)
-                            }
-                          
-                            />
-                        </div>
                         </div>
                     </Form.Group>
 
 
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
-                    <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Title:</Form.Label>
+                        <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Title:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter Description"
@@ -379,40 +386,40 @@ export default function About() {
                                 setDetail(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowDetailColor(!showDetailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showDetailColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for Details 2.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowDetailColor(!showDetailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showDetailColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for Details 2.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={detailColor} onChange={(color) => setDetailColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={detailColor} onChange={(color) => setDetailColor(color)} />
+                            }
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.title2.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('title2', 'textSize', e.target.value)
+                                    }
+
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.title2.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('title2', 'spacing', e.target.value)
+                                    }
+
+                                />
                             </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.title2.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('title2', 'textSize', e.target.value)
-                            }
-                          
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.title2.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('title2', 'spacing', e.target.value)
-                            }
-                        
-                            />
-                        </div>
                         </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicDetails">
@@ -428,44 +435,40 @@ export default function About() {
                                     onChange={(event) => handleChange(index, event)}
                                     style={{ margin: "5px 0px" }}
                                 />
-                                <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingBlock":'1rem'}}>
-                                {index > 0 && (
-                                    <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", backgroundColor: 'red', color: 'white' }}>
-                                        Remove-
+                                <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingBlock": '1rem' }}>
+                                    {index > 0 && (
+                                        <Button type="button" variant="danger" onClick={() => handleRemove(index)} style={{ marginRight: "20px", backgroundColor: 'red', color: 'white' }}>
+                                            Remove-
+                                        </Button>
+                                    )}
+                                    <Button type="button" onClick={() => setShowColor({ show: true, index: index })} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                        Color Picker
                                     </Button>
-                                )}
-                                <Button type="button" onClick={() => setShowColor({ show: true, index: index })} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                                    Color Picker
-                                </Button>
-                                {showColor.show && showColor.index === index &&
-                                    <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                            <div></div><div>Color Picker for summary no {index + 1}</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={() => setShowColor({ show: false, index: index })}>Close X</div>
+                                    {showColor.show && showColor.index === index &&
+                                        <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                <div></div><div>Color Picker for summary no {index + 1}</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={() => setShowColor({ show: false, index: index })}>Close X</div>
+                                            </div>
+                                            <ColorPicker hideInputs hidePresets value={details[index].color} onChange={(color) => handleChangeColor(index, color)} />
                                         </div>
-                                        <ColorPicker hideInputs hidePresets value={details[index].color} onChange={(color) => handleChangeColor(index, color)} />
+                                    }
+                                    <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                        <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            placeholder="Enter text size"
+                                            value={detail.textSize}
+                                            onChange={(e) => handleTextSizeChange(index, e.target.value)}
+                                        />
+                                        <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            placeholder="Enter spacing"
+                                            value={detail.spacing}
+                                            onChange={(e) => handleSpacingChange(index, e.target.value)}
+                                        />
                                     </div>
-                                }
-                                <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                                <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.Summary1.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('Phone', 'textSize', e.target.value)
-                            }
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.Summary1.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('Summary1', 'spacing', e.target.value)
-              }
-                            />
-                        </div>
-                        </div>
+                                </div>
                             </div>
                         ))}
                         <Button type="button" onClick={handleAdd} style={{ backgroundColor: 'green', color: 'white' }}>
@@ -482,38 +485,38 @@ export default function About() {
                                 setEmail(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowEmailColor(!showEmailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showEmailColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for Email 3.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowEmailColor(!showEmailColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showEmailColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for Email 3.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={emailColor} onChange={(color) => setEmailColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={emailColor} onChange={(color) => setEmailColor(color)} />
-                            </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.Email.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('Email', 'textSize', e.target.value)
                             }
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.Email.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('Email', 'spacing', e.target.value)
-                            } 
-                            />
-                        </div>
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.Email.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('Email', 'textSize', e.target.value)
+                                    }
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.Email.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('Email', 'spacing', e.target.value)
+                                    }
+                                />
+                            </div>
                         </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicPassword">
@@ -526,38 +529,38 @@ export default function About() {
                                 setLocTxt(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowPhoneColor(!showPhoneColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showPhoneColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for Phone.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowPhoneColor(!showPhoneColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showPhoneColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for Phone.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={phoneColor} onChange={(color) => setPhoneColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={phoneColor} onChange={(color) => setPhoneColor(color)} />
+                            }
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.Phone.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('Phone', 'textSize', e.target.value)
+                                    }
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.Phone.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('Phone', 'spacing', e.target.value)
+                                    }
+                                />
                             </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.Phone.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('Phone', 'textSize', e.target.value)
-                            }
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.Phone.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('Phone', 'spacing', e.target.value)
-                            }
-                            />
-                        </div>
                         </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
@@ -570,38 +573,38 @@ export default function About() {
                                 setInstaUrl(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowInstaColor(!showInstaColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showInstaColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for Instagram.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowInstaColor(!showInstaColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showInstaColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for Instagram.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={instaColor} onChange={(color) => setInstaColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={instaColor} onChange={(color) => setInstaColor(color)} />
+                            }
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.InstagramUrl.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('InstagramUrl', 'textSize', e.target.value)
+                                    }
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.InstagramUrl.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('InstagramUrl', 'spacing', e.target.value)
+                                    }
+                                />
                             </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.InstagramUrl.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('InstagramUrl', 'textSize', e.target.value)
-                            }
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.InstagramUrl.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('InstagramUrl', 'spacing', e.target.value)
-                            }
-                            />
-                        </div>
                         </div>
                     </Form.Group>
                     <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
@@ -614,38 +617,38 @@ export default function About() {
                                 setRepName(e.target.value);
                             }}
                         />
-                        <div style={{'display':'flex','gap':'20px',"align-items":"center","paddingTop":'1rem'}}>
-                        <Button type="button" onClick={() => setShowLinkedinColor(!showLinkedinColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
-                            Color Picker
-                        </Button>
-                        {showLinkedinColor &&
-                            <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <div></div><div>Color Picker for LinkedIn.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                        <div style={{ 'display': 'flex', 'gap': '20px', "align-items": "center", "paddingTop": '1rem' }}>
+                            <Button type="button" onClick={() => setShowLinkedinColor(!showLinkedinColor)} style={{ marginRight: "20px", backgroundColor: 'black', color: 'white' }}>
+                                Color Picker
+                            </Button>
+                            {showLinkedinColor &&
+                                <div style={{ position: "absolute", right: "5px", top: 0, backgroundColor: "white", border: "2px solid gray", borderRadius: "5px", textAlign: "center", fontWeight: "bold", boxShadow: "5px 10px 10px", zIndex: "100" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <div></div><div>Color Picker for LinkedIn.</div><div style={{ cursor: "pointer", marginRight: "2px", color: "gray", fontWeight: "light" }} onClick={handleCloseAllColorPickers}>Close X</div>
+                                    </div>
+                                    <ColorPicker hideInputs hidePresets value={linkedColor} onChange={(color) => setLinkedColor(color)} />
                                 </div>
-                                <ColorPicker hideInputs hidePresets value={linkedColor} onChange={(color) => setLinkedColor(color)} />
+                            }
+                            <div style={{ 'display': 'flex', 'gap': '1rem', "align-items": "center" }}>
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Size:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter text size"
+                                    value={sizes.LinkedInUrl.textSize}
+                                    onChange={(e) =>
+                                        handleSizeChange('LinkedInUrl', 'textSize', e.target.value)
+                                    }
+                                />
+                                <Form.Label style={{ fontWeight: '600', 'margin': '0px' }} >Spacing:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter spacing"
+                                    value={sizes.LinkedInUrl.spacing}
+                                    onChange={(e) =>
+                                        handleSizeChange('LinkedInUrl', 'spacing', e.target.value)
+                                    }
+                                />
                             </div>
-                        }
-                        <div style={{'display':'flex','gap':'1rem',"align-items":"center"}}>
-                        <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Size:</Form.Label>
-                        <Form.Control
-                            type="number"
-                            placeholder="Enter text size"
-                            value={sizes.LinkedInUrl.textSize}
-                            onChange={(e) =>
-                            handleSizeChange('LinkedInUrl', 'textSize', e.target.value)
-                            }
-                            />
-                            <Form.Label style={{ fontWeight: '600','margin':'0px' }} >Spacing:</Form.Label>
-                            <Form.Control
-                            type="number"
-                            placeholder="Enter spacing"
-                            value={sizes.LinkedInUrl.spacing}
-                            onChange={(e) =>
-                            handleSizeChange('LinkedInUrl', 'spacing', e.target.value)
-                            }
-                            />
-                        </div>
                         </div>
                     </Form.Group>
                     {/* <Form.Group className="mb-3" style={{ position: 'relative' }} controlId="formBasicEmail">
