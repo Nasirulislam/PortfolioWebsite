@@ -29,7 +29,7 @@ export default function About(props) {
                 const response = await axios.get(`${url}/project/getDetail`);
 
                 if (response.data) {
-                    console.log('yes', response.data.details[0].textSize)
+                    console.log('yes', response.data.details)
                     setSizes(response?.data?.sizes)
                     setDetails(response?.data?.details);
                     setTextColors(response?.data)
@@ -137,6 +137,7 @@ export default function About(props) {
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
                                         fontSize: `${sizes?.title2.textSize}vw`,
+                                        marginTop: `${sizes?.title2.spacing}px`,
                                         marginBottom: `${sizes?.title2.spacing}px`
                                     }}>
                                         {detail}
@@ -148,6 +149,7 @@ export default function About(props) {
                                         const link = isLink ? (data?.summary?.startsWith("http") ? data?.summary : `http://${data?.summary}`) : '';
                                         const backgroundStyle = data?.color?.includes("linear-gradient") ? `-webkit-${data?.color}` : data?.color;
 
+                                        console.log('MYYYYYYYYYYYYYYYYYYY DATA', data.spacing)
                                         return isLink ? (
                                             <a
                                                 href={link}
@@ -163,7 +165,8 @@ export default function About(props) {
                                                     fontSize: `${Number(data?.textSize)}vw`,
                                                     // fontSize: data?.fontSize + "vw",
                                                     width: "100%",
-                                                    marginTop: `${Number(data?.spacing)}px`
+                                                    marginTop: `${Number(data?.spacing)}px`,
+                                                    marginBottom: `${Number(data?.spacing)}px`
                                                 }}
                                                 target='_blank'
                                             >
@@ -181,7 +184,8 @@ export default function About(props) {
                                                     backgroundPosition: 'center',
                                                     fontSize: `${Number(data?.textSize)}vw`,
                                                     width: "100%",
-                                                    marginTop: `${Number(data?.spacing)}px`
+                                                    marginTop: `${Number(data?.spacing)}px`,
+                                                    marginBottom: `${Number(data?.spacing)}px`
                                                 }}
                                             >
                                                 {data?.summary}
@@ -207,7 +211,8 @@ export default function About(props) {
                                     fontWeight: '1000',
                                     backgroundPosition: 'center',
                                     fontSize: `${sizes?.Email.textSize}vw`,
-                                    marginBottom: `${sizes?.Email.spacing}px`
+                                    marginBottom: `${sizes?.Email.spacing}px`,
+                                    marginTop: `${sizes?.Email.spacing}px`
                                 }}
                                 className='my-gradients-colors'
                             >{email}</h1>
@@ -221,7 +226,8 @@ export default function About(props) {
                                 fontWeight: '1000',
                                 backgroundPosition: 'center',
                                 fontSize: `${sizes?.Phone.textSize}vw`,
-                                marginBottom: `${sizes?.Phone.spacing}px`
+                                marginBottom: `${sizes?.Phone.spacing}px`,
+                                marginTop: `${sizes?.Phone.spacing}px`
                             }}
                                 className='my-gradients-colors'
                             >{locTxt}</h1>
@@ -245,7 +251,8 @@ export default function About(props) {
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
                                         fontSize: `${sizes?.InstagramUrl.textSize}vw`,
-                                        marginBottom: `${sizes?.InstagramUrl.spacing}px`
+                                        marginBottom: `${sizes?.InstagramUrl.spacing}px`,
+                                        marginTop: `${sizes?.InstagramUrl.spacing}px`
                                     }}
                                     className='my-gradients-colors'
                                 >
@@ -268,7 +275,8 @@ export default function About(props) {
                                         fontWeight: '1000',
                                         backgroundPosition: 'center',
                                         fontSize: `${sizes?.LinkedInUrl.textSize}vw`,
-                                        marginBottom: `${sizes?.LinkedInUrl.spacing}px`
+                                        marginBottom: `${sizes?.LinkedInUrl.spacing}px`,
+                                        marginTop: `${sizes?.LinkedInUrl.spacing}px`
                                     }}
                                     className='my-gradients-colors'
                                 >
