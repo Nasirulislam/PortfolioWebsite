@@ -28,7 +28,7 @@ function Brenna(props) {
           >
             {
               banner.fileUrl.includes("mp4") ?
-                <video autoPlay loop muted onClick={() => props.handleSlug()}>
+                <video autoPlay loop muted playsInline onClick={() => props.handleSlug()}>
                   <source src={banner.fileUrl} type="video/mp4" />
                   <source src={banner.fileUrl} type="video/ogg" />
                   Your browser does not support the video tag.
@@ -43,13 +43,7 @@ function Brenna(props) {
                 </div>
 
 
-              // <img
-              //   className={" " + (props.images.length - 1) === key && props.images.length > 2 ? "last-image" : ""}
-              //   src={banner.fileUrl}
-              //   key={key}
-              //   style={{ cursor: 'pointer' }}
-              //   onClick={() => props.handleSlug()}
-              // />
+
             }
           </motion.div>
             : key == 1 ?
@@ -58,7 +52,7 @@ function Brenna(props) {
                 key={key}>
                 {
                   banner.fileUrl.includes("mp4") ?
-                    <video autoPlay loop muted onClick={() => props.handleSlug()}>
+                    <video autoPlay loop muted playsInline onClick={() => props.handleSlug()}>
                       <source src={banner.fileUrl} type="video/mp4" />
                       <source src={banner.fileUrl} type="video/ogg" />
                       Your browser does not support the video tag.
@@ -92,7 +86,7 @@ function Brenna(props) {
             style={{ position: 'relative', marginTop: '-8.5%', zIndex: '1' }}>
             {
               thirdImage.fileUrl.includes("mp4") ?
-                <video autoPlay loop muted onClick={() => props.handleSlug()}>
+                <video autoPlay loop muted playsInline onClick={() => props.handleSlug()}>
                   <source src={thirdImage.fileUrl} type="video/mp4" />
                   <source src={thirdImage.fileUrl} type="video/ogg" />
                   Your browser does not support the video tag.

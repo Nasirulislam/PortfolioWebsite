@@ -123,7 +123,7 @@ function EditImages(props) {
     padding: '5px',
     border: '1px solid #ccc',
     borderRadius: '4px',
-    fontSize: '14px',
+    fontSize: '20px',
     width: '50px',
   };
   return (
@@ -212,12 +212,12 @@ function EditImages(props) {
                       onClick={() => {
                         setImgId(image);
                       }}
-                      style={{
-                        outline:
-                          imgId === image
-                            ? "5px solid green"
-                            : "1px solid black",
-                      }}
+                    // style={{
+                    //   outline:
+                    //     imgId === image
+                    //       ? "5px solid green"
+                    //       : "1px solid black",
+                    // }}
                     >
                       <img
                         src={image.fileUrl}
@@ -234,7 +234,7 @@ function EditImages(props) {
 
           {btnshow &&
             <div style={divStyle}>
-              <label>Select Thumbnail Image number: </label>
+              <label style={{ fontSize: '20px' }}>Select Thumbnail Image number: </label>
               <input type="number" style={inputStyle} value={thumbnailIndex} onChange={(e) => setThumbnailIndex(e.target.value)} />
             </div>
           }
