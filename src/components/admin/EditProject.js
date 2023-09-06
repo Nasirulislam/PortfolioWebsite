@@ -428,7 +428,7 @@ function EditProject(props) {
                       </div>
                     ) : (
                       <div key={image} className="image">
-                        <video autoPlay loop muted>
+                          <video autoPlay loop muted playsInline>
                           {/* <source src={image?.fileUrl?.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/mp4" />
                           <source src={image?.fileUrl?.split("/")[0] === "data:video" ? image : base_url + "/projects/" + image} type="video/ogg" /> */}
                           <source src={image.fileUrl} type="video/mp4" />

@@ -174,7 +174,7 @@ function EditHomeIndex(props) {
                           height="150"
                           alt="upload"
                         />
-                        : <video autoPlay loop muted>
+                        : <video autoPlay loop muted playsInline>
                           <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
                           <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
                         </video>
@@ -242,7 +242,7 @@ function EditHomeIndex(props) {
                           height="150"
                           alt="upload"
                         />
-                        : <video autoPlay loop muted>
+                        : <video autoPlay loop muted playsInline>
                           <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/mp4" />
                           <source src={image.split(":")[0] === "data" ? image : base_url + "/home/" + image} type="video/ogg" />
                         </video>

@@ -337,7 +337,7 @@ function AddProject({ projects }) {
                     <div key={image} className="image">
                       {image.split("/")[0] === "data:video" ? (
                         <>
-                          <video autoPlay loop muted>
+                          <video autoPlay loop muted playsInline>
                             <source
                               src={
                                 image.split("/")[0] === "data:video"

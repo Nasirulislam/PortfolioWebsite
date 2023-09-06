@@ -9,7 +9,7 @@ import Helper from "../../constants/Helper";
 function Auston(props) {
 
   const handleClick = () => {
-    console.log("this is ptops name",props.name); props.handleSlug(props.name)
+    console.log("this is ptops name", props.name); props.handleSlug(props.name)
   }
 
   return (
@@ -23,7 +23,7 @@ function Auston(props) {
                 {
                   banner.fileUrl.includes("mp4") ?
                     <>
-                      <video autoplay loop muted onClick={() => props.handleSlug()}>
+                      <video autoPlay loop muted playsInline onClick={() => props.handleSlug()}>
                         <source src={banner.fileUrl} type="video/mp4" />
                         <source src={banner.fileUrl} type="video/ogg" />
                         Your browser does not support the video tag.

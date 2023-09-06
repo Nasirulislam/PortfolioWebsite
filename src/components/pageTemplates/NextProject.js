@@ -66,7 +66,7 @@ function NextProject(props) {
         <div className="col-md-6 d-flex justify-content-end">
           {
             projectData[index + 1].imagesAndThumb[0].fileUrl?.includes("mp4") ?
-              <motion.video autoPlay loop muted>
+              <motion.video autoPlay loop muted playsInline>
                 <source src={projectData[index + 1].imagesAndThumb[0].fileUrl} type="video/mp4" />
                 <source src={projectData[index + 1].imagesAndThumb[0].fileUrl} type="video/ogg" />
                 Your browser does not support the video tag.
@@ -85,7 +85,7 @@ function NextProject(props) {
           <div className="col-md-5">
             {
               projectData[index + 1].imagesAndThumb[1].fileUrl?.includes("mp4") ?
-                <motion.video autoPlay loop muted>
+                <motion.video autoPlay loop muted playsInline>
                   <source src={projectData[index + 1].imagesAndThumb[1].fileUrl} type="video/mp4" />
                   <source src={projectData[index + 1].imagesAndThumb[1].fileUrl} type="video/ogg" />
                   Your browser does not support the video tag.

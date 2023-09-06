@@ -176,7 +176,7 @@ function EditImages(props) {
                           alt="upload"
                         />
                       ) : (
-                        <video autoPlay loop muted>
+                        <video autoPlay loop muted playsInline>
                           <source src={image.fileUrl} type="video/mp4" />
                           <source src={image.fileUrl} type="video/ogg" />
                         </video>

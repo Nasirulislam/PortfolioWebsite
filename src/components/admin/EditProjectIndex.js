@@ -68,7 +68,7 @@ function EditProjectIndex(props) {
     e.preventDefault();
     setLoading(true);
     let tempArr = [];
-    tempArr = projectsData.map((item,index) => {
+    tempArr = projectsData.map((item, index) => {
       return {
         id: item._id,
         index: index.toString()
@@ -80,11 +80,11 @@ function EditProjectIndex(props) {
     }
 
     const response = await axios.post(`${base_url}/project/updateProjectIndexes`, payload);
-    if(response.status === 262) {
+    if (response.status === 262) {
       toast("Indexes updated successfully");
       setProjectsData(response.data.data);
     } else {
-      toast("unable to process request");      
+      toast("unable to process request");
     }
 
     setLoading(false);
@@ -107,7 +107,7 @@ function EditProjectIndex(props) {
           </Form.Select> */}
 
           <section className="edit-section">
-            <button type="button12" className={"btn btn-primary " +(btnshow ? "edit-image-btn" : "invisible")} onClick={moveBackward}>
+            <button type="button12" className={"btn btn-primary " + (btnshow ? "edit-image-btn" : "invisible")} onClick={moveBackward}>
               Prev
             </button>
             <div className="edit-image-section">
@@ -133,7 +133,7 @@ function EditProjectIndex(props) {
                           height="150"
                           alt="upload"
                         />
-                        : <video autoPlay loop muted>
+                        : <video autoPlay loop muted playsInline>
                           <source src={project.imagesAndThumb[0]?.fileUrl.split(":")[0] === "data" ? project.imagesAndThumb[0]?.fileUrl : project.imagesAndThumb[0]?.fileUrl} type="video/mp4" />
                           <source src={project.imagesAndThumb[0]?.fileUrl.split(":")[0] === "data" ? project.imagesAndThumb[0]?.fileUrl : project.imagesAndThumb[0]?.fileUrl} type="video/ogg" />
                         </video>
@@ -148,7 +148,7 @@ function EditProjectIndex(props) {
             </div>
             <button
               type="button12"
-              className={"btn btn-primary ms-2 " +(btnshow ? "edit-image-btn" : "invisible")}
+              className={"btn btn-primary ms-2 " + (btnshow ? "edit-image-btn" : "invisible")}
               onClick={moveForward}
             >
               Next
