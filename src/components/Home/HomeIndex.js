@@ -232,43 +232,35 @@ function HomeIndex(props) {
       let dif = prev - scroll;
 
       if (zoom < ZOOM_BREAKPOINT - FADE_SPEED / ZOOM_SPEED) {
-        // const el = document.querySelector('.my--title');
-        console.log('here fade 1')
+        // console.log("fade 1", document.querySelector('.my--title'))
+        console.log("fade 1", fadeElement)
         fade = 1;
       } else if (zoom > ZOOM_BREAKPOINT) {
-        console.log('here fade 0')
+        console.log("fade 0", fadeElement)
         fade = 0;
       } else {
         fade += dif / FADE_SPEED;
-        console.log('here fade diff')
       }
 
-      // el.classList.add('test-blend')
-      // if (fade >= 0.95 || fade < 0.95) {
-      //   // el.style.color = 'white'
-      //   // el.style.background = 'transparent'
-      // }
-      // if (scroll < 50) {
-      //   const el = document.querySelector('.my--title');
-      //   // el.style.color = '';  // Reset to original color
-      //   // el.style.background = '';  // Reset to original background
-      //   fadeElement.style.opacity = 1;  // Reset opacity to 1
-      //   console.log("upper: ", el)
-      //   if (isIOS) {
-      //     el.classList.add('test-blend')
-
-      //     // el.style.mixBlendMode = 'difference';  
-      //     // el.style.color = '#fff';
-      //   }
-      // }
-      // document.querySelector('.my--title').classList.remove('test-blend')
-      // console.log("lower: ", document.querySelector('.my--title'))
-      // fadeElement.style.opacity = fade;
-      if (fade !== 1) {
-        fadeElement.style.display = 'none';
-      } else {
-        fadeElement.style.display = 'block';
+      if (fade >= 0.95 || fade < 0.95) {
+        const el = document.querySelector('.my--title');
+        el.style.color = 'white'
+        el.style.background = 'transparent'
       }
+      if (scroll < 50) {
+        const el = document.querySelector('.my--title');
+        // el.style.color = '';  // Reset to original color
+        // el.style.background = '';  // Reset to original background
+        fadeElement.style.opacity = 1;  // Reset opacity to 1
+
+        if (isIOS) {
+          el.style.mixBlendMode = 'exclusion';  // Apply different mix-blend-mode for iOS
+          el.style.background = 'transparent';  // Reset to original background
+          el.style.color = '#fff';
+          fadeElement.style.opacity = 1;  // Reset opacity to 1
+        }
+      }
+      fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
     }
@@ -356,9 +348,9 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom my--title test-blend" style={{ background: "transparent", top: "39%", left: "50%" }} >
+      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%" }} >
 
-        <h1 style={{ cursor: "pointer" }} className="my--title test-blend">{props.value}</h1>
+        <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
       </div>
       <div
         className="px-0 d-flex justify-content-between tech-slideshow flex-wrap"
