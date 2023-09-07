@@ -254,12 +254,12 @@ function HomeIndex(props) {
           el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
           el.style.color = 'white';
           el.style.background = 'transparent'
-          imgElement.style.color = 'white';
-          imgElement.style.mixBlendMode = 'difference';
-          imgElement.style.background = 'transparent'
-          fadeElement.style.color = 'white';
-          fadeElement.style.mixBlendMode = 'difference';
-          fadeElement.style.background = 'transparent'
+          // imgElement.style.color = 'white';
+          // imgElement.style.mixBlendMode = 'difference';
+          // imgElement.style.background = 'transparent'
+          // fadeElement.style.color = 'white';
+          // fadeElement.style.mixBlendMode = 'difference';
+          // fadeElement.style.background = 'transparent'
         }
       }
       // fadeElement.style.opacity = fade;
