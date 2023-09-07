@@ -232,11 +232,8 @@ function HomeIndex(props) {
       let dif = prev - scroll;
 
       if (zoom < ZOOM_BREAKPOINT - FADE_SPEED / ZOOM_SPEED) {
-        // console.log("fade 1", document.querySelector('.my--title'))
-        console.log("fade 1", fadeElement)
         fade = 1;
       } else if (zoom > ZOOM_BREAKPOINT) {
-        console.log("fade 0", fadeElement)
         fade = 0;
       } else {
         fade += dif / FADE_SPEED;
@@ -249,15 +246,13 @@ function HomeIndex(props) {
       }
       if (scroll < 50) {
         const el = document.querySelector('.my--title');
-        // el.style.color = '';  // Reset to original color
-        // el.style.background = '';  // Reset to original background
+        el.style.color = '';  // Reset to original color
+        el.style.background = '';  // Reset to original background
         fadeElement.style.opacity = 1;  // Reset opacity to 1
 
         if (isIOS) {
-          el.style.mixBlendMode = 'exclusion';  // Apply different mix-blend-mode for iOS
-          el.style.background = 'transparent';  // Reset to original background
-          el.style.color = '#fff';
-          fadeElement.style.opacity = 1;  // Reset opacity to 1
+          el.style.mixBlendMode = 'normal';  // Apply different mix-blend-mode for iOS
+          el.style.color = 'black';
         }
       }
       fadeElement.style.opacity = fade;
@@ -335,7 +330,6 @@ function HomeIndex(props) {
 
 
   return (
-
     <div
       id="home-page"
       className="home-page"
@@ -343,9 +337,7 @@ function HomeIndex(props) {
         width: "100%",
         height: "100%",
         overflowX: "hidden",
-        isolation: 'isolate',
         backgroundColor: bgColor,
-
       }}
       onMouseMove={handleMouseMove}
       onMouseOver={handleMouseOver}
