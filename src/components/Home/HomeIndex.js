@@ -190,7 +190,7 @@ function HomeIndex(props) {
 
     //   return isIOS || (isAppleDevice && (isTouchScreen || iosQuirkPresent()));
     // })();
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.platform);
+    const isIOS = /Mac|iPad|iPhone|iPod/.test(navigator.platform);
 
     const zoomElement = document.querySelector(".zoom");
     if (!zoomElement) {
