@@ -250,11 +250,14 @@ function HomeIndex(props) {
         // el.style.background = '';  // Reset to original background
         fadeElement.style.opacity = 1;  // Reset opacity to 1
 
+
         if (isIOS) {
-          el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
-          el.style.color = '#fff';
+          el.classList.add('test-blend')
+          // el.style.mixBlendMode = 'difference';  
+          // el.style.color = '#fff';
         }
       }
+      document.querySelector('.my--title').classList.remove('test-blend')
       fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
@@ -345,7 +348,7 @@ function HomeIndex(props) {
     >
       <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%" }} >
 
-        <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
+        <h1 style={{ cursor: "pointer" }} className="my--title test-blend">{props.value}</h1>
       </div>
       <div
         className="px-0 d-flex justify-content-between tech-slideshow flex-wrap"
