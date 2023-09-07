@@ -1,22 +1,22 @@
 import "./App.css";
 import Index from "./components/Index/Index";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomeMain from "./components/Home/HomeMain";
 import Spinner from "react-bootstrap/Spinner";
 import { useEffect } from "react";
 import axios from "axios";
 import base_url from "./constants/url";
 import Template1 from "./components/pageTemplates/Template1";
-import Admin from "./components/admin/Admin";
-import NewLogin from "./components/admin/NewLogin";
-import ScrollToTop from "./components/ScrollToTop";
 import { useNavigate } from "react-router-dom";
 
-import { ProjectContext } from "./services/ProjectContext";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import About from "./components/About";
+import HomeMain from "./components/Home/HomeMain";
+import ScrollToTop from "./components/ScrollToTop";
+import NewLogin from "./components/admin/NewLogin";
+import Admin from "./components/admin/Admin";
 import HomeIndex from "./components/admin/HomeIndex";
+import { ProjectContext } from "./services/ProjectContext";
+import About from "./components/About";
 import VideoUpload from "./VideoUpload";
 import { useLocation } from "react-router-dom";
 

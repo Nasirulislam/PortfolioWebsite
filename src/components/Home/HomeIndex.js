@@ -111,26 +111,6 @@ function HomeIndex(props) {
         return videoE;
       }
 
-      // const handleVideosFromData = (file) => {
-      //   const videoUrl = file.src;
-      //   // const videoUrl = "https://media.istockphoto.com/id/1436859766/video/meeting-the-designer-and-client-in-office-and-discussing-choice-of-color.mp4?s=mp4-640x640-is&k=20&c=yEmaqxLFyxiCuNM-63UTc7_YYchGi7OOPaTiZyh-IF0="; // Use the file URL obtained from the backend
-      //   const originalWidth = 1080;
-      //   const originalHeight = 1000;
-      //   const videoE = getVideoElement(videoUrl, originalWidth, originalHeight);
-      //   const fab_video = new fabric.Image(videoE, {
-      //     ...file,
-      //   });
-      //   fab_video.set("video_src", videoUrl);
-      //   fab_video.set("src", videoUrl);
-      //   fabricRef.current.add(fab_video);
-      //   videoE.load();
-      //   fab_video.getElement().play();
-      //   fabric.util.requestAnimFrame(function render() {
-      //     fabricRef.current.renderAll();
-      //     fabric.util.requestAnimFrame(render);
-      //   });
-      // };
-
       const handleVideosFromData = (file) => {
         const videoUrl = file.src;
         const originalWidth = 1080;
@@ -202,16 +182,9 @@ function HomeIndex(props) {
     }
 
     const fadeElement = document.querySelector("#home-page");
-    // const afterZoomElement = document.querySelector('.afterzoom')
     const imgElement = document.querySelector("h1");
-    // const WIDTH = document.body.clientWidth;
-    // const HEIGHT = zoomElement.clientHeight;
-    // const IMAGE_WIDTH = imgElement.clientWidth;
-    // const IMAGE_HEIGHT = imgElement.clientHeight;
     const ZOOM_SPEED = window.innerWidth <= 500 ? 80 : 75; // Lower is faster
     const ZOOM_BREAKPOINT = window.innerWidth <= 500 ? 6.5 : 9.5; // When it should stop zooming in
-    // console.log('ZOOM ZOOM', ZOOM_BREAKPOINT)
-    // const IMAGE_HEIGHT_MAX = IMAGE_HEIGHT * ZOOM_BREAKPOINT;
     const ABSOLUTE = ZOOM_BREAKPOINT * ZOOM_SPEED; // Absolute position, when the Element reached maximum size
 
     // Fade --------------------------------------------------------------------------------------
@@ -224,17 +197,6 @@ function HomeIndex(props) {
       let scroll = window.scrollY;
       let temp = scroll / ZOOM_SPEED;
       let zoom = temp > 1 ? temp : 1;
-      // console.log('----')
-      // console.log("SCROLL : ", scroll);
-      // console.log("TEMP : ", temp);
-      // console.log("ZOOM : ", zoom);
-      // console.log('ZOOM BREAKPOINT : ', ZOOM_BREAKPOINT);
-      // console.log('Absolute : ', ABSOLUTE);
-      // console.log('FADE : ', fade);
-      // // console.log('Absolute : ', fade);
-      // console.log('prev : ', prev);
-      // console.log('----')
-
       // Only update the Elements scale, when we are below the breakpoint
       if (zoom < ZOOM_BREAKPOINT) {
         // Only scale the Image, so the Zoom element does not mess with the document width
@@ -265,28 +227,25 @@ function HomeIndex(props) {
         const el = document.querySelector('.my--title');
         el.style.color = 'white'
         el.style.background = 'transparent'
-
-        // console.log(el.style)
-
       }
+
+      // Reset styles to original state when near the top
+      if (scroll < 50) {
+        const el = document.querySelector('.my--title');
+        el.style.color = '';  // Reset to original color
+        el.style.background = '';  // Reset to original background
+        fadeElement.style.opacity = 1;  // Reset opacity to 1
+      }
+
       fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
     }
-    // Resets scroll position on every reload
-    // if ('scrollRestoration' in history) {
-    //   history.scrollRestoration = 'manual'
-    // }
 
     window.addEventListener("scroll", () => window.requestAnimationFrame(anim));
 
     // Fade --------------------------------------------------------------------------------------
     zoomElement.style.opacity = 1;
-    // zoomElement.style.color = 'white';
-    // -------------------------------------------------------------------------------------- Fade
-
-    // Positions the afterZoom element right below the zoomed image
-    // afterZoomElement.style.top = ABSOLUTE + IMAGE_HEIGHT_MAX / 2 + HEIGHT / 2 + 'px'
 
     return () => {
       window.removeEventListener("scroll", () =>
@@ -294,14 +253,6 @@ function HomeIndex(props) {
       );
     };
   }, []);
-
-  // useEffect(() => {
-  //   window.addEventListener("mousemove", mousemove);
-
-  //   return () => {
-  //     window.removeEventListener("mousemove", mousemove);
-  //   };
-  // });
 
   useEffect(() => {
     const mergeIndexImages = () => {
@@ -387,74 +338,8 @@ function HomeIndex(props) {
             style={style}
           />
         </motion.div>
-        {/* </div> */}
-        {/* {homeIndexImages.map((banner, index) => {
-          {
-            return (
-              <motion.div
-                className={"home-slide-section d-flex  " + ((homeIndexImages.length - 1) === index ? "col-md-12 px-0 justify-content-end " : index === 7 ? "align-items-end " : index === 5 ? 'margin-left ' : "col-md-4 align-items-center ", (index === homeIndexImages.length - 1) ? "is-last-image " : "")}
-                animate={{ x: fastCircle.x, y: fastCircle.y, opacity: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 30,
-                }}
-                key={index}
-                style={{ maxHeight: '60vh', width: (homeIndexImages.length - 1) === index ? '100%' : index === 5 || index === 7 ? '25vh' : '', height: (homeIndexImages.length - 1) === index ? '0px' : index === 5 || index === 7 ? '5vh' : '', marginRight: index === 4 ? '190px' : '', marginTop: index === 6 ? '10%' : '', marginLeft: index === 6 ? '10%' : '', marginRight: index === 7 ? '21%' : '' }}
-              >
-                {index % 2 === 0 ?
-                  <motion.div className={" "+(index === 4 ? "custom-position" : "")}
-                    // animate={{ x: index == 1 ? mediumCircle.x : largeCircle.x, y: index == 1 ? mediumCircle.y : largeCircle.y, opacity: 1 }}
-                    key={index}
-                    style={{ marginLeft: index === 4 ? '100px' : '', top: index === 4 ? '-60px' : '', right: index === 4 ? '-220px' : '' }}
-                  >
-                    {banner.image.includes("mp4")
-                      ?
-                      <video autoPlay loop muted
-                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '' }}
-                      >
-                        <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
-                        <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
-                        Your browser does not support the video tag.
-                      </video>
-                      :
-                      <img
-                        className="img-fluid mover-1"
-                        src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
-                        style={{ width: (homeIndexImages.length - 1) === index ? '18vw' : '', height: (homeIndexImages.length - 1) === index ? '35vh' : '', objectFit: 'contain', marginTop: index === 8 ? '-45%' : '', marginTop: index === (homeIndexImages.length - 1) ? '-22%' : '' }}
-                      />
-                    }
-                  </motion.div>
-                  :
-                  <motion.Card
-                    key={index}
-                    // animate={{ x: largeCircle.x, y: largeCircle.y, opacity: 1 }}
-                    style={{ marginTop: index === 7 ? '100px' : '' }}
-                  >
-                    {banner.image.includes("mp4")
-                      ?
-                      <video autoPlay loop muted
-                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '' }}
-                      >
-                        <source src={`${base_url}` + "/home/" + banner.image} type="video/mp4" />
-                        <source src={`${base_url}` + "/home/" + banner.image} type="video/ogg" />
-                        Your browser does not support the video tag.
-                      </video>
-                      :
-                      <img
-                        className="img-fluid mover-1"
-                        src={banner.image.includes("data:image") ? banner.image : `${base_url}/home/${banner.image}`}
-                        style={{ width: (homeIndexImages.length - 1) === index ? '50%' : '', marginTop: index === 8 ? '-45%' : '', marginTop: index === (homeIndexImages.length - 1) ? '-22%' : '' }}
-                      />
-                    }
-                  </motion.Card>
-                }
 
-              </motion.div>
-            )
-          }
-        })} */}
       </div>
-      {/* </motion.div> */}
     </div>
   );
 }
