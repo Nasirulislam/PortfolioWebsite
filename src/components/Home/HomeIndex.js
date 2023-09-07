@@ -244,17 +244,17 @@ function HomeIndex(props) {
         el.style.color = 'white'
         el.style.background = 'transparent'
       }
-      // if (scroll < 50) {
-      //   const el = document.querySelector('.my--title');
-      //   el.style.color = '';  // Reset to original color
-      //   el.style.background = '';  // Reset to original background
-      //   fadeElement.style.opacity = 1;  // Reset opacity to 1
+      if (scroll < 50) {
+        const el = document.querySelector('.my--title');
+        // el.style.color = '';  // Reset to original color
+        // el.style.background = '';  // Reset to original background
+        fadeElement.style.opacity = 1;  // Reset opacity to 1
 
-      //   if (isIOS) {
-      //     el.style.mixBlendMode = 'normal';  // Apply different mix-blend-mode for iOS
-      //     el.style.color = 'black';
-      //   }
-      // }
+        if (isIOS) {
+          el.style.mixBlendMode = 'normal';  // Apply different mix-blend-mode for iOS
+          el.style.color = 'black';
+        }
+      }
       fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
@@ -343,9 +343,10 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%", isolation: 'isolate' }} >
-
-        <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
+      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%", }} >
+        <div style={{ isolation: 'isolate', width: '100%' }}>
+          <h1 style={{ cursor: "pointer", scale: '2' }} className="my--title test-blend">{props.value}</h1>
+        </div>
       </div>
       <div
         className="px-0 d-flex justify-content-between tech-slideshow flex-wrap"
