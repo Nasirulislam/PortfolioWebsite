@@ -232,33 +232,43 @@ function HomeIndex(props) {
       let dif = prev - scroll;
 
       if (zoom < ZOOM_BREAKPOINT - FADE_SPEED / ZOOM_SPEED) {
+        // const el = document.querySelector('.my--title');
+        console.log('here fade 1')
         fade = 1;
       } else if (zoom > ZOOM_BREAKPOINT) {
+        console.log('here fade 0')
         fade = 0;
       } else {
         fade += dif / FADE_SPEED;
+        console.log('here fade diff')
       }
 
-      if (fade >= 0.95 || fade < 0.95) {
-        const el = document.querySelector('.my--title');
-        // el.style.color = 'white'
-        // el.style.background = 'transparent'
-      }
-      if (scroll < 50) {
-        const el = document.querySelector('.my--title');
-        // el.style.color = '';  // Reset to original color
-        // el.style.background = '';  // Reset to original background
-        fadeElement.style.opacity = 1;  // Reset opacity to 1
+      // el.classList.add('test-blend')
+      // if (fade >= 0.95 || fade < 0.95) {
+      //   // el.style.color = 'white'
+      //   // el.style.background = 'transparent'
+      // }
+      // if (scroll < 50) {
+      //   const el = document.querySelector('.my--title');
+      //   // el.style.color = '';  // Reset to original color
+      //   // el.style.background = '';  // Reset to original background
+      //   fadeElement.style.opacity = 1;  // Reset opacity to 1
+      //   console.log("upper: ", el)
+      //   if (isIOS) {
+      //     el.classList.add('test-blend')
 
-
-        if (isIOS) {
-          el.classList.add('test-blend')
-          // el.style.mixBlendMode = 'difference';  
-          // el.style.color = '#fff';
-        }
+      //     // el.style.mixBlendMode = 'difference';  
+      //     // el.style.color = '#fff';
+      //   }
+      // }
+      // document.querySelector('.my--title').classList.remove('test-blend')
+      // console.log("lower: ", document.querySelector('.my--title'))
+      // fadeElement.style.opacity = fade;
+      if (fade !== 1) {
+        fadeElement.style.display = 'none';
+      } else {
+        fadeElement.style.display = 'block';
       }
-      document.querySelector('.my--title').classList.remove('test-blend')
-      fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
     }
@@ -346,7 +356,7 @@ function HomeIndex(props) {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%" }} >
+      <div className="home-title change-title zoom my--title test-blend" style={{ background: "transparent", top: "39%", left: "50%" }} >
 
         <h1 style={{ cursor: "pointer" }} className="my--title test-blend">{props.value}</h1>
       </div>
