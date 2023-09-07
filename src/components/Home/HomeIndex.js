@@ -335,6 +335,7 @@ function HomeIndex(props) {
 
 
   return (
+
     <div
       id="home-page"
       className="home-page"
@@ -342,13 +343,15 @@ function HomeIndex(props) {
         width: "100%",
         height: "100%",
         overflowX: "hidden",
+        isolation: 'isolate',
         backgroundColor: bgColor,
+
       }}
       onMouseMove={handleMouseMove}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%" }} >
+      <div className="home-title change-title zoom my--title" style={{ background: "transparent", top: "39%", left: "50%", isolation: 'isolate' }} >
 
         <h1 style={{ cursor: "pointer" }} className="my--title">{props.value}</h1>
       </div>
