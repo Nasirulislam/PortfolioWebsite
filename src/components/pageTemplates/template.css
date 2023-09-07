@@ -13,7 +13,7 @@
 
   -webkit-text-stroke: 1px black;
   background: transparent;
-  mix-blend-mode: exclusion;
+  mix-blend-mode: difference;
   color: white;
   display: block;
   display: flex;
@@ -23,47 +23,54 @@
   text-align: center;
   font-size: 110px;
 }
-.title > h1 {
+
+.title>h1 {
   font-size: 110px;
   font-weight: 700;
   -webkit-text-stroke: 5px black;
   background: transparent;
 }
-.title > p {
+
+.title>p {
   font-size: 20px;
   margin-left: 10vw;
   color: brown;
   background: transparent;
 }
 
-.next-project-section > .next-title {
+.next-project-section>.next-title {
   position: absolute;
   z-index: 10;
   margin-top: 80px;
   margin-left: 12vw;
   color: white;
 }
+
 .next-project-section {
   position: relative;
   z-index: 10;
-  transition: all 0.5s ease-in-out ;
+  transition: all 0.5s ease-in-out;
 }
+
 .next-title {
   position: fixed;
 }
-.next-project-section > .next-title > h1 {
+
+.next-project-section>.next-title>h1 {
   font-size: 110px;
   margin-left: 10vw;
   -webkit-text-stroke: 4px white;
   background: transparent;
 }
-.next-project-section > .next-title > h2 {
+
+.next-project-section>.next-title>h2 {
   font-size: 40px;
   margin-left: 10vw;
   color: black;
   -webkit-text-stroke: 4px white;
 }
-.next-title > h4 {
+
+.next-title>h4 {
   -webkit-text-stroke: 1px white;
   font-weight: 700;
   font-size: 42px;
@@ -72,15 +79,18 @@
   margin-top: 50px;
   margin-left: 20vw;
 }
-.title > h1 {
+
+.title>h1 {
   background: transparent;
   overflow: hidden;
 }
-.title > span {
+
+.title>span {
   display: inline-block;
   transform: translateY(100%);
 }
-.next-title > h1 {
+
+.next-title>h1 {
   color: black;
   font-weight: 700;
   font-size: 42px;
@@ -96,29 +106,34 @@
   margin: 10px;
   transition: all 0.5s ease-in-out;
 }
+
 .next-proj-img1:hover {
   margin-left: 10px;
   margin-top: -30px;
   cursor: pointer;
 }
+
 .next-proj-img2 {
   max-width: 50vw;
   max-height: 100vh;
   margin: 10px;
   margin-top: 133px;
   margin-left: -50px;
-  transition: all 0.5s ease-in-out ;
+  transition: all 0.5s ease-in-out;
 }
-.next-proj-img2:hover{
+
+.next-proj-img2:hover {
   margin-left: 10px;
   margin-bottom: -30px;
   cursor: pointer;
 }
+
 .temp1_img1 {
   max-width: 700px;
   float: right;
   position: relative;
 }
+
 .temp1_img2 {
   max-width: 500px;
   z-index: 1;
@@ -127,17 +142,20 @@
   /* margin-bottom: 10vh; */
   position: relative;
 }
+
 .temp1_sec1 {
   display: flex;
   flex-direction: column;
   float: right;
 }
+
 .temp1_sec2 {
   margin-top: 15vh;
   /* margin-bottom: 10vh; */
   float: right;
   width: 100%;
 }
+
 .temp1_sec3 {
   margin-top: 15vh;
   float: right;
@@ -146,19 +164,23 @@
   justify-content: center;
   align-items: center;
 }
+
 .temp1_img3 {
   max-width: 400px;
   margin-left: 50px;
   margin-top: 50px;
   /* margin-bottom: 10vh */
 }
+
 .temp1_img4 {
   max-width: 700px;
   margin-left: 10vw;
 }
+
 .next-section {
   z-index: 5;
 }
+
 .temp_img1,
 .temp_img2 {
   display: flex;
@@ -166,32 +188,38 @@
   margin-top: 20px;
   /* margin-bottom: 10vh */
 }
-.temp_img1 > img {
+
+.temp_img1>img {
   max-width: 700px;
   margin-top: 15vh;
   margin-right: 5vw;
   margin-bottom: 10vh;
   transition: all 0.5 ease-in-out;
 }
-.temp_img1 > img:hover {
+
+.temp_img1>img:hover {
   cursor: pointer;
   margin-top: 5vh;
   margin-right: 2vw;
 }
+
 .temp_img1 {
   justify-content: flex-end;
   margin-bottom: 10vh;
 }
+
 .temp_img2 {
   justify-content: flex-start;
 }
-.temp_img2 > img {
+
+.temp_img2>img {
   max-width: 700px;
   margin-top: 15vh;
   margin-bottom: 10vh;
   transition: all 0.5 ease-in-out;
 }
-.temp_img2 > img:hover {
+
+.temp_img2>img:hover {
   margin-bottom: 6vh;
   margin-left: -1vw;
 }
@@ -201,11 +229,13 @@
   margin-top: 20px;
   /* margin-bottom: 10vh */
 }
-.temp_img3 > img {
+
+.temp_img3>img {
   float: unset;
   transition: all 0.5 ease-in-out;
 }
-.temp_img3 > img :hover {
+
+.temp_img3>img :hover {
   margin-top: 0px;
   margin-right: -10px;
 }
@@ -215,34 +245,41 @@
   display: flex;
   justify-content: flex-end;
 }
-.temp_img4 > img {
+
+.temp_img4>img {
   max-width: 500px;
   margin-right: 10vw;
   margin-bottom: 10vh;
 }
-.temp_img4 > img:hover {
+
+.temp_img4>img:hover {
   margin-right: 3vw;
   margin-bottom: 2vh;
 }
+
 .temp_img5 {
   margin-top: -10vh;
   /* margin-bottom: 10vh */
   float: left;
 }
-.temp_img5 > img {
+
+.temp_img5>img {
   max-width: 500px;
   display: flex;
   margin-left: 10vw;
   /* margin-bottom: 10vh */
 }
-.temp_img5 > img:hover {
+
+.temp_img5>img:hover {
   margin-left: 0vw;
 }
+
 .movingImg {
   -webkit-transition: margin 1s ease-out;
   -moz-transition: margin 1s ease-out;
   -o-transition: margin 1s ease-out;
 }
+
 .movingImg:hover {
   cursor: pointer;
   margin-top: -5px;

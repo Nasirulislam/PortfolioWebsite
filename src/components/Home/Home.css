@@ -147,7 +147,7 @@ s.cardTemp {
   top: 20%;
   /* -webkit-text-stroke: 1px black; */
   background: transparent;
-  mix-blend-mode: exclusion;
+  mix-blend-mode: difference;
   color: white;
   text-align-last: center;
 }
