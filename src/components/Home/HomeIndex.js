@@ -246,14 +246,14 @@ function HomeIndex(props) {
       }
       if (scroll < 50) {
         const el = document.querySelector('.my--title');
-        el.style.color = '';  // Reset to original color
+        // el.style.color = '';  // Reset to original color
         el.style.background = '';  // Reset to original background
         fadeElement.style.opacity = 1;  // Reset opacity to 1
 
-        if (isIOS) {
-          el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
-          el.style.color = 'white';
-        }
+        // if (isIOS) {
+        el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
+        el.style.color = 'white';
+        // }
       }
       fadeElement.style.opacity = fade;
       prev = scroll;
