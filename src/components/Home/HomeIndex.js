@@ -251,8 +251,8 @@ function HomeIndex(props) {
         fadeElement.style.opacity = 1;  // Reset opacity to 1
 
         if (isIOS) {
-          el.style.mixBlendMode = 'normal';  // Apply different mix-blend-mode for iOS
-          el.style.color = 'black';
+          el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
+          el.style.color = 'white';
         }
       }
       fadeElement.style.opacity = fade;
