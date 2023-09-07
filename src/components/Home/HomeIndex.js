@@ -208,7 +208,7 @@ function HomeIndex(props) {
     let fade = 1;
     let prev = 0;
     // -------------------------------------------------------------------------------------- Fade
-
+    let scrollTimeout;
     function anim() {
       let scroll = window.scrollY;
       let temp = scroll / ZOOM_SPEED;
@@ -239,30 +239,30 @@ function HomeIndex(props) {
         fade += dif / FADE_SPEED;
       }
 
-      if (fade >= 0.95 || fade < 0.95) {
+      if (isIOS) {
         const el = document.querySelector('.my--title');
-        el.style.color = 'white'
-        el.style.background = 'transparent'
-      }
-      if (scroll < 50) {
-        const el = document.querySelector('.my--title');
-        // el.style.color = '';  // Reset to original color
-        // el.style.background = '';  // Reset to original background
-        fadeElement.style.opacity = 1;  // Reset opacity to 1
-
-        if (isIOS) {
-          el.style.mixBlendMode = 'difference';  // Apply different mix-blend-mode for iOS
+        if (scroll < 50) {
+          el.style.mixBlendMode = 'difference';
           el.style.color = 'white';
-          el.style.background = 'transparent'
-          // imgElement.style.color = 'white';
-          // imgElement.style.mixBlendMode = 'difference';
-          // imgElement.style.background = 'transparent'
-          // fadeElement.style.color = 'white';
-          // fadeElement.style.mixBlendMode = 'difference';
-          // fadeElement.style.background = 'transparent'
+          el.style.background = 'transparent';
+        } else {
+          el.style.mixBlendMode = 'normal';
+          el.style.color = 'black';
+          el.style.background = 'transparent';
         }
       }
-      // fadeElement.style.opacity = fade;
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (isIOS && scroll < 50) {
+          const el = document.querySelector('.my--title');
+          el.style.mixBlendMode = 'difference';
+          el.style.color = 'white';
+          el.style.background = 'transparent';
+        }
+      }, 150);
+
+      fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
     }
