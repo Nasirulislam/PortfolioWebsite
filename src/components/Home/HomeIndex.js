@@ -229,14 +229,6 @@ function HomeIndex(props) {
         el.style.background = 'transparent'
       }
 
-      // Reset styles to original state when near the top
-      if (scroll < 50) {
-        const el = document.querySelector('.my--title');
-        el.style.color = '';  // Reset to original color
-        el.style.background = '';  // Reset to original background
-        fadeElement.style.opacity = 1;  // Reset opacity to 1
-      }
-
       fadeElement.style.opacity = fade;
       prev = scroll;
       // -------------------------------------------------------------------------------------- Fade
@@ -299,6 +291,19 @@ function HomeIndex(props) {
     mergeIndexImages();
   }, []);
 
+
+  // AUTOMATIC ON CLICK 
+  const motionDivRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      motionDivRef.current.click();
+    }, 8000); // 10 seconds
+
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, []);
+
+
   return (
     <div
       id="home-page"
@@ -323,6 +328,11 @@ function HomeIndex(props) {
       >
         <motion.div
           className="relative"
+          ref={motionDivRef}
+          onClick={() => {
+            console.log('Motion div clicked');
+            // Your click handler logic here
+          }}
           style={{
             width: window.innerWidth,
             marginLeft: "auto",
