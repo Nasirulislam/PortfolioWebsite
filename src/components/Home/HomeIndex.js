@@ -241,7 +241,7 @@ function HomeIndex(props) {
 
       if (isIOS) {
         const el = document.querySelector('.my--title');
-        if (scroll < 50) {
+        if (scroll < 70) {
           el.style.mixBlendMode = 'difference';
           el.style.color = 'white';
           el.style.background = 'transparent';
