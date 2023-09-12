@@ -629,3 +629,13 @@ s.cardTemp {
     transform: translateY(-50%) translateX(-50%);
   }
 }
+
+.my--home--text {
+  width: 900px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .my--home--text {
+    width: 384px !important;
+  }
+}

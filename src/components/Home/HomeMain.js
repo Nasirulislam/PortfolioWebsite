@@ -134,14 +134,14 @@ function HomeMain(props) {
         >
           {value.toLowerCase() !== "david ellis" && (
             <div
-              className="home-title change-title"
+              className="home-title change-title my--home--text"
               initial={"hidden"}
               animate={"visible"}
               variants={animateTxt}
               transition={{ y: 200, duration: 4 }}
-              style={{ width: '900px' }}
+            // style={{ width: '385px' }}
             >
-              <h1 style={{ cursor: "pointer" }} onClick={() => handleSlug()}>
+              <h1 style={{ cursor: "pointer" }} onClick={() => handleSlug()} >
                 <ReactTextTransition
                   springConfig={presets.gentle}
                   className="indexitem-button"
